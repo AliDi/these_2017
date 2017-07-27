@@ -1,0 +1,65 @@
+\section{Approche bayésienne}
+
+Rappel des estimation de sources et du paramètre de régularisation proposés par Antoni 2012.\\
+
+la probabilité est la traduction d'un état de connaissance du système.
+
+\subsection{Formulation probabiliste du problème direct}
+
+Le problème direct revient à exprimer la pression $\bm{p}$ au niveau de l'antenne de microphones en fonction du champ source $\bm{q}$ et du modèle de propagation acoustique $\bm{G}$.\\
+Le champ source $q(\bm{r})$ peut est décomposé sur une base de $K$ fonctions spatiales $\phi_k(\bm{r})$ normalisées :
+
+\begin{equation}
+q(\bm{r}) = \bm{c} \cdot \bm{\phi}
+\end{equation}
+Les inconnues du problèmes sont donc les fonctions $\phi_k$, les coefficients $c_k$ qui dépendent des mesures et leur nombre $K$.\\
+
+L'approche bayésienne propose de voir ces coefficients comme des variables aléatoires et d'étudier leur probabilité conditionnée aux mesures $[q(\bm{c},\bm{\phi})|\bm{p}]$. Si cette probabilité est élevée, ça signifie que les mesures expliquent précisément le champ source $q$. L'objectif est donc d'estimer ces variables de façon à ce qu'elles expliquent au mieux les mesures $\bm{p}$. Ces estimations de $\bm{\phi}$ et de $\bm{c}$ sont notées respectivement $\bm{\hat{\phi}}$ et $\bm{\hat{c}}$ telles que : 
+\begin{equation}
+	(\bm{\hat{c}},\bm{\hat{\phi}}) = \text{Argmax}[q(\bm{c},\bm{\phi})|\bm{p}]
+\end{equation}
+
+La loi de Bayes permet d'exprimer $[q(\bm{c},\bm{\phi})|\bm{p}]$ ainsi : 
+\begin{equation}
+[q(\bm{c},\bm{\phi})|\bm{p}]=\frac{[\bm{p}|q(\bm{c},\bm{\phi})][q(\bm{c},\bm{\phi})]}{[\bm{p}]}.
+\end{equation}
+
+En prenant le logarithme négatif de la quantité à maximiser, on peut définir une fonction coût à minimiser : 
+\begin{equation}
+	J(\bm{c},\bm{\phi}) = - \ln[q|\bm{p}] = -\ln[\bm{p}|q]-\ln[q]+\ln[\bm{p}]
+\end{equation}
+
+Le bruit de mesure $\bm{n}$  a une distribution gaussienne et par conséquent (?), $[\bm{p}|q]$ suit également une loi gaussienne. En introduisant la matrice de covariance $\mathbb{E}\{\bm{n}\bm{n}^*\}=\beta^{2}\bm{\Omega}_B$ ($\beta^2$ étant l'énergie moyenne du bruit, $\bm{\Omega}_B$ matrice connue selon la nature du bruit) : 
+\begin{equation}
+[\bm{p}|q] =\mathcal{N_c}(\bm{G}\bm{q},\beta^2\bm{\Omega}_B = \frac{   1   }{ \pi^M \beta^{2M} |\bm{\Omega}_N| } \exp \left( -\frac{1}{\beta^2} ||   \bm{p}  -  \bm{Gq}  ||^2_{\bm{\Omega}_N} \right)
+\end{equation}
+
+Une distribution gaussienne est également choisie pour la densité de probabilité des sources, de moyenne nulle et de variance $\mathbb{E}\{\bm{q}\bm{q}'\}=\alpha^2 \bm{\Omega}_q$ : 
+\begin{equation}
+	[\bm{q}] = \mathcal{N_c}(\bm{0}, \alpha^2\bm{\Omega}_q) = \frac{  1  }{  \pi^K\alpha^{2K} |\bm{\omega}_q|} \exp \left( -\frac{1}{\alpha^2}   ||\bm{q}||^2_{\bm{\Omega}_q} \right)
+\end{equation}
+
+vraisemblance : adéquation entre une distribution observée (sur échantillon) et la loi de proba qui décrit la population dont est issu l'échantillon 
+fonction de vraisemblance : la vraisemblance varie  en fonction des paramètres de la loi choisie. Paramètre s'appelle généralement $\theta$. Sert donc a ajuster des observations à une loi.
+
+
+
+
+\subsection{Régularisation bayésienne}
+
+Le paramètre de régularisation peut être estimé par une approche bayésienne. 
+objectif : développer un formalisme généralisant les diverses approches développées pour chaque contexte d'imagerie ; prendre en compte le maximum d'informations a priori connues.
+
+Les informations connues a priori peuvent être incertaines et décrites par une densité de probabilité. L'approche bayésienne permet donc de prendre en compte ces informations "incertaines".\\
+Dans cette approche, les paramètres inconnus (sources acoustiques) sont exprimés en fonction des données de mesures selon la loi de Bayes : 
+\begin{equation}
+[x|y] = \frac{[y|x][x]}{[y]}
+\end{equation}
+où la notation $[y]$ est la densité de probabilité de la variable $x$ et $[x|y]$ est la densité de probabilité de $x$ conditionnée à la variable $y$
+
+
+
+
+
+Calcul de l'intervalle de confiance ??
+	

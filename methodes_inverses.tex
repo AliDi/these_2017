@@ -1,0 +1,116 @@
+\section{Les méthodes inverses}
+En formation de voies, chaque source est considérée indépendemment des autres. La surface contenant les sources potentielles est scannées point par point et l'éventuelle cohérence des sources n'est pas prise en compte.\\L'approche des méthodes inverses est de traiter le problème dans son ensemble, en recherchant toutes les sources simultanément, prenant ainsi en compte les effets d'interférence entre les sources. \todo{interaction non linéaire des sources ?}
+
+Les méthodes varient selon le modèle de source choisi : \\
+-ondes planes propagatives et évanescentes : NAH, SONAH\\
+-radiation BEM\\
+-distribution de monopoles\\
+-harmoniques sphériques.
+ 
+Résolution d'un problème d'optimisation par méthode globale ou locale
+
+itératif ou non ?
+
+Holographie en champ proche : quand il est possible d'effectuer des mesures en champ proche, les signaux de mesures sont porteurs de plus d'information, notamment les ondes évanescentes.
+
+\subsubsection{Globale}
+On parcourt l'espace des solutions avec une approche statistique
+
+\subsubsection{Locale}
+On part suffisamment proche du minimum global. Gradient+Hessien permettent d'estimer la plus forte pente. Gradient, gradient conjugué, Newton, Gauss-Newton, quasi-Newton,...
+
+Reconstruction pixellisée des paramètres ou déformation de contour.
+
+\subsection{Holographie en champ proche}
+%hypothèse : on connait le plan d'émission des sources + les fonctions de transferts
+L'holographie en champ proche propose d'exploiter des mesures réalisées à proximité des sources pour en reconstruire une image. Cette méthode tire profit de la mesure des ondes évanescentes, exponentiellement décroissantes avec la distance, qui viennent s'ajouter aux ondes propagatives \cite{maynard_1985}.\\
+Le champ de pression mesuré est d'abord décomposé dans le domaine des nombres d'ondes par une transformée de Fourier spatiale. A chaque onde est associé un propagateur (i.e. une fonction de transfert supposée connue) qui, inversé, permet de rétropropager le champ mesuré et ainsi reconstruire le champ source.  Avant rétropropagation, un filtre sur les nombres d'ondes est appliqué de manière à sélectionner les nombres d'ondes d'intérêt : il est nécessaire de trouver un compromis permettant de conserver suffisamment d'ondes évanescentes (porteuses d'informations) tout en limitant l'amplification du bruit. La mesure à proximité permet ainsi d'obtenir une résolution supérieure à la demi-longueur d'onde.\\
+
+
++ en espace clos\\
+
++ antenne double couche
+
+
+\subsection{Méthodes par mise à jour successive d'un modèle}
+L'idée est de minimiser l'écart entre les signaux mesurés et ceux calculés à partir d'un modèle.
+
+The polar correlation technique : JET ENGINE NOISE SOURCE LOCATION: 
+THE 
+POLAR 
+CORRELATION 
+TECHNIQUE 
+M. 
+J. 
+FISHER
+
+très proche : P. J. T. FILLIPI, D. HABAULT and J. PIRAUX 1988 Journal of Sound and <ibration 124, 285}296.
+Noise source modelling and identi"cation procedure
+
+
+En résumé, les méthodes inverses utilisées principalement sont de 2 sortes : 1) les méthodes basées sur la transformée de Fourier (holographie,...) ; 2) Les méthodes ``model based''. En pratiques, ces méthodes sont très proches (ce que montrent W. A. VERONESI and J. D. MAYNARD 1989 Journal of the Acoustical Society of America 85,
+588}598. Digital holographic reconstruction of sources with arbitrarily shaped surfaces)
+
+
+
+
+
+sources équivalentes (ESM)
+
+\subsubsection{Les méthodes de régularisation}
+nelson part2 compare deux méthodes de régularisation : 1) il explique comment choisir un paramètre de Tikhonov ; 2) il explique comment choisir les valeurs de la SVD à supprimer.\\ Beaucoup se sont penchés sur le problème du choix de $\nu$.nelson part2 compare les différentes facçon de déterminer $\nu$ en comparant l'erreur entre le champ source désiré et celui reconstruit, ainsi que l'erreur entre l'interspectre reconstruit et le vrai interspectre (les $S_{qq}$). Les méthodes comparées sont : \\
+-cross-validation technique : M. ALLEN 1974 ¹echnometrics 16, 125}127. The relationship between variable selection and data
+augmentation and a method for prediction\\
+-generalize cross-validation technique : G. H. GOLUB, M. HEATH and G. WAHBA 1979 ¹echnometrics 21, 215}223. Generalized crossvalidationas a method for choosing a good ridge parameter
+
+
+
+
+
+
+Les problèmes inverses de localisation de sources acoustiques sont souvent mal posés car le nombre de sources est supérieur au nombre de capteur. Il est alors nécessaire de mettre en place des stratégies qui améliorent le conditionnement du problème. 
+page 11 thèse thibaut le magueresse
+
+Régularisation de Tikhonov (ref : Tikhonov. Solution of incorrectly formulated problems and the regularization method) : La stratégie la plus souvent adoptée est la régularisation de Thikonov qui consiste à rajouter un terme de contrôle dans la fonction coût. Cette dernière prend alors la forme suivante : 
+\begin{equation}
+	||\bm{p}-\bm{G}\bm{q}||^2 + \nu^2||\bm{q}||^2
+\end{equation}
+où $||\bullet||$ est la norme euclidienne et $\nu^2$ est le paramètre de régularisation, choisi judicieusement de façon à favoriser les solutions de petite norme.
+
+$\$nu$ est déterminé par des procédures ad-hoc qui peuvent être : \\
+-discrepancy principle\\
+-cross-validation\\
+-L-curve method : P. C. HANSEN and D. P. O'LEARY 1993 SIAM Journal on Scienti,c Computing 14, 1487}1503. The
+use of the L-curve in the regularisation of discrete ill-posed problems\\
+-(restricted) maximum likehood : B. ANDERSSEN and P. BLOOMFIELD 1974 Numerische Mathematik 22, 157}182. Numerical
+differentiation procedures for non-exact data\\
+-unbiased predictive risk estimator\\
+-interprétation bayesienne\\
+Plusieurs techniques sont disponibles dans la littérature pour estimer
+ce paramètre : la méthode de la courbe en L, la méthode de la validation croisée généralisée
+ ou la méthode utilisant le principe d’anomalie de Morozov
+
+
+
+Prise en compte de la parcimonie spatiale : \\
+Afin de réduire le caractère sous-déterminé du problème, il est nécessaire d'exploiter toutes les connaissances a priori sur la nature et la répartition des sources. Il est par exemple possible de prendre en compte leur parcimonie spatiale. Cette propriété de parcimonie sert notamment à compenser le rayonnement omnidirectionnel des sources qui n'est pas mesuré et qui engendre une sous-estimation du niveau des sources. \\
+La parcimonie est donnée par la norme $L_0$ du champ source (qui donne alors le nombre de valeurs non-nulles de $\bm{G_{qq}}$. Un formalisme bayesien permet de prendre en compte cette parcimonie en définissant une densité de probabilité des sources $[\bm{p}]$. Une loi gaussienne peut par exemple être choisie telle que : 
+\begin{equation}
+ [\bm{p}] \propto \exp\left(\frac{\sum_i |q_i|^p}{2\gamma^2}\right)
+\end{equation}
+avec $i$ le i\textsuperscript{ème} élément de $\bm{q}$, et $p$ un paramètre prenant une valeur entre $0$ et $2$.$p=0$ correspond à une distribution parcimonieuse, tandis que plus $p$ tend vers $2$, plus la distribution spatiale des source est étendue.\\
+
+Minimisation : 
+\begin{equation}
+	||\bm{p}-\bm{G}\bm{q}||^2 + \mu^2\sum_i |q_i|^p
+\end{equation}
+
+Cette équation peut être minimisée de différentes manières : $L_0$, dur à résoudre :iterative thresholding algorithm for linear inverse pb with sparsity, daubechies 2004 ; LASSO pour la version norme $L_1$, DAMAS with sparsity constraint (SC-DAMAS) ; $L_2$ revient à la régularisation de Tikhonov.  \\
+
+
+
+
+
+tronquer le sous-espace bruit (i.e les petites valeurs singulières après svd, mais à quel seuil?)
+
+
