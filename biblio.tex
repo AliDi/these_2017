@@ -40,6 +40,8 @@
 \usepackage{paralist} % Used for the compactitem environment which makes bullet points with less space between them
 \usepackage{bm}
 \usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
 
 \usepackage{titlesec} % Allows customization of titles
 \renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
@@ -114,7 +116,8 @@
 Intro : localisation de sources dans le sous-sol, dans des tissus humains, dans des pièces industrielles, dans les fluides (avec ou sans écoulement, dans un espace clos ou non). La nature des sources varie.
 But : caractériser quantitativement/qualitativement les sources à partir de mesures obtenue en quelques points  discrets de l'espace.
 
-Contexte : Réduction du bruit des avions par la compréhension des bruits (40 fois plus d'énergie dans 1 kg de kérosène que dans 1 kg des meilleures batterie, après calcul de rendement, il reste un rapport 15 entre les 2).
+Contexte : Réduction du bruit des avions par la compréhension des bruits (40 fois plus d'énergie dans 1 kg de kérosène que dans 1 kg des meilleures batterie, après calcul de rendement, il reste un rapport 15 entre les 2).\\
+Enjeu : identifier les mécanismes de génération de bruit ; 
 
 historique :Dès 1976, pour répondre à des problématiques de compréhension des bruits de turboréacteur, \cite{billingsley_1976} réalisent des mesures simultanées à l'aide d'une antenne linéaire constituées de 14 microphones. 
 Depuis, le nombre de capteur par antenne a augmenté, ainsi la gamme fréquentielle.
@@ -133,27 +136,27 @@ Depuis, le nombre de capteur par antenne a augmenté, ainsi la gamme fréquentie
 -pb inverse mal posé : le nombre de source est souvent bien supérieur au nombre de microphones}
 
 %sources aéros et médole de propagation en écoulement
-\include{sources_aero}
+%\include{sources_aero}
 
 %débruitage (tonal, cyclo, aerodynamique)
 %\include{debruitage}
 
 %Les méthodes de formation de voies
-%\include{beamforming}
+\include{beamforming}
 
 %Ajout d'une étape de déconvolution
-%\include{deconvolution}
+\include{deconvolution}
 
 
 %Les méthodes inverses
 %\include{methodes_inverses}
 
 %Régularisation spécifique : Approche bayésienne
-%\include{approche_bayesienne}
+\include{approche_bayesienne}
 
 
 
-\todo[inline]{holographie, séparation de champ ? retournement temporel ? contrainte de parcimonie ?}
+
 
 
 %À citer : \\

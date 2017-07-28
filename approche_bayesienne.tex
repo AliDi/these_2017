@@ -4,6 +4,9 @@ Rappel des estimation de sources et du paramètre de régularisation proposés p
 
 la probabilité est la traduction d'un état de connaissance du système.
 
+
+Principe général des probabilités bayésiennes : on choisit une distribution a priori décrivant la fonction à modéliser $[\bm{q}]$. Cette distribution est corrigée progressivement sous forme de fonction de vraisemblance à partir des observations $[\bm{p|q}]$. Prises ensemble, la distribution a priori et la fonction de vraisemblance permettent de construire la distribution a posteriori : $[\bm{q|p}] = [\bm{p|q}][\bm{q}]/[\bm{p}]$.
+
 \subsection{Formulation probabiliste du problème direct}
 
 Le problème direct revient à exprimer la pression $\bm{p}$ au niveau de l'antenne de microphones en fonction du champ source $\bm{q}$ et du modèle de propagation acoustique $\bm{G}$.\\
@@ -21,26 +24,70 @@ L'approche bayésienne propose de voir ces coefficients comme des variables alé
 
 La loi de Bayes permet d'exprimer $[q(\bm{c},\bm{\phi})|\bm{p}]$ ainsi : 
 \begin{equation}
+\label{bayes}
 [q(\bm{c},\bm{\phi})|\bm{p}]=\frac{[\bm{p}|q(\bm{c},\bm{\phi})][q(\bm{c},\bm{\phi})]}{[\bm{p}]}.
 \end{equation}
+
+
+
+Le bruit de mesure $\bm{n}$  a une distribution gaussienne et par conséquent (?), $[\bm{p}|q]$ suit également une loi gaussienne. En introduisant la matrice de covariance $\mathbb{E}\{\bm{n}\bm{n}^*\}=\beta^{2}\bm{\Omega}_B$ ($\beta^2$ étant l'énergie moyenne du bruit, $\bm{\Omega}_B$ matrice connue selon la nature du bruit) : 
+\begin{equation}
+[\bm{p}|q,\beta^2] =\mathcal{N}_c(\bm{G}\bm{q},\beta^2\bm{\Omega}_B = \frac{   1   }{ \pi^M \beta^{2M} |\bm{\Omega}_N| } \exp \left( -\frac{1}{\beta^2} ||   \bm{p}  -  \bm{Gq}  ||^2_{\bm{\Omega}_N} \right)
+\end{equation}
+
+Une distribution gaussienne est également choisie pour la densité de probabilité des sources, de moyenne nulle et de variance $\mathbb{E}\{\bm{q}\bm{q}'\}=\alpha^2 \bm{\Omega}_q$ : 
+\begin{equation}
+	[\bm{q}|\alpha^2] = \mathcal{N}_c(\bm{0}, \alpha^2\bm{\Omega}_q) = \frac{  1  }{  \pi^K\alpha^{2K} |\bm{\Omega}_q|} \exp \left( -\frac{1}{\alpha^2}   ||\bm{q}||^2_{\bm{\Omega}_q} \right)
+\end{equation}
+
+$\alpha^2$ et $\beta^2$ sont appelés les hyperparamètres.
+
+
+\todo[inline]{ Notes :\\
+vraisemblance : adéquation entre une distribution observée (sur échantillon) et la loi de proba qui décrit la population dont est issu l'échantillon 
+fonction de vraisemblance : la vraisemblance varie  en fonction des paramètres de la loi choisie. Paramètre s'appelle généralement $\theta$. Sert donc a ajuster des observations à une loi.\\
+
+
+
+\url{https://en.wikipedia.org/wiki/Bayesian_interpretation_of_kernel_regularization} : \\
+
+Dans le contexte de régression, la fonction de vraisemblance (\[p|q\]) sont souvent supposé suivre une distribution gaussienne, car ``corrompues'' par du bruit gaussien. Les observation sont supposées indépendantes et identiquement distribuées, ce qui fait qu'il est possible de factoriser la fonction de vraisemblance sur chaque point de mesure.
+}
+
+\subsection{Estimation des hyperparamètres et des sources}
+\subsubsection{Estimateur MAP}
+La résolution du problème inverse se fait donc par l'estimation de la probabilité $[\bm{q}|\bm{p},\alpha^2,\beta^2]$. Le vecteur $\bm{q}$ est ainsi approché en observant sa valeur la plus probable d'après les données, le  ``Maximum a posteriori'' (MAP) : 
+\begin{eqnarray}
+\bm{\tilde{q}}_{MAP} &=& \text{Argmax}([\bm{q}|\bm{p},\alpha^2,\beta^2])\\
+					 &=& \text{Argmax}\left( [\bm{p}|\bm{q}][\bm{q}]  \right) \text{d'après \ref{bayes}}\\
+					 &=& 
+\end{eqnarray}
 
 En prenant le logarithme négatif de la quantité à maximiser, on peut définir une fonction coût à minimiser : 
 \begin{equation}
 	J(\bm{c},\bm{\phi}) = - \ln[q|\bm{p}] = -\ln[\bm{p}|q]-\ln[q]+\ln[\bm{p}]
 \end{equation}
 
-Le bruit de mesure $\bm{n}$  a une distribution gaussienne et par conséquent (?), $[\bm{p}|q]$ suit également une loi gaussienne. En introduisant la matrice de covariance $\mathbb{E}\{\bm{n}\bm{n}^*\}=\beta^{2}\bm{\Omega}_B$ ($\beta^2$ étant l'énergie moyenne du bruit, $\bm{\Omega}_B$ matrice connue selon la nature du bruit) : 
+D'après les lois normales choisies, 
 \begin{equation}
-[\bm{p}|q] =\mathcal{N_c}(\bm{G}\bm{q},\beta^2\bm{\Omega}_B = \frac{   1   }{ \pi^M \beta^{2M} |\bm{\Omega}_N| } \exp \left( -\frac{1}{\beta^2} ||   \bm{p}  -  \bm{Gq}  ||^2_{\bm{\Omega}_N} \right)
+J=M\ln(\beta^2) + K\ln(\alpha^2) +\beta^{-2}||\bm{p}-\bm{Hc}||^2_{\Omega_n}+\alpha^{-2}||\bm{q}||^2_{\Omega_c}
 \end{equation}
-
-Une distribution gaussienne est également choisie pour la densité de probabilité des sources, de moyenne nulle et de variance $\mathbb{E}\{\bm{q}\bm{q}'\}=\alpha^2 \bm{\Omega}_q$ : 
+\todo[inline]{revoir les notations ci-dessus}
+Finalement, on ne conservant que les termes qui dépendent de $c$, on retrouve la formulation des moindres carrés : 
 \begin{equation}
-	[\bm{q}] = \mathcal{N_c}(\bm{0}, \alpha^2\bm{\Omega}_q) = \frac{  1  }{  \pi^K\alpha^{2K} |\bm{\omega}_q|} \exp \left( -\frac{1}{\alpha^2}   ||\bm{q}||^2_{\bm{\Omega}_q} \right)
+ J = (p'-cH)\Omega^{-1}_n(p-Hc) + \nu^2c'\Omega^-1_c c
 \end{equation}
+avec pour terme de régularisation $\nu = \beta^2/\alpha^2$.
 
-vraisemblance : adéquation entre une distribution observée (sur échantillon) et la loi de proba qui décrit la population dont est issu l'échantillon 
-fonction de vraisemblance : la vraisemblance varie  en fonction des paramètres de la loi choisie. Paramètre s'appelle généralement $\theta$. Sert donc a ajuster des observations à une loi.
+
+
+
+
+\subsubsection{MCMC}
+algo : Metropolis-Hasting
+
+
+
 
 
 

@@ -1,6 +1,21 @@
 %====================================================
-\section{Méthodes de localisation de sources}
+\section{Méthodes de formation de voies}
 %====================================================
+
+\subsection{Formulation du problème}
+
+La formulation du problème direct lie le vecteur des pressions $\bm{p}$ mesurées aux $M$ points de mesure et l'intensité des $N$ sources $\bm{q}$ à l'aide de la matrice de transfert $\bm{G}$ qui représente le modèle de propagation des ondes acoustiques : 
+\begin{equation}
+\bm{p}=\bm{G}\bm{q}
+\end{equation}
+
+Le problème d'imagerie est donc de résoudre le problème inverse qui consiste à estimer les sources $\bm{q}$ à partir des données  $\bm{p}$ :
+\begin{equation}
+\bm{\tilde{q}}=\bm{W}\bm{p}
+\end{equation}
+
+Le problème peut aussi être formulé à partir des matrices de densité interspectrale notée 
+
 
 
 \subsection{Sommation cohérente de signaux : méthodes de formation de voies}
@@ -31,9 +46,9 @@ Donc, le vecteur des pression pour une source ponctuelle au point $i$ d'amplitud
 La formation de voies peut être vue comme la solution d'un problème d'optimisation : afin d'optimiser le vecteur de pointage, on cherche à minimiser l'écart entre l'amplitude estimée $\bm{w}_i'\bm{p}$ et l'amplitude réelle $A_i$. Cette fonction coût est défini à partir d'une densité spectrale $E[\bullet]$ puisque les sources sont des grandeurs aléatoires :
 \begin{eqnarray}
 	J=&E\left[(\bm{w}_i'\bm{p}-A_i)(\bm{w}_i'\bm{p}-A_i)^*\right]\\
-	 =& \bm{w}_i'\bm{G_{pp}}\bm{w}_i-\bm{w}_i'\bm{h}_iG_{ii}-\bm{h}_i'G_{ii}'\bm{w}_i + G_{ii}
+	 =& \bm{w}_i'\bm{S_{pp}}\bm{w}_i-\bm{w}_i'\bm{h}_iG_{ii}-\bm{h}_i'G_{ii}'\bm{w}_i + G_{ii}
 \end{eqnarray}
-$^*$ est l'opérateur conjugué, $\bm{G_{pp}}=E[\bm{p}\bm{p}']$ et $G_{ii}=E[A_iA_i']$ , soit : 
+$^*$ est l'opérateur conjugué, $\bm{S_{pp}}=E[\bm{p}\bm{p}']$ et $G_{ii}=E[A_iA_i']$ , soit : 
 \begin{equation}
 	\frac{\dd J}{\dd \bm{w}_i'}=0 ~~~~~\Leftrightarrow ~~~~~ \bm{w}_i=\frac{\bm{h}_i}{\bm{h}_i'\bm{h}_i}.
 \end{equation}
@@ -50,24 +65,24 @@ avec $\gamma=G_{nn}/G_{ii}$, $G_{nn}$ étant les termes diagonaux de la matrice 
 
 
 \subsubsection{Construction d'un vecteur de pointage à partir des données}
-Certaines méthodes de localisation n'utilisent pas un modèle de source mais construisennt le vecteur de pointage à partir de l'ensemble des covariances des signaux de mesure. \\
-\cite{schmidt_1986} propose de minimiser l'énergie en sortie du processeur tout en conservant une contrainte de normalisation que le vecteur de pointage est dans la direction de la source (méthode dite "à variance minimale"): minimiser $\bm{w}_i'\bm{G_{pp}}\bm{w}_i$ sous la contrainte $\bm{w}_i'\bm{h}_i=1$.
+Certaines méthodes de localisation n'utilisent pas un modèle de source mais construisent le vecteur de pointage à partir de l'ensemble des covariances des signaux de mesure. \\
+\cite{schmidt_1986} propose de minimiser l'énergie en sortie du processeur tout en conservant une contrainte de normalisation que le vecteur de pointage est dans la direction de la source (méthode dite "à variance minimale"): minimiser $\bm{w}_i'\bm{S_{pp}}\bm{w}_i$ sous la contrainte $\bm{w}_i'\bm{h}_i=1$.
 On résout donc, en utilisant le multiplicateur de Lagrange $\lambda$ : 
 \begin{equation}
 \frac{\dd J}{\dd\bm{w}_i}=0~~~~~\text{et}~~~~~\frac{\dd J}{\dd\lambda}=0
 \end{equation}
 avec la fonction coût : 
 \begin{equation}
-J=\bm{w}_i'\bm{G_{pp}}\bm{w}_i + \lambda(\bm{w}_i'\bm{h}_i+\bm{h}_i'\bm{w}_i).
+J=\bm{w}_i'\bm{S_{pp}}\bm{w}_i + \lambda(\bm{w}_i'\bm{h}_i+\bm{h}_i'\bm{w}_i).
 \end{equation}
 La résolution de ces 2 équations permet de construire le vecteur de pointage : 
 \begin{equation}
-	\bm{w}_i=\frac{\bm{G_{pp}}^{-1}\bm{h}_{i}}{\bm{h}_i'\bm{G_{pp}}^{-1}\bm{h}_{i}}.
+	\bm{w}_i=\frac{\bm{S_{pp}}^{-1}\bm{h}_{i}}{\bm{h}_i'\bm{S_{pp}}^{-1}\bm{h}_{i}}.
 \end{equation}
 
 
 
-L'algorithme MUltiple Signal Classification (MUSIC, \cite{schmidt_1986}) propose une décomposition en valeurs propres de la matrice interspectrale $\bm{G_{pp}}$ pour la décomposer en 2 sous-espaces, l’un associé au signal et l’autre au bruit, afin de diminuer la contribution énergétique du bruit.\\
+L'algorithme MUltiple Signal Classification (MUSIC, \cite{schmidt_1986}) propose une décomposition en valeurs propres de la matrice interspectrale $\bm{S_{pp}}$ pour la décomposer en 2 sous-espaces, l’un associé au signal et l’autre au bruit, afin de diminuer la contribution énergétique du bruit.\\
 
 Ces méthodes font l'hypothèse de sources décorrélées et sont sensibles au non-respect de cette hypothèse. Des stratégies peuvent être mises en place pour prendre en compte la cohérence des sources (Jiang Y and Stoica P. CAPON beamforming in the presence of steering vector errors and coherent signals. In: Proceedings of the adaptive sensor array processing (ASAP) workshop, Lexington, MA,
 USA, 11–13 March 2003.). 
@@ -89,3 +104,6 @@ Generalize Inverse Beamforming ?
 SAFT, TFM
 
 }
+
+
+\todo[inline]{holographie, séparation de champ ? retournement temporel ? contrainte de parcimonie ?}
