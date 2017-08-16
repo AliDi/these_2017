@@ -1,43 +1,25 @@
- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Journal Article
-% LaTeX Template
-% Version 1.3 (9/9/13)
-%
-% This template has been downloaded from:
-% http://www.LaTeXTemplates.com
-%
-% Original author:
-% Frits Wenneker (http://www.howtotex.com)
-%
-% License:
-% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 %----------------------------------------------------------------------------------------
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 \documentclass[twocolumn]{article}
+\setlength{\columnsep}{1cm}
 
 \usepackage[french]{babel}
 
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx} %pour mettre des figures dans multicol avec l'environnement figure*
 
-%\usepackage[sc]{mathpazo} % Use the Palatino font
-\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
-\linespread{1.05} % Line spacing - Palatino needs more space between lines
-\usepackage{microtype} % Slightly tweak font spacing for aesthetics
 
-\usepackage[hmarginratio=1:1,top=20mm, right=20mm]{geometry} % Document margins
-\usepackage{multicol} % Used for the two-column layout of the document
-\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+%\linespread{1.05} % Line spacing - Palatino needs more space between lines
+%\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+
+\usepackage[hmarginratio=1:1,top=15mm, right=15mm]{geometry} % Document margins
+\usepackage[textfont=it]{caption} % Custom captions under/above floats in tables or figures
 \usepackage{booktabs} % Horizontal rules in tables
 %\usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
 \usepackage{hyperref} % For hyperlinks in the PDF
 
-\usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
-\usepackage{paralist} % Used for the compactitem environment which makes bullet points with less space between them
 \usepackage{bm}
 \usepackage{amsfonts}
 \usepackage{amsmath}
@@ -119,7 +101,7 @@ But : caractériser quantitativement/qualitativement les sources à partir de me
 Contexte : Réduction du bruit des avions par la compréhension des bruits (40 fois plus d'énergie dans 1 kg de kérosène que dans 1 kg des meilleures batterie, après calcul de rendement, il reste un rapport 15 entre les 2).\\
 Enjeu : identifier les mécanismes de génération de bruit ; 
 
-historique :Dès 1976, pour répondre à des problématiques de compréhension des bruits de turboréacteur, \cite{billingsley_1976} réalisent des mesures simultanées à l'aide d'une antenne linéaire constituées de 14 microphones. 
+historique :Dès 1976, pour répondre à des problématiques de compréhension des bruits de turboréacteur, \cite{Billingsley1976} réalisent des mesures simultanées à l'aide d'une antenne linéaire constituées de 14 microphones. 
 Depuis, le nombre de capteur par antenne a augmenté, ainsi la gamme fréquentielle.
 
 
@@ -137,19 +119,19 @@ Depuis, le nombre de capteur par antenne a augmenté, ainsi la gamme fréquentie
 
 %sources aéros et médole de propagation en écoulement
 %\include{sources_aero}
-
+%
 %débruitage (tonal, cyclo, aerodynamique)
 %\include{debruitage}
 
 %Les méthodes de formation de voies
-\include{beamforming}
+%\include{beamforming}
 
 %Ajout d'une étape de déconvolution
-\include{deconvolution}
+%\include{deconvolution}
 
 
 %Les méthodes inverses
-%\include{methodes_inverses}
+\include{methodes_inverses}
 
 %Régularisation spécifique : Approche bayésienne
 \include{approche_bayesienne}

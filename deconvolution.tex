@@ -21,7 +21,7 @@ La PSF des méthodes inverses est plus difficile à estimer car elle dépend des
 
 \paragraph{DAMAS}
 
- \cite{brooks_2006_damas} (deconvolution approach for the mapping of acoustic sources)
+ \cite{Brooks2006} (deconvolution approach for the mapping of acoustic sources)
  
 \paragraph{Spectral Estimation Model}
 Correction de différence entre deux matrices de covariance minimisée avec un gradient conjugué (D. Blacodon, G. Elias, Level estimation of extended acoustic sources using an array of microphones, American Institute of Aeronautics and Astronautics Paper 2003-3199, 2003)\\
@@ -30,13 +30,13 @@ Contrainte de positivité sur la solution de source difficile à appliquer ?
 \paragraph{CLEAN}
 
 
-\cite{dougherty_1998} présente 3 façons de réduire les lobes secondaires liés au positionnement des michrophones sur l'antenne : \\
+\cite{Dougherty1998} présente 3 façons de réduire les lobes secondaires liés au positionnement des michrophones sur l'antenne : \\
 -CSM weighting : réduire le poids des termes de la CSM (cross-spectral matrix) correspondant aux paires de microphones dont l'espacement fait qu'ils apportent une information redondante (par exemple 2 microphones sur la même branche d'une antenne en croix)\\
 -robust adaptative beamforming = minimum variance algorithm = CAPON\\
 -CLEAN algorithme.\\
 De ces trois méthodes, CLEAN ressort comme étant la plus efficace
 
-Hypothèse sur l'algo CLEAN : le vecteur source est parcimonieux : le champ source recherché est constitué de points sources. Principe de l'algorithme CLEAN \citep{hogborn_1974} : on extrait la plus grande valeur du champ source issu du beamforming, on la note comme un point source, on lui retire un petit gain convolué avec la fonction d'étalement, et on réitère jusqu'à ce que la plus grande valeur atteigne un seuil.\\
+Hypothèse sur l'algo CLEAN : le vecteur source est parcimonieux : le champ source recherché est constitué de points sources. Principe de l'algorithme CLEAN \citep{Hogbom1974} : on extrait la plus grande valeur du champ source issu du beamforming, on la note comme un point source, on lui retire un petit gain convolué avec la fonction d'étalement, et on réitère jusqu'à ce que la plus grande valeur atteigne un seuil.\\
 
 Cette méthode est une heuristique (algorithme d'approximation) de type "matching pursuit".\todo{détailler "Matching pursuit"}\\
 

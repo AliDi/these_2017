@@ -30,9 +30,17 @@ La loi de Bayes permet d'exprimer $[q(\bm{c},\bm{\phi})|\bm{p}]$ ainsi :
 
 
 
-Le bruit de mesure $\bm{n}$  a une distribution gaussienne et par conséquent (?), $[\bm{p}|q]$ suit également une loi gaussienne. En introduisant la matrice de covariance $\mathbb{E}\{\bm{n}\bm{n}^*\}=\beta^{2}\bm{\Omega}_B$ ($\beta^2$ étant l'énergie moyenne du bruit, $\bm{\Omega}_B$ matrice connue selon la nature du bruit) : 
+Le bruit de mesure $\bm{n}$  a une distribution gaussienne et par conséquent 
+\footnote{Modèle direct : $\bm{p}=\bm{Gq}+\bm{n}$ ; bruit centré : $\langle \bm{n}\rangle = \langle \bm{p}-\bm{Gq} \rangle = 0 $ ; la covariance du bruit est la covariance des mesures étant données les sources : 
+\begin{eqnarray*}
+\bm{C_n}& = & \mathbb{E}\{\bm{n}\bm{n}^*\} \\
+		& = & \mathbb{E}\{(\bm{p}-\bm{Gq})(\bm{p}-\bm{Gq})^*\}  \\
+		& = & \bm{C_{\bm{p}|\bm{q}}} 
+\end{eqnarray*}
+},
+$[\bm{p}|q]$ suit également une loi gaussienne. En introduisant la matrice de covariance $\mathbb{E}\{\bm{n}\bm{n}^*\}=\beta^{2}\bm{\Omega}_N$ ($\beta^2$ étant l'énergie moyenne du bruit, $\bm{\Omega}_N$ matrice connue selon la nature du bruit) : 
 \begin{equation}
-[\bm{p}|q,\beta^2] =\mathcal{N}_c(\bm{G}\bm{q},\beta^2\bm{\Omega}_B = \frac{   1   }{ \pi^M \beta^{2M} |\bm{\Omega}_N| } \exp \left( -\frac{1}{\beta^2} ||   \bm{p}  -  \bm{Gq}  ||^2_{\bm{\Omega}_N} \right)
+[\bm{p}|q,\beta^2] =\mathcal{N}_c(\bm{G}\bm{q},\beta^2\bm{\Omega}_N) = \frac{   1   }{ \pi^M \beta^{2M} |\bm{\Omega}_N| } \exp \left( -\frac{1}{\beta^2} ||   \bm{p}  -  \bm{Gq}  ||^2_{\bm{\Omega}_N} \right)
 \end{equation}
 
 Une distribution gaussienne est également choisie pour la densité de probabilité des sources, de moyenne nulle et de variance $\mathbb{E}\{\bm{q}\bm{q}'\}=\alpha^2 \bm{\Omega}_q$ : 
@@ -55,6 +63,14 @@ Dans le contexte de régression, la fonction de vraisemblance (\[p|q\]) sont sou
 }
 
 \subsection{Estimation des hyperparamètres et des sources}
+3 approches possibles pour poser le problème d'optimisation : 
+\begin{itemize}
+	\item Maximum de vraisemblance\\
+	\item Minimum de variance\\
+	\item Maximum a posteriori\\
+\end{itemize}
+voir le cours %https://cral.univ-lyon1.fr/labo/perso/eric.thiebaut/downloads/documents/cargese-2006-thiebaut.pdf
+On peut montrer que MAP propage moins d'erreur que maximum de vraisemblance.
 \subsubsection{Estimateur MAP}
 La résolution du problème inverse se fait donc par l'estimation de la probabilité $[\bm{q}|\bm{p},\alpha^2,\beta^2]$. Le vecteur $\bm{q}$ est ainsi approché en observant sa valeur la plus probable d'après les données, le  ``Maximum a posteriori'' (MAP) : 
 \begin{eqnarray}
