@@ -9,7 +9,10 @@ Principe général des probabilités bayésiennes : on choisit une distribution 
 
 \subsection{Formulation probabiliste du problème direct}
 
-Le problème direct revient à exprimer la pression $\bm{p}$ au niveau de l'antenne de microphones en fonction du champ source $\bm{q}$ et du modèle de propagation acoustique $\bm{G}$.\\
+Le problème direct revient à exprimer la pression $\bm{p}$ au niveau de l'antenne de microphones en fonction du champ source $\bm{q}$, du modèle de propagation acoustique $\bm{G}$, du bruit de mesure et des erreurs de modèle représentés par le vecteur $\bm{n}$ : 
+\begin{equation}
+\bm{p}=\bm{Gq}+\bm{n}
+\end{equation}•
 Le champ source $q(\bm{r})$ peut est décomposé sur une base de $K$ fonctions spatiales $\phi_k(\bm{r})$ normalisées :
 
 \begin{equation}
@@ -30,7 +33,7 @@ La loi de Bayes permet d'exprimer $[q(\bm{c},\bm{\phi})|\bm{p}]$ ainsi :
 
 
 
-Le bruit de mesure $\bm{n}$  a une distribution gaussienne et par conséquent 
+On estime d'abord que le bruit $\bm{n}$  a une distribution gaussienne, et que sa moyenne est nulle ($\mathbb{E}\{\bm{n}\}=0$) et par conséquent 
 \footnote{Modèle direct : $\bm{p}=\bm{Gq}+\bm{n}$ ; bruit centré : $\langle \bm{n}\rangle = \langle \bm{p}-\bm{Gq} \rangle = 0 $ ; la covariance du bruit est la covariance des mesures étant données les sources : 
 \begin{eqnarray*}
 \bm{C_n}& = & \mathbb{E}\{\bm{n}\bm{n}^*\} \\
@@ -38,7 +41,7 @@ Le bruit de mesure $\bm{n}$  a une distribution gaussienne et par conséquent
 		& = & \bm{C_{\bm{p}|\bm{q}}} 
 \end{eqnarray*}
 },
-$[\bm{p}|q]$ suit également une loi gaussienne. En introduisant la matrice de covariance $\mathbb{E}\{\bm{n}\bm{n}^*\}=\beta^{2}\bm{\Omega}_N$ ($\beta^2$ étant l'énergie moyenne du bruit, $\bm{\Omega}_N$ matrice connue selon la nature du bruit) : 
+$[\bm{p}|q]$ suit également une distribution normale multivariée complexe. En introduisant la matrice de covariance $\mathbb{E}\{\bm{n}\bm{n}^*\}=\beta^{2}\bm{\Omega}_N$ ($\beta^2$ étant l'énergie moyenne du bruit, $\bm{\Omega}_N$ matrice connue a priori selon la nature du bruit) : 
 \begin{equation}
 [\bm{p}|q,\beta^2] =\mathcal{N}_c(\bm{G}\bm{q},\beta^2\bm{\Omega}_N) = \frac{   1   }{ \pi^M \beta^{2M} |\bm{\Omega}_N| } \exp \left( -\frac{1}{\beta^2} ||   \bm{p}  -  \bm{Gq}  ||^2_{\bm{\Omega}_N} \right)
 \end{equation}
@@ -63,14 +66,7 @@ Dans le contexte de régression, la fonction de vraisemblance (\[p|q\]) sont sou
 }
 
 \subsection{Estimation des hyperparamètres et des sources}
-3 approches possibles pour poser le problème d'optimisation : 
-\begin{itemize}
-	\item Maximum de vraisemblance\\
-	\item Minimum de variance\\
-	\item Maximum a posteriori\\
-\end{itemize}
-voir le cours %https://cral.univ-lyon1.fr/labo/perso/eric.thiebaut/downloads/documents/cargese-2006-thiebaut.pdf
-On peut montrer que MAP propage moins d'erreur que maximum de vraisemblance.
+
 \subsubsection{Estimateur MAP}
 La résolution du problème inverse se fait donc par l'estimation de la probabilité $[\bm{q}|\bm{p},\alpha^2,\beta^2]$. Le vecteur $\bm{q}$ est ainsi approché en observant sa valeur la plus probable d'après les données, le  ``Maximum a posteriori'' (MAP) : 
 \begin{eqnarray}

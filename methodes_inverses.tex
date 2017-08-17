@@ -31,6 +31,16 @@ Le champ de pression mesuré est d'abord décomposé dans le domaine des nombres
 
 + antenne double couche
 
+\subsection{Choix de la fonction coût}
+
+3 approches possibles pour poser le problème d'optimisation  : 
+\begin{itemize}
+	\item Maximum de vraisemblance\\
+	\item Minimum de variance\\
+	\item Maximum a posteriori\\
+\end{itemize}
+voir le cours %https://cral.univ-lyon1.fr/labo/perso/eric.thiebaut/downloads/documents/cargese-2006-thiebaut.pdf
+On peut montrer que MAP propage moins d'erreur que maximum de vraisemblance.
 
 \subsection{Méthodes par mise à jour successive d'un modèle}
 L'idée est de minimiser l'écart entre les signaux mesurés et ceux calculés à partir d'un modèle.
@@ -70,23 +80,21 @@ augmentation and a method for prediction\\
 Les problèmes inverses de localisation de sources acoustiques sont souvent mal posés car le nombre de sources est supérieur au nombre de capteur. Il est alors nécessaire de mettre en place des stratégies qui améliorent le conditionnement du problème. 
 page 11 thèse thibaut le magueresse
 
-Régularisation de Tikhonov (ref : Tikhonov. Solution of incorrectly formulated problems and the regularization method) : La stratégie la plus souvent adoptée est la régularisation de Thikonov qui consiste à rajouter un terme de contrôle dans la fonction coût. Cette dernière prend alors la forme suivante : 
+Régularisation de Tikhonov (ref : Tikhonov. Solution of incorrectly formulated problems and the regularization method) : La stratégie la plus souvent adoptée est la régularisation de Thikonov qui consiste à rajouter un terme de contrôle dans la fonction coût (équivalent à un contrôle de l'énergie de la solution). Cette dernière prend alors la forme suivante : 
 \begin{equation}
 	||\bm{p}-\bm{G}\bm{q}||^2 + \nu^2||\bm{q}||^2
 \end{equation}
 où $||\bullet||$ est la norme euclidienne et $\nu^2$ est le paramètre de régularisation, choisi judicieusement de façon à favoriser les solutions de petite norme.
 
-$\$nu$ est déterminé par des procédures ad-hoc qui peuvent être : \\
+La difficulté de cette régularisation réside dans ne choix de $\nu$. Ce paramètre peut être déterminé par des procédures ad-hoc qui telle que : \\
 -discrepancy principle\\
--cross-validation\\
+-cross-validation (méthode de la validation croisée généralisée)\\
 -L-curve method : %P. C. HANSEN and D. P. O'LEARY 1993 SIAM Journal on Scienti,c Computing 14, 1487}1503. The use of the L-curve in the regularisation of discrete ill-posed problems\\
 -(restricted) maximum likehood : %B. ANDERSSEN and P. BLOOMFIELD 1974 Numerische Mathematik 22, 157}182. Numerical
 differentiation procedures for non-exact data\\
 -unbiased predictive risk estimator\\
--interprétation bayesienne\\
-Plusieurs techniques sont disponibles dans la littérature pour estimer
-ce paramètre : la méthode de la courbe en L, la méthode de la validation croisée généralisée
- ou la méthode utilisant le principe d’anomalie de Morozov
+-interprétation bayesienne \citep{Pereira2015}\\
+- méthode utilisant le principe d’anomalie de Morozov\\
 
 \subsubsection{Optimisation parcimonieuse}
 L'objectif d'une approche parcimonieuse est d'obtenir une solution approchée du problème avec le moins de composantes non nulles possible. On minimise alors à la fois l'écart entre les données mesurées et simulées, ainsi que la "norme" $L_0$ qui donne la parcimonie d'un vecteur $\bm{x}$ telle que : $||\bm{x}||_0 := \#\{i|x_i\neq0\}$. Le problème d'optimisation devient alors bi-objectif : 
