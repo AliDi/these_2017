@@ -1,5 +1,5 @@
 %===================================================
-\section{Propagation et spécificités des sources aéroacoustiques}
+\section{Modèle de propagation et nature des sources aéroacoustiques}
 %===================================================
 On décrit ici les sources de bruit d'un avion à turbopropulseur, les méthodes de séparation des différentes contributions et les mécanismes de génération de bruits en écoulement.\\
 
@@ -18,7 +18,7 @@ Séparer ces composantes dans le champ total mesuré permet de mieux comprendre 
 \subsection{Exemples de sources aéroacoustiques sur un avion}
 %=============================================================
 
-\todo[inline]{Un bref récap des sources est fait en intro de la thèse de Greboul}
+\todo[inline]{Un bref récap des sources est fait en intro de la thèse de G. Reboul et Simon B.}
 \cite{Smith1989} décrit un très grand nombre de sources aéroacoustisques sur un avion. Elles peuvent être classées en 2 catégories : le bruit de moteur et le bruit aérodynamique. Le bruit aérodynamique est principalement généré par le train d'atterrissage et par les ailes. La principale source de bruit des ailes est liée aux volets à l'avant (becs de bord d'attaque) et à l'arrière. Ces volets sont des hypersustentateurs qui augmentent la portance qui génèrent localement beaucoup de bruit. Mais paradoxalement, leur présence contribuent fortement à la réduction du bruit des avions par le fait qu'ils favorisent un décollage rapide et un atterrissage à vitesse réduite.\\
 Comme le montre l'image de \cite{Smith1989} \ref{smith}, les bruits du moteur sont d'origines diverses. Les moteurs doubles flux ont permis de fortement diminuer le bruit de jet, ce qui rend le bruit aérodynamique égal voire prépondérant sur le bruit de moteur en configuration d'approche (atterrissage).
 
@@ -29,28 +29,26 @@ Comme le montre l'image de \cite{Smith1989} \ref{smith}, les bruits du moteur so
  \end{center}
 \end{figure}
 
-\subsubsection{Fan noise}
 
-\paragraph{Bruits tonaux}
-\begin{itemize}
-	\item Fréquence de passage des pales (BPF : blade pass frequency) et ses harmoniques : bruit tonal, connu : $\omega = h Z \Omega$, $h=1,2,...$,  où $Z$ est le nombre de pales du rotor et $\Omega$ est sa fréquence de rotation. Les harmoniques qui apparaissent sont alors donnés par : $m=hZ-sV$, avec $m$ le numéro du mode azimutal, $V$ le nombre de pale du stator et $s=...,-1,0,1,...$\\
-	\item Bruit d'épaisseur (Blade thickness noise) : monopole, tonal. C'est le bruit généré par le déplacement du fluide autour des pales (présent à haute vitesse de rotation seulement).\\
-	\item Uniform inlet flow : peut être réduit en augmentant le nombre de pales\\
-\end{itemize}
+\paragraph{Bruits tonaux}~\\
+	$\bullet$ Fréquence de passage des pales (BPF : blade pass frequency) et ses harmoniques : bruit tonal, connu : $\omega = h Z \Omega$, $h=1,2,...$,  où $Z$ est le nombre de pales du rotor et $\Omega$ est sa fréquence de rotation. Les harmoniques qui apparaissent sont alors donnés par : $m=hZ-sV$, avec $m$ le numéro du mode azimutal, $V$ le nombre de pale du stator et $s=...,-1,0,1,...$\\
+	$\bullet$ Bruit d'épaisseur (Blade thickness noise) : monopole, tonal. C'est le bruit généré par le déplacement du fluide autour des pales (présent à haute vitesse de rotation seulement).\\
+	$\bullet$ Uniform inlet flow : peut être réduit en augmentant le nombre de pales\\
+
  
 
-\paragraph{Bruits large bande}
-\begin{itemize}
-	\item Flux inconstant : fluctuation stochastique de la vitesse du flux entrant génère un bruit large bande\\
-	\item Couche limite turbulente (TBL : Turbulent Boundary layer) : couche turbulent générée aux bords de fuite. Ce bruit peut être modélisé comme un ensemble de dipôles répartis sur la surface de l'aube.\\
-	\item Décollement de couche limite (Vortex shedding) : décollement de la couche limite (laminaire ou turbulente), ce qui change l'écoulement autour des pales\\
-	\item tip noise : bruit généré dans l'espacement entre les pales et le carter. Ce bruit augmente si l'espacement augmente. A noter que la vitesse à l'extrémité des pales étant grande, ce bruit peut être important.\\
-	\item Bruit de soufflante : dans les turboréacteurs double-flux principalement. Ref : thèse Greboul\\
-\end{itemize}
+\paragraph{Bruits large bande}~\\
+	$\bullet$ Flux inconstant : fluctuation stochastique de la vitesse du flux entrant génère un bruit large bande\\
+		$\bullet$ Couche limite turbulente (TBL : Turbulent Boundary layer) : couche turbulent générée aux bords de fuite. Ce bruit peut être modélisé comme un ensemble de dipôles répartis sur la surface de l'aube.\\
+	$\bullet$ Décollement de couche limite (Vortex shedding) : décollement de la couche limite (laminaire ou turbulente), ce qui change l'écoulement autour des pales\\
+	$\bullet$ tip noise : bruit généré dans l'espacement entre les pales et le carter. Ce bruit augmente si l'espacement augmente. A noter que la vitesse à l'extrémité des pales étant grande, ce bruit peut être important.\\
+	$\bullet$ Bruit de soufflante : dans les turboréacteurs double-flux principalement. Ref : thèse G. reboul\\
 
-Bruit d'interaction rotor-stator : dominant ?
 
-les moteur a double flux ont permis de diminuer l'importance du bruit de jet, mais a rajouté le bruit de soufflante.
+Bruit d'interaction rotor-stator : dominant ?\\
+\todo[inline]{Compléter en lisant la thèse de S. Boulay}
+
+Les moteurs double flux ont permis de diminuer l'importance du bruit de jet, mais ont rajouté le bruit de soufflante.
 
 
 \subsubsection{Bruit de jet}
@@ -61,14 +59,10 @@ page 86 de Smith : Description du bruit de jet\\
 -mixing region\\
 -shock noise\\
 Sur un moteur à low-bypass-ration, le centre du jet sort à 500 m/s de la tuyère, et constitue la principale source de bruit du turbo réacteur.\\
-Depuis les turboréacteurs double-flux, le jet chaud est entouré du jet froid issu de la soufflante.
+Depuis les turboréacteurs double-flux, le jet chaud est entouré du jet froid issu de la soufflante.\\
 
 
-
-
-
-L'enjeu est donc de séparer ces composantes pour extraire seulement le bruit induit par les sources d'intérêt.\\ \todo[inline]{Faire une biblio de ce qui est fait ailleurs pour chaque composante}
-
+L'enjeu est donc de séparer ces composantes pour extraire seulement le bruit induit par les sources d'intérêt.
 
 
 \subsection{Séparation des composantes du bruit}
@@ -99,7 +93,7 @@ turbulence : matrice diagonale si on suppose qu'il y a une décorrélation total
 \begin{equation}
 \bm{S_{yy}} = \bm{HH}' + \bm{B}
 \end{equation}
-L'identification de ces matrice s'appelle "Structured Covariance Estimation problem".\todo{état de l'art}
+L'identification de ces matrice s'appelle "Structured Covariance Estimation problem".\todo[inline]{état de l'art}
 $\bm{B}=Diag(\sigma^{2})$
 
 \paragraph{Stochastic modelling}
@@ -155,14 +149,13 @@ Source dipolaire/monopolaire : influence sur la méthode ?
 Nature du bruit de fond ?
 
 \subsection{Prise en compte des réflexions dans la soufflerie et sur le jet ?}
-Dangereux parce que ça peut empirer les choses.
 
 %===================================================
-\section{Aspects expérimentaux}
+\subsection{Aspects expérimentaux}
 %===================================================
 Pour obtenir une représentation spatiale d'un champ stationnaire, les mesures peuvent être réalisées de plusieurs manières. Le ou les capteurs peuvent être déplacés dans l'espace pas à pas ou continûment (\cite{Comesana2013} pour un exemple de scan manuel, la position du capteur étant enregistrée par une vidéo) . Les mesures peuvent aussi être réalisées simultanément, moyennent l'utilisation d'une antenne fixe et d'une éventuelle carte d'acquisition multivoies. Pour caractériser un champ instationnaire à un instant donné, seules les mesures simultanées peuvent être réalisées.
 
-\subsection{Antenne}
+\subsubsection{Antenne}
 différence entre antenne linéaire et antenne plane et antenne 3D.\\
 
 acquisition(antenne, micro, accéléro, MEMS)/excitation (nature des sources)\\

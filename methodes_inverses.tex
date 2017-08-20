@@ -1,5 +1,5 @@
 \section{Les méthodes inverses}
-En formation de voies, chaque source est considérée indépendemment des autres. La surface contenant les sources potentielles est scannées point par point et l'éventuelle cohérence des sources n'est pas prise en compte.\\L'approche des méthodes inverses est de traiter le problème dans son ensemble, en recherchant toutes les sources simultanément, prenant ainsi en compte les effets d'interférence entre les sources. \todo{interaction non linéaire des sources ?}
+En formation de voies, chaque source est considérée indépendemment des autres. La surface contenant les sources potentielles est scannées point par point et l'éventuelle cohérence des sources n'est pas prise en compte.\\L'approche des méthodes inverses est de traiter le problème dans son ensemble, en recherchant toutes les sources simultanément, prenant ainsi en compte les effets d'interférence entre les sources. \todo[inline]{Quid des interactions non-linéaires entre sources ?}
 
 Les méthodes varient selon le modèle de source choisi : \\
 -ondes planes propagatives et évanescentes : NAH, SONAH\\
@@ -31,16 +31,8 @@ Le champ de pression mesuré est d'abord décomposé dans le domaine des nombres
 
 + antenne double couche
 
-\subsection{Choix de la fonction coût}
 
-3 approches possibles pour poser le problème d'optimisation  : 
-\begin{itemize}
-	\item Maximum de vraisemblance\\
-	\item Minimum de variance\\
-	\item Maximum a posteriori\\
-\end{itemize}
-voir le cours %https://cral.univ-lyon1.fr/labo/perso/eric.thiebaut/downloads/documents/cargese-2006-thiebaut.pdf
-On peut montrer que MAP propage moins d'erreur que maximum de vraisemblance.
+
 
 \subsection{Méthodes par mise à jour successive d'un modèle}
 L'idée est de minimiser l'écart entre les signaux mesurés et ceux calculés à partir d'un modèle.
@@ -57,6 +49,40 @@ FISHER
 %très proche : P. J. T. FILLIPI, D. HABAULT and J. PIRAUX 1988 Journal of Sound and <ibration 124, 285}296.
 Noise source modelling and identi"cation procedure
 
+\subsubsection{Choix de la fonction coût}
+
+Il existe trois principales approches pour poser le problème d'optimisation et en définir une fonction objectif \footnote{détails des calculs dans le cours de E. Thiébaut et C. Pichon : \url{https://cral.univ-lyon1.fr/labo/perso/eric.thiebaut/downloads/documents/cargese-2006-thiebaut.pdf}} : 
+\begin{itemize}
+	\item[•] \textbf{le maximum de vraisemblance}, pour lequel on cherche la solution 
+	\begin{equation}
+		\bm{q}_{ML} = \arg\max_{\bm{q}} [ \bm{p}|\bm{q} ]=\arg\min_q f_{data},
+	\end{equation}	
+	 avec 
+	\begin{eqnarray}
+		f_{data} &=&-\log[\bm{p}|\bm{q}] + \text{cst}\\
+				 &=& [\bm{p}-\bm{Gq}]'  \bm{C}_{\bm{p}|\bm{q}}^{-1}  [\bm{p}-\bm{Gq}]
+	\end{eqnarray}
+	en considérant que $[ \bm{p}|\bm{q} ]$ a une répartition gaussienne, de covariance $\bm{C}_{\bm{p}|\bm{q}}$ . L'estimateur obtenu est le même que celui donné par la méthode des moindres carrés.\\
+	 	
+	\item[•] \textbf{le maximum a posteriori} (MAP), qui cherche à maximiser la densité des sources a posteriori : 
+	\begin{eqnarray}
+		\bm{q}_{MAP} &=& \arg\max_{\bm{q}}[ \bm{q} |  \bm{p}  ]\\
+					& =& \arg\max_{\bm{q}}([\bm{p} | \bm{q}][\bm{q}])\\
+					&=& \arg\min_{\bm{q}} ( \underbrace{-\log[\bm{p}|\bm{q}]}_{f_{data}} \underbrace{- \log[\bm{q}]}_{f_{prior}})
+	\end{eqnarray}
+	La méthode MAP propose donc d'ajouter à au maximum de vraisemblance un terme de régularisation donné par $f_{prior}$. Considérant que les sources ont une densité de probabilité gaussienne, le terme de régularisation s'écrit : 
+	\begin{equation}
+		f_{prior}= (\bm{q}- \bm{\bar{q}})' \bm{C_q}^{-1}(\bm{q}- \bm{\bar{q}})
+	\end{equation}\\	
+	
+	\item[•] \textbf{le minimum de variance} \footnote{\textit{minimum mean square error}}, dont le critère est de minimiser l'espérance de l'erreur quadratique : 
+	\begin{equation}
+		\bm{q}_{MV} = \arg\min_{\tilde{q}} \mathbb{E}\{||\bm{q}-\bm{\tilde{q}}||^2\}
+	\end{equation}	
+	Cette solution généralise le filtre de Wiener et est la même que la solution MAP. \\
+\end{itemize}
+
+En faisant un analyse de la propagation des erreurs pour chaque méthode, on peut montrer que le maximum de vraisemblance en propage davantage.\\
 
 En résumé, les méthodes inverses utilisées principalement sont de 2 sortes : 1) les méthodes basées sur la transformée de Fourier (holographie,...) ; 2) Les méthodes ``model based''. En pratiques, ces méthodes sont très proches (ce que montrent %W. A. VERONESI and J. D. MAYNARD 1989 Journal of the Acoustical Society of America 85,588}598. Digital holographic reconstruction of sources with arbitrarily shaped surfaces)
 
@@ -64,10 +90,10 @@ En résumé, les méthodes inverses utilisées principalement sont de 2 sortes :
 
 
 
-sources équivalentes (ESM)
+//sources équivalentes (ESM)
 
 \subsubsection{Les méthodes de régularisation}
-nelson part2 compare deux méthodes de régularisation : 1) il explique comment choisir un paramètre de Tikhonov ; 2) il explique comment choisir les valeurs de la SVD à supprimer.\\ Beaucoup se sont penchés sur le problème du choix de $\nu$.nelson part2 compare les différentes facçon de déterminer $\nu$ en comparant l'erreur entre le champ source désiré et celui reconstruit, ainsi que l'erreur entre l'interspectre reconstruit et le vrai interspectre (les $S_{qq}$). Les méthodes comparées sont : \\
+nelson part2 compare deux méthodes de régularisation : 1) il explique comment choisir un paramètre de Tikhonov ; 2) il explique comment choisir les valeurs de la SVD à supprimer.\\ Beaucoup se sont penchés sur le problème du choix de $\mu$.nelson part2 compare les différentes facçon de déterminer $\mu$ en comparant l'erreur entre le champ source désiré et celui reconstruit, ainsi que l'erreur entre l'interspectre reconstruit et le vrai interspectre (les $S_{qq}$). Les méthodes comparées sont : \\
 -cross-validation technique : %M. ALLEN 1974 ¹echnometrics 16, 125}127. The relationship between variable selection and data
 augmentation and a method for prediction\\
 -generalize cross-validation technique : %G. H. GOLUB, M. HEATH and G. WAHBA 1979 ¹echnometrics 21, 215}223. Generalized crossvalidationas a method for choosing a good ridge parameter
@@ -82,11 +108,11 @@ page 11 thèse thibaut le magueresse
 
 Régularisation de Tikhonov (ref : Tikhonov. Solution of incorrectly formulated problems and the regularization method) : La stratégie la plus souvent adoptée est la régularisation de Thikonov qui consiste à rajouter un terme de contrôle dans la fonction coût (équivalent à un contrôle de l'énergie de la solution). Cette dernière prend alors la forme suivante : 
 \begin{equation}
-	||\bm{p}-\bm{G}\bm{q}||^2 + \nu^2||\bm{q}||^2
+	||\bm{p}-\bm{G}\bm{q}||^2 + \mu^2||\bm{q}||^2
 \end{equation}
-où $||\bullet||$ est la norme euclidienne et $\nu^2$ est le paramètre de régularisation, choisi judicieusement de façon à favoriser les solutions de petite norme.
+où $||\bullet||$ est la norme euclidienne et $\mu^2$ est le paramètre de régularisation, choisi judicieusement de façon à favoriser les solutions de petite norme.
 
-La difficulté de cette régularisation réside dans ne choix de $\nu$. Ce paramètre peut être déterminé par des procédures ad-hoc qui telle que : \\
+La difficulté de cette régularisation réside dans ne choix de $\mu$. Ce paramètre peut être déterminé par des procédures ad-hoc qui telle que : \\
 -discrepancy principle\\
 -cross-validation (méthode de la validation croisée généralisée)\\
 -L-curve method : %P. C. HANSEN and D. P. O'LEARY 1993 SIAM Journal on Scienti,c Computing 14, 1487}1503. The use of the L-curve in the regularisation of discrete ill-posed problems\\

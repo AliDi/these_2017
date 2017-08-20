@@ -1,7 +1,7 @@
 %----------------------------------------------------------------------------------------
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
-\documentclass[twocolumn]{article}
+\documentclass[twocolumn, 11pt]{article}
 \setlength{\columnsep}{1cm}
 
 \usepackage[french]{babel}
@@ -38,9 +38,14 @@
 \renewcommand{\headrulewidth}{0pt} %pour enlever la ligne du header
 %\fancyhead[C]{titre, date, noms...	} % Custom header text
 \fancyfoot[RO,RE]{\thepage} % Custom footer text
-\fancyfoot[LO,LE]{A. DINSENMEYER, juillet 2017}
+\fancyfoot[LO,LE]{A. DINSENMEYER, \today}
 \renewcommand{\footrulewidth}{0.4pt} 
- 
+
+%modif des espacement avant et après l'environnement equation
+\let\oldequation=\equation
+\let\endoldequation=\endequation
+\renewenvironment{equation}{\vspace{-0.2cm}\begin{oldequation}}{\vspace{-0.2cm}\end{oldequation}}
+
  
 %agrandissement de la zone de texte
 %\addtolength{\oddsidemargin}{-1cm}
@@ -51,6 +56,7 @@
 
 \usepackage{todonotes}
 \usepackage{mathtools}
+
 
 %\usepackage{cite} 
 \usepackage[round,authoryear,numbers]{natbib}
@@ -95,46 +101,47 @@
 
 %\begin{multicols}{2} % Two-column layout throughout the main article text
 
-Intro : localisation de sources dans le sous-sol, dans des tissus humains, dans des pièces industrielles, dans les fluides (avec ou sans écoulement, dans un espace clos ou non). La nature des sources varie.
-But : caractériser quantitativement/qualitativement les sources à partir de mesures obtenue en quelques points  discrets de l'espace.
+Pourquoi : localisation de sources dans le sous-sol, dans des tissus humains, dans des pièces industrielles, dans les fluides (avec ou sans écoulement, dans un espace clos ou non). Dans chaque contexte, la nature des sources varie.\\
 
-Contexte : Réduction du bruit des avions par la compréhension des bruits (40 fois plus d'énergie dans 1 kg de kérosène que dans 1 kg des meilleures batterie, après calcul de rendement, il reste un rapport 15 entre les 2).\\
-Enjeu : identifier les mécanismes de génération de bruit ; 
+Objectif : caractériser quantitativement/qualitativement les sources à partir de mesures obtenue en quelques points  discrets de l'espace.\\
 
-historique :Dès 1976, pour répondre à des problématiques de compréhension des bruits de turboréacteur, \cite{Billingsley1976} réalisent des mesures simultanées à l'aide d'une antenne linéaire constituées de 14 microphones. 
-Depuis, le nombre de capteur par antenne a augmenté, ainsi la gamme fréquentielle.
+Contexte : Réduction du bruit des avions (not. des turbomachines \footnote{Le moteur électrique n'est pas pour tout de suite, car il y a 40 fois plus d'énergie dans 1 kg de kérosène que dans 1 kg des meilleures batterie et après calcul de rendement, il reste un rapport 15 entre les 2.}) par l'identification des mécanismes de génération de bruit.\\
 
+Historique : Dès 1976, pour répondre à des problématiques de compréhension des bruits de turboréacteur, \cite{Billingsley1976} réalisent des mesures simultanées à l'aide d'une antenne linéaire constituées de 14 microphones. Depuis, le nombre de capteur par antenne a augmenté, ainsi la gamme fréquentielle.
 
+Problèmes : On distingue 4 sources de problème dans la qualité de la reconstruction:\\
+\begin{itemize}
+	\item le bruit de mesure (notamment hydrodynamique)
+	\item l'approximation du modèle de propagation
+	\item le choix du modèle de sources approché
+	\item le caractère mal-posé du problème inverse (le nombre de source est souvent bien supérieur au nombre de points de mesure)
+\end{itemize}
 
-\todo[inline]{Pour chaque méthode : \\
+\todo[inline]{Pour chaque méthode d'imagerie, comprendre : \\
 -hypothèses et connaissances a priori\\
 -avantages et inconvénient\\
 -contexte de développement\\
--algorithme de résolution}
-\todo[inline]{4 sources de problème dans la qualité de la reconstruction:\\
--bruit de mesure\\
--modèle de propagation approché\\
--modèle de source approché\\
--pb inverse mal posé : le nombre de source est souvent bien supérieur au nombre de microphones}
+-algorithme(s) de résolution}
+
 
 %sources aéros et médole de propagation en écoulement
-%\include{sources_aero}
+\input{sources_aero}
 %
 %débruitage (tonal, cyclo, aerodynamique)
-%\include{debruitage}
+\input{debruitage}
 
 %Les méthodes de formation de voies
-%\include{beamforming}
+\input{beamforming}
 
 %Ajout d'une étape de déconvolution
-%\include{deconvolution}
+\input{deconvolution}
 
 
 %Les méthodes inverses
-\include{methodes_inverses}
+\input{methodes_inverses}
 
 %Régularisation spécifique : Approche bayésienne
-\include{approche_bayesienne}
+\input{approche_bayesienne}
 
 
 

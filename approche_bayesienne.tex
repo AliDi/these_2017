@@ -2,6 +2,12 @@
 
 Rappel des estimation de sources et du paramètre de régularisation proposés par Antoni 2012.\\
 
+
+
+Le problème peut être formulée à l'aide d'une approche probabiliste. Les inconnues du problème sont décrites  par une densité de probabilité. L'objectif de cette approche est double : \textit{i)} développer un formalisme généralisant les diverses méthodes développées pour chaque contexte d'imagerie ; \textit{ii)} prendre en compte au mieux les informations connues à l'avance sur les sources, même si elles sont incertaines puisque données par une densité de probabilité. Ce deuxième point est mis en œuvre par l'utilisation d'une régularisation.
+
+
+
 la probabilité est la traduction d'un état de connaissance du système.
 
 
@@ -12,7 +18,7 @@ Principe général des probabilités bayésiennes : on choisit une distribution 
 Le problème direct revient à exprimer la pression $\bm{p}$ au niveau de l'antenne de microphones en fonction du champ source $\bm{q}$, du modèle de propagation acoustique $\bm{G}$, du bruit de mesure et des erreurs de modèle représentés par le vecteur $\bm{n}$ : 
 \begin{equation}
 \bm{p}=\bm{Gq}+\bm{n}
-\end{equation}•
+\end{equation}
 Le champ source $q(\bm{r})$ peut est décomposé sur une base de $K$ fonctions spatiales $\phi_k(\bm{r})$ normalisées :
 
 \begin{equation}
@@ -71,7 +77,7 @@ Dans le contexte de régression, la fonction de vraisemblance (\[p|q\]) sont sou
 La résolution du problème inverse se fait donc par l'estimation de la probabilité $[\bm{q}|\bm{p},\alpha^2,\beta^2]$. Le vecteur $\bm{q}$ est ainsi approché en observant sa valeur la plus probable d'après les données, le  ``Maximum a posteriori'' (MAP) : 
 \begin{eqnarray}
 \bm{\tilde{q}}_{MAP} &=& \text{Argmax}([\bm{q}|\bm{p},\alpha^2,\beta^2])\\
-					 &=& \text{Argmax}\left( [\bm{p}|\bm{q}][\bm{q}]  \right) \text{d'après \ref{bayes}}\\
+					 &=& \text{Argmax}\left( [\bm{p}|\bm{q}][\bm{q}]  \right) ~~~\text{d'après \ref{bayes}}\\
 					 &=& 
 \end{eqnarray}
 
@@ -96,29 +102,9 @@ avec pour terme de régularisation $\nu = \beta^2/\alpha^2$.
 
 
 \subsubsection{MCMC}
-algo : Metropolis-Hasting
+algo utilisé par Charles : Metropolis-Hasting
 
 
+\subsection{Confiance accordée à la reconstruction}
 
-
-
-
-
-\subsection{Régularisation bayésienne}
-
-Le paramètre de régularisation peut être estimé par une approche bayésienne. 
-objectif : développer un formalisme généralisant les diverses approches développées pour chaque contexte d'imagerie ; prendre en compte le maximum d'informations a priori connues.
-
-Les informations connues a priori peuvent être incertaines et décrites par une densité de probabilité. L'approche bayésienne permet donc de prendre en compte ces informations "incertaines".\\
-Dans cette approche, les paramètres inconnus (sources acoustiques) sont exprimés en fonction des données de mesures selon la loi de Bayes : 
-\begin{equation}
-[x|y] = \frac{[y|x][x]}{[y]}
-\end{equation}
-où la notation $[y]$ est la densité de probabilité de la variable $x$ et $[x|y]$ est la densité de probabilité de $x$ conditionnée à la variable $y$
-
-
-
-
-
-Calcul de l'intervalle de confiance ??
 	
