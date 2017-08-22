@@ -4,6 +4,9 @@
 \documentclass[twocolumn, 11pt]{article}
 \setlength{\columnsep}{1cm}
 
+%\usepackage{cite} 
+\usepackage[round,authoryear,numbers]{natbib}
+
 \usepackage[french]{babel}
 
 \usepackage[utf8]{inputenc}
@@ -28,8 +31,15 @@
 \usepackage{titlesec} % Allows customization of titles
 \renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
 \renewcommand\thesubsection{\arabic{section}.\arabic{subsection}} % Roman numerals for subsections
-\titleformat{\section}[block]{\bfseries\large\scshape\centering}{\thesection.}{1em}{} % Change the look of the section titles
+\titleformat{\section}[block]{\bfseries\large\scshape\centering}{\thesection.}{1em}{}[{\titlerule[1.2pt]}] % Change the look of the section titles
 \titleformat{\subsection}[block]{\bfseries\large}{\thesubsection.}{1em}{} % Change the look of the section titles
+\renewcommand\thesubsubsection{\small{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}}
+\titleformat{\subsubsection}[block]{\bfseries}{\thesubsubsection}{0.5em}{}
+\titleformat*{\paragraph}{\vspace{-0.3cm}\small\bfseries}
+
+\newcommand{\tbullet}{$\vcenter{\hbox{\tiny$\bullet$}}~$}
+
+
 
 \usepackage{fancyhdr} % Headers and footers
 \pagestyle{fancy} % All pages have headers and footers
@@ -56,10 +66,6 @@
 
 \usepackage{todonotes}
 \usepackage{mathtools}
-
-
-%\usepackage{cite} 
-\usepackage[round,authoryear,numbers]{natbib}
 
 
 \usepackage{hyperref}
@@ -123,6 +129,11 @@ Problèmes : On distingue 4 sources de problème dans la qualité de la reconstr
 -contexte de développement\\
 -algorithme(s) de résolution}
 
+%-----------------------
+\newpage
+\tableofcontents
+\newpage
+%----------------------
 
 %sources aéros et médole de propagation en écoulement
 \input{sources_aero}
