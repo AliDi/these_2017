@@ -52,8 +52,8 @@ Noise source modelling and identi"cation procedure
 \subsubsection{Choix de la fonction coût}
 
 Il existe trois principales approches pour poser le problème d'optimisation et en définir une fonction objectif \footnote{détails des calculs dans le cours de E. Thiébaut et C. Pichon : \url{https://cral.univ-lyon1.fr/labo/perso/eric.thiebaut/downloads/documents/cargese-2006-thiebaut.pdf}} : 
-\begin{itemize}
-	\item[•] \textbf{le maximum de vraisemblance}, pour lequel on cherche la solution 
+
+\paragraph{\tbullet le maximum de vraisemblance}, pour lequel on cherche la solution 
 	\begin{equation}
 		\bm{q}_{ML} = \arg\max_{\bm{q}} [ \bm{p}|\bm{q} ]=\arg\min_q f_{data},
 	\end{equation}	
@@ -64,7 +64,7 @@ Il existe trois principales approches pour poser le problème d'optimisation et 
 	\end{eqnarray}
 	en considérant que $[ \bm{p}|\bm{q} ]$ a une répartition gaussienne, de covariance $\bm{C}_{\bm{p}|\bm{q}}$ . L'estimateur obtenu est le même que celui donné par la méthode des moindres carrés.\\
 	 	
-	\item[•] \textbf{le maximum a posteriori} (MAP), qui cherche à maximiser la densité des sources a posteriori : 
+\paragraph{\tbullet le maximum a posteriori} (MAP), qui cherche à maximiser la densité des sources a posteriori : 
 	\begin{eqnarray}
 		\bm{q}_{MAP} &=& \arg\max_{\bm{q}}[ \bm{q} |  \bm{p}  ]\\
 					& =& \arg\max_{\bm{q}}([\bm{p} | \bm{q}][\bm{q}])\\
@@ -75,12 +75,12 @@ Il existe trois principales approches pour poser le problème d'optimisation et 
 		f_{prior}= (\bm{q}- \bm{\bar{q}})' \bm{C_q}^{-1}(\bm{q}- \bm{\bar{q}})
 	\end{equation}\\	
 	
-	\item[•] \textbf{le minimum de variance} \footnote{\textit{minimum mean square error}}, dont le critère est de minimiser l'espérance de l'erreur quadratique : 
+\paragraph{\tbullet le minimum de variance} \footnote{\textit{minimum mean square error}}, dont le critère est de minimiser l'espérance de l'erreur quadratique : 
 	\begin{equation}
 		\bm{q}_{MV} = \arg\min_{\tilde{q}} \mathbb{E}\{||\bm{q}-\bm{\tilde{q}}||^2\}
 	\end{equation}	
 	Cette solution généralise le filtre de Wiener et est la même que la solution MAP. \\
-\end{itemize}
+
 
 En faisant un analyse de la propagation des erreurs pour chaque méthode, on peut montrer que le maximum de vraisemblance en propage davantage.\\
 
@@ -93,7 +93,7 @@ En résumé, les méthodes inverses utilisées principalement sont de 2 sortes :
 //sources équivalentes (ESM)
 
 \subsection{Les méthodes de régularisation}
-nelson part2 compare deux méthodes de régularisation : 1) il explique comment choisir un paramètre de Tikhonov ; 2) il explique comment choisir les valeurs de la SVD à supprimer.\\ Beaucoup se sont penchés sur le problème du choix de $\mu$.nelson part2 compare les différentes facçon de déterminer $\mu$ en comparant l'erreur entre le champ source désiré et celui reconstruit, ainsi que l'erreur entre l'interspectre reconstruit et le vrai interspectre (les $S_{qq}$). Les méthodes comparées sont : \\
+nelson part2 compare deux méthodes de régularisation : 1) il explique comment choisir un paramètre de Tikhonov ; 2) il explique comment choisir les valeurs de la SVD à supprimer.\\ Beaucoup se sont penchés sur le problème du choix de $\eta$.nelson part2 compare les différentes facçon de déterminer $\eta$ en comparant l'erreur entre le champ source désiré et celui reconstruit, ainsi que l'erreur entre l'interspectre reconstruit et le vrai interspectre (les $S_{qq}$). Les méthodes comparées sont : \\
 -cross-validation technique : %M. ALLEN 1974 ¹echnometrics 16, 125}127. The relationship between variable selection and data
 augmentation and a method for prediction\\
 -generalize cross-validation technique : %G. H. GOLUB, M. HEATH and G. WAHBA 1979 ¹echnometrics 21, 215}223. Generalized crossvalidationas a method for choosing a good ridge parameter
@@ -108,11 +108,11 @@ page 11 thèse thibaut le magueresse
 
 Régularisation de Tikhonov (ref : Tikhonov. Solution of incorrectly formulated problems and the regularization method) : La stratégie la plus souvent adoptée est la régularisation de Thikonov qui consiste à rajouter un terme de contrôle dans la fonction coût (équivalent à un contrôle de l'énergie de la solution). Cette dernière prend alors la forme suivante : 
 \begin{equation}
-	||\bm{p}-\bm{G}\bm{q}||^2 + \mu^2||\bm{q}||^2
+	||\bm{p}-\bm{G}\bm{q}||^2 + \eta^2||\bm{q}||^2
 \end{equation}
-où $||\bullet||$ est la norme euclidienne et $\mu^2$ est le paramètre de régularisation, choisi judicieusement de façon à favoriser les solutions de petite norme.
+où $||\bullet||$ est la norme euclidienne et $\eta^2$ est le paramètre de régularisation, choisi judicieusement de façon à favoriser les solutions de petite norme.
 
-La difficulté de cette régularisation réside dans ne choix de $\mu$. Ce paramètre peut être déterminé par des procédures ad-hoc qui telle que : \\
+La difficulté de cette régularisation réside dans ne choix de $\eta$. Ce paramètre peut être déterminé par des procédures ad-hoc qui telle que : \\
 -discrepancy principle\\
 -cross-validation (méthode de la validation croisée généralisée)\\
 -L-curve method : %P. C. HANSEN and D. P. O'LEARY 1993 SIAM Journal on Scienti,c Computing 14, 1487}1503. The use of the L-curve in the regularisation of discrete ill-posed problems\\
@@ -135,7 +135,7 @@ La parcimonie est donnée par la norme $L_0$ du champ source (qui donne alors le
 \end{equation}
 avec $i$ le i\textsuperscript{ème} élément de $\bm{q}$. Dans cette formulation, la norme $L_0$ peut être relaxée par une norme $L_p$ permettant de rendre l'objectif convexe, avec $p$ un paramètre prenant une valeur entre $0$ et $2$. $p=0$ correspond à une distribution parcimonieuse, tandis que plus $p$ tend vers $2$, plus la distribution spatiale des source est étendue. Le problème donné en équation \ref{bi-objectif} revient alors à résoudre :
 \begin{equation}
-	\bm{\tilde{q}}=\arg\min_{\bm{q}}\left( ||\bm{p}-\bm{G}\bm{q}||^2 + \mu^2\sum_i |q_i|^p \right)
+	\bm{\tilde{q}}=\arg\min_{\bm{q}}\left( ||\bm{p}-\bm{G}\bm{q}||^2 + \eta^2\sum_i |q_i|^p \right)
 \end{equation}
 
 
@@ -202,7 +202,7 @@ De manière générale, les méthodes de régularisation se confronte aux probl�
 \begin{itemize}
 	\item[-] Comment choisir la base de décomposition optimale ?
 	\item[-] Comment régler le paramètre $beta$
-	\item[-] Quel algorithme de résolution choisir ?
+	\item[-] Quelle formulation et quel algorithme de résolution choisir ?
 	\item[-] Comment évaluer la fiabilité de la solution ?
 \end{itemize}
 

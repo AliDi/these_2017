@@ -20,17 +20,16 @@ Le problème direct revient à exprimer la pression $\bm{p}$ au niveau de l'ante
 \bm{p}=\bm{Gq}+\bm{n}
 \end{equation}
 Le champ source $q(\bm{r})$ peut est décomposé sur une base de $K$ fonctions spatiales $\phi_k(\bm{r})$ normalisées :
-
 \begin{equation}
 q(\bm{r}) = \bm{c} \cdot \bm{\phi}
 \end{equation}
+
 Les inconnues du problèmes sont donc les fonctions $\phi_k$, les coefficients $c_k$ qui dépendent des mesures et leur nombre $K$.\\
 
 L'approche bayésienne propose de voir ces coefficients comme des variables aléatoires et d'étudier leur probabilité conditionnée aux mesures $[q(\bm{c},\bm{\phi})|\bm{p}]$. Si cette probabilité est élevée, ça signifie que les mesures expliquent précisément le champ source $q$. L'objectif est donc d'estimer ces variables de façon à ce qu'elles expliquent au mieux les mesures $\bm{p}$. Ces estimations de $\bm{\phi}$ et de $\bm{c}$ sont notées respectivement $\bm{\hat{\phi}}$ et $\bm{\hat{c}}$ telles que : 
 \begin{equation}
-	(\bm{\hat{c}},\bm{\hat{\phi}}) = \text{Argmax}[q(\bm{c},\bm{\phi})|\bm{p}]
+	(\bm{\hat{c}},\bm{\hat{\phi}}) = \arg\max_{\bm{c},\bm{\phi}}[q(\bm{c},\bm{\phi})|\bm{p}]
 \end{equation}
-
 La loi de Bayes permet d'exprimer $[q(\bm{c},\bm{\phi})|\bm{p}]$ ainsi : 
 \begin{equation}
 \label{bayes}
@@ -41,21 +40,23 @@ La loi de Bayes permet d'exprimer $[q(\bm{c},\bm{\phi})|\bm{p}]$ ainsi :
 
 On estime d'abord que le bruit $\bm{n}$  a une distribution gaussienne, et que sa moyenne est nulle ($\mathbb{E}\{\bm{n}\}=0$) et par conséquent 
 \footnote{Modèle direct : $\bm{p}=\bm{Gq}+\bm{n}$ ; bruit centré : $\langle \bm{n}\rangle = \langle \bm{p}-\bm{Gq} \rangle = 0 $ ; la covariance du bruit est la covariance des mesures étant données les sources : 
-\begin{eqnarray*}
-\bm{C_n}& = & \mathbb{E}\{\bm{n}\bm{n}^*\} \\
-		& = & \mathbb{E}\{(\bm{p}-\bm{Gq})(\bm{p}-\bm{Gq})^*\}  \\
-		& = & \bm{C_{\bm{p}|\bm{q}}} 
-\end{eqnarray*}
+\begin{align*}
+\bm{C_n}& =  \mathbb{E}\{\bm{n}\bm{n}^*\} \\
+		& =  \mathbb{E}\{(\bm{p}-\bm{Gq})(\bm{p}-\bm{Gq})^*\}  \\
+		& =  \bm{C_{\bm{p}|\bm{q}}} 
+\end{align*}
 },
 $[\bm{p}|q]$ suit également une distribution normale multivariée complexe. En introduisant la matrice de covariance $\mathbb{E}\{\bm{n}\bm{n}^*\}=\beta^{2}\bm{\Omega}_N$ ($\beta^2$ étant l'énergie moyenne du bruit, $\bm{\Omega}_N$ matrice connue a priori selon la nature du bruit) : 
-\begin{equation}
-[\bm{p}|q,\beta^2] =\mathcal{N}_c(\bm{G}\bm{q},\beta^2\bm{\Omega}_N) = \frac{   1   }{ \pi^M \beta^{2M} |\bm{\Omega}_N| } \exp \left( -\frac{1}{\beta^2} ||   \bm{p}  -  \bm{Gq}  ||^2_{\bm{\Omega}_N} \right)
-\end{equation}
+\begin{align}
+[\bm{p}|q,\beta^2] &=\mathcal{N}_c(\bm{G}\bm{q},\beta^2\bm{\Omega}_N) \\
+	&= \frac{   1   }{ \pi^M \beta^{2M} |\bm{\Omega}_N| } \exp \left( -\frac{1}{\beta^2} ||   \bm{p}  -  \bm{Gq}  ||^2_{\bm{\Omega}_N} \right)
+\end{align}
 
 Une distribution gaussienne est également choisie pour la densité de probabilité des sources, de moyenne nulle et de variance $\mathbb{E}\{\bm{q}\bm{q}'\}=\alpha^2 \bm{\Omega}_q$ : 
-\begin{equation}
-	[\bm{q}|\alpha^2] = \mathcal{N}_c(\bm{0}, \alpha^2\bm{\Omega}_q) = \frac{  1  }{  \pi^K\alpha^{2K} |\bm{\Omega}_q|} \exp \left( -\frac{1}{\alpha^2}   ||\bm{q}||^2_{\bm{\Omega}_q} \right)
-\end{equation}
+\begin{align}
+	[\bm{q}|\alpha^2] &= \mathcal{N}_c(\bm{0}, \alpha^2\bm{\Omega}_q)\\
+	 &= \frac{  1  }{  \pi^K\alpha^{2K} |\bm{\Omega}_q|} \exp \left( -\frac{1}{\alpha^2}   ||\bm{q}||^2_{\bm{\Omega}_q} \right)
+\end{align}
 
 $\alpha^2$ et $\beta^2$ sont appelés les hyperparamètres.
 
@@ -75,11 +76,10 @@ Dans le contexte de régression, la fonction de vraisemblance (\[p|q\]) sont sou
 
 \subsubsection{Estimateur MAP}
 La résolution du problème inverse se fait donc par l'estimation de la probabilité $[\bm{q}|\bm{p},\alpha^2,\beta^2]$. Le vecteur $\bm{q}$ est ainsi approché en observant sa valeur la plus probable d'après les données, le  ``Maximum a posteriori'' (MAP) : 
-\begin{eqnarray}
-\bm{\tilde{q}}_{MAP} &=& \text{Argmax}([\bm{q}|\bm{p},\alpha^2,\beta^2])\\
-					 &=& \text{Argmax}\left( [\bm{p}|\bm{q}][\bm{q}]  \right) ~~~\text{d'après \ref{bayes}}\\
-					 &=& 
-\end{eqnarray}
+\begin{align}
+\bm{\tilde{q}}_{MAP} &= \arg\max([\bm{q}|\bm{p},\alpha^2,\beta^2])\\
+					 &= \arg\max\left( [\bm{p}|\bm{q}][\bm{q}]  \right) ~~~\text{d'après \ref{bayes}}
+\end{align}
 
 En prenant le logarithme négatif de la quantité à maximiser, on peut définir une fonction coût à minimiser : 
 \begin{equation}

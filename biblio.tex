@@ -27,6 +27,7 @@
 \usepackage{amsfonts}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{tabularx}
 
 \usepackage{titlesec} % Allows customization of titles
 \renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
@@ -115,7 +116,29 @@ Contexte : Réduction du bruit des avions (not. des turbomachines \footnote{Le m
 
 Historique : Dès 1976, pour répondre à des problématiques de compréhension des bruits de turboréacteur, \cite{Billingsley1976} réalisent des mesures simultanées à l'aide d'une antenne linéaire constituées de 14 microphones. Depuis, le nombre de capteur par antenne a augmenté, ainsi la gamme fréquentielle.
 
-Problèmes : On distingue 4 sources de problème dans la qualité de la reconstruction:\\
+
+\paragraph{Formulation du problème d'imagerie acoustique}
+La formulation du problème direct lie le vecteur des pressions $\bm{p}$ mesurées aux $M$ points de mesure et l'intensité des $N$ sources $\bm{q}$ à l'aide de la matrice de transfert $\bm{G}$ qui représente le modèle de propagation des ondes acoustiques : 
+\begin{equation}
+\bm{p}=\bm{G}\bm{q}
+\end{equation}
+
+Le problème d'identification de sources acoustique est donc de résoudre le problème inverse qui consiste à estimer les sources $\bm{q}$ à partir des données  $\bm{p}$ :
+\begin{equation}
+\bm{\tilde{q}}=\bm{W}\bm{p}
+\end{equation}
+où $\bm{W}$ est appelé opérateur inverse.
+
+Le problème peut aussi être formulé à partir des matrices de densité interspectrale  : 
+\begin{align}
+		 \mathbb{E} \left\{ \bm{p p}' \right\} &= \mathbb{E} \left\{ (\bm{Gq})(\bm{Gq})' \right\}\\
+	\Leftrightarrow~~~~  \bm{S_{pp}} &= \bm{G S_{qq}G}'
+\end{align} 
+
+
+
+
+Problèmes : On distingue 4 sources de difficultés majeures pour la résolution de ce problème inverse, pouvant nuire à la qualité de la reconstruction : \\
 \begin{itemize}
 	\item le bruit de mesure (notamment hydrodynamique)
 	\item l'approximation du modèle de propagation
@@ -128,6 +151,37 @@ Problèmes : On distingue 4 sources de problème dans la qualité de la reconstr
 -avantages et inconvénient\\
 -contexte de développement\\
 -algorithme(s) de résolution}
+
+% Tableau des notations
+%------------------------
+\newpage
+\section*{Notations}
+
+\begin{center}
+	
+	\begin{tabularx}{0.5\textwidth}{c c X}
+		$m$			&	scalaire		&	nombre de capteurs de l'antenne\\
+		$n$			&	scalaire		&	nombre de sources\\
+	    $\bm{p}$		& $m\times 1$	&	coefficients des signaux captés\\
+	    $\bm{q}$		& $n \times 1$	& 	coefficients des sources\\
+	    $\bm{n}$		& $m\times 1$	&	bruit capté\\
+		$\bm{G}$		& $m\times n$	&	matrice de transfert acoustique\\
+		$\bm{W}$		&	$n\times m$	&	matrice de l'opérateur inverse\\
+		$\eta$		& scalaire		&	paramètre de régularisation\\
+		$\bm{S_{xy}}$& l($\bm{x}$) $\times$ l($\bm{y}$) & matrice interspectrale des séries $\bm{x}$ et $\bm{y}$\\
+		$\bm{C_{xy}}$&	l($\bm{x}$) $\times$ l($\bm{y}$) & matrice de covariance des séries $\bm{x}$ et $\bm{y}$\\
+		$\bm{R_{xy}}$&	l($\bm{x}$) $\times$ l($\bm{y}$) & matrice d'intercorrélation des séries $\bm{x}$ et $\bm{y}$\\
+		$\bm{\bar{x}}$	& l($\bm{x}$)	& vecteur des moyennes du processus $\bm{x}$\\
+		$\bm{\tilde{x}}$	& l($\bm{x}$)	& estimation de $\bm{x}$
+		%$\bm{S_{pp}}$	&	$m\times m$	&	matrice interspectrale des signaux captés\\
+		%$\bm{S_{qq}}$	&	$n \times n$	&	matrice interspectrale des sources\\
+		%$\bm{S_{nn}}$	&	$m\times m$	&	matrice interspectrale du bruit capté\\
+		
+	\end{tabularx}
+\end{center}
+
+
+\newpage  	
 
 %-----------------------
 \newpage
