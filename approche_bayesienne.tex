@@ -80,10 +80,11 @@ La résolution du problème inverse se fait donc par l'estimation de la probabil
 \bm{\tilde{q}}_{MAP} &= \arg\max([\bm{q}|\bm{p},\alpha^2,\beta^2])\\
 					 &= \arg\max\left( [\bm{p}|\bm{q}][\bm{q}]  \right) ~~~\text{d'après \ref{bayes}}
 \end{align}
+puisque $[\bm{p}]$ est une constante du problème.
 
 En prenant le logarithme négatif de la quantité à maximiser, on peut définir une fonction coût à minimiser : 
 \begin{equation}
-	J(\bm{c},\bm{\phi}) = - \ln[q|\bm{p}] = -\ln[\bm{p}|q]-\ln[q]+\ln[\bm{p}]
+	J(\bm{c},\bm{\phi}) = - \ln[q|\bm{p}] = -\ln[\bm{p}|q]-\ln[q]
 \end{equation}
 
 D'après les lois normales choisies, 
