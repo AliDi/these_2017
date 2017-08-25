@@ -74,6 +74,42 @@ Dans le contexte de régression, la fonction de vraisemblance (\[p|q\]) sont sou
 
 \subsection{Estimation des hyperparamètres et des sources}
 
+
+\subsubsection{Choix de la fonction coût}
+
+Il existe trois principales approches pour poser le problème d'optimisation et en définir une fonction objectif \footnote{détails des calculs dans le cours de E. Thiébaut et C. Pichon : \url{https://cral.univ-lyon1.fr/labo/perso/eric.thiebaut/downloads/documents/cargese-2006-thiebaut.pdf}} : 
+
+\paragraph{\tbullet le maximum de vraisemblance}, pour lequel on cherche la solution 
+	\begin{equation}
+		\bm{q}_{ML} = \arg\max_{\bm{q}} [ \bm{p}|\bm{q} ]=\arg\min_q f_{data},
+	\end{equation}	
+	 avec 
+	\begin{eqnarray}
+		f_{data} &=&-\log[\bm{p}|\bm{q}] + \text{cst}\\
+				 &=& [\bm{p}-\bm{Gq}]'  \bm{C}_{\bm{p}|\bm{q}}^{-1}  [\bm{p}-\bm{Gq}]
+	\end{eqnarray}
+	en considérant que $[ \bm{p}|\bm{q} ]$ a une répartition gaussienne, de covariance $\bm{C}_{\bm{p}|\bm{q}}$ . L'estimateur obtenu est le même que celui donné par la méthode des moindres carrés.\\
+	 	
+\paragraph{\tbullet le maximum a posteriori} (MAP), qui cherche à maximiser la densité des sources a posteriori : 
+	\begin{eqnarray}
+		\bm{q}_{MAP} &=& \arg\max_{\bm{q}}[ \bm{q} |  \bm{p}  ]\\
+					& =& \arg\max_{\bm{q}}([\bm{p} | \bm{q}][\bm{q}])\\
+					&=& \arg\min_{\bm{q}} ( \underbrace{-\log[\bm{p}|\bm{q}]}_{f_{data}} \underbrace{- \log[\bm{q}]}_{f_{prior}})
+	\end{eqnarray}
+	La méthode MAP propose donc d'ajouter à au maximum de vraisemblance un terme de régularisation donné par $f_{prior}$. Considérant que les sources ont une densité de probabilité gaussienne, le terme de régularisation s'écrit : 
+	\begin{equation}
+		f_{prior}= (\bm{q}- \bm{\bar{q}})' \bm{C_q}^{-1}(\bm{q}- \bm{\bar{q}})
+	\end{equation}\\	
+	
+\paragraph{\tbullet le minimum de variance} \footnote{\textit{minimum mean square error}}, dont le critère est de minimiser l'espérance de l'erreur quadratique : 
+	\begin{equation}
+		\bm{q}_{MV} = \arg\min_{\tilde{q}} \mathbb{E}\{||\bm{q}-\bm{\tilde{q}}||^2\}
+	\end{equation}	
+	Cette solution généralise le filtre de Wiener et est la même que la solution MAP. \\
+
+
+En faisant un analyse de la propagation des erreurs pour chaque méthode, on peut montrer que le maximum de vraisemblance en propage davantage.\\
+
 \subsubsection{Estimateur MAP}
 La résolution du problème inverse se fait donc par l'estimation de la probabilité $[\bm{q}|\bm{p},\alpha^2,\beta^2]$. Le vecteur $\bm{q}$ est ainsi approché en observant sa valeur la plus probable d'après les données, le  ``Maximum a posteriori'' (MAP) : 
 \begin{align}

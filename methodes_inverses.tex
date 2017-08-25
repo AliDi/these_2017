@@ -12,102 +12,86 @@ Les méthodes varient selon le modèle de source choisi : \\
 
 itératif ou non ?
 
-Holographie en champ proche : quand il est possible d'effectuer des mesures en champ proche, les signaux de mesures sont porteurs de plus d'information, notamment les ondes évanescentes.
 
-
-%Reconstruction pixellisée des paramètres ou déformation de contour.
-
-\subsection{Holographie en champ proche}
-%hypothèse : on connait le plan d'émission des sources + les fonctions de transferts
+\subsection{Holographie acoustique}
+De manière générale, les méthodes basées sur l'holographie acoustique présentent l'avantage de pouvoir reconstruire le champ source en tout point de l'espace et donc sur un plan source de géométrie arbitraire. Un autre avantage est son utilisation en milieu clos.
+\subsubsection{Holographie en champ proche (NAH)}
 L'holographie en champ proche propose d'exploiter des mesures réalisées à proximité des sources pour en reconstruire une image. Cette méthode tire profit de la mesure des ondes évanescentes, exponentiellement décroissantes avec la distance, qui viennent s'ajouter aux ondes propagatives \cite{Maynard1985}.\\
-Le champ de pression mesuré est d'abord décomposé dans le domaine des nombres d'ondes par une transformée de Fourier spatiale. A chaque onde est associé un propagateur (i.e. une fonction de transfert supposée connue) qui, inversé, permet de rétropropager le champ mesuré et ainsi reconstruire le champ source.  Avant rétropropagation, un filtre sur les nombres d'ondes est appliqué de manière à sélectionner les nombres d'ondes d'intérêt : il est nécessaire de trouver un compromis permettant de conserver suffisamment d'ondes évanescentes (porteuses d'informations) tout en limitant l'amplification du bruit. La mesure à proximité permet ainsi d'obtenir une résolution supérieure à la demi-longueur d'onde.\\
+Le champ de pression mesuré est d'abord décomposé dans le domaine des nombres d'ondes par une transformée de Fourier spatiale. A chaque onde est associé un propagateur (i.e. une fonction de transfert supposée connue) qui, inversé, permet de rétropropager le champ mesuré et ainsi reconstruire le champ source. \\
 
-Amélioration SONAH pour éviter de faire la transformée de Fourier spatiale %J. Hald. Time domain acoustical holography and its applications. Sound and Vibration,
- + M-SONAH dans le cas où on ne connaît pas analytiquement toutes les ondes pour décrire le champ d'onde complet : elles sont alors alors exprimer comme étant une combinaison des différentes ondes.\\
+La pression recherchée $p_e(\bm{r}_0)$ au niveau du plan de recherche de sources s'écrit donc en fonction de la pression mesurée $p_m(\bm{r}_h)$ : 
+\begin{equation}
+	p_e(\bm{r}_0,f) = \mathcal{F}^{-1} \left[ \mathcal{F}\left[ p_m(\bm{r}_h,f)\right]\mathcal{F}\left[G(\bm{r}_h-\bm{r}_0 ,f)\right]\right]
+\end{equation}
+où $\mathcal{F}$ est  la transformée de Fourier spatiale et $G$ la fonction de transfert donnant la propagation de l'onde acoustique du plan source au plan de mesure, choisie selon le modèle de sources.
+
+  Avant rétropropagation, un filtre sur les hauts nombres d'ondes est appliqué (ex : filtre de Vernoesi ou de Li) de manière à sélectionner les nombres d'ondes d'intérêt : il est nécessaire de trouver un compromis permettant de conserver suffisamment d'ondes évanescentes (porteuses d'informations) tout en limitant l'amplification du bruit. La mesure à proximité permet ainsi d'obtenir une résolution supérieure à la demi-longueur d'onde.\\
+  
+
+\todo[inline, color=green!10]{Référence pour comprendre les méthodes suivantes : {Comparison of patch acoustic holography methods Zdeněk HAVRÁNEK}\\
+Référence pour leur implémentation : \url{http://www.sandv.com/downloads/1002wuxx.pdf}} 
  
-+ amélioration sur des géométrie quelconques par l'utilisation d'éléments de frontières (iBem : méthode des éléments de frontières inverse). La transformée de Fourier spatiale est remplacée par une SVD de la matrice de transfert (ref 29 thèse de T. Lemagueresse). L'équation liant la pression pariétale à  la pression mesurée est alors résolue par la méthode des éléments de frontière. \\
+\subsubsection{Statically optimized near-field acoustical holography (SONAH)}
  
-+ en espace clos\\
+Cette méthode est notamment utilisée lorsque le plan source est plus grand que l'antenne de mesure (on parle de "patch methods"). Elle repose sur l'idée que la pression estimée sur un plan de prédiction (situé entre le plan de mesure et le plan source) est exprimée comme la somme pondérée des pressions mesurées en N points du plan source \citep{Hald2009} : 
+\begin{equation}
+	p(\bm{r})\approx \sum_{n=1}^{N} C_n(\bm{r})p_m(\bm{r}_{h,n}) = \bm{p}^T(\bm{r}_h)\bm{c}(\bm{r})
+\end{equation} 
+ Les coefficients $\bm{c}$ ne dépendent pas du champ mais uniquement de la position et, de la même façon, les ondes planes élémentaires composant le champ sur le plan de prédiction peuvent être projetées sur le plan de calcul : 
+ \begin{equation}
+\bm{\phi}_m(\bm{r}) = \sum_{n=1}^{N} C_n(\bm{r}) \bm{\phi}_m(\bm{r}_h,n)
+ \end{equation}
+ 
+ En notant cette équation sous forme matricielle, avec $A_{mn} =\bm{\phi}_m(\bm{r}_h,n)$ et $a_m= \bm{\phi}_m(\bm{r})$, on peut calculer les coefficients $\bm{c}(\bm{r})$ en résolvant le problème d'optimisation (avec régularisation de Tikhonov) : 
+ \begin{align}
+	~& \arg\min_{\bm{c}} \left( ||\bm{a}-\bm{Ac}||^2 + \eta^2||\bm{c}||^2\right)\\
+	\Leftrightarrow & \bm{c} = \frac{\bm{A}'\bm{a}}{\bm{A}'\bm{A} + \eta^2\bm{I}} 
+\end{align}
 
-+ antenne double couche
+\todo[inline]{$\eta^2=\bm{A}'\bm{A} 10^{\frac{-SNR}{10}}$ ?}
+ 
+ Cette méthode, contrairement à NAH, ne nécessite pas de calcul de transformée de Fourier spatiale.\\
 
-%voir http://www.conforg.fr/cfa2006/cdrom/data/articles/000175.pdf
+ L'amélioration M-SONAH a été développée pour le cas où l'ensemble des fonctions élémentaires qui compose le champ ne sont pas connues et elles sont alors exprimées comme une combinaison de différentes ondes connues.
+\todo[inline, color=green!10]{Notations et formulation tirées de l'article (en français) : \url{https://www.researchgate.net/publication/225102534_Evaluation_de_deux_methodes_d\%27imagerie_acoustique_en_milieu_bruite}}
 
-\todo[inline]{
-%\subsection{Méthodes par mise à jour successive d'un modèle}
-L'idée est de minimiser l'écart entre les signaux mesurés et ceux calculés à partir d'un modèle.
+\subsubsection{iBEM}
 
-The polar correlation technique : JET ENGINE NOISE SOURCE LOCATION: 
-THE 
-POLAR 
-CORRELATION 
-TECHNIQUE 
-M. 
-J. 
-FISHER
+iBEM propose de résoudre l'équation liant la pression pariétale à  la pression mesurée par la méthode des éléments de frontière.  La transformée de Fourier spatiale est remplacée par une SVD de la matrice de transfert\\
+ 
 
-%très proche : P. J. T. FILLIPI, D. HABAULT and J. PIRAUX 1988 Journal of Sound and <ibration 124, 285}296.
-Noise source modelling and identi"cation procedure
++ amélioration sur des géométrie quelconques par l'utilisation d'éléments de frontières (iBem : méthode des éléments de frontières inverse). La transformée de Fourier spatiale est remplacée par une SVD de la matrice de transfert (ref 29 thèse de T. Lemagueresse). L
+\subsubsection{SEM}
+L'idée de la méthode des sources équivalentes est que le champ source recherché peut être représenté comme une superposition de points source équivalents. Une séparation du champ nécessite qu'il y ait deux plans de mesures et deux plans fictifs de reconstruction des sources équivalentes.\\
+L'inverse de la matrice de transfert peut se faire par SVD, par exemple.
 
-}
+
 
 \subsection{Helmoltz equation least squares}
+\cite{Wang1997}
+Peut-être vu comme un cas particulier de SEM. \\~\\
 
 
-\subsubsection{Choix de la fonction coût}
-
-Il existe trois principales approches pour poser le problème d'optimisation et en définir une fonction objectif \footnote{détails des calculs dans le cours de E. Thiébaut et C. Pichon : \url{https://cral.univ-lyon1.fr/labo/perso/eric.thiebaut/downloads/documents/cargese-2006-thiebaut.pdf}} : 
-
-\paragraph{\tbullet le maximum de vraisemblance}, pour lequel on cherche la solution 
-	\begin{equation}
-		\bm{q}_{ML} = \arg\max_{\bm{q}} [ \bm{p}|\bm{q} ]=\arg\min_q f_{data},
-	\end{equation}	
-	 avec 
-	\begin{eqnarray}
-		f_{data} &=&-\log[\bm{p}|\bm{q}] + \text{cst}\\
-				 &=& [\bm{p}-\bm{Gq}]'  \bm{C}_{\bm{p}|\bm{q}}^{-1}  [\bm{p}-\bm{Gq}]
-	\end{eqnarray}
-	en considérant que $[ \bm{p}|\bm{q} ]$ a une répartition gaussienne, de covariance $\bm{C}_{\bm{p}|\bm{q}}$ . L'estimateur obtenu est le même que celui donné par la méthode des moindres carrés.\\
-	 	
-\paragraph{\tbullet le maximum a posteriori} (MAP), qui cherche à maximiser la densité des sources a posteriori : 
-	\begin{eqnarray}
-		\bm{q}_{MAP} &=& \arg\max_{\bm{q}}[ \bm{q} |  \bm{p}  ]\\
-					& =& \arg\max_{\bm{q}}([\bm{p} | \bm{q}][\bm{q}])\\
-					&=& \arg\min_{\bm{q}} ( \underbrace{-\log[\bm{p}|\bm{q}]}_{f_{data}} \underbrace{- \log[\bm{q}]}_{f_{prior}})
-	\end{eqnarray}
-	La méthode MAP propose donc d'ajouter à au maximum de vraisemblance un terme de régularisation donné par $f_{prior}$. Considérant que les sources ont une densité de probabilité gaussienne, le terme de régularisation s'écrit : 
-	\begin{equation}
-		f_{prior}= (\bm{q}- \bm{\bar{q}})' \bm{C_q}^{-1}(\bm{q}- \bm{\bar{q}})
-	\end{equation}\\	
-	
-\paragraph{\tbullet le minimum de variance} \footnote{\textit{minimum mean square error}}, dont le critère est de minimiser l'espérance de l'erreur quadratique : 
-	\begin{equation}
-		\bm{q}_{MV} = \arg\min_{\tilde{q}} \mathbb{E}\{||\bm{q}-\bm{\tilde{q}}||^2\}
-	\end{equation}	
-	Cette solution généralise le filtre de Wiener et est la même que la solution MAP. \\
-
-
-En faisant un analyse de la propagation des erreurs pour chaque méthode, on peut montrer que le maximum de vraisemblance en propage davantage.\\
 
 En résumé, les méthodes inverses utilisées principalement sont de 2 sortes : 1) les méthodes basées sur la transformée de Fourier (holographie,...) ; 2) Les méthodes ``model based''. En pratiques, ces méthodes sont très proches (ce que montrent %W. A. VERONESI and J. D. MAYNARD 1989 Journal of the Acoustical Society of America 85,588}598. Digital holographic reconstruction of sources with arbitrarily shaped surfaces)
 
+\subsection{+soap, generalized BF, bayesian focusing ?}
 
 
 
 
-//sources équivalentes (ESM)
 
 \subsection{Les méthodes de régularisation}
+\todo[inline, color=green!10]{liste des méthodes de régularisation : \url{http://www.imm.dtu.dk/~pcha/Regutools/RTv4manual.pdf}
+}
 
-liste des méthodes de régularisation : \url{http://www.imm.dtu.dk/~pcha/Regutools/RTv4manual.pdf}
-
-
+\todo[inline, color=green!10]{
 nelson part2 compare deux méthodes de régularisation : 1) il explique comment choisir un paramètre de Tikhonov ; 2) il explique comment choisir les valeurs de la SVD à supprimer.\\ Beaucoup se sont penchés sur le problème du choix de $\eta$.nelson part2 compare les différentes facçon de déterminer $\eta$ en comparant l'erreur entre le champ source désiré et celui reconstruit, ainsi que l'erreur entre l'interspectre reconstruit et le vrai interspectre (les $S_{qq}$). Les méthodes comparées sont : \\
 -cross-validation technique : %M. ALLEN 1974 ¹echnometrics 16, 125}127. The relationship between variable selection and data
 augmentation and a method for prediction\\
 -generalize cross-validation technique : %G. H. GOLUB, M. HEATH and G. WAHBA 1979 ¹echnometrics 21, 215}223. Generalized crossvalidationas a method for choosing a good ridge parameter
 
-
+}
 
 
 
@@ -141,6 +125,8 @@ differentiation procedures for non-exact data\\
 - méthode utilisant le principe d’anomalie de Morozov\\
 -normalized cumulative periodogramm\\
 -...\\
+
+La régularisation de Tikhonov cherchant à restreindre l'énergie de la solution a tendance à sous-estimer les niveaux des sources reconstruite. Cette régularisation ne prend pas correctement en compte le rayonnement omni-directionnel des sources : seule la partie rayonnée vers l'antenne est reconstruite. 
 
 \subsubsection{Optimisation parcimonieuse }
 L'objectif d'une approche parcimonieuse est d'obtenir une solution approchée du problème avec le moins de composantes non nulles possible. On minimise alors à la fois l'écart entre les données mesurées et simulées, ainsi que la "norme" $L_0$ qui donne la parcimonie d'un vecteur $\bm{x}$ telle que : $||\bm{x}||_0 := \#\{i|x_i\neq0\}$. Le problème d'optimisation devient alors bi-objectif : 
@@ -232,4 +218,8 @@ CLEAN : technique de déconvolution itérative, heuristique de type "matching pu
 
 
 
-
+\todo[inline]{
+The polar correlation technique , FISHER
+%très proche : P. J. T. FILLIPI, D. HABAULT and J. PIRAUX 1988 Journal of Sound and <ibration 124, 285}296.
+%Noise source modelling and identi"cation procedure
+}
