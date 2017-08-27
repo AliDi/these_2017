@@ -3,7 +3,8 @@
 %====================================================
 
 Le principe des méthodes de formation de voies est de pondérer les signaux de mesure à l'aide de vecteurs de pointage de manière à les focaliser dans chaque point du plan sur lequel les sources sont cherchées.
-Ces méthodes sont très utilisées \todo{référence} car elles offrent beaucoup de flexibilité sur la position des capteurs et sont simplew à mettre en œuvre. Cependant, elles offrent une résolution fortement dépendante de la géométrie de l'antenne.\\
+Ces méthodes sont très utilisées car elles offrent beaucoup de flexibilité sur la position des capteurs et sont simples à mettre en œuvre. Cependant, elles offrent une résolution fortement dépendante de la géométrie de l'antenne.\\
+\todo[inline]{Manque une référence type review}
 Les vecteurs de pointage (correspondant aux lignes de l'opérateur inverse $\bm{W}$) sont les poids attribués à chaque microphone avant de sommer leur réponse.  En tout point focal $i$ du plan de recherche de source, le vecteur de pointage est comparé à la pression mesurée par les microphones. Ainsi, le produit scalaire $\bm{w}_i'\bm{p}$ entre le vecteur de pointage $\bm{w}_i$ conjugué transposé (symbole $'$) et le vecteur des pressions $\bm{p}$ est maximal lorsque les vecteurs sont colinéaires. Le vecteur de pointage est donc associé à un modèle de source. Le modèle de source choisi ici est un ensemble de sources ponctuelles décorrélées. Une source a pour fonction de transfert du point focal $i$ au microphone $m$ : 
 \begin{equation}
 	h_{im}=\frac{e^{-jkr_{mi}}}{4\pi r_{mi}}.
@@ -22,7 +23,7 @@ Donc, le vecteur des pression pour une source ponctuelle au point $i$ d'amplitud
 
 
 \todo[inline]{
-inconvénient : quantification difficile car chaque source est estimée comme si elle est la seule. 
+inconvénient : quantification difficile car chaque source est estimée comme si elle est la seule (decor. 
 ref prise en compte des réflexions :
 -ajouter la contribution des sources images au processus de formation de voies. B. A. Fenech, “Accurate aeroacoustic measurements in closed-section hard-walled wind tunnels,” Ph.D. dissertation, University of Southampton, June 2009
  
