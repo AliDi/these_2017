@@ -1,0 +1,43 @@
+\section{Ajout d'une étape de déconvolution}
+
+La distribution de sources obtenue obtenue par une méthode d'imagerie peut être vue comme la convolution entre la distribution de sources et la fonction d'étalement du point (PSF : point spread function). La PSF est comparable à une réponse impulsionnelle du système d'imagerie. En formation de voies, la PSF est souvent connue (Measurement of Phased Array Point Spread Functions for use with Beamforming ): elle est composée d'un lobe principal et de lobes secondaires. \\
+
+Ces lobes diminuent notamment le pouvoir de séparation des sources, surtout à basse fréquence ou si les sources sont proches ou multipolaires. Si la PSF est connue, on peut, en principe, déconvoluer la distribution  de source calculée afin de réduire l'intrusion des lobes secondaires.\\
+
+On distingue 2 types de lobes secondaires :\\
+-ceux généré par la forme générale de l'antenne (le fait qu'elle soit d'une surface finie): peuvent être corrigés en appliquant une fenêtre d'appodisation diminuant la sensibilité des microphones situés sur les bords de l'antenne.\\
+-ceux liés à l'espacement entre les microphones
+
+
+La PSF des méthodes inverses est plus difficile à estimer car elle dépend des données de mesure. C'est pourquoi les méthodes de déconvolution y sont moins appliquées. \\
+
+
+\paragraph{DAMAS}
+
+ \cite{Brooks2006} (deconvolution approach for the mapping of acoustic sources)
+ 
+\paragraph{Spectral Estimation Model}
+Correction de différence entre deux matrices de covariance minimisée avec un gradient conjugué (D. Blacodon, G. Elias, Level estimation of extended acoustic sources using an array of microphones, American Institute of Aeronautics and Astronautics Paper 2003-3199, 2003)\\
+Contrainte de positivité sur la solution de source difficile à appliquer ?
+
+\paragraph{CLEAN}
+
+
+\cite{Dougherty1998} présente 3 façons de réduire les lobes secondaires liés au positionnement des michrophones sur l'antenne : \\
+-CSM weighting : réduire le poids des termes de la CSM (cross-spectral matrix) correspondant aux paires de microphones dont l'espacement fait qu'ils apportent une information redondante (par exemple 2 microphones sur la même branche d'une antenne en croix)\\
+-robust adaptative beamforming = minimum variance algorithm = CAPON\\
+-CLEAN algorithme.\\
+De ces trois méthodes, CLEAN ressort comme étant la plus efficace
+
+Hypothèse sur l'algo CLEAN : le vecteur source est parcimonieux : le champ source recherché est constitué de points sources. Principe de l'algorithme CLEAN \citep{Hogbom1974} : on extrait la plus grande valeur du champ source issu du beamforming, on la note comme un point source, on lui retire un petit gain convolué avec la fonction d'étalement, et on réitère jusqu'à ce que la plus grande valeur atteigne un seuil. Cette méthode est une heuristique (algorithme d'approximation) de type "matching pursuit" (voir le paragraphe sur l'optimisation parcimonieuse).\\
+
+
+~\\  : DAMAS, CLEAN-SC, TIDY
++amélioration par déconvolution , ex:DAMAS, SEM, NNLS
+
+
+
+
+
+
+

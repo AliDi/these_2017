@@ -1,0 +1,233 @@
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+\documentclass[twocolumn, 11pt]{article}
+\setlength{\columnsep}{1cm}
+
+%\usepackage{cite} 
+\usepackage[round,authoryear,numbers]{natbib}
+
+\usepackage[french]{babel}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx} %pour mettre des figures dans multicol avec l'environnement figure*
+
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+%\linespread{1.05} % Line spacing - Palatino needs more space between lines
+%\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+
+\usepackage[hmarginratio=1:1,top=15mm, right=15mm]{geometry} % Document margins
+\usepackage[textfont=it]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{booktabs} % Horizontal rules in tables
+%\usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
+\usepackage{hyperref} % For hyperlinks in the PDF
+
+\usepackage{bm}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tabularx}
+
+\usepackage{titlesec} % Allows customization of titles
+\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+\renewcommand\thesubsection{\arabic{section}.\arabic{subsection}} % Roman numerals for subsections
+\titleformat{\section}[block]{\bfseries\large\scshape\centering}{\thesection.}{1em}{}[{\titlerule[1.2pt]}] % Change the look of the section titles
+\titleformat{\subsection}[block]{\bfseries\large}{\thesubsection.}{1em}{} % Change the look of the section titles
+\renewcommand\thesubsubsection{\small{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}}
+\titleformat{\subsubsection}[block]{\bfseries}{\thesubsubsection}{0.5em}{}
+\titleformat*{\paragraph}{\vspace{-0.3cm}\small\bfseries}
+
+\newcommand{\tbullet}{$\vcenter{\hbox{\tiny$\bullet$}}~$}
+
+
+
+\usepackage{fancyhdr} % Headers and footers
+\pagestyle{fancy} % All pages have headers and footers
+\fancyhead{} % Blank out the default header
+\fancyfoot{} % Blank out the default footer
+\renewcommand{\headrulewidth}{0pt} %pour enlever la ligne du header
+%\fancyhead[C]{titre, date, noms...	} % Custom header text
+\fancyfoot[RO,RE]{\thepage} % Custom footer text
+\fancyfoot[LO,LE]{A. DINSENMEYER, \today}
+\renewcommand{\footrulewidth}{0.4pt} 
+
+%modif des espacement avant et après l'environnement equation
+\let\oldequation=\equation
+\let\endoldequation=\endequation
+\renewenvironment{equation}{\vspace{-0.2cm}\begin{oldequation}}{\vspace{-0.2cm}\end{oldequation}}
+
+ 
+%agrandissement de la zone de texte
+%\addtolength{\oddsidemargin}{-1cm}
+%\addtolength{\evensidemargin}{-1cm}
+%\addtolength{\textwidth}{2cm}
+%\addtolength{\topmargin}{-0.7cm}
+\addtolength{\textheight}{1cm}
+
+\usepackage[color=blue!20]{todonotes}
+\usepackage{mathtools}
+
+
+\usepackage{hyperref}
+\hypersetup{
+     colorlinks   = true,
+     citecolor    = blue!90
+}
+
+\newcommand{\dd}{\partial}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+%\title{\vspace{-15mm}\fontsize{24pt}{10pt}\selectfont\textbf{Imagerie par application de la FWI à des signaux ultrasonores}} % Article title
+ \title{
+\centering \fontsize{18pt}{10pt}\textbf{Étude bibliographique : Méthodes de localisation de sources aéroacoustiques}
+}
+\author{
+\large{Alice \textsc{Dinsenmeyer}}\\[2mm] % Your name %\thanks{}
+%\normalsize University of California \\ % Your institution
+%\normalsize \href{mailto:john@smith.com}{john@smith.com} % Your email address
+\vspace{-5mm}
+}
+\date{}
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Insert title
+
+\thispagestyle{fancy} % All pages have headers and footers
+
+
+%----------------------------------------------------------------------------------------
+%	ARTICLE CONTENTS
+%----------------------------------------------------------------------------------------
+
+%\begin{multicols}{2} % Two-column layout throughout the main article text
+
+Pourquoi : localisation de sources dans le sous-sol, dans des tissus humains, dans des pièces industrielles, dans les fluides (avec ou sans écoulement, dans un espace clos ou non). Dans chaque contexte, la nature des sources varie.\\
+
+Objectif : caractériser quantitativement/qualitativement les sources à partir de mesures obtenue en quelques points  discrets de l'espace.\\
+
+Contexte : Réduction du bruit des avions (not. des turbomachines \footnote{Le moteur électrique n'est pas pour tout de suite, car il y a 40 fois plus d'énergie dans 1 kg de kérosène que dans 1 kg des meilleures batterie et après calcul de rendement, il reste un rapport 15 entre les 2.}) par l'identification des mécanismes de génération de bruit.\\
+
+Historique : Dès 1976, pour répondre à des problématiques de compréhension des bruits de turboréacteur, \cite{Billingsley1976} réalisent des mesures simultanées à l'aide d'une antenne linéaire constituées de 14 microphones. Depuis, le nombre de capteur par antenne a augmenté, ainsi la gamme fréquentielle.
+
+
+\paragraph{Formulation du problème d'imagerie acoustique}
+La formulation du problème direct lie le vecteur des pressions $\bm{p}$ mesurées aux $M$ points de mesure et l'intensité des $N$ sources $\bm{q}$ à l'aide de la matrice de transfert $\bm{G}$ qui représente le modèle de propagation des ondes acoustiques : 
+\begin{equation}
+\bm{p}=\bm{G}\bm{q}
+\end{equation}
+
+Le problème d'identification de sources acoustique est donc de résoudre le problème inverse qui consiste à estimer les sources $\bm{q}$ à partir des données  $\bm{p}$ :
+\begin{equation}
+\bm{\tilde{q}}=\bm{W}\bm{p}
+\end{equation}
+où $\bm{W}$ est appelé opérateur inverse.
+
+Le problème peut aussi être formulé à partir des matrices de densité interspectrale  : 
+\begin{align}
+		 \mathbb{E} \left\{ \bm{p p}' \right\} &= \mathbb{E} \left\{ (\bm{Gq})(\bm{Gq})' \right\}\\
+	\Leftrightarrow~~~~  \bm{S_{pp}} &= \bm{G S_{qq}G}'
+\end{align} 
+
+
+
+
+Problèmes : On distingue 4 sources de difficultés majeures pour la résolution de ce problème inverse, pouvant nuire à la qualité de la reconstruction : \\
+\begin{itemize}
+	\item le bruit de mesure (notamment hydrodynamique)
+	\item l'approximation du modèle de propagation
+	\item le choix du modèle de sources approché
+	\item le caractère mal-posé du problème inverse (le nombre de source est souvent bien supérieur au nombre de points de mesure)
+\end{itemize}
+
+\todo[inline]{Pour chaque méthode d'imagerie, comprendre : \\
+-hypothèses et connaissances a priori\\
+-avantages et inconvénient\\
+-contexte de développement\\
+-algorithme(s) de résolution}
+
+% Tableau des notations
+%------------------------
+\newpage
+\section*{Notations}
+
+\begin{center}
+	
+	\begin{tabularx}{0.5\textwidth}{c c X}
+		$m$			&	scalaire		&	nombre de capteurs de l'antenne\\
+		$n$			&	scalaire		&	nombre de sources\\
+	    $\bm{p}$		& $m\times 1$	&	coefficients des signaux captés\\
+	    $\bm{q}$		& $n \times 1$	& 	coefficients des sources\\
+	    $\bm{n}$		& $m\times 1$	&	bruit capté\\
+		$\bm{G}$		& $m\times n$	&	matrice de transfert acoustique\\
+		$\bm{W}$		&	$n\times m$	&	matrice de l'opérateur inverse\\
+		$\eta$		& scalaire		&	paramètre de régularisation\\
+		$\bm{S_{xy}}$& l($\bm{x}$) $\times$ l($\bm{y}$) & matrice interspectrale des séries $\bm{x}$ et $\bm{y}$\\
+		$\bm{C_{xy}}$&	l($\bm{x}$) $\times$ l($\bm{y}$) & matrice de covariance des séries $\bm{x}$ et $\bm{y}$\\
+		$\bm{R_{xy}}$&	l($\bm{x}$) $\times$ l($\bm{y}$) & matrice d'intercorrélation des séries $\bm{x}$ et $\bm{y}$\\
+		$\bm{\bar{x}}$	& l($\bm{x}$)	& vecteur des moyennes du processus $\bm{x}$\\
+		$\bm{\tilde{x}}$	& l($\bm{x}$)	& estimation de $\bm{x}$
+		%$\bm{S_{pp}}$	&	$m\times m$	&	matrice interspectrale des signaux captés\\
+		%$\bm{S_{qq}}$	&	$n \times n$	&	matrice interspectrale des sources\\
+		%$\bm{S_{nn}}$	&	$m\times m$	&	matrice interspectrale du bruit capté\\
+		
+	\end{tabularx}
+\end{center}
+
+
+\newpage  	
+
+%-----------------------
+\newpage
+\tableofcontents
+\newpage
+%----------------------
+
+%sources aéros et médole de propagation en écoulement
+\input{sources_aero}
+%
+%débruitage (tonal, cyclo, aerodynamique)
+%\input{debruitage}
+
+%Les méthodes de formation de voies
+\input{beamforming}
+
+%Ajout d'une étape de déconvolution
+\input{deconvolution}
+
+
+%Les méthodes inverses
+\input{methodes_inverses}
+
+%Régularisation spécifique : Approche bayésienne
+\input{approche_bayesienne}
+
+
+
+%À citer : \\
+%A. Mohammad-Djafari. Bayesian inference for inverse problems. arXiv preprint physics/0110093, 2001.\\
+%[85] M. R. Bai, A. Agarwal, C.-C. Chen, and Y.-C. Wang. Bayesian approach of nearfield
+%acoustic reconstruction with particle filters. The Journal of the Acoustical Society of
+%America, 133(6) :4032–4043, 2013.
+
+
+
+%----------------------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+%	REFERENCE LIST
+%----------------------------------------------------------------------------------------
+\newpage
+
+\bibliographystyle{my_plainnat}%\bibliographystyle{unsrt}
+\bibliography{biblio}
+
+%\end{multicols}
+
+\end{document}

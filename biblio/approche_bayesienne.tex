@@ -1,0 +1,147 @@
+\section{Approche bayésienne}
+
+Rappel des estimation de sources et du paramètre de régularisation proposés par Antoni 2012.\\
+
+
+
+Le problème peut être formulée à l'aide d'une approche probabiliste. Les inconnues du problème sont décrites  par une densité de probabilité. L'objectif de cette approche est double : \textit{i)} développer un formalisme généralisant les diverses méthodes développées pour chaque contexte d'imagerie ; \textit{ii)} prendre en compte au mieux les informations connues à l'avance sur les sources, même si elles sont incertaines puisque données par une densité de probabilité. Ce deuxième point est mis en œuvre par l'utilisation d'une régularisation.
+
+
+
+la probabilité est la traduction d'un état de connaissance du système.
+
+
+Principe général des probabilités bayésiennes : on choisit une distribution a priori décrivant la fonction à modéliser $[\bm{q}]$. Cette distribution est corrigée progressivement sous forme de fonction de vraisemblance à partir des observations $[\bm{p|q}]$. Prises ensemble, la distribution a priori et la fonction de vraisemblance permettent de construire la distribution a posteriori : $[\bm{q|p}] = [\bm{p|q}][\bm{q}]/[\bm{p}]$.
+
+\subsection{Formulation probabiliste du problème direct}
+
+Le problème direct revient à exprimer la pression $\bm{p}$ au niveau de l'antenne de microphones en fonction du champ source $\bm{q}$, du modèle de propagation acoustique $\bm{G}$, du bruit de mesure et des erreurs de modèle représentés par le vecteur $\bm{n}$ : 
+\begin{equation}
+\bm{p}=\bm{Gq}+\bm{n}
+\end{equation}
+Le champ source $q(\bm{r})$ peut est décomposé sur une base de $K$ fonctions spatiales $\phi_k(\bm{r})$ normalisées :
+\begin{equation}
+q(\bm{r}) = \bm{c} \cdot \bm{\phi}
+\end{equation}
+
+Les inconnues du problèmes sont donc les fonctions $\phi_k$, les coefficients $c_k$ qui dépendent des mesures et leur nombre $K$.\\
+
+L'approche bayésienne propose de voir ces coefficients comme des variables aléatoires et d'étudier leur probabilité conditionnée aux mesures $[q(\bm{c},\bm{\phi})|\bm{p}]$. Si cette probabilité est élevée, ça signifie que les mesures expliquent précisément le champ source $q$. L'objectif est donc d'estimer ces variables de façon à ce qu'elles expliquent au mieux les mesures $\bm{p}$. Ces estimations de $\bm{\phi}$ et de $\bm{c}$ sont notées respectivement $\bm{\hat{\phi}}$ et $\bm{\hat{c}}$ telles que : 
+\begin{equation}
+	(\bm{\hat{c}},\bm{\hat{\phi}}) = \arg\max_{\bm{c},\bm{\phi}}[q(\bm{c},\bm{\phi})|\bm{p}]
+\end{equation}
+La loi de Bayes permet d'exprimer $[q(\bm{c},\bm{\phi})|\bm{p}]$ ainsi : 
+\begin{equation}
+\label{bayes}
+[q(\bm{c},\bm{\phi})|\bm{p}]=\frac{[\bm{p}|q(\bm{c},\bm{\phi})][q(\bm{c},\bm{\phi})]}{[\bm{p}]}.
+\end{equation}
+
+
+
+On estime d'abord que le bruit $\bm{n}$  a une distribution gaussienne, et que sa moyenne est nulle ($\mathbb{E}\{\bm{n}\}=0$) et par conséquent 
+\footnote{Modèle direct : $\bm{p}=\bm{Gq}+\bm{n}$ ; bruit centré : $\langle \bm{n}\rangle = \langle \bm{p}-\bm{Gq} \rangle = 0 $ ; la covariance du bruit est la covariance des mesures étant données les sources : 
+\begin{align*}
+\bm{C_n}& =  \mathbb{E}\{\bm{n}\bm{n}^*\} \\
+		& =  \mathbb{E}\{(\bm{p}-\bm{Gq})(\bm{p}-\bm{Gq})^*\}  \\
+		& =  \bm{C_{\bm{p}|\bm{q}}} 
+\end{align*}
+},
+$[\bm{p}|q]$ suit également une distribution normale multivariée complexe. En introduisant la matrice de covariance $\mathbb{E}\{\bm{n}\bm{n}^*\}=\beta^{2}\bm{\Omega}_N$ ($\beta^2$ étant l'énergie moyenne du bruit, $\bm{\Omega}_N$ matrice connue a priori selon la nature du bruit) : 
+\begin{align}
+[\bm{p}|q,\beta^2] &=\mathcal{N}_c(\bm{G}\bm{q},\beta^2\bm{\Omega}_N) \\
+	&= \frac{   1   }{ \pi^M \beta^{2M} |\bm{\Omega}_N| } \exp \left( -\frac{1}{\beta^2} ||   \bm{p}  -  \bm{Gq}  ||^2_{\bm{\Omega}_N} \right)
+\end{align}
+
+Une distribution gaussienne est également choisie pour la densité de probabilité des sources, de moyenne nulle et de variance $\mathbb{E}\{\bm{q}\bm{q}'\}=\alpha^2 \bm{\Omega}_q$ : 
+\begin{align}
+	[\bm{q}|\alpha^2] &= \mathcal{N}_c(\bm{0}, \alpha^2\bm{\Omega}_q)\\
+	 &= \frac{  1  }{  \pi^K\alpha^{2K} |\bm{\Omega}_q|} \exp \left( -\frac{1}{\alpha^2}   ||\bm{q}||^2_{\bm{\Omega}_q} \right)
+\end{align}
+
+$\alpha^2$ et $\beta^2$ sont appelés les hyperparamètres.
+
+
+\todo[inline]{ Notes :\\
+vraisemblance : adéquation entre une distribution observée (sur échantillon) et la loi de proba qui décrit la population dont est issu l'échantillon 
+fonction de vraisemblance : la vraisemblance varie  en fonction des paramètres de la loi choisie. Paramètre s'appelle généralement $\theta$. Sert donc a ajuster des observations à une loi.\\
+
+
+
+\url{https://en.wikipedia.org/wiki/Bayesian_interpretation_of_kernel_regularization} : \\
+
+Dans le contexte de régression, la fonction de vraisemblance ($[p|q]$) sont souvent supposé suivre une distribution gaussienne, car ``corrompues'' par du bruit gaussien. Les observation sont supposées indépendantes et identiquement distribuées, ce qui fait qu'il est possible de factoriser la fonction de vraisemblance sur chaque point de mesure.
+}
+
+\subsection{Estimation des hyperparamètres et des sources}
+
+
+\subsubsection{Choix de la fonction coût}
+
+Il existe trois principales approches pour poser le problème d'optimisation et en définir une fonction objectif \footnote{détails des calculs dans le cours de E. Thiébaut et C. Pichon : \url{https://cral.univ-lyon1.fr/labo/perso/eric.thiebaut/downloads/documents/cargese-2006-thiebaut.pdf}} : 
+
+\paragraph{\tbullet le maximum de vraisemblance}, pour lequel on cherche la solution 
+	\begin{equation}
+		\bm{q}_{ML} = \arg\max_{\bm{q}} [ \bm{p}|\bm{q} ]=\arg\min_q f_{data},
+	\end{equation}	
+	 avec 
+	\begin{eqnarray}
+		f_{data} &=&-\log[\bm{p}|\bm{q}] + \text{cst}\\
+				 &=& [\bm{p}-\bm{Gq}]'  \bm{C}_{\bm{p}|\bm{q}}^{-1}  [\bm{p}-\bm{Gq}]
+	\end{eqnarray}
+	en considérant que $[ \bm{p}|\bm{q} ]$ a une répartition gaussienne, de covariance $\bm{C}_{\bm{p}|\bm{q}}$ . L'estimateur obtenu est le même que celui donné par la méthode des moindres carrés.\\
+	 	
+\paragraph{\tbullet le maximum a posteriori} (MAP), qui cherche à maximiser la densité des sources a posteriori : 
+	\begin{eqnarray}
+		\bm{q}_{MAP} &=& \arg\max_{\bm{q}}[ \bm{q} |  \bm{p}  ]\\
+					& =& \arg\max_{\bm{q}}([\bm{p} | \bm{q}][\bm{q}])\\
+					&=& \arg\min_{\bm{q}} ( \underbrace{-\log[\bm{p}|\bm{q}]}_{f_{data}} \underbrace{- \log[\bm{q}]}_{f_{prior}})
+	\end{eqnarray}
+	La méthode MAP propose donc d'ajouter à au maximum de vraisemblance un terme de régularisation donné par $f_{prior}$. Considérant que les sources ont une densité de probabilité gaussienne, le terme de régularisation s'écrit : 
+	\begin{equation}
+		f_{prior}= (\bm{q}- \bm{\bar{q}})' \bm{C_q}^{-1}(\bm{q}- \bm{\bar{q}})
+	\end{equation}\\	
+	
+\paragraph{\tbullet le minimum de variance} \footnote{\textit{minimum mean square error}}, dont le critère est de minimiser l'espérance de l'erreur quadratique : 
+	\begin{equation}
+		\bm{q}_{MV} = \arg\min_{\tilde{q}} \mathbb{E}\{||\bm{q}-\bm{\tilde{q}}||^2\}
+	\end{equation}	
+	Cette solution généralise le filtre de Wiener et est la même que la solution MAP. \\
+
+
+En faisant un analyse de la propagation des erreurs pour chaque méthode, on peut montrer que le maximum de vraisemblance en propage davantage.\\
+
+\subsubsection{Estimateur MAP}
+La résolution du problème inverse se fait donc par l'estimation de la probabilité $[\bm{q}|\bm{p},\alpha^2,\beta^2]$. Le vecteur $\bm{q}$ est ainsi approché en observant sa valeur la plus probable d'après les données, le  ``Maximum a posteriori'' (MAP) : 
+\begin{align}
+\bm{\tilde{q}}_{MAP} &= \arg\max([\bm{q}|\bm{p},\alpha^2,\beta^2])\\
+					 &= \arg\max\left( [\bm{p}|\bm{q}][\bm{q}]  \right) ~~~\text{d'après \ref{bayes}}
+\end{align}
+puisque $[\bm{p}]$ est une constante du problème.
+
+En prenant le logarithme négatif de la quantité à maximiser, on peut définir une fonction coût à minimiser : 
+\begin{equation}
+	J(\bm{c},\bm{\phi}) = - \ln[q|\bm{p}] = -\ln[\bm{p}|q]-\ln[q]
+\end{equation}
+
+D'après les lois normales choisies, 
+\begin{equation}
+J=M\ln(\beta^2) + K\ln(\alpha^2) +\beta^{-2}||\bm{p}-\bm{Hc}||^2_{\Omega_n}+\alpha^{-2}||\bm{q}||^2_{\Omega_c}
+\end{equation}
+\todo[inline]{revoir les notations ci-dessus}
+Finalement, on ne conservant que les termes qui dépendent de $c$, on retrouve la formulation des moindres carrés : 
+\begin{equation}
+ J = (p'-cH)\Omega^{-1}_n(p-Hc) + \nu^2c'\Omega^-1_c c
+\end{equation}
+avec pour terme de régularisation $\nu = \beta^2/\alpha^2$.
+
+
+
+
+
+\subsubsection{MCMC}
+algo utilisé par Charles : Metropolis-Hasting
+
+
+\subsection{Confiance accordée à la reconstruction}
+
+	

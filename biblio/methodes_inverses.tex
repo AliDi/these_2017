@@ -1,0 +1,225 @@
+\section{Les méthodes inverses}
+En formation de voies, chaque source est considérée indépendemment des autres. La surface contenant les sources potentielles est scannées point par point et l'éventuelle cohérence des sources n'est pas prise en compte.\\
+
+L'approche des méthodes inverses est de traiter le problème dans son ensemble, en recherchant toutes les sources simultanément, prenant ainsi en compte les effets d'interférence entre les sources. \todo[inline]{Quid des interactions non-linéaires entre sources ?} La résolution du problème inverse ne peut généralement pas reposer sur une inversion de la matrice de transfert, car le problème inverse est souvent sous-déterminé. De plus, la relation entre sources et mesures n'est pas toujours bijective.
+
+Les méthodes varient selon le modèle de source choisi : \\
+-ondes planes propagatives et évanescentes : NAH, SONAH\\
+-radiation BEM\\
+-distribution de monopoles\\
+-harmoniques sphériques.
+ 
+
+itératif ou non ?
+
+
+\subsection{Holographie acoustique}
+De manière générale, les méthodes basées sur l'holographie acoustique présentent l'avantage de pouvoir reconstruire le champ source en tout point de l'espace et donc sur un plan source de géométrie arbitraire. Un autre avantage est son utilisation en milieu clos.
+\subsubsection{Holographie en champ proche (NAH)}
+L'holographie en champ proche propose d'exploiter des mesures réalisées à proximité des sources pour en reconstruire une image. Cette méthode tire profit de la mesure des ondes évanescentes, exponentiellement décroissantes avec la distance, qui viennent s'ajouter aux ondes propagatives \cite{Maynard1985}.\\
+Le champ de pression mesuré est d'abord décomposé dans le domaine des nombres d'ondes par une transformée de Fourier spatiale. A chaque onde est associé un propagateur (i.e. une fonction de transfert supposée connue) qui, inversé, permet de rétropropager le champ mesuré et ainsi reconstruire le champ source. \\
+
+La pression recherchée $p_e(\bm{r}_0)$ au niveau du plan de recherche de sources s'écrit donc en fonction de la pression mesurée $p_m(\bm{r}_h)$ : 
+\begin{equation}
+	p_e(\bm{r}_0,f) = \mathcal{F}^{-1} \left[ \mathcal{F}\left[ p_m(\bm{r}_h,f)\right]\mathcal{F}\left[G(\bm{r}_h-\bm{r}_0 ,f)\right]\right]
+\end{equation}
+où $\mathcal{F}$ est  la transformée de Fourier spatiale et $G$ la fonction de transfert donnant la propagation de l'onde acoustique du plan source au plan de mesure, choisie selon le modèle de sources.
+
+  Avant rétropropagation, un filtre sur les hauts nombres d'ondes est appliqué (ex : filtre de Vernoesi ou de Li) de manière à sélectionner les nombres d'ondes d'intérêt : il est nécessaire de trouver un compromis permettant de conserver suffisamment d'ondes évanescentes (porteuses d'informations) tout en limitant l'amplification du bruit. La mesure à proximité permet ainsi d'obtenir une résolution supérieure à la demi-longueur d'onde.\\
+  
+
+\todo[inline, color=green!10]{Référence pour comprendre les méthodes suivantes : {Comparison of patch acoustic holography methods Zdeněk HAVRÁNEK}\\
+Référence pour leur implémentation : \url{http://www.sandv.com/downloads/1002wuxx.pdf}} 
+ 
+\subsubsection{Statically optimized near-field acoustical holography (SONAH)}
+ 
+Cette méthode est notamment utilisée lorsque le plan source est plus grand que l'antenne de mesure (on parle de "patch methods"). Elle repose sur l'idée que la pression estimée sur un plan de prédiction (situé entre le plan de mesure et le plan source) est exprimée comme la somme pondérée des pressions mesurées en N points du plan source \citep{Hald2009} : 
+\begin{equation}
+	p(\bm{r})\approx \sum_{n=1}^{N} C_n(\bm{r})p_m(\bm{r}_{h,n}) = \bm{p}^T(\bm{r}_h)\bm{c}(\bm{r})
+\end{equation} 
+ Les coefficients $\bm{c}$ ne dépendent pas du champ mais uniquement de la position et, de la même façon, les ondes planes élémentaires composant le champ sur le plan de prédiction peuvent être projetées sur le plan de calcul : 
+ \begin{equation}
+\bm{\phi}_m(\bm{r}) = \sum_{n=1}^{N} C_n(\bm{r}) \bm{\phi}_m(\bm{r}_h,n)
+ \end{equation}
+ 
+ En notant cette équation sous forme matricielle, avec $A_{mn} =\bm{\phi}_m(\bm{r}_h,n)$ et $a_m= \bm{\phi}_m(\bm{r})$, on peut calculer les coefficients $\bm{c}(\bm{r})$ en résolvant le problème d'optimisation (avec régularisation de Tikhonov) : 
+ \begin{align}
+	~& \arg\min_{\bm{c}} \left( ||\bm{a}-\bm{Ac}||^2 + \eta^2||\bm{c}||^2\right)\\
+	\Leftrightarrow & \bm{c} = \frac{\bm{A}'\bm{a}}{\bm{A}'\bm{A} + \eta^2\bm{I}} 
+\end{align}
+
+\todo[inline]{$\eta^2=\bm{A}'\bm{A} 10^{\frac{-SNR}{10}}$ ?}
+ 
+ Cette méthode, contrairement à NAH, ne nécessite pas de calcul de transformée de Fourier spatiale.\\
+
+ L'amélioration M-SONAH a été développée pour le cas où l'ensemble des fonctions élémentaires qui compose le champ ne sont pas connues et elles sont alors exprimées comme une combinaison de différentes ondes connues.
+\todo[inline, color=green!10]{Notations et formulation tirées de l'article (en français) : \url{https://www.researchgate.net/publication/225102534_Evaluation_de_deux_methodes_d\%27imagerie_acoustique_en_milieu_bruite}}
+
+\subsubsection{iBEM}
+
+iBEM propose de résoudre l'équation liant la pression pariétale à  la pression mesurée par la méthode des éléments de frontière.  La transformée de Fourier spatiale est remplacée par une SVD de la matrice de transfert\\
+ 
+
++ amélioration sur des géométrie quelconques par l'utilisation d'éléments de frontières (iBem : méthode des éléments de frontières inverse). La transformée de Fourier spatiale est remplacée par une SVD de la matrice de transfert (ref 29 thèse de T. Lemagueresse). L
+\subsubsection{SEM}
+L'idée de la méthode des sources équivalentes est que le champ source recherché peut être représenté comme une superposition de points source équivalents. Une séparation du champ nécessite qu'il y ait deux plans de mesures et deux plans fictifs de reconstruction des sources équivalentes.\\
+L'inverse de la matrice de transfert peut se faire par SVD, par exemple.
+
+
+
+\subsection{Helmoltz equation least squares}
+\cite{Wang1997}
+Peut-être vu comme un cas particulier de SEM. \\~\\
+
+
+
+En résumé, les méthodes inverses utilisées principalement sont de 2 sortes : 1) les méthodes basées sur la transformée de Fourier (holographie,...) ; 2) Les méthodes ``model based''. En pratiques, ces méthodes sont très proches (ce que montrent %W. A. VERONESI and J. D. MAYNARD 1989 Journal of the Acoustical Society of America 85,588}598. Digital holographic reconstruction of sources with arbitrarily shaped surfaces)
+
+\subsection{+soap, generalized BF, bayesian focusing ?}
+
+
+
+
+
+\subsection{Les méthodes de régularisation}
+\todo[inline, color=green!10]{liste des méthodes de régularisation : \url{http://www.imm.dtu.dk/~pcha/Regutools/RTv4manual.pdf}
+}
+
+\todo[inline, color=green!10]{
+nelson part2 compare deux méthodes de régularisation : 1) il explique comment choisir un paramètre de Tikhonov ; 2) il explique comment choisir les valeurs de la SVD à supprimer.\\ Beaucoup se sont penchés sur le problème du choix de $\eta$.nelson part2 compare les différentes facçon de déterminer $\eta$ en comparant l'erreur entre le champ source désiré et celui reconstruit, ainsi que l'erreur entre l'interspectre reconstruit et le vrai interspectre (les $S_{qq}$). Les méthodes comparées sont : \\
+-cross-validation technique : %M. ALLEN 1974 ¹echnometrics 16, 125}127. The relationship between variable selection and data
+augmentation and a method for prediction\\
+-generalize cross-validation technique : %G. H. GOLUB, M. HEATH and G. WAHBA 1979 ¹echnometrics 21, 215}223. Generalized crossvalidationas a method for choosing a good ridge parameter
+
+}
+
+
+
+
+Les problèmes inverses de localisation de sources acoustiques sont souvent mal posés car le nombre de sources est supérieur au nombre de capteur (la solution n'est pas unique) et la solution dépend des données d'entrée. Il est alors nécessaire de mettre en place des stratégies qui améliorent le conditionnement du problème, notamment en réduisant la sensibilité de la solution aux données d'entrée.\\
+
+
+\subsubsection{Décomposition en valeurs singulières}
+
+
+Le conditionnement du problème peut être quantifié par le rapport entre la plus grande et la plus petite valeur singulière de la matrice de transfert. Plus ce rapport est faible, mieux le problème est conditionné. Le conditionnement du problème peut donc être amélioré en supprimant les petites valeurs singulières de la matrice de transfert. La question du nombre de valeurs singulières à conserver se pose alors. 
+
+
+
+\subsubsection{Régularisation de Tikhonov}
+
+La stratégie la plus souvent adoptée est la régularisation de Thikonov \citep{Tikhonov1963} qui consiste à rajouter un terme de contrôle de l'énergie de la solution dans la fonction coût. Cette dernière prend alors la forme suivante : 
+\begin{equation}
+	||\bm{p}-\bm{G}\bm{q}||^2 + \eta^2||\bm{q}||^2
+\end{equation}
+où $||\bullet||$ est la norme euclidienne et $\eta^2$ est le paramètre de régularisation, choisi judicieusement de façon à favoriser les solutions de petite norme.
+
+La difficulté de cette régularisation réside dans ne choix de $\eta$. Ce paramètre peut être déterminé par des procédures ad-hoc qui telle que : \\
+-discrepancy principle\\
+-general cross-validation (méthode de la validation croisée généralisée)\\
+-L-curve method : %P. C. HANSEN and D. P. O'LEARY 1993 SIAM Journal on Scienti,c Computing 14, 1487}1503. The use of the L-curve in the regularisation of discrete ill-posed problems\\
+-(restricted) maximum likehood : \\%B. ANDERSSEN and P. BLOOMFIELD 1974 Numerische Mathematik 22, 157}182. Numerical
+differentiation procedures for non-exact data\\
+-unbiased predictive risk estimator\\
+-interprétation bayesienne \citep{Pereira2015}\\
+- méthode utilisant le principe d’anomalie de Morozov\\
+-normalized cumulative periodogramm\\
+-...\\
+
+La régularisation de Tikhonov cherchant à restreindre l'énergie de la solution a tendance à sous-estimer les niveaux des sources reconstruite. Cette régularisation ne prend pas correctement en compte le rayonnement omni-directionnel des sources : seule la partie rayonnée vers l'antenne est reconstruite. 
+
+\subsubsection{Optimisation parcimonieuse }
+L'objectif d'une approche parcimonieuse est d'obtenir une solution approchée du problème avec le moins de composantes non nulles possible. On minimise alors à la fois l'écart entre les données mesurées et simulées, ainsi que la "norme" $L_0$ qui donne la parcimonie d'un vecteur $\bm{x}$ telle que : $||\bm{x}||_0 := \#\{i|x_i\neq0\}$. Le problème d'optimisation devient alors bi-objectif : 
+\begin{equation}
+	\min_{\bm{q}}(||\bm{q}||_0 , ||\bm{p}-\bm{G}\bm{q}||^2) .
+	\label{bi-objectif}
+\end{equation}
+Prendre en compte une distribution parcimonieuse des sources dans l'espace, par exemple, permet de réduire le caractère sous-déterminé du problème en exploitant les connaissances a priori sur les sources. Cette propriété de parcimonie sert notamment à compenser le rayonnement omnidirectionnel des sources qui n'est pas mesuré et qui engendre une sous-estimation du niveau des sources. \\
+La parcimonie est donnée par la norme $L_0$ du champ source (qui donne alors le nombre de valeurs non-nulles de $\bm{G_{qq}}$. Un formalisme bayesien permet de prendre en compte cette parcimonie en définissant une densité de probabilité des sources $[\bm{p}]$. Une loi gaussienne peut par exemple être choisie telle que : 
+\begin{equation}
+ [\bm{p}] \propto \exp\left(\frac{\sum_i |q_i|^p}{2\gamma^2}\right)
+\end{equation}
+avec $i$ le i\textsuperscript{ème} élément de $\bm{q}$. Dans cette formulation, la norme $L_0$ peut être relaxée par une norme $L_p$ permettant de rendre l'objectif convexe, avec $p$ un paramètre prenant une valeur entre $0$ et $2$. $p=0$ correspond à une distribution parcimonieuse, tandis que plus $p$ tend vers $2$, plus la distribution spatiale des source est étendue.
+
+\cite{Tropp2010} passent en revue les principales façons de poser et de résoudre ce problème d'optimisation.\\
+% p=0
+%------------------------------
+Lorsque le paramètre $p$ est proche de 0, le critère n'est pas convexe et le problème doit être résolu à l'aide d'algorithmes gloutons, dont les plus répandus sont décrits ci-dessous : 
+\paragraph{\tbullet Matching pursuit (MP)} Minimiser une fonction coût de la forme $||\bm{p}-\bm{Gq}||_2$ avec une contrainte de parcimonie $||\bm{q}||_0 \leq \epsilon$ peut être vu comme une sorte d'analyse en composante principale de $\bm{p}$, par une projection sur un ensemble d'atome (pas forcément orthogonaux) trié dans $\bm{G}$, où $\bm{q}$ donne l'amplitude pour chaque atome. \cite{Mallat1993} propose un algorithme qui calcule successivement  à partir d'un dictionnaire d'atomes normalisés les poids associés aux atomes pour lesquels le produit scalaire avec le signal est maximal. L'opération est répétée sur les résidus jusqu'à ce que le signal soit suffisamment décomposé, i.e. qu'un critère sur les résidus soit atteint.
+
+\paragraph{\tbullet Orthogonal matching pursuit (OMP)} Une extension de l'algorithme MP propose également d'extraire un à un les atomes et leur coefficient, mais à chaque sélection d'atome, la projection du signal dans le nouvel espace vectoriel généré est recalculée, ce qui permet une convergence plus rapide, moyennant une étape d’orthogonalisation supplémentaire \citep{Pati1993}. Chaque atome n'est sélectionné qu'une fois, contrairement à l'algorithme MP. Cette minimisation des redondances également de réduire l'erreur commise. \\
+
+%p=1
+%--------------------------------
+
+Il est possible de s'affranchir de la norme $L_0$ en relaxant le paramètre $p$, et en prenant par exemple $p=1$\footnote{$||a||_1=\sum_i |a_i|$} (critère non dérivable). Le problème d'optimisation contenant une contrainte en norme $L_1$ peut s'exprimer de différence manière :  
+%Candès montre que la norme L0 peut être équivalente à la norme L1 dans certain cas. 
+\paragraph{\tbullet  Poursuite de base (Basis pursuit, BP)} Ce principe d'optimisation s'écrit sous la forme :
+\begin{equation}
+\min_{\bm{q}} ||\bm{q}||_1 ~~~~\text{sous la contrainte}~~~~ \bm{Gq}=\bm{p}
+\end{equation}
+Ce problème peut être linéarisé puis résolu par des algorithmes comme ceux du simplexe  ou de points intérieurs \citep{Chen2001}.
+
+\paragraph{\tbullet  Least absolute shrinkage and selection operator (LASSO)} \cite{Tibshirani1996} propose de résoudre :
+\begin{equation}
+\min(||\bm{p}-\bm{Gq}||^2) ~~~~\text{sous la contrainte}~~~~||\bm{q}||_1\leq t),
+\end{equation}
+ce qui revient à estimer $\tilde{q}$ tel que : 
+\begin{equation}
+\bm{\tilde{q}} = \arg\min_{\bm{q}} \left( ||\bm{p}- \bm{Gq}||^2 + \beta ||\bm{q}||_1 \right)
+\end{equation}
+Quand $\beta=0$, le problème LASSO est analogue aux moindres carrés ordinaires. Si $\beta$ est très grand, $\bm{\tilde{q}}$ tend vers 0. Ce paramètre permet donc de fixer certain coefficients de la régression à 0 ou, avec une approche bayésienne, on peut leur associer une incertitude.
+
+\paragraph{\tbullet  Basis pursuit denoising (BPDN)} Le principe de BPDN mène au même problème que celui formulé par LASSO. On cherche à résoudre :
+\begin{equation}
+\min_{\bm{q}} ||\bm{q}||_1 ~~~~\text{sous la contrainte}~~~~ ||\bm{Gq}-\bm{p}||^2 \leq \tau,
+\end{equation}
+ce qui équivaut, comme LASSO à trouver un compromis entre réduire les résidus et trouver la solution la plus parcimonieuse possible.
+
+%0<p<1
+%-----------------------------------
+
+~\\Parmi les algorithmes de résolution des problèmes pour $0<p<2$, on trouve : 
+\begin{itemize}
+	\item[-] les algorithmes de relaxation (ex : RELAX, Li \& Stoica, 1996),
+	\item[-] les algorithmes de type "seuillage itératif" (type FISTA, Expectation-Maximisation,...),
+	\item[-] IRLS (iterative reweighted least squares) : cette méthode propose de représenter une norme $L_p$ ($0<p\leq1$) par une norme $L_2$ pondérée.  %iterative thresholding algorithm for linear inverse pb with sparsity, daubechies 2004
+	 Elle ne garantie pas la convergence vers un minimum global. Elle s'utilise donc plutôt en optimisation locale. Voir par exemple l'algorithme FOCUSS (FOcal Underdetermined System Solver).
+	\item[-] least-Angle regression stagewise (LARS) : méthode par homotopie (Osbourne, 2000),
+	\item[-] shooting algorithm (Fu, 1998),
+	\item[-] gradient conjugué et ses dérivés,
+	\item[-] et tous les autres algorithmes d'optimisation convexe quadratique.
+\end{itemize}
+
+Si $p>1$, le critère est strictement convexe (et ne présente donc qu'un minimum global). Dans le cas où $p=2$, le problème n'est pas soumis à une contrainte de parcimonie et correspond à la régularisation de Tikhonov ou régression d'arête (\textit{ridge regression}).
+
+
+\paragraph{Cours et algorithmes liés à l'optimisation parcimonieuse en ligne :}~\\
+Une liste de solvers selon la catégorie du problème se trouve à l'adresse : \url{https://web.archive.org/web/20150502191143/http://www.ugcs.caltech.edu/~srbecker/wiki/Category:Solvers}.\\
+Cours d'H. Carfantan sur l'optimisation parcimonieuse : \url{http://www.ast.obs-mip.fr/users/carfan/PPF-PSI/CarfantanSparse.pdf}
+10 cours  "Sparse Representations and Signal Recovery (Purdue University)", StudentLecture : url{https://engineering.purdue.edu/ChanGroup/ECE695Notes/}
+
+
+
+De manière générale, les méthodes de régularisation se confronte aux problématiques suivantes : 
+\begin{itemize}
+	\item[-] Comment choisir la base de décomposition optimale ?
+	\item[-] Comment régler le paramètre $\eta$
+	\item[-] Quelle formulation et quel algorithme de résolution choisir ?
+	\item[-] Comment évaluer la fiabilité de la solution ?
+\end{itemize}
+
+
+
+\todo[inline]{Faire les parallèles : \\
+CLEAN : technique de déconvolution itérative, heuristique de type "matching pursuit"\\
+ SC-DAMAS : de type "basis pursuit"\\
+}
+
+
+
+\todo[inline]{
+The polar correlation technique , FISHER
+%très proche : P. J. T. FILLIPI, D. HABAULT and J. PIRAUX 1988 Journal of Sound and <ibration 124, 285}296.
+%Noise source modelling and identi"cation procedure
+}
