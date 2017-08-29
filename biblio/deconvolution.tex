@@ -1,20 +1,68 @@
-\section{Ajout d'une étape de déconvolution}
+\section{Ajout d'une étape de déconvolution\label{deconvolution}}
 
-La distribution de sources obtenue obtenue par une méthode d'imagerie peut être vue comme la convolution entre la distribution de sources et la fonction d'étalement du point (PSF : point spread function). La PSF est comparable à une réponse impulsionnelle du système d'imagerie. En formation de voies, la PSF est souvent connue (Measurement of Phased Array Point Spread Functions for use with Beamforming ): elle est composée d'un lobe principal et de lobes secondaires. \\
+La distribution de sources obtenue obtenue par une méthode d'imagerie peut être vue comme la convolution entre la distribution de sources et la fonction d'étalement du point (PSF : point spread function). La PSF est comparable à une réponse impulsionnelle du système d'imagerie. En formation de voies, la PSF est souvent connue \citep{Bahr2011a}: elle est composée d'un lobe principal et de lobes secondaires. \\
 
-Ces lobes diminuent notamment le pouvoir de séparation des sources, surtout à basse fréquence ou si les sources sont proches ou multipolaires. Si la PSF est connue, on peut, en principe, déconvoluer la distribution  de source calculée afin de réduire l'intrusion des lobes secondaires.\\
+Ces lobes diminuent notamment le pouvoir de séparation des sources, surtout à basses fréquences ou si les sources sont proches ou encore multipolaires. Si la PSF est connue, on peut, en principe, déconvoluer la distribution  de source calculée afin de réduire l'intrusion des lobes secondaires.\\
 
-On distingue 2 types de lobes secondaires :\\
--ceux généré par la forme générale de l'antenne (le fait qu'elle soit d'une surface finie): peuvent être corrigés en appliquant une fenêtre d'appodisation diminuant la sensibilité des microphones situés sur les bords de l'antenne.\\
--ceux liés à l'espacement entre les microphones
+On distingue 2 types de lobes secondaires : ceux liés à l'espacement entre les microphones et ceux généré par la forme générale de l'antenne (le fait qu'elle soit d'une surface finie). Ces derniers peuvent être corrigés en appliquant une fenêtre d'appodisation diminuant la sensibilité des microphones situés sur les bords de l'antenne.\\
 
 
 La PSF des méthodes inverses est plus difficile à estimer car elle dépend des données de mesure. C'est pourquoi les méthodes de déconvolution y sont moins appliquées. \\
 
+\section{PSF du beamforming standard}
+
+Le beamforming standard permet d'estimer les sources $\bm{\tilde{q}}$ ainsi (cf paragraphe~\ref{bf_standard}) : 
+\begin{equation}
+	\bm{\tilde{q}} = \bm{W}\bm{p},
+\end{equation}
+
+ou bien, en terme d'énergie : 
+
+\begin{align}\label{bf_psf}
+	~ & \bm{\tilde{S}_{qq}} = \bm{W}' \bm{S_{pp}} \bm{W}  \\
+	\text{avec, ~~~~} & \bm{S_{pp}} = \bm{G S_{qq}G}'
+\end{align}
+
+Comme les sources sont supposées décorrélées, on peut calculer avec uniquement les diagonales de  $\bm{\tilde{S}_{qq}}=\text{diag}(b_1, ... , b_j...,b_N)$ et $\bm{S_{qq}}=\text{diag}(q1, ... , q_j...,q_N)$.\\
+
+On a alors : 
+\begin{equation}
+	b_j = \sum_k A_{jk}q_k
+\end{equation}
+avec  $\bm{A}$ la PSF associée à chaque point source. D'après~\ref{bf_psf}, et en rappelant que $\bm{G}=[\bm{g}_1,~...~,\bm{g}_N]$ et $\bm{W}=[\bm{w}_1,~...~,\bm{w}_M]^T$, on a : 
+\begin{equation}
+	A_{jk}=|\bm{w}_j'\bm{g}_k|^2
+\end{equation}
+\todo[inline]{Rapport $1/M^2$ ?}
+
+\todo[inline,color=green!10]{Notations inspirée de \url{http://www.bebec.eu/Downloads/BeBeC2014/Papers/BeBeC-2014-02.pdf} qui donne aussi g et w en présence d'un écoulement uniforme.}
+
 
 \paragraph{DAMAS}
 
- \cite{Brooks2006} (deconvolution approach for the mapping of acoustic sources)
+ \cite{Brooks2006} proposent l'algorithme DAMAS (deconvolution approach for the mapping of acoustic sources) pour résoudre le problème linéaire suivant : 
+\begin{align}
+	&\bm{b}=\bm{Aq}\\
+	\Leftrightarrow & b_j=\sum_k A_{jk}q_k
+\end{align}
+où $\bm{A}$ est la PSF considérée connue, $\bm{b}$ est l'image avant déconvolution et $\bm{q}$ est la distribution de sources après déconvolution.\\
+Cette relation peut être décomposée, de manière analogue à la méthode de Gauss-Seidel : 
+\begin{align}
+	&b_j= \sum_{k=1}^{j-1}A_{jk}q_k + A_{jj}q_j + \sum_{k=j+1}^{N}A_{jk}q_k
+\end{align}
+avec $N$ le nombre total de points de l'image.
+Cependant, les $q_k$ sont inconnus. Ils sont calculés de manière itérative : pour $k>j$, les $q_k$ sont calculés à partir de l'itération précédente et pour $k<j$, les sources sont données à l'itération courante par la relation : 
+
+\begin{equation}
+	b_j^n= \sum_{k=1}^{j-1}A_{jk}q_k^{n} + A_{jj}q_j + \sum_{k=j+1}^{N}A_{jk}q_k^{n-1}
+\end{equation}
+L'incrémentation se fait donc sur $j$, la position des sources déconvoluées et sur $n$, les points de l'image issue du beamforming.\\
+Pour forcer la convergence, $q$ étant une valeur énergétique, elle est mise à zéro si une valeur est calculée négative.
+ 
+ 
+\paragraph{DAMAS2}
+C'est une extension de DAMAS qui considère la PSF shift-invariante. Ainsi, la convolution dans le domaine spatial est remplacée par un produit dans le domaine des nombres d'onde. Cette formulation a pour effet d'accélérer la procédure de déconvolution (et ajoute une régularisation par un effet de filtre passe-bas ?). Ce choix de PSF peut être une bonne approximation si les sources sont suffisamment éloignées de l'antenne.
+
  
 \paragraph{Spectral Estimation Model}
 Correction de différence entre deux matrices de covariance minimisée avec un gradient conjugué (D. Blacodon, G. Elias, Level estimation of extended acoustic sources using an array of microphones, American Institute of Aeronautics and Astronautics Paper 2003-3199, 2003)\\
@@ -30,6 +78,25 @@ Contrainte de positivité sur la solution de source difficile à appliquer ?
 De ces trois méthodes, CLEAN ressort comme étant la plus efficace
 
 Hypothèse sur l'algo CLEAN : le vecteur source est parcimonieux : le champ source recherché est constitué de points sources. Principe de l'algorithme CLEAN \citep{Hogbom1974} : on extrait la plus grande valeur du champ source issu du beamforming, on la note comme un point source, on lui retire un petit gain convolué avec la fonction d'étalement, et on réitère jusqu'à ce que la plus grande valeur atteigne un seuil. Cette méthode est une heuristique (algorithme d'approximation) de type "matching pursuit" (voir le paragraphe sur l'optimisation parcimonieuse).\\
+
+\paragraph{Non-negative least squares (NNLS)}
+
+De manière similaire à DAMAS2, la version FFT-NNLS remplace la convolution par une multiplication dans le domaine des nombres d'onde pour accélérer les calculs.
+
+référence pour chaque méthode dans bahr2011 : \\
+-damas2\\
+
+-fft-nnls\\
+
+-clean-sc\\
+
+-cmf\\
+
+-lore\\
+
+-macs\\
+
+
 
 
 ~\\  : DAMAS, CLEAN-SC, TIDY

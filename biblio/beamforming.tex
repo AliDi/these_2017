@@ -31,7 +31,7 @@ remarque : en beamforming classique, doubler le nombre de micro améliore le RSB
 
 }
 
-\subsection{Vecteur de pointage indépendant des données}
+\subsection{Vecteur de pointage indépendant des données \label{bf_standard}}
 
 
 
@@ -81,6 +81,9 @@ Le spectre de puissance de la distribution des sources estimée est alors donné
 L'algorithme MUltiple Signal Classification (MUSIC, \cite{Schmidt1986}) propose une décomposition en valeurs propres de la matrice interspectrale $\bm{S_{pp}}$ pour la décomposer en 2 sous-espaces, l’un associé au signal et l’autre au bruit, afin de diminuer la contribution énergétique du bruit.  Dans l'expression de $\tilde{G_{ii}}$ en équation~\ref{Gii}, $\bm{S_{pp}}$ est remplacé par les composantes correspondant au sous-espace bruit. Ainsi, ce nouvel estimateur sera maximal lorsque le processeur pointe vers une source, puisque les éléments du dénominateur seront décorrélés. Cet estimateur ne correspond alors plus à une densité spectrale des sources mais seulement à un indicateur de présence au point $i$.\\
 
 Ces méthodes font l'hypothèse de sources décorrélées et sont sensibles au non-respect de cette hypothèse. Des stratégies peuvent être mises en place pour prendre en compte la cohérence des sources \citep{Jiang2003}. De plus, l'utilisation des signaux de mesure pour construire le vecteur de pointage rend ce méthode sensibles à la qualité de ce mesures. Pour contourner cette limitation, une pondération peut être ajoutée à la diagonale de la matrice interspectrale \citep{Li2003}.\\
+
+Ces méthodes de formation de voies présentent l'avantages d'être simples à implémenter et relativement rapides à calculer. Mais leur résolution diminue fortement lorsque la longueur d'onde devient grande devant l'écart inter-microphonique et les images présentent alors des lobes secondaires qui rendent les sources difficile à localiser et à séparer. Ce problème peut être résolu par une étape de déconvolution décrite dans la section \ref{deconvolution}.
+
 
 \todo[inline]{
 DORT (pas d'hypothèse sur la distance source-antenne, équation d'euler linéarisées invariantes par RT en changeant le sens de l'écoulement moyen (ex : Localisation de source acoustique en soufflerie anéchoïque par deux techniques d'antennerie : formation de voies et retournement temporel numérique par Thomas Padois))\\
