@@ -65,8 +65,13 @@
 %\addtolength{\topmargin}{-0.7cm}
 \addtolength{\textheight}{1cm}
 
+\usepackage{color}
 \usepackage[color=blue!20]{todonotes}
 \usepackage{mathtools}
+
+%pour écrire du pseudo code :
+\usepackage{algorithm}
+\usepackage{algorithmic}
 
 
 \usepackage{hyperref}
@@ -190,10 +195,10 @@ Problèmes : On distingue 4 sources de difficultés majeures pour la résolution
 %----------------------
 
 %sources aéros et médole de propagation en écoulement
-\input{sources_aero}
+%\input{sources_aero}
 %
 %débruitage (tonal, cyclo, aerodynamique)
-\input{debruitage}
+%\input{debruitage}
 
 %Les méthodes de formation de voies
 \input{beamforming}
@@ -206,7 +211,7 @@ Problèmes : On distingue 4 sources de difficultés majeures pour la résolution
 \input{methodes_inverses}
 
 %Régularisation spécifique : Approche bayésienne
-\input{approche_bayesienne}
+%\input{approche_bayesienne}
 
 
 

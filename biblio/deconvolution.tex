@@ -7,9 +7,9 @@ Ces lobes diminuent notamment le pouvoir de séparation des sources, surtout à 
 On distingue 2 types de lobes secondaires : ceux liés à l'espacement entre les microphones et ceux généré par la forme générale de l'antenne (le fait qu'elle soit d'une surface finie). Ces derniers peuvent être corrigés en appliquant une fenêtre d'appodisation diminuant la sensibilité des microphones situés sur les bords de l'antenne.\\
 
 
-La PSF des méthodes inverses est plus difficile à estimer car elle dépend des données de mesure. C'est pourquoi les méthodes de déconvolution y sont moins appliquées. \\
+La PSF des méthodes inverses est difficile à estimer car elle dépend des données de mesure. C'est pourquoi les méthodes de déconvolution y sont moins appliquées. En revanche, la PSF du beamforming est bien connue et la résolution de cette méthode est souvent améliorée par une étape de déconvolution.\\
 
-\section{PSF du beamforming standard}
+\subsection{PSF du beamforming standard}
 
 Le beamforming standard permet d'estimer les sources $\bm{\tilde{q}}$ ainsi (cf paragraphe~\ref{bf_standard}) : 
 \begin{equation}
@@ -23,7 +23,7 @@ ou bien, en terme d'énergie :
 	\text{avec, ~~~~} & \bm{S_{pp}} = \bm{G S_{qq}G}'
 \end{align}
 
-Comme les sources sont supposées décorrélées, on peut calculer avec uniquement les diagonales de  $\bm{\tilde{S}_{qq}}=\text{diag}(b_1, ... , b_j...,b_N)$ et $\bm{S_{qq}}=\text{diag}(q1, ... , q_j...,q_N)$.\\
+Comme les sources sont supposées décorrélées, on peut calculer avec uniquement les diagonales de  $\bm{\tilde{S}_{qq}}=\text{diag}(b_1, ... , b_j...,b_N)$ et $\bm{S_{qq}}=\text{diag}(q_1, ... , q_j...,q_N)$.\\
 
 On a alors : 
 \begin{equation}
@@ -35,53 +35,152 @@ avec  $\bm{A}$ la PSF associée à chaque point source. D'après~\ref{bf_psf}, e
 \end{equation}
 \todo[inline]{Rapport $1/M^2$ ?}
 
+La déconvolution consiste théoriquement à inverser la matrice $\bm{A}$ afin de retrouver les vraies valeurs de sources. En pratique, il est nécessaire d'avoir recours à une inversion avec contrainte de positivité sur la solution ($\bm{A}$ étant de grande dimension). Ce problème est généralement suffisamment bien posé pour qu'aucune régularisation supplémentaire ne soit requise.
+
 \todo[inline,color=green!10]{Notations inspirée de \url{http://www.bebec.eu/Downloads/BeBeC2014/Papers/BeBeC-2014-02.pdf} qui donne aussi g et w en présence d'un écoulement uniforme.}
 
 
-\paragraph{DAMAS}
-
- \cite{Brooks2006} proposent l'algorithme DAMAS (deconvolution approach for the mapping of acoustic sources) pour résoudre le problème linéaire suivant : 
+\subsubsection{DAMAS}
+%article en francais : http://www.conforg.fr/cfa2014/cdrom/data/articles/000206.pdf
+ \cite{Brooks2006} proposent l'algorithme DAMAS (deconvolution approach for the mapping of acoustic sources) pour résoudre le problème linéaire de déconvolution : 
 \begin{align}
-	&\bm{b}=\bm{Aq}\\
-	\Leftrightarrow & b_j=\sum_k A_{jk}q_k
+	\Leftrightarrow~~~~ & b_j=\sum_k A_{jk}q_k
 \end{align}
-où $\bm{A}$ est la PSF considérée connue, $\bm{b}$ est l'image avant déconvolution et $\bm{q}$ est la distribution de sources après déconvolution.\\
+Les sources sont supposées incohérentes (i.e. distribution de sources indépendantes statistiquement).
 Cette relation peut être décomposée, de manière analogue à la méthode de Gauss-Seidel : 
 \begin{align}
-	&b_j= \sum_{k=1}^{j-1}A_{jk}q_k + A_{jj}q_j + \sum_{k=j+1}^{N}A_{jk}q_k
+	&b_j= \sum_{k=1}^{j-1}A_{jk}q_k + A_{jj}q_j + \sum_{k=j+1}^{N}A_{jk}q_k\\
+	\Leftrightarrow~~~~~& q_j = \frac{1}{A_{jj}}\left( b_j - \sum_{k=1}^{j-1}A_{jk}q_k -  \sum_{k=j+1}^{N}A_{jk}q_k   \right)
 \end{align}
 avec $N$ le nombre total de points de l'image.
 Cependant, les $q_k$ sont inconnus. Ils sont calculés de manière itérative : pour $k>j$, les $q_k$ sont calculés à partir de l'itération précédente et pour $k<j$, les sources sont données à l'itération courante par la relation : 
 
 \begin{equation}
-	b_j^n= \sum_{k=1}^{j-1}A_{jk}q_k^{n} + A_{jj}q_j + \sum_{k=j+1}^{N}A_{jk}q_k^{n-1}
+	q_j^n= \frac{1}{A_{jj}}\left(b_j -\sum_{k=1}^{j-1}A_{jk}q_k^{n} - \sum_{k=j+1}^{N}A_{jk}q_k^{n-1} \right)
 \end{equation}
-L'incrémentation se fait donc sur $j$, la position des sources déconvoluées et sur $n$, les points de l'image issue du beamforming.\\
-Pour forcer la convergence, $q$ étant une valeur énergétique, elle est mise à zéro si une valeur est calculée négative.
- 
- 
-\paragraph{DAMAS2}
-C'est une extension de DAMAS qui considère la PSF shift-invariante. Ainsi, la convolution dans le domaine spatial est remplacée par un produit dans le domaine des nombres d'onde. Cette formulation a pour effet d'accélérer la procédure de déconvolution (et ajoute une régularisation par un effet de filtre passe-bas ?). Ce choix de PSF peut être une bonne approximation si les sources sont suffisamment éloignées de l'antenne.
+L'incrémentation se fait donc sur $j$, la position des sources déconvoluées et le nombre d'itération $n$ est au choix de l'utilisateur. Pour l'initialisation, on peut choisir $q_j=0$ ou bien $q_j=b_j$, ce qui fera une différence sur la vitesse de convergence.\\
+Pour forcer la convergence, $q$ étant une valeur énergétique, elle est mise à zéro si une valeur est calculée négative.\\
+Cette déconvolution permet de supprimer en partie les lobes secondaires mais présente le principal inconvénient d'être lent.\\
+
+Il existe de nombreuse extension de cette méthode de déconvolution \citep{Dougherty2005}. Par exemple, DAMAS2 considère que la convolution avec la PSF est invariante par translation. Ainsi, la convolution dans le domaine spatial est remplacée par un produit dans le domaine des nombres d'onde. Cette formulation a pour effet d'accélérer la procédure de déconvolution. Elle propose aussi l'ajout d'une régularisation par un filtre passe-bas. Ce choix de PSF peut être une bonne approximation si les sources sont suffisamment éloignées de l'antenne. DAMAS-C prend en compte une définition cohérente des sources.%brooks 2006
+
+
 
  
-\paragraph{Spectral Estimation Model}
-Correction de différence entre deux matrices de covariance minimisée avec un gradient conjugué (D. Blacodon, G. Elias, Level estimation of extended acoustic sources using an array of microphones, American Institute of Aeronautics and Astronautics Paper 2003-3199, 2003)\\
+\subsubsection{Spectral Estimation Model (SEM)}
+Correction de différence entre deux matrices de covariance minimisée avec un gradient conjugué \citep{Blacodon2003}\\
+Equivalent à un filtre de Wiener ?
 Contrainte de positivité sur la solution de source difficile à appliquer ?
 
-\paragraph{CLEAN}
 
 
-\cite{Dougherty1998} présente 3 façons de réduire les lobes secondaires liés au positionnement des michrophones sur l'antenne : \\
--CSM weighting : réduire le poids des termes de la CSM (cross-spectral matrix) correspondant aux paires de microphones dont l'espacement fait qu'ils apportent une information redondante (par exemple 2 microphones sur la même branche d'une antenne en croix)\\
--robust adaptative beamforming = minimum variance algorithm = CAPON\\
--CLEAN algorithme.\\
-De ces trois méthodes, CLEAN ressort comme étant la plus efficace
-
-Hypothèse sur l'algo CLEAN : le vecteur source est parcimonieux : le champ source recherché est constitué de points sources. Principe de l'algorithme CLEAN \citep{Hogbom1974} : on extrait la plus grande valeur du champ source issu du beamforming, on la note comme un point source, on lui retire un petit gain convolué avec la fonction d'étalement, et on réitère jusqu'à ce que la plus grande valeur atteigne un seuil. Cette méthode est une heuristique (algorithme d'approximation) de type "matching pursuit" (voir le paragraphe sur l'optimisation parcimonieuse).\\
-
-\paragraph{Non-negative least squares (NNLS)}
+\subsubsection{Non-negative least squares (NNLS)}
+L'approche NNLS est de minimiser l'erreur au sens des moindres carrés entre $\bm{b}$ et $\bm{Aq}$, en imposant que $\bm{q}$ reste non-négatif : 
+\begin{eqnarray}
+\min_{\bm{q}}\left(||\bm{\tilde{S_{qq}}}-\bm{A}\bm{S_{qq}}||^2 \right)\\
+\text{~~~~sous la contrainte~~~~}\bm{S_{qq}}\geq 0
+\end{eqnarray}
+\todo[inline,color=green!10]{Possibilité d'utiliser la fonction Octave lsqnonneg}
 
 De manière similaire à DAMAS2, la version FFT-NNLS remplace la convolution par une multiplication dans le domaine des nombres d'onde pour accélérer les calculs.
+
+\subsubsection{Déconvolution avec contrainte de parcimonie}
+Les algorithme ci après font l'hypothèse que le vecteur source est parcimonieux
+
+\paragraph{CLEAN}
+Principe de l'algorithme CLEAN \citep{Hogbom1974} : on extrait la plus grande valeur du champ source issu du beamforming, on la note comme un point source, on lui retire un petit gain convolué avec la fonction d'étalement, et on réitère jusqu'à ce que la plus grande valeur atteigne un seuil. Cette méthode est une heuristique (algorithme d'approximation) de type "matching pursuit" (voir le paragraphe sur l'optimisation parcimonieuse).\\
+
+\begin{figure}[!h]
+	\centering
+	\fbox{
+	\begin{minipage}{0.5\textwidth}	
+		Partant de l'image des sources issue du beamforming $dirty$, calcule l'image déconvoluée $clean$.\\
+		\begin{algorithmic}
+			\STATE $gain = $ gain loop
+			\STATE $clean = $zeros(shape($dirty$))
+			\STATE $res=dirty$			
+			\WHILE{$i < niter$ \AND max(abs($res$))< $thresh$}
+			\STATE \textcolor{orange}{1. Search for the peak location in $dirty$}
+			\STATE $rmax$ = coordonnées de max($res$)
+			\STATE \textcolor{orange}{2. Update $clean$}
+			\STATE $mval = res[rmax]\times gain$
+			\STATE $clean[rmax]$ += $mval$
+			\STATE \textcolor{orange}{3. Subtract the appropriately scaled PSF from the dirty map.}
+			\STATE calcul des coordonnées des bords de la psf centrée sur $rmax$
+			\STATE $res$[centré sur $rymax$]	-=  $psf$[centrée sur $rmax$] $\times mval$
+			\STATE $i$ += $1$
+			\ENDWHILE			
+		\end{algorithmic}
+	\end{minipage}
+	}
+	\caption{Pseudo-code de CLEAN de \cite{Hogbom1974}}
+\end{figure}
+
+
+\begin{figure}[!h]
+	\centering
+	\fbox{
+	\begin{minipage}{0.5\textwidth}	
+		Partant de la matrice interspectrale des signaux microphoniques $Spp$, calcule image beamforming $dirty$, puis l'image déconvoluée $clean$, puis la matrice $Sclean$ induite. \\
+		\begin{algorithmic}
+			\STATE $gain = $ gain loop
+			\STATE $clean = $zeros($M,N$)
+			\FOR{$i$ in $niter$}
+				\STATE \textcolor{orange}{1. Obtain $dirty$ by beamforming}	
+				\FOR{$n=1:N$}
+					\STATE $dirty[n]=W'[n,:]\times Spp \times  W[n,:]$
+				\ENDFOR 
+				\STATE \textcolor{orange}{2. Search for the peak location in $dirty$}
+				\STATE $rmax$ = coordonnées de max($dirty$)
+				\STATE $mval=dirty[rmax]$
+				\STATE \textcolor{orange}{3. Steering vector to location of peak}	
+				\STATE $wpeak = W[rmax,:]$			
+				\STATE \textcolor{orange}{4. Update $clean$}
+				\STATE $clean[rmax]$ += $mval$
+				\STATE \textcolor{orange}{5. Calculate Sclean induced}
+				\STATE $Spp$ -= $mval \times wpeak \times wpeak'$			
+			\ENDFOR	
+		\end{algorithmic}
+	\end{minipage}
+	}
+	\caption{Pseudo-code de CLEAN-psf de \cite{Sijtsma2007}}
+\end{figure}
+!!! à chaque fois, sur les données Spp et Sppclean mettre la diagonale à 0 !!!
++critère d'arrêt si sum(sum(Spp)) se met à augmenter
+
+CLEAN possède des extensions telles que CLEAN-PSF ou CLEAN-SC. Ces extensions sont très utilisées pour la localisation de sources aéroacoustiques.
+\todo[inline,color=green!10]{algo Hogbom en python : \url{http://www.mrao.cam.ac.uk/~bn204/alma/python-clean.html}}
+
+
+%\cite{Dougherty1998} présente 3 façons de réduire les lobes secondaires liés au positionnement des michrophones sur l'antenne : \\
+%-CSM weighting : réduire le poids des termes de la CSM (cross-spectral matrix) correspondant aux paires de microphones dont l'espacement fait qu'ils apportent une information redondante (par exemple 2 microphones sur la même branche d'une antenne en croix)\\
+%-robust adaptative beamforming = minimum variance algorithm = CAPON\\
+%-CLEAN algorithme.\\
+%De ces trois méthodes, CLEAN ressort comme étant la plus efficace
+
+
+
+\paragraph{Sparcity constrained DAMAS (SC-DAMAS)}
+\cite{Yardibi2008}
+
+type basis pursuit
+
+\paragraph{bayésien}
+
+
+Comme l'étape de déconvolution revient à résoudre un problème inverse où toutes les sources sont traitées simultanément, les méthodes inverses décrites dans la section~\ref{methodes_inverses} peuvent être utilisées.
+
+
+\subsubsection{Rpise en compte de la cohérence des sources}
+\paragraph{clean-sc}
+notamment en aeroacoustique.
+clean-sc : type matching pursuit
+
+\paragraph{DAMAS-C}
+
+
+
+
 
 référence pour chaque méthode dans bahr2011 : \\
 -damas2\\
@@ -90,21 +189,16 @@ référence pour chaque méthode dans bahr2011 : \\
 
 -clean-sc\\
 
--cmf\\
+-cmf et son extension aux sources cohérentes (CFM-C)\\
 
 -lore\\
 
 -macs\\
 
 
-
-
 ~\\  : DAMAS, CLEAN-SC, TIDY
-+amélioration par déconvolution , ex:DAMAS, SEM, NNLS
 
-
-
-
-
+lire review : Sparsity constrained deconvolution approaches for acoustic
+source mapping
 
 
