@@ -88,7 +88,11 @@ De manière similaire à DAMAS2, la version FFT-NNLS remplace la convolution par
 Les algorithme ci après font l'hypothèse que le vecteur source est parcimonieux
 
 \paragraph{CLEAN}
-Principe de l'algorithme CLEAN \citep{Hogbom1974} : on extrait la plus grande valeur du champ source issu du beamforming, on la note comme un point source, on lui retire un petit gain convolué avec la fonction d'étalement, et on réitère jusqu'à ce que la plus grande valeur atteigne un seuil. Cette méthode est une heuristique (algorithme d'approximation) de type "matching pursuit" (voir le paragraphe sur l'optimisation parcimonieuse).\\
+Pour réduire les lobes secondaires produits par les méthodes d'imagerie, \citep{Hogbom1974} propose de traiter les données (issues des radiotéléscopes) de manière itérative à l'aide d'un algorithme CLEAN.
+Le principe de l'algorithme est le suivant : on extrait la plus grande valeur du champ source issu du beamforming, on la note comme un point source, on lui retire un petit gain convolué avec la fonction d'étalement, et on réitère jusqu'à ce que la plus grande valeur atteigne un seuil. Le pseudo-code correspondant se trouve en figure~\ref{clean_hogbom}.\\
+
+
+\cite{Sijtsma2007} propose une version de cet algorithme pour lequel, à chaque itération, ce sont les données qui sont nettoyées et l'image des sources est recalculée à chaque fois. Cette version permet notamment d'appliquer une pondération sur les données, comme une suppression de la diagonale pour réduire l'effet du bruit aérodynamique. Cette méthode est de type "matching pursuit" (voir le paragraphe sur l'optimisation parcimonieuse) : à chaque itération, le vecteur de pointages correspondant à une mauvaise localisation de sources est écarté et le signal est projeté dans le nouvel espace vectoriel.\\
 
 \begin{figure}[!h]
 	\centering
@@ -113,7 +117,7 @@ Principe de l'algorithme CLEAN \citep{Hogbom1974} : on extrait la plus grande va
 		\end{algorithmic}
 	\end{minipage}
 	}
-	\caption{Pseudo-code de CLEAN de \cite{Hogbom1974}}
+	\caption{Pseudo-code de CLEAN de \cite{Hogbom1974}. \label{clean_hogbom}}
 \end{figure}
 
 
@@ -137,19 +141,26 @@ Principe de l'algorithme CLEAN \citep{Hogbom1974} : on extrait la plus grande va
 				\STATE $wpeak = W[rmax,:]$			
 				\STATE \textcolor{orange}{4. Update $clean$}
 				\STATE $clean[rmax]$ += $mval$
-				\STATE \textcolor{orange}{5. Calculate Sclean induced}
-				\STATE $Spp$ -= $mval \times wpeak \times wpeak'$			
+				\STATE \textcolor{orange}{5. Calculate $Sclean$ induced}
+				\STATE $Spp$ -= $mval \times wpeak \times wpeak'$	
+				\STATE \textcolor{orange}{6. Trimm $Spp$}
+				\STATE $Spp$[logical(eye(N))]=0	
+				\STATE \textcolor{orange}{Stop criterium : Frobenius norm of $Spp$ must always decrease}
+				\STATE normSpp=normFrobenius(Spp)
+				\IF{normSpp>normSclean}
+				\STATE stop
+				\ENDIF	
+				normSclean=normSpp
 			\ENDFOR	
 		\end{algorithmic}
 	\end{minipage}
 	}
-	\caption{Pseudo-code de CLEAN-psf de \cite{Sijtsma2007}}
+	\caption{Pseudo-code de CLEAN-psf de \cite{Sijtsma2007}.}
 \end{figure}
-!!! à chaque fois, sur les données Spp et Sppclean mettre la diagonale à 0 !!!
-+critère d'arrêt si sum(sum(Spp)) se met à augmenter
+\todo[inline]{Pourquoi supprimer aussi la diagonale de $wpeak \times wpeak'$ ?}
 
-CLEAN possède des extensions telles que CLEAN-PSF ou CLEAN-SC. Ces extensions sont très utilisées pour la localisation de sources aéroacoustiques.
-\todo[inline,color=green!10]{algo Hogbom en python : \url{http://www.mrao.cam.ac.uk/~bn204/alma/python-clean.html}}
+
+\todo[inline,color=green!10]{algo Hogbom en python : \url{http://www.mrao.cam.ac.uk/~bn204/alma/python-clean.html}\\ algo Sijtsma en matlab : \url{https://github.com/jorgengrythe/beamforming/tree/master/algorithm}}
 
 
 %\cite{Dougherty1998} présente 3 façons de réduire les lobes secondaires liés au positionnement des michrophones sur l'antenne : \\
@@ -171,10 +182,12 @@ type basis pursuit
 Comme l'étape de déconvolution revient à résoudre un problème inverse où toutes les sources sont traitées simultanément, les méthodes inverses décrites dans la section~\ref{methodes_inverses} peuvent être utilisées.
 
 
-\subsubsection{Rpise en compte de la cohérence des sources}
-\paragraph{clean-sc}
+\subsubsection{Prise en compte de la cohérence des sources}
+\paragraph{CLEAN-SC}
+\cite{Sijtsma2007} propose une version de CLEAN 
+
 notamment en aeroacoustique.
-clean-sc : type matching pursuit
+
 
 \paragraph{DAMAS-C}
 
@@ -201,4 +214,6 @@ référence pour chaque méthode dans bahr2011 : \\
 lire review : Sparsity constrained deconvolution approaches for acoustic
 source mapping
 
+
+Ces méthodes supposent de bien connaître son modèle de sources pour avoir une bonne PSF.
 

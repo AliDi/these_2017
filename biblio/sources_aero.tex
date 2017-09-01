@@ -1,6 +1,8 @@
 %===================================================
 \section{Modèle de propagation et nature des sources aéroacoustiques}
 %===================================================
+
+
 On décrit ici les sources de bruit d'un avion à turboréacteur double flux, les méthodes de séparation des différentes contributions et les mécanismes de génération de bruits en écoulement.\\
 
 
@@ -95,6 +97,8 @@ turbulence : matrice diagonale si on suppose qu'il y a une décorrélation total
 \end{equation}
 L'identification de ces matrice s'appelle "Structured Covariance Estimation problem".\todo[inline]{état de l'art}
 $\bm{B}=Diag(\sigma^{2})$
+
+Un filtrage dans le domaine des nombres d'ondes nécessite un grand nombre de microphone pour être fiable. De plus, il fait l'hypothèse que les parties acoustique et aérodynamique sont disjointes dans ce domaine, ce qui n'est vrai que pour $M<0.8$.
 
 \paragraph{Stochastic modelling}
 approche statistique
