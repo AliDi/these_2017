@@ -97,7 +97,7 @@ Le principe de l'algorithme est le suivant : on extrait la plus grande valeur du
 \begin{figure}[!h]
 	\centering
 	\fbox{
-	\begin{minipage}{0.5\textwidth}	
+	\begin{minipage}{0.45\textwidth}	
 		Partant de l'image des sources issue du beamforming $dirty$, calcule l'image déconvoluée $clean$.\\
 		\begin{algorithmic}
 			\STATE $gain = $ gain loop
@@ -106,8 +106,8 @@ Le principe de l'algorithme est le suivant : on extrait la plus grande valeur du
 			\WHILE{$i < niter$ \AND max(abs($res$))< $thresh$}
 			\STATE \textcolor{orange}{1. Search for the peak location in $dirty$}
 			\STATE $rmax$ = coordonnées de max($res$)
-			\STATE \textcolor{orange}{2. Update $clean$}
 			\STATE $mval = res[rmax]\times gain$
+			\STATE \textcolor{orange}{2. Update $clean$}
 			\STATE $clean[rmax]$ += $mval$
 			\STATE \textcolor{orange}{3. Subtract the appropriately scaled PSF from the dirty map.}
 			\STATE calcul des coordonnées des bords de la psf centrée sur $rmax$
@@ -124,7 +124,7 @@ Le principe de l'algorithme est le suivant : on extrait la plus grande valeur du
 \begin{figure}[!h]
 	\centering
 	\fbox{
-	\begin{minipage}{0.5\textwidth}	
+	\begin{minipage}{0.45\textwidth}	
 		Partant de la matrice interspectrale des signaux microphoniques $Spp$, calcule image beamforming $dirty$, puis l'image déconvoluée $clean$, puis la matrice $Sclean$ induite. \\
 		\begin{algorithmic}
 			\STATE $gain = $ gain loop
@@ -136,7 +136,7 @@ Le principe de l'algorithme est le suivant : on extrait la plus grande valeur du
 				\ENDFOR 
 				\STATE \textcolor{orange}{2. Search for the peak location in $dirty$}
 				\STATE $rmax$ = coordonnées de max($dirty$)
-				\STATE $mval=dirty[rmax]$
+				\STATE $mval=dirty[rmax]\times gain$
 				\STATE \textcolor{orange}{3. Steering vector to location of peak}	
 				\STATE $wpeak = W[rmax,:]$			
 				\STATE \textcolor{orange}{4. Update $clean$}
@@ -146,11 +146,11 @@ Le principe de l'algorithme est le suivant : on extrait la plus grande valeur du
 				\STATE \textcolor{orange}{6. Trimm $Spp$}
 				\STATE $Spp$[logical(eye(N))]=0	
 				\STATE \textcolor{orange}{Stop criterium : Frobenius norm of $Spp$ must always decrease}
-				\STATE normSpp=normFrobenius(Spp)
-				\IF{normSpp>normSclean}
+				\STATE $normSpp$=normFrobenius($Spp$)
+				\IF{$normSpp>normSclean$}
 				\STATE stop
 				\ENDIF	
-				normSclean=normSpp
+				\STATE $normSclean=normSpp$
 			\ENDFOR	
 		\end{algorithmic}
 	\end{minipage}
@@ -184,7 +184,8 @@ Comme l'étape de déconvolution revient à résoudre un problème inverse où t
 
 \subsubsection{Prise en compte de la cohérence des sources}
 \paragraph{CLEAN-SC}
-\cite{Sijtsma2007} propose une version de CLEAN 
+\cite{Sijtsma2007} propose une version de CLEAN qui prend en compte la cohérence des sources. Le principe est le suivant : Le maximum de la dirty map est trouvé.  Les composantes spatiales corrélées avec ce maximum sont sélectionnées puis soustraites à la dirty map.\\
+Cette méthode offre une meilleure résolution que CLEAN.
 
 notamment en aeroacoustique.
 
