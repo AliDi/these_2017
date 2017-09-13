@@ -88,11 +88,12 @@ De manière similaire à DAMAS2, la version FFT-NNLS remplace la convolution par
 Les algorithme ci après font l'hypothèse que le vecteur source est parcimonieux
 
 \paragraph{CLEAN}
-Pour réduire les lobes secondaires produits par les méthodes d'imagerie, \citep{Hogbom1974} propose de traiter les données (issues des radiotéléscopes) de manière itérative à l'aide d'un algorithme CLEAN.
+Pour réduire les lobes secondaires produits par les méthodes d'imagerie, \citep{Hogbom1974} propose de traiter les données (issues des radiotéléscopes) de manière itérative à l'aide d'un algorithme CLEAN.\\
+% L'algorithme CLEAN repose sur 3 principales hypothèses : les sources sont décorrélées ($\bm{S_{pp}}=\sum_k \bm{p}_k \bm{p}k$), il n'y a pas de décorrélation d'un microphone à un autre et il n'y a pas de bruit incohérent.\\
 Le principe de l'algorithme est le suivant : on extrait la plus grande valeur du champ source issu du beamforming, on la note comme un point source, on lui retire un petit gain convolué avec la fonction d'étalement, et on réitère jusqu'à ce que la plus grande valeur atteigne un seuil. Le pseudo-code correspondant se trouve en figure~\ref{clean_hogbom}.\\
 
 
-\cite{Sijtsma2007} propose une version de cet algorithme pour lequel, à chaque itération, ce sont les données qui sont nettoyées et l'image des sources est recalculée à chaque fois. Cette version permet notamment d'appliquer une pondération sur les données, comme une suppression de la diagonale pour réduire l'effet du bruit aérodynamique. Cette méthode est de type "matching pursuit" (voir le paragraphe sur l'optimisation parcimonieuse) : à chaque itération, le vecteur de pointages correspondant à une mauvaise localisation de sources est écarté et le signal est projeté dans le nouvel espace vectoriel.\\
+\cite{Sijtsma2007} propose une version de cet algorithme pour lequel, à chaque itération, ce sont les données qui sont nettoyées et l'image des sources est recalculée à chaque fois. Cette version permet notamment d'appliquer une pondération sur les données, comme une suppression de la diagonale pour réduire l'effet du bruit aérodynamique. Cette méthode est de type "matching pursuit" (voir le paragraphe sur l'optimisation parcimonieuse) : à chaque itération, le vecteur de pointages correspondant à une localisation de sources est écarté et le signal est projeté dans le nouvel espace vectoriel.\\
 
 \begin{figure}[!h]
 	\centering
@@ -159,8 +160,10 @@ Le principe de l'algorithme est le suivant : on extrait la plus grande valeur du
 \end{figure}
 \todo[inline]{Pourquoi supprimer aussi la diagonale de $wpeak \times wpeak'$ ?}
 
-
+ 
 \todo[inline,color=green!10]{algo Hogbom en python : \url{http://www.mrao.cam.ac.uk/~bn204/alma/python-clean.html}\\ algo Sijtsma en matlab : \url{https://github.com/jorgengrythe/beamforming/tree/master/algorithm}}
+
+
 
 
 %\cite{Dougherty1998} présente 3 façons de réduire les lobes secondaires liés au positionnement des michrophones sur l'antenne : \\
@@ -185,7 +188,34 @@ Comme l'étape de déconvolution revient à résoudre un problème inverse où t
 \subsubsection{Prise en compte de la cohérence des sources}
 \paragraph{CLEAN-SC}
 \cite{Sijtsma2007} propose une version de CLEAN qui prend en compte la cohérence des sources. Le principe est le suivant : Le maximum de la dirty map est trouvé.  Les composantes spatiales corrélées avec ce maximum sont sélectionnées puis soustraites à la dirty map.\\
-Cette méthode offre une meilleure résolution que CLEAN.
+
+On veut que G soit tel qu'il contienne toutes les contributions des sources corrélées avec pmax. Ainsi, la projection de G sur wmax est égale à la projection des données (Spp) sur wmax : \\
+Gwmax = Dwmax.\\
+
+Il faut donc construire un vecteur de propagation h traduisant la cohérence entre pmax et les autres sources, de manière à ce que 
+G=pmax h h 
+soit solution de l'équation (Gwmax=Dwmax). 
+Cette solution n'est pas unique. On peut exprimer $\bm{h}$ de la façon suivante : 
+\begin{equation}
+	\bm{h}=\frac{1}{\bm{h}'\bm{w}_{max}}  \frac{\bm{S_{pp}}\bm{w}_{max}}{S_{max}}
+\end{equation}
+En réinjectant cette expression dans (Gwmax=Dwmax) et en rappelant que $S_{max} = \bm{w}_{max}\bm{S_{pp}}\bm{w}_{max}'$, on trouve que le scalaire $\bm{h}'\bm{w}_{max}$ doit être égal à $1$.\\
+
+Si on veut utiliser un $\bm{G}$ à diagonale nulle, on cherche une expression de $\bm{h}$ tel que : 
+\begin{equation}
+	\bar{\bm{G}} = S_{max} (\bm{hh}'-\bm{H}),
+\end{equation}
+avec $\bm{H}$ contenant les éléments diagonaux de $\bm{hh}'$. En isolant $\bm{h}$ dans l'équation (Gwmax=Dwmax), on a : 
+\begin{equation}
+	\bm{h}=\frac{1}{\bm{h}'\bm{w}_{max}}  \left( \frac{\bm{S_{pp}}\bm{w}_{max}}{S_{max}} + \bm{H}\bm{w}_{max} \right)
+\end{equation}
+
+En réinjectant cette expression dans (Gwmax=Dwmax), on trouve que le scalaire $\bm{h}'\bm{w}_{max}$ doit être égal à $\sqrt{1+\bm{w}_{max}\bm{H}\bm{w}_{max}'}$.
+
+
+
+
+Cette méthode offre une meilleure résolution que CLEAN lorsque les sources sont corrélées.
 
 notamment en aeroacoustique.
 

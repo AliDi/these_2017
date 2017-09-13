@@ -5,12 +5,12 @@
 Le principe des méthodes de formation de voies est de pondérer les signaux de mesure à l'aide de vecteurs de pointage de manière à les focaliser dans chaque point du plan sur lequel les sources sont cherchées.
 Ces méthodes sont très utilisées car elles offrent beaucoup de flexibilité sur la position des capteurs et sont simples à mettre en œuvre. Cependant, elles offrent une résolution fortement dépendante de la géométrie de l'antenne.\\
 \todo[inline]{Manque une référence type review}
-Les vecteurs de pointage (correspondant aux lignes de l'opérateur inverse $\bm{W}$) sont les poids attribués à chaque microphone avant de sommer leur réponse.  En tout point focal $i$ du plan de recherche de source, le vecteur de pointage est comparé à la pression mesurée par les microphones. Ainsi, le produit scalaire $\bm{w}_i'\bm{p}$ entre le vecteur de pointage $\bm{w}_i$ conjugué transposé (symbole $'$) et le vecteur des pressions $\bm{p}$ est maximal lorsque les vecteurs sont colinéaires. Le vecteur de pointage est donc associé à un modèle de source. Le modèle de source choisi ici est un ensemble de sources ponctuelles décorrélées. En choisissant un modèle de source décrite par une fonction de Green solution de l'équation d'Helmoltz en champ libre, cette source a pour fonction de transfert du point focal $i$ au microphone $m$ : 
+Les vecteurs de pointage (correspondant aux lignes de l'opérateur inverse $\bm{W}$) sont les poids attribués à chaque microphone avant de sommer leur réponse.  En tout point focal $i$ du plan de recherche de source, le vecteur de pointage est comparé à la pression mesurée par les microphones. Ainsi, le produit scalaire $\bm{w}_i'\bm{p}$ entre le vecteur de pointage $\bm{w}_i$ conjugué transposé (symbole $'$) et le vecteur des pressions $\bm{p}$ est maximal lorsque les vecteurs sont colinéaires. Le vecteur de pointage est donc associé à un modèle de source. Le modèle de source choisi ici est un ensemble de sources ponctuelles décorrélées. Le calcul peut être réalisé aussi bien dans le domaine temporel que dans le domaine fréquentiel. En choisissant un modèle de monopole décrit par une fonction de Green solution de l'équation d'Helmoltz en champ libre, cette source a pour fonction de transfert du point focal $i$ au microphone $m$ : 
 \begin{equation}
 	h_{im}=\frac{e^{-jkr_{mi}}}{4\pi r_{mi}}.
 \end{equation}
 Donc, le vecteur des pression pour une source ponctuelle au point $i$ d'amplitude $A_i$ est $\bm{p}=A_i\bm{h}_i$.\\
-
+Différents vecteurs de pointage sont utilisés dans la littérature (Sarradj, E., Three-Dimensional Acoustic Source Mapping with Different Beamforming Steering Vector Formulations).
 
 
 %Cette méthode de formation de voies se base sur l'analyse des temps de vol des ondes émises par les sources, dans un milieu dont la propagation est considérée connue. Les retards des signaux sont compensés et sommés pour chaque direction incidente (i.e. point de balayage) possible. La réponse de l'antenne est ainsi maximisée pour l'angle de balayage correspondant à l'angle d'incidence de la source.\\
@@ -51,7 +51,9 @@ En présence d'un bruit décorrélé à chaque microphone, on peut montrer que l
 \begin{equation}
 	\bm{w}_i=\frac{\bm{h}_i}{\bm{h}_i'\bm{h}_i+\gamma},
 \end{equation}
-avec $\gamma=G_{nn}/G_{ii}$, $G_{nn}$ étant les termes diagonaux de la matrice interspectrale du bruit aux microphones.
+avec $\gamma=G_{nn}/G_{ii}$, $G_{nn}$ étant les termes diagonaux de la matrice interspectrale du bruit aux microphones.\\
+
+Il est fréquent d'annuler la diagonale de $\bm{S_{pp}}$ afin de négliger la contribution du bruit de cohérence intermicrohponique nulle. Suite à cette opération, $\bm{S_{pp}}$  n'est plus définie positive et ses valeurs propres peuvent être négative\footnote{La somme des valeurs propres de $A$ est égale à la somme de ses éléments diagonaux.}, ce qui peut rendre la PSF négative.
 
 
 

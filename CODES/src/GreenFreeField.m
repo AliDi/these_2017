@@ -1,4 +1,4 @@
-function G=GreenFreeField(r_src , r_mic)
+function G=GreenFreeField(r_src , r_mic , F)
 %Calculates the acoustic transfert matrix for free field propagation (3D),
 %from source points r_src to microphone points r_mic.
 %
@@ -7,7 +7,6 @@ function G=GreenFreeField(r_src , r_mic)
 %r_src : (N x 3) matrix (idem)
 %
 %G : (M x N x nb_freq) matrix
-    global F;
     [M, ~]= size(r_mic);
     [N, ~]= size(r_src);
     c=343; %speed of sound in air, m/sbeam

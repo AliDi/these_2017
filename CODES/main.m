@@ -18,7 +18,7 @@ addpath('C:\Users\adinsenmey\Desktop\these17\CODES\src')
 
 %%% Frequencies
 global F;
-F=20e3;%1:100:20e3; %observed frequencies
+F=1:100:20e3; %observed frequencies
 nb_F = length(F);
 
 %%% Microphones position
@@ -49,7 +49,7 @@ title('Configuration')
 correlated ='uncorrelated'
 
 %%Real source strength coefficients
-q = 1000*ones(N , 1 , nb_F); 
+q = 1*ones(N , 1 , nb_F); 
 
 if strcmpi(correlated,'correlated')
 	Sqq=InterspectraMatrix(q);
@@ -67,7 +67,7 @@ end
 %%%------------------------------------------------------------------------
 
 %%% Define grid for source map
-Nx=1000;
+Nx=500;
 Ny=1;
 Nz=1;
 Nmap = Nx * Ny * Nz; %number of source point on the constructed map
@@ -84,7 +84,7 @@ Zmap=Zmap';
 r_src_map = [Xmap(:) Ymap(:) Zmap(:)]; % vector of estimate source point positions (map)
 
 %%% Matrix of acoustic transfert from real source position to mic position (for the direct pb)
-G_src_mic = GreenFreeField(r_src , r_mic);
+G_src_mic = GreenFreeField(r_src , r_mic , F);
 
 
 for f=1:nb_F	
@@ -99,16 +99,27 @@ end
 %%%------------------------------------------------------------------------
 
 %%% Matrix of acoustic transfert from map points to mic position (for the BF pb)
-G_map_mic = GreenFreeField(r_src_map , r_mic);
+G_map_mic = GreenFreeField(r_src_map , r_mic , F);
 
 %%% Estimates source cross spectra, using beamforming
-%[Sqq_est , Sqq_diag ] = beamforming(Spp , G_map_mic);
+%parfor f=1:nb_F
+%[Sqq_est(:,:,f) , Sqq_diag(:,:,f) , W(:,:,f) ] = beamforming(Spp(:,:,f) , G_map_mic(:,:,f));
+%end
 
 
 %%%------------------------------------------------------------------------
 %%% CLEAN-PSF algorithm
 %%%------------------------------------------------------------------------
-[cleanmap , dirtymap ] = clean_psf(0.5 , Spp , G_map_mic , 10);
+trim='on';
+parfor f=1:nb_F
+    
+    disp(['Frequency : ' num2str(f) '/' num2str(nb_F)]);
+    [cleanmap(:,f) , dirtymap(:,f) ] = clean_psf(0.99 , Spp(:,:,f) , G_map_mic(:,:,f) , 500 , trim);
+    
+end
+
+
+
 
 
 
@@ -123,20 +134,20 @@ G_map_mic = GreenFreeField(r_src_map , r_mic);
 
 % sources on a line (1D)
 figure(4)
-%imagesc(F,x_grid,20*log10(abs(Sqq_diag)));
-imagesc(F,x_grid,20*log10(abs(cleanmap)));
+%imagesc(F,x_grid,10*log10(abs(Sqq_diag)));
+imagesc(F,x_grid,10*log10(real(cleanmap)/max(max(real(cleanmap)))));
 colorbar
 xlabel('Fr\''equence en Hz');
 ylabel('Position en m');
 title(['Beamforming, ' correlated ' sources'])
 
-figure(5)
-%imagesc(F,x_grid,20*log10(abs(Sqq_diag)));
-imagesc(F,x_grid,20*log10(abs(dirtymap)));
-colorbar
-xlabel('Fr\''equence en Hz');
-ylabel('Position en m');
-title(['Beamforming, ' correlated ' sources'])
+%%% 
+
+for n=1:N
+    hold on
+    p1=plot(F,x_src(n)*ones(nb_F,1), 'color', [0.5 0.5 0.5],'linestyle','--');
+    p1.Color(4) = 0.5;
+end
 
 %print(['beamforming/img_antenne_log/beamforming_' correlated],'-dsvg')
 %print(['beamforming/img_antenne_log/beamforming_' correlated],'-dpng')

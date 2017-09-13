@@ -1,5 +1,5 @@
-function [cleanmap , dirtymap ] = clean_psf(LoopGain , Spp , G_map_mic , nb_itmax , trim)
-%CLEAN-PSF (from Sijtsma, 2007)
+function [cleanmap , dirtymap ] = clean_sc(LoopGain , Spp , G_map_mic , nb_itmax , trim)
+%CLEAN-SC (from Sijtsma, 2007)
 %
 %LoopGain (scalar 0< <1) : fraction of max value substracted too clean map
 %Spp : (M x M x nb_F) matrix of mic pressures cross spectra
@@ -11,9 +11,6 @@ function [cleanmap , dirtymap ] = clean_psf(LoopGain , Spp , G_map_mic , nb_itma
     [M Nmap]=size(G_map_mic);
     cleanmap=zeros(Nmap,1); 
     
-
-
-
     %Initialize stop criterion
     count=1;
     StopCriterion=0;
@@ -42,6 +39,8 @@ function [cleanmap , dirtymap ] = clean_psf(LoopGain , Spp , G_map_mic , nb_itma
 
         %%% Update clean
         cleanmap(index_rmax) = cleanmap(index_rmax) + valmax;
+        
+        %%%
 
         %%% Calculate Sppclean induced
         SppOld=Spp(:,:);

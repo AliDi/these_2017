@@ -47,289 +47,38 @@
 
 \addtobeamertemplate{footline}{\hspace{11cm} \insertframenumber/\inserttotalframenumber}
 
-\author{Alice \textsc{Dinsenmeyer} }
+\author{Encadrement : \\ Romain \textsc{Brossier} \& Ludovic \textsc{Moreau} \\ Maîtres de conférences, ISTerre}
 
-\title{FWI for Ultrasonic Imaging}
-\subtitle{Flaw detection in steel weld}
-\date{\small \today}
+\title{Imagerie ultrasonore de soudures\\par inversion de formes d'onde}
+
+\titlegraphic{
+\begin{minipage}{0.3\textwidth}
+	\centering
+	\includegraphics[height=1cm]{img/univ.png}	
+\end{minipage}
+\begin{minipage}{0.3\textwidth}
+	\centering	
+	\includegraphics[height=1cm]{img/cnrs.png}
+\end{minipage}
+\begin{minipage}{0.3\textwidth}
+	\centering
+	\includegraphics[height=1cm]{img/isterre.png}
+\end{minipage}
+
+}
+
 
 \setbeamertemplate{caption}{\raggedright\insertcaption\par}
 
 \begin{document}
 
-\section{Présentation}
 
+%\include{part_1_presentation}
 
-\begin{frame}
-	\begin{center}
-		\textbf{Alice \textsc{Dinsenmeyer}}\\
-		\footnotesize{Doctorante (1\textsuperscript{ère} année)\\[0.5cm]
-		\textit{alice.dinsenmeyer@insa-lyon.fr\\
-		1\textsuperscript{er} étage, Bât. J. Jacquard}}
-			
-	\end{center}
-	\begin{itemize}
-		\item 2011 -- 2014 : licence en acoustique, Université du Maine, Le Mans %Bachelor of science in acoustics
-		\item 2014 --2016 : Master recherche en acoustique, Université du Maine, Le Mans %Master of science in acoustics
-		\begin{columns}
-			\hspace{2cm}\column{0.5\textwidth}
-			\begin{itemize}
-				\item[-] Ondes dans les solides et les fluides
-				\item[-] Imagerie ultrasonore
-				\item[-] Psychoacoustique
-			\end{itemize}
-			\column{0.5\textwidth}
-			\begin{itemize}
-				\item[-] Traitement du signal
-				\item[-] Informatique scientifique
-			\end{itemize}
-		\end{columns}
-	\end{itemize}
-\end{frame}
-
-\section{Sujet de thèse}
-
-
-\begin{frame}
-	\centering
-	\textbf{ Méthodes inverses avec approche bayésienne \\pour l'identification de sources aéroacoustique}\\
-	\footnotesize{depuis juillet 2017}\\[0.5cm]
-	Direction : Jérôme Antoni (LVA), Chritophe Bailly (LMFA), Quentin Leclère (LVA)\\[0.5cm]
-	Financements : CeLyA + INSAVALOR (projet européen \textbf{AD}vanced \textbf{A}eroacoustic \textbf{P}rocessing \textbf{T}echniques, ADAPT)
-\end{frame}
-
-\begin{frame}
-	
-	Contexte : réduction du bruit aérodynamique des avions (turbomachines et profil)
-	
-	Nature des sources : \\
-	-parcimonieuses spatialement\\
-	-large bande fréquentielle (not. domaine de l'audible)\\
-	-mesures empreintes de bruit aérodynamique
-	
-	
-\end{frame}
-
-\begin{frame}
-	
-	Problématiques : \\
-	-extraction des composantes tonales, cyclostationnaires et aérodynamiques\\
-	-localisation et quantification des sources
-	
-
-	
-\end{frame}
+\include{part_2_stage}
 
 
 
-
-\begin{frame}
-	Master internship at Institut des Sciences de la Terre (ISTerre), Grenoble\\
-	Full Waveform Inversion for Ultrasonic Imaging,\\
-	Flaw detection in steel weld
-	
-	Institut des Sciences de la Terre : \\
-	108 chercheurs permanents + 80 doctorants\\
-	axes de recherche : géochimie, géophysique, risques
-	
-	Consortium industriel Seiscope : imagerie géophysique, prospection pétrolière
-	
-	\begin{tikzpicture}[remember picture,overlay,shift={(\textwidth-1cm,-0.5\textheight+3cm)}]
-		\node[]{\includegraphics[width=2cm]{img/logo_isterre.jpg}};
-	\end{tikzpicture}
-
-\end{frame}
-
-
- \section{Master's Internship}
-
-\section*{NDT for Welds}
-\begin{frame}{\insertsectionhead}
-\vspace{-0.7cm}
-	\begin{figure}
-		\centering
-		\includegraphics[height=3cm]{img/us_test.jpg}
-		\hspace{1cm}
-		\includegraphics[height=3cm]{img/olympus.jpg}\\
-		{\tiny Pipeline test$^{*}$\hspace{4cm} Echo mode testing$^{**}$}
-	\end{figure}
-
-	%\begin{columns}
-			%\column{.5\textwidth}
-			Non destructive testing for weld in :\\
-			\begin{itemize}
-				\item nuclear reactors (cooling system)
-				\item oil and gaz pipelines
-			\end{itemize}
-			%\column{.05\textwidth}
-			%\ding{222}
-			%\column{.45\textwidth}
-			%\centering
-			\vspace{0.6cm}
- 			\indent \ding{222} porosity, cracks, lack of fusion, corrosion, inclusions,\ldots
-	%\end{columns}
-
-
-	
-\vfill
-{\tiny Pictures from $^{*}$Davidmack \& $^{**}$Olympus}\vspace{-0.5cm}
-\end{frame}
-
-
-
-\begin{frame}{\insertsectionhead}
-\vspace{-1cm}
-\hspace{1cm}
-	\begin{columns}[c]
-			\column{.5\textwidth}<1->
-			\centering
-			\begin{figure}
-				\includegraphics[height=2.7cm]{./img/soudure1.png}\\
-				{\centering \tiny Macrography of a weld$^{*}$}
-			\end{figure}
-			\column{.001\textwidth}<2->
-			\hspace{-3cm}
-			\vspace{2cm}
-			\begin{tikzpicture}
-					\draw[<-, thick,shorten <=2pt,shorten >=2pt,red] (-1.5,3)--(0.5,4);
-			\end{tikzpicture}
-			\column{.9\textwidth}<2->
-			%\vfill
-			\hspace{-1cm}
-			\textcolor{red}{Strong unknown anisotropy}\\
-			$\hookrightarrow$ distorsion and splitting of the beam\\[0.2cm]
-			\hspace{-0.5cm}
-			\includegraphics[scale=0.5]{img/gardahaut.png}\\
-			{\centering \tiny Comparison of ray based model and experiment result$^{**}$}
-				
-	\end{columns}
-	\vspace{0.3cm}
-	\begin{columns}[c]
-			\column{.5\textwidth}<1->
-			%\begin{block}{}
-				\begin{itemize}
-					\item[$\bullet$] delay and sum methods
-					\item[$\bullet$] decomposition of covariance matrix (DORT)
-				\end{itemize}
-			%\end{block}
-			\column{.05\textwidth}<2->
-			\ding{222}
-			\column{.5\textwidth}<2->
-			%\begin{block}{}
-				\begin{itemize}
-					\item[\ding{55}] need to know $c$ a priori\\
-					\item[\ding{55}] strong artefacts
-				\end{itemize}
-			%\end{block}
-			
-	\end{columns}
-	\begin{columns}[c]
-		\column{.5\textwidth}<3->
-			\begin{itemize}
-				\item[$\bullet$] solving NL optimization problem
-			\end{itemize}
-		\column{.05\textwidth}<3->
-			\ding{222}
-		\column{.5\textwidth}<3->
-			\begin{itemize}
-			\item contour reconstruction :\\\hspace{-0.5cm}\small{\emph{Dominguez et al.}, \emph{Rodriguez et al.}}\\[0.1cm]
-			\item[\ding{51}] \normalsize{$C_{ij}$ reconstruction : FWI}
-		\end{itemize}		
-	\end{columns}
-\vfill
-{\tiny Pictures from $^{*}$Chassignole 2000, PhD thesis \& $^{**}$Gardahaut \emph{et al.} 2014}\vspace{-0.5cm}
-\end{frame} 
-
-\section{What is specific to weld imaging ?}
-\begin{frame}{\insertsectionhead}
-	\begin{itemize}
-		\item <1-> 2 free surfaces : more information $\leftrightarrow$ non-linear inversion
-		\item <2-> surface acquisition only 
-		\item <3-> anisotropy $\rightarrow$ multi-parameter inversion \\\hspace{2.3cm}($C_{ij}\times$6 : weld + defects)
-		%\item <4-> defects $\rightarrow$ multi-scale inversion ($C_{ij}^{d}\times$6)
-	\end{itemize}
-	\vfill
-	\begin{figure}[!h]
-		\centering
-		\includegraphics<1-1>[scale=1]{img/soud1.pdf}
-		\includegraphics<2-2>[scale=1]{img/soud2.pdf}
-		%\includegraphics<3-3>[scale=1]{img/soud3.pdf}
-		\includegraphics<3-3>[scale=1]{img/soud4_bis.pdf}
-	\end{figure}
-
-\end{frame}
-
-%\section{To do}
-%\begin{frame}{\insertsectionhead}
-%	\begin{itemize}
-%		\item <1-> 2D acoustic approximation (mono/multiparameter)
-%		\begin{itemize}
-%			\item isotropic weld ($v_{p}$, $\rho$)
-%			\item transverse isotropic weld ($v_{p}$, $\rho$, $\epsilon$, $\delta$, $\theta$)
-%		\end{itemize}
-%		\item <2-> 3D elastic inversion (mono/multiparameter : $C_{ij}\times$6)
-%		\begin{itemize}
-%			\item isotropic weld
-%			\item anisotropic weld
-%			\item real data
-%		\end{itemize}		
-%	\end{itemize}
-%\end{frame}
-
-\section{To do}
-\begin{frame}{\insertsectionhead}
-	\begin{itemize}
-		\item 2D acoustic approximation (mono/multiparameter)
-		\begin{itemize}
-			\item isotropic weld (\fcolorbox{DeepSkyBlue4}{DeepSkyBlue4!10}{$v_{p}$}, \fcolorbox{DeepSkyBlue4}{DeepSkyBlue4!10}{$\rho$})
-			\item transverse isotropic weld ($v_{p}$, $\rho$, \fcolorbox{DeepSkyBlue4}{DeepSkyBlue4!10}{$\epsilon$}, $\delta$, $\theta$)
-		\end{itemize}
-		\item 3D elastic inversion (mono/multiparameter : $C_{ij}\times$6)
-		\begin{itemize}
-			\item isotropic weld : \fcolorbox{DeepSkyBlue4}{DeepSkyBlue4!10}{$v_{p}$}
-			\item anisotropic weld
-			\item real data
-		\end{itemize}		
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\begin{columns}
-		\column{.7\textwidth}
-		\begin{figure}[!h]
-			\flushleft
-			\includegraphics[width=\textwidth]{img/vp.png}\\[0.5cm]
-		\end{figure}
-		\vline
-		\column{.36\textwidth}
-		\begin{figure}[!h]
-			\flushright
-			\vspace{-1cm}
-			\includegraphics[width=\textwidth]{img/ondes.png}
-		\end{figure}
-	\end{columns}
-	\begin{center}
-			2D isotropic case :  monoparameter inversion of $v_{p}$\\ 100kHz $\rightarrow$5MHz
-	\end{center}
-
-\end{frame}
-
-\section{To do}
-\begin{frame}{\insertsectionhead}
-	\begin{itemize}
-		\item 2D acoustic approximation (mono/multiparameter)
-		\begin{itemize}
-			\item isotropic weld (\fcolorbox{DeepSkyBlue4}{DeepSkyBlue4!10}{$v_{p}$}, \fcolorbox{DeepSkyBlue4}{DeepSkyBlue4!10}{$\rho$})
-			\item transverse isotropic weld ($v_{p}$, $\rho$, \fcolorbox{DeepSkyBlue4}{DeepSkyBlue4!10}{$\epsilon$}, $\delta$, $\theta$)
-		\end{itemize}
-		\item 3D elastic inversion (mono/multiparameter : $C_{ij}\times$6)
-		\begin{itemize}
-			\item isotropic weld : \fcolorbox{DeepSkyBlue4}{DeepSkyBlue4!10}{$v_{p}$}
-			\item anisotropic weld
-			\item real data
-		\end{itemize}		
-	\end{itemize}
-\end{frame}
 \begin{frame}
 code ouverts (FORTRAN 90) : optimization toolbox + codes FW modelling and inversion
 

@@ -1,0 +1,33 @@
+	\begin{tikzpicture}
+		\node (init) [draw=black, align=center] at (0,0) {Paramètres initiaux \\ $\bm{m}_{0}$};
+		\node (dir) [below=0.7cm of init , draw=black,align=center] {Problème direct :\\ éléments finis \\ ou différences finies};
+		\path[->, thick,shorten <=2pt,shorten >=2pt] (init) edge (dir);
+		\node (dcal) [draw=black, right=0.7cm of dir, align=center] {Données calculées \\ $\bm{d}_{cal}(\bm{m})$};
+		\path[->, thick,shorten <=2pt,shorten >=2pt] (dir) edge (dcal);
+		\node (dobs) [draw=black, right=0.7cm of dcal, align=center] {Données de mesures \\ $\bm{d}_{obs}$};
+		\node (fc) [draw=black,below right= 0.7cm and -2cm of dcal, align=center] {Fonction de coût \\ $C(\bm{m})=\frac{1}{2}||\bm{d}_{obs}-\bm{d}_{cal}(\bm{m})||^{2}$};
+		%\draw[|-,-|,->, thick,] (dobs.south) |-+(0,-1em)-| (fc.north);
+		%\draw[|-,-|,-> thick,] (dcal.south) |-+(0,-1em)-| (fc.north);
+		\path[->, thick,shorten <=2pt,shorten >=2pt] (dcal) edge (fc);
+		\path[->, thick,shorten <=2pt,shorten >=2pt] (dobs) edge (fc);
+		\path[->, thick,shorten <=2pt,shorten >=2pt] (dir) edge (dcal);
+		\node (m) [draw=black, below left=0.7cm and -6cm of fc, align=center] {Problème inverse : \\~\\ 
+			\begin{minipage}{0.35\textwidth}
+				\centering
+				Calcul du gradient $C'(\bm{m})$
+				Calcul du hessien $C''(\bm{m})$
+			\end{minipage}
+			\vline
+			\begin{minipage}{0.3\textwidth}
+				\centering
+				~$\bm{\Delta m}=-(C'')^{-1}C'$
+			\end{minipage}
+			\vline
+			\begin{minipage}{0.35\textwidth}
+				\centering
+				Mise à jour du modèle : \\ $\bm{m} := \bm{m}+ \bm{\Delta m}$
+			\end{minipage}
+		};
+		\path[->, thick,shorten <=2pt,shorten >=2pt] (fc) edge (m);
+		\path[->, thick,shorten <=2pt,shorten >=2pt] (m) edge (dir);		
+	\end{tikzpicture}

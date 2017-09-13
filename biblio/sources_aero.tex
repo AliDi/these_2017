@@ -17,6 +17,7 @@ Séparer ces composantes dans le champ total mesuré permet de mieux comprendre 
 
 
 
+
 \subsection{Exemples de sources aéroacoustiques sur un avion}
 %=============================================================
 
@@ -138,28 +139,42 @@ Pour comprendre le problème, il est nécessaire de rappeler les expression anal
 
 
 
-Nature des sources : cohérent/incohérent, étendues/ponctuelles ? Hypothèses sur les sources : ondes planes/sphériques, par ex.
+%Nature des sources : différent niveaux, cohérent/incohérent, étendues/ponctuelles ? Hypothèses sur les sources : ondes planes/sphériques, par ex.
 
-Fonctions de Green en écoulement
+%Fonctions de Green en écoulement
 
-Spécificité de l'imagerie en écoulement turbulent
+%Spécificité de l'imagerie en écoulement turbulent
 
-Correction de l'écoulement : modèle d'Amiet ou modèle de Koop
-Étude de la correction à appliquer pour l'écoulement en beamforming : thèse Haddad.
+%Correction de l'écoulement : modèle d'Amiet ou modèle de Koop
+%Étude de la correction à appliquer pour l'écoulement en beamforming : thèse Haddad.
 
 
-Source dipolaire/monopolaire : influence sur la méthode ?
+%Source dipolaire/monopolaire : influence sur la méthode ?
 
-Nature du bruit de fond ?
+%Nature du bruit de fond ?
 
-\todo[inline]{Prise en compte des réflexions sur le jet, interaction non-linéaire des sources, ...}
+%\todo[inline]{Prise en compte des réflexions sur le jet, interaction non-linéaire des sources, ...}
 
 %===================================================
 \subsection{Aspects expérimentaux}
 %===================================================
+\todo[inline]{Etat de l'art beamforming dans le doc \url{CEAS-special-issue-arrays_3-April-2017_error.pdf}}
+
 Pour obtenir une représentation spatiale d'un champ stationnaire, les mesures peuvent être réalisées de plusieurs manières. Le ou les capteurs peuvent être déplacés dans l'espace pas à pas ou continûment (\cite{Comesana2013} pour un exemple de scan manuel, la position du capteur étant enregistrée par une vidéo) . Les mesures peuvent aussi être réalisées simultanément, moyennent l'utilisation d'une antenne fixe et d'une éventuelle carte d'acquisition multivoies. Pour caractériser un champ instationnaire à un instant donné, seules les mesures simultanées peuvent être réalisées.
 
+\subsubsection{Mesures en soufflerie}
+Les mesures en soufflerie sont plus simples à réaliser que les mesures en vol (échelle réduite, instrumentation facilitée, source fixe, ...) et permettent de réaliser les tests dans un environnement contrôlé. Cependant, pour assurer leur validité, il faut s'assurer que les conditions en soufflerie sont équivalentes aux conditions réelles. Les mesures peuvent être réaliser en soufflerie close ou ouverte. Le veine close permettent un meilleur contrôle des condition d'écoulement mais induisent un bruit de turbulence plus élevé que les veines ouvertes.
+
+\subsubsection{Mesures en vol}
+Si les capteurs sont positionnés au sol, la principale problématique est de mettre en oeuvre une dédopplerisation. Ces mesures sont plutôt pratiquées pour connaître le bruit à l’atterrissage ou au décollage.\\
+Pour des mesures du bruit aérodynamique, les capteurs peuvent être posés sur l'avion en régime iddle. Le contenu des mesures dépend alors grandement de la position des capteurs (proximité des turbomachines, des ailes, ...).
+
+
+
 \subsubsection{Antenne}
+Les mesures en présence d'un fort écoulement sont fortement marquée par le bruit de turbulence. Pour réduire ce bruit, différentes stratégies peuvent être mises en place. Les microphones peuvent être montés dans des cavités de manière à filtrer les petites longueurs d'ondes associées au bruit de turbulence. En veine ouverte, les microphones peuvent être placés en dehors du jet.  
+
+
 différence entre antenne linéaire et antenne plane et antenne 3D.\\
 
 acquisition(antenne, micro, accéléro, MEMS)/excitation (nature des sources)\\
@@ -168,5 +183,6 @@ ref sur l'influence de la position des micros : thèse antoine peillot\\
 
 
 
-Algo de détection du nombre de sources, notamment pour séparer les sous-espaces bruit/signal ?
+
+
 
