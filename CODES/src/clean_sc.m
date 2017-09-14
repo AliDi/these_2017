@@ -1,4 +1,4 @@
-function [cleanmap , dirtymap ] = clean_sc(LoopGain , Spp , G_map_mic , nb_itmax , trim)
+function [cleanmap , dirtymap , count ] = clean_sc(LoopGain , Spp , G_map_mic , nb_itmax , trim)
 %CLEAN-SC (from Sijtsma, 2007)
 %
 %LoopGain (scalar 0< <1) : fraction of max value substracted too clean map
@@ -36,21 +36,36 @@ function [cleanmap , dirtymap ] = clean_sc(LoopGain , Spp , G_map_mic , nb_itmax
 
         %%% Find steering vector associated to rmax
         wmax=W(index_rmax,:);
+        wmax=wmax'; %make wmax a colonn vector
 
         %%% Update clean
         cleanmap(index_rmax) = cleanmap(index_rmax) + valmax;
         
-        %%%
-
+        %%% Calculate coherent sources propagator
+        if strcmpi(trim,'on')
+            h = G_map_mic(:,index_rmax);
+            for iterH = 1:1000
+                hOldValue = h;
+                H = h*h';        
+                H(~logical(eye(M))) = 0;            
+                h = 1/sqrt(1+wmax'*H*wmax)*(Spp*wmax/valmax + H*wmax);
+                if norm(h-hOldValue) < 1e-10
+                    break;
+                end
+            end
+        else
+             h=Spp*wmax./valmax;
+        end
+        
         %%% Calculate Sppclean induced
         SppOld=Spp(:,:);
-        Spp(:,:) = Spp(:,:) - valmax * G_map_mic(:,index_rmax)*G_map_mic(:,index_rmax)';
+        Spp(:,:) = Spp(:,:) - valmax * h * h';
 
         %%%Stop criterion
         if ( norm(Spp(:,:),'fro') > norm(SppOld,'fro') || count > nb_itmax || valmax <0)
             StopCriterion=1;
             cleanmap(index_rmax) = cleanmap(index_rmax) - valmax;
-            Spp(:,:) = Spp(:,:) + valmax * G_map_mic(:,index_rmax)*G_map_mic(:,index_rmax)';
+            Spp(:,:) = Spp(:,:) + valmax * h *h';
         end
 
         %figure(5);
@@ -58,5 +73,6 @@ function [cleanmap , dirtymap ] = clean_sc(LoopGain , Spp , G_map_mic , nb_itmax
         %colorbar
         %pause(1);
     end
-    disp(['Number of iteration for CLEAN : ' num2str(count-1) ]);
+    count=count-1;
+    disp(['Number of iteration for CLEAN-SC : ' num2str(count) ]);
 end

@@ -187,19 +187,24 @@ Comme l'étape de déconvolution revient à résoudre un problème inverse où t
 
 \subsubsection{Prise en compte de la cohérence des sources}
 \paragraph{CLEAN-SC}
-\cite{Sijtsma2007} propose une version de CLEAN qui prend en compte la cohérence des sources. Le principe est le suivant : Le maximum de la dirty map est trouvé.  Les composantes spatiales corrélées avec ce maximum sont sélectionnées puis soustraites à la dirty map.\\
+\cite{Sijtsma2007} propose une version de CLEAN qui prend en compte la cohérence des sources. Le principe est le suivant : Le maximum  $S_{max}$ de la dirty map est trouvé au point $\bm{r}_{max}$.  Les composantes spatiales corrélées avec ce maximum sont sélectionnées puis soustraites à la dirty map.\\
 
-On veut que G soit tel qu'il contienne toutes les contributions des sources corrélées avec pmax. Ainsi, la projection de G sur wmax est égale à la projection des données (Spp) sur wmax : \\
-Gwmax = Dwmax.\\
+On veut trouver la matrice interspectrale $\bm{G}$ qui contient toutes les contributions des sources corrélées avec la source en $\bm{r}_{max}$. Ainsi, la projection de $\bm{G}$ sur le vecteur $\bm{w}_max$ est égale à la projection des données $\bm{S_{pp}}$ sur ce même vecteur $\bm{w}_max$ : \\
+\begin{equation}\label{Gw=Dw}
+	\bm{G}\bm{w}_max= \bm{D} \bm{w}_max
+\end{equation}
+\\
 
-Il faut donc construire un vecteur de propagation h traduisant la cohérence entre pmax et les autres sources, de manière à ce que 
-G=pmax h h 
-soit solution de l'équation (Gwmax=Dwmax). 
+Il faut donc construire un vecteur de propagation $\bm{h}$ traduisant la cohérence entre $S_{max}$ et les autres sources, de manière à ce que 
+\begin{equation}
+	\bm{G} = S_{max} \bm{hh}'
+\end{equation}
+soit solution de l'équation~\ref{Gw=Dw}.
 Cette solution n'est pas unique. On peut exprimer $\bm{h}$ de la façon suivante : 
 \begin{equation}
 	\bm{h}=\frac{1}{\bm{h}'\bm{w}_{max}}  \frac{\bm{S_{pp}}\bm{w}_{max}}{S_{max}}
 \end{equation}
-En réinjectant cette expression dans (Gwmax=Dwmax) et en rappelant que $S_{max} = \bm{w}_{max}\bm{S_{pp}}\bm{w}_{max}'$, on trouve que le scalaire $\bm{h}'\bm{w}_{max}$ doit être égal à $1$.\\
+En réinjectant cette expression dans~\ref{Gw=Dw} et en rappelant que $S_{max} = \bm{w}_{max}\bm{S_{pp}}\bm{w}_{max}'$, on trouve que le scalaire $\bm{h}'\bm{w}_{max}$ doit être égal à $1$.\\
 
 Si on veut utiliser un $\bm{G}$ à diagonale nulle, on cherche une expression de $\bm{h}$ tel que : 
 \begin{equation}
@@ -210,14 +215,12 @@ avec $\bm{H}$ contenant les éléments diagonaux de $\bm{hh}'$. En isolant $\bm{
 	\bm{h}=\frac{1}{\bm{h}'\bm{w}_{max}}  \left( \frac{\bm{S_{pp}}\bm{w}_{max}}{S_{max}} + \bm{H}\bm{w}_{max} \right)
 \end{equation}
 
-En réinjectant cette expression dans (Gwmax=Dwmax), on trouve que le scalaire $\bm{h}'\bm{w}_{max}$ doit être égal à $\sqrt{1+\bm{w}_{max}\bm{H}\bm{w}_{max}'}$.
+En réinjectant cette expression dans (Gwmax=Dwmax)~\ref{Gw=Dw}, on trouve que le scalaire $\bm{h}'\bm{w}_{max}$ doit être égal à $\sqrt{1+\bm{w}_{max}\bm{H}\bm{w}_{max}'}$.
 
 
 
 
 Cette méthode offre une meilleure résolution que CLEAN lorsque les sources sont corrélées.
-
-notamment en aeroacoustique.
 
 
 \paragraph{DAMAS-C}
@@ -246,5 +249,5 @@ lire review : Sparsity constrained deconvolution approaches for acoustic
 source mapping
 
 
-Ces méthodes supposent de bien connaître son modèle de sources pour avoir une bonne PSF.
+Ces méthodes supposent de bien connaître son modèle de sources pour avoir une bonne PSF. Elles soont très utilisées dans le domaine de domaine de l'aéroacoustique (\cite{Fleury2012} propose une correction pour les sources en déplacement, par exemple).
 

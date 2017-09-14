@@ -1,13 +1,13 @@
 function [Sqq_est , Sqq_diag , W ] = beamforming(Spp , G_map_mic)
 %Estimates sources through beamfoming method. 
 %
-%Spp : (M x M x nb_F) matrix of mic pressures cross spectra
-%G_map_mic (M x Nmap x nb_F): Transfert matrix from map points to mic position
+%Spp : (M x M ) matrix of mic pressures cross spectra
+%G_map_mic (M x Nmap): Transfert matrix from map points to mic position
 %
 %Returns :
-%Sqq_est : (Nmap x Nmap x nb_F) matrix of source cross spectra
-%Sqq_diag : (Nmap x nb_F) diagonal terms of Sqq_est, ie source auto spectra
-%W : (Nmap x M x nb_F) steering vectors 
+%Sqq_est : (Nmap x Nmap ) matrix of source cross spectra
+%Sqq_diag : (1 x Nmap ) diagonal terms of Sqq_est, ie source auto spectra
+%W : (Nmap x M ) steering vectors 
 
 	[M Nmap ]=size(G_map_mic);
         %%% Calculates weighting vectors (source scaling)
