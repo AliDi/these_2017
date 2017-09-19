@@ -104,7 +104,7 @@ G_map_mic = GreenFreeField(r_src_map , r_mic , F);
 %%% Estimates source cross spectra, using beamforming
 parfor f=1:nb_F
     disp(['Frequency : ' num2str(f) '/' num2str(nb_F)]);
-    [Sqq_BF(:,:,f) , Sqq_BF_diag(:,f) , W(:,:,f) ] = beamforming(Spp(:,:,f) , G_map_mic(:,:,f));
+    [Sqq_BF_diag(:,f) , W(:,:,f) ] = beamforming(Spp(:,:,f) , G_map_mic(:,:,f));
 end
 
 figure

@@ -25,7 +25,7 @@ function [cleanmap , dirtymap , count ] = clean_sc(LoopGain , Spp , G_map_mic , 
         end 
 
         %%%  Obtain dirty map from beamforming
-        [~ , dirtymap , W] = beamforming(Spp(:,:) , G_map_mic(:,:));
+        [dirtymap , W] = beamforming(Spp(:,:) , G_map_mic(:,:));
 
         %%% If source map is 2D or 3D
         %dirty(:,:,f)=reshape(Sqq_diag(:,f),Nx,Ny,Nz);
