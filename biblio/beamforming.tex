@@ -80,6 +80,8 @@ Le spectre de puissance de la distribution des sources estimée est alors donné
 	&=\frac{1}{\bm{h}_i'\bm{S_{pp}}^{-1}\bm{h}_i}\label{Gii}
 \end{align}
 
+Dougherty (2014) propose le "functional beamforming" qui généralise ce beamforming à variance minimale.
+
 L'algorithme MUltiple Signal Classification (MUSIC, \cite{Schmidt1986}) propose une décomposition en valeurs propres de la matrice interspectrale $\bm{S_{pp}}$ pour la décomposer en 2 sous-espaces, l’un associé au signal et l’autre au bruit, afin de diminuer la contribution énergétique du bruit.  Dans l'expression de $\tilde{G_{ii}}$ en équation~\ref{Gii}, $\bm{S_{pp}}$ est remplacé par les composantes correspondant au sous-espace bruit. Ainsi, ce nouvel estimateur sera maximal lorsque le processeur pointe vers une source, puisque les éléments du dénominateur seront décorrélés. Cet estimateur ne correspond alors plus à une densité spectrale des sources mais seulement à un indicateur de présence au point $i$.\\
 
 Ces méthodes font l'hypothèse de sources décorrélées et sont sensibles au non-respect de cette hypothèse. Des stratégies peuvent être mises en place pour prendre en compte la cohérence des sources \citep{Jiang2003}. De plus, l'utilisation des signaux de mesure pour construire le vecteur de pointage rend ce méthode sensibles à la qualité de ce mesures. Pour contourner cette limitation, une pondération peut être ajoutée à la diagonale de la matrice interspectrale \citep{Li2003}.\\

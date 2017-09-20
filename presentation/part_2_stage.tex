@@ -2,6 +2,47 @@
 	\titlepage 
 \end{frame}
 
+\begin{frame}{Institut des sciences de la Terre, Grenoble}
+	\begin{itemize}
+		\item 280 personnes, dont 108 chercheurs et 80 doctorants (2016)
+		\item Géochimie (géologie, minéralogie)
+		\item Géophysique (mécanique, ondes tectonique, cycle sismique, magnétisme)
+		\item Risque et environnement
+	\end{itemize}
+	
+	Équipe 
+	
+	\vfill
+	\includegraphics[width=\textwidth]{img/bandeau_isterre.jpg}
+\end{frame}
+
+\begin{frame}{Projet Seiscope}
+	\begin{columns}
+		\column{0.6\textwidth}
+		\centering
+		\begin{itemize}
+			\item $\approx$ 20 personnes à ISTerre
+			\item Sponsors : industrie du gaz et pétrole
+		\end{itemize}
+		\column{0.45\textwidth}
+		\centering
+		\begin{figure}
+			\vspace{-1cm}
+			\includegraphics[width=0.9\textwidth]{img/dispo_valhall.jpg}\\
+			{ \centering \scriptsize{Acquisition à Valhall, \itshape{ Sirgue et al. 2009}}\\
+			120 km de câbles, 2414 hydrophones\\[-0.1cm]
+			 50000 excitations par canon à air (45 km$^2$)}
+		\end{figure}
+	\end{columns}
+	
+	\begin{figure}
+		\includegraphics[width=0.6\textwidth]{img/geophy.png}\\
+		\centering{\scriptsize Profondeur : 150 m~~~~~~Profondeur : 1050 m\\
+		En haut : tomographie des temps en réflexion\\[-0.1cm]
+		En bas : Inversion de forme d'ondes}
+	\end{figure}
+\end{frame}
+
 
 \section{Contexte}
 
@@ -12,12 +53,12 @@
 			\column{0.5\textwidth}
 			\centering
 			\begin{figure}
-				\includegraphics[height=3cm]{img/us_test.jpg}\\
+				\includegraphics[height=3cm]{./img/us_test.jpg}\\
 				{\tiny{\raggedright \itshape Image Davidmack}\\ \centering \scriptsize{Contrôle sur pipeline}}
 			\end{figure}		
 			\column{0.5\textwidth}
 			\begin{figure}
-				\includegraphics[height=3cm]{img/olympus.jpg}\\
+				\includegraphics[height=3cm]{./img/olympus.jpg}\\
 				 {\tiny{\itshape Image Olympus}\\ \centering			\scriptsize{Exemple de test en réflexion}}
 			\end{figure}
 		\end{columns}	
@@ -41,10 +82,28 @@
  			\indent \ding{222} porosité, fissure, manque de fusion, corrosion, corps étrangers,\ldots
  			\column{0.3\textwidth}
  			\centering
- 			\includegraphics[width=0.95\textwidth]{img/defaut_soudure.png}\\
+ 			\includegraphics[width=0.95\textwidth]{./img/defaut_soudure.png}\\
  			{\itshape \tiny Image extraite de Consonni et al., \\[-0.2cm]Insight, 2011}
  			\end{columns}
 	%\end{columns}
+\end{frame}
+
+\begin{frame}{Spécificité de l'imagerie de soudure}
+	\begin{itemize}
+		\item <1-> 2 surfaces libres : réflexions multiples $\leftrightarrow$ non-linéarité de l'inversion
+		\item <2-> Acquisition de surface : limitation de la résolution 
+		\item <3-> Anisotropie $\rightarrow$ inversion multiparamétrique \\\hspace{2.3cm}($C_{ij}\times$6 : soudure + défaut)
+		%\item <4-> defects $\rightarrow$ multi-scale inversion ($C_{ij}^{d}\times$6)
+	\end{itemize}
+	\vfill
+	\begin{figure}[!h]
+		\centering
+		\includegraphics<1-1>[scale=1]{img/soud1.pdf}
+		\includegraphics<2-2>[scale=1]{img/soud2.pdf}
+		%\includegraphics<3-3>[scale=1]{img/soud3.pdf}
+		\includegraphics<3-3>[scale=1]{img/soud4_bis.pdf}
+	\end{figure}
+
 \end{frame}
 
 
@@ -77,7 +136,7 @@
 			$\hookrightarrow$ déviation et division du faisceau ultrasonore\\[0.2cm]
 			\hspace{-0.5cm}
 			\hspace{1cm}\includegraphics[height=2.5cm]{img/tfm_dort.png}\\
-			{\tiny{ \itshape Images extraites de Cunningham et al., Proc. R. Soc., 2016} \\[0.2cm] \hspace{1cm} \scriptsize Méthodes DORT (gauche) et FTP (droite)\\[-0.1cm] \hspace{1.5cm}sur modèle EF de soudure anisotrope }
+			{\tiny{ \itshape  \hspace{1.7cm} Cunningham et al., Proc. R. Soc., 2016} \\[0.2cm] \hspace{1cm} \scriptsize Méthodes DORT (gauche) et FTP (droite)\\[-0.1cm] \hspace{1.5cm}sur modèle EF de soudure anisotrope }
 				
 	\end{columns}
 	%\vspace{0.3cm}
@@ -117,23 +176,20 @@
 
 \section{La FWI}
 \subsection*{}
-\begin{frame}{La Full Waveform Inversion}
+\begin{frame}{Full Waveform Inversion}
 	\begin{columns}
-		\column{0.6\textwidth}<1-1>
+		\column{0.6\textwidth}<1->
 		\begin{itemize}
-			\item Développée pour la géophysique\\[0.3cm]
+			\only<1-1>{\item  Développée pour la géophysique\\[0.3cm]
 			\item Estimation des paramètres élastiques\\ $~~~~~~\hookrightarrow$ optimisation locale\\[0.3cm]
-			\item Utilise tout le champ d'onde\\[0.3cm]
+			\item Utilise tout le champ d'onde\\[1cm]}
+			\only<2->{\item Fonction de coût : $C(\bm{m})=\frac{1}{2}||\bm{d}_{obs}-\bm{d}_{cal}(\bm{m})||^{2}$\\[0.3cm]
+			\item<3-> Optimisation locale : modèle optimal quand $C'(\bm{m} + \bm{\Delta m})=0$\\[0.3cm]
+			%\item[$\hookrightarrow$]  ~\\[0.5cm]
+			\item<4-4> Perturbation du modèle : $\bm{\Delta m}=-(C'')^{-1}$\fcolorbox{white!0}{white!0}{$C'$}\\
+			}
 		\end{itemize}
-		
-		\column{0.6\textwidth}<2->
-		\begin{itemize}
-			\item<2-> Fonction de coût : $C(\bm{m})=\frac{1}{2}||\bm{d}_{obs}-\bm{d}_{cal}(\bm{m})||^{2}$\\♥
-			\item<3-> Optimisation locale : modèle optimal quand $C'(\bm{m})=0$
-			\item[$\hookrightarrow$]  \\[0.5cm]
-			\item \only<3->{Perturbation du modèle : $\bm{\Delta m}=-(C'')^{-1}$\fcolorbox{white!0}{white!0}{$C'$}} \onslide<2->{Perturbation du modèle : $\bm{\Delta m}=-(C'')^{-1}$\fcolorbox{DeepSkyBlue4}{white!0}{$C'$}}
-%	\end{itemize}
-		
+
 		
 		\column{0.5\textwidth}<1->
 		\begin{figure}
@@ -144,4 +200,133 @@
 	
 \end{frame}
 
+\begin{frame}{Calcul du gradient}
+	\begin{itemize}
+		\item<1-> Problème direct...
+		\begin{equation*}
+			\bm{A}(\bm{m},\bm{x},t)\bm{d}_{cal}(\bm{m},\bm{x},t)=\bm{s}(\bm{x},t)
+		\end{equation*}
+	
+		\item<2->...dérivé par rapport à $\bm{m}$ : 
+		\begin{equation*}
+			\bm{A} \frac{\partial \bm{\tilde{d}}_{cal}(\bm{m})}{\partial m_{i}} + \frac{\partial \bm{A}}{\partial m_{i}}\bm{\tilde{d}}_{cal}(\bm{m}) = \bm{0} 
+		\end{equation*}
+	
+		\item<3->Expression du gradient	
+		\begin{align*}
+			\frac{\partial C (\bm{m})}{\partial m_{i}} &= -\tr{\left( \frac{\partial \bm{d}_{cal}(\bm{m}) }{\partial m_{i}} \right)} ( \bm{d}_{obs} - \bm{d}_{cal}(\bm{m})) \\
+			&= \tr{\tilde{\bm{d}}_{cal}} \tr{\left( \frac{\partial\bm{A}}{\partial m_{i}} \right)} \textcolor{DeepSkyBlue4}{\underbrace{\textcolor{black}{\bm{A}^{-1} (\tilde{\bm{d}}_{obs} - \tilde{\bm{d}}_{cal})}}_{\text{résidus rétropopagés}}}
+		\end{align*}
+	\end{itemize}
+	
+	\onslide<4->{\textbf{Le gradient découle du calcul de 2 problèmes directs :}
+	\begin{equation*}
+		\bm{A}(\bm{m})\bm{\tilde{d}}_{cal}(\bm{m})=\bm{s} ~~~~~~~\text{et}~~~~~~~\bm{A}(\bm{m})\bm{\lambda} (\bm{m})=( \bm{\tilde{d}}_{obs} - \bm{\tilde{d}}_{cal}(\bm{m})),
+	\end{equation*}
+	}
+	
+\end{frame}
 
+\begin{frame}{Estimation du Hessien}
+	\centering
+	$\bm{\Delta m}=-($\fcolorbox{DeepSkyBlue4}{white!0}{$C''$}$)^{-1}$ \fcolorbox{white!0}{white!0}{$C'$}  \\~\\
+	
+	Hessien calculé à partir du gradient (algo L-BFGS)
+	
+	
+\end{frame}
+
+\section{Résolution de la FWI}
+
+\subsection*{}
+\begin{frame}{\insertsectionhead}
+	\only<1-3>{
+		\begin{equation*}
+			\frac{\partial C}{\partial m_{i}}= \textcolor{DeepSkyBlue4}{\underbrace{\textcolor{black}{\tr{\tilde{\bm{d}}_{cal}}}}_{\substack{\text{champ incident}}}}
+			  \text{\fcolorbox{white!0}{white!0}{$\tr{\left( \frac{\partial\bm{A}}{\partial m_{i}} \right)}$ }} 
+			 \textcolor{DeepSkyBlue4}{\underbrace{\textcolor{black}{\bm{\lambda}}}_{\substack{\text{résidus rétropopagés}}}}
+		\end{equation*}
+	}
+	\only<4->{
+		\vspace{-0.06cm}\begin{equation*}
+			\frac{\partial C}{\partial m_{i}}= \textcolor{DeepSkyBlue4}{\underbrace{\textcolor{black}{\tr{\tilde{\bm{d}}_{cal}}}}_{\substack{\text{champ incident}}}}
+			 \text{\fcolorbox{DeepSkyBlue4}{white!0}{$\tr{\left( \frac{\partial\bm{A}}{\partial m_{i}} \right)}$ }}
+			 \textcolor{DeepSkyBlue4}{\underbrace{\textcolor{black}{\bm{\lambda}}}_{\substack{\text{résidus rétropopagés}}}}
+		\end{equation*}		
+%	\begin{picture}(0,0)(0,0)\put(155,-105){
+%		\begin{tikzpicture}	
+%					\node (A) at (6,0) {};
+%					\node (ray) at ($(A)+(0,-4)$) {};
+%					\draw[->, thick,shorten <=2pt,shorten >=2pt,DeepSkyBlue4] (A) -- (ray);		
+%		\end{tikzpicture}
+%	}\end{picture}
+	}
+	\begin{equation*}
+		~~~~~~~~\sim~ \Re\left( e^{j k_{0} \bm{s.x}} \right)~~~~~~~~~\sim~ \Re\left( e^{j k_{0} \bm{r.x}} \right)
+	\end{equation*}
+		
+	\onslide<2->{
+		\begin{itemize}
+			\item Résolution du gradient :\vspace{-0.34cm}
+			\begin{align}
+				k=|\bm{s}+\bm{r}|=&\frac{\omega}{c}2\cos\left( \frac{\theta}{2} \right)~~~~~~~~\\
+				\hookrightarrow \text{~ maximale ($\lambda$/2) en HF et pour}~&\theta=0 \nonumber
+			\end{align}	\vspace{-1cm}		
+	}
+		\only<1-3>{
+			\begin{columns}
+				\column{0.4\textwidth}<1-3>
+				\begin{figure}
+					\centering
+					\vfill
+					\includegraphics[height=2.5cm]{img/reso.png}	
+				\end{figure}
+				\column{0.55\textwidth}<3-3>
+				\begin{figure}
+					\centering
+					\vspace{0.4cm} \includegraphics[height=3.7cm]{img/reso_surf_libre.png}
+				\end{figure}		
+			\end{columns}
+		}	
+
+	\only<4->{		
+		\vspace{0.7cm}\item Rayonnement des paramètres :\\[0.2cm] 
+		\begin{figure}
+			\hspace{-1cm}\includegraphics[height=2cm]{img/rayonnement.png}
+		\end{figure}		
+	}
+
+	\end{itemize}
+	\vspace{1cm}
+\end{frame}
+
+
+\begin{frame}{Résolution de la FWI}
+	\begin{figure}
+		\includegraphics[height=2.5cm]{img/vp_scat.png}\\
+		\vspace{-0.3cm} \small{Modèle de vitesse}
+	\end{figure}
+	\vspace{-0.6cm} 
+	\begin{columns}
+		\column{0.5\textwidth}
+		\begin{figure}
+			\includegraphics[height=3cm]{img/1400pt.png}\\
+			\small{Pour 1 réflexion}\\[0.3cm]
+			\includegraphics[height=1cm]{img/1ref.png}
+		\end{figure}
+		\column{0.5\textwidth}
+		\begin{figure}
+			\includegraphics[height=3cm]{img/4200pt.png}\\
+			\small{Pour 5 réflexions}\\[0.3cm]
+			\includegraphics[height=1cm]{img/6ref.png}
+		\end{figure}
+	\end{columns}
+
+\end{frame}
+
+
+
+\begin{frame}
+	Améliorations : 
+	Méthodes numériques (pb direct), régularisation (pb inverse), transport optimal
+\end{frame}

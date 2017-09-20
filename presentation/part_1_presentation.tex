@@ -10,7 +10,7 @@
 			
 	\end{center}
 	\begin{itemize}
-		\item 2011 -- 2014 : licence en acoustique, Université du Maine, Le Mans %Bachelor of science in acoustics
+		\item 2011 -- 2014 : Licence en acoustique, Université du Maine, Le Mans %Bachelor of science in acoustics
 		\item 2014 --2016 : Master recherche en acoustique, Université du Maine, Le Mans %Master of science in acoustics
 		\begin{columns}
 			\hspace{2cm}\column{0.5\textwidth}
@@ -33,31 +33,61 @@
 
 \begin{frame}
 	\centering
-	\textbf{ Méthodes inverses avec approche bayésienne \\pour l'identification de sources aéroacoustique}\\
+	\textbf{ Méthodes inverses par approche bayésienne \\pour l'identification de sources aéroacoustique}\\
 	\footnotesize{depuis juillet 2017}\\[0.5cm]
 	Direction : Jérôme Antoni (LVA), Chritophe Bailly (LMFA), Quentin Leclère (LVA)\\[0.5cm]
 	Financements : CeLyA + INSAVALOR (projet européen \textbf{AD}vanced \textbf{A}eroacoustic \textbf{P}rocessing \textbf{T}echniques, ADAPT)
+
+	Collaborations : LVA, LMFA, MicrodB, PSA3, Airbus
 \end{frame}
 
+
+\begin{frame}{Contexte}
+	\begin{itemize}
+		\item Réduction du bruit des avions (conception et validation) : aérodynamique et turbomachines
+		\item Caractériser acoustiquement des flucutations de pressions, dominées par la turbulence
+		\item Spécificité des sources aéroacoustique : 
+			\begin{itemize}
+				\item parcimonieuse spatialement,
+				\item large bande fréquentielle (not. domaine de l'audible)
+				\item mesures empreintes de bruit aérodynamique
+			\end{itemize}
+		\item Méthodes actuelles : formation de voies + déconvolution
+			\begin{itemize}
+				\item Avantages : flexible, simple et rapide
+				\item Limites : connaissance du modèle de sources a priori, sources corrélées, artefacts, niveaux
+			\end{itemize}
+	\end{itemize}
+	
+\end{frame}
+
+
 \begin{frame}
-	
-	Contexte : réduction du bruit aérodynamique des avions (turbomachines et profil)
-	
-	Nature des sources : \\
-	-parcimonieuses spatialement\\
-	-large bande fréquentielle (not. domaine de l'audible)\\
-	-mesures empreintes de bruit aérodynamique
-	
-	
+	approche bayésienne
 \end{frame}
 
 \begin{frame}
 	
 	Problématiques : \\
 	-extraction des composantes tonales, cyclostationnaires et aérodynamiques\\
-	-localisation et quantification des sources
+	-régularisation (prior information)
+	-interprétation des résultats
 	
 
+	
+\end{frame}
+
+\begin{frame}{Imagerie US vs localisation de sources}
+	\begin{itemize}
+		\item<1-> Localisation de sources acoustique
+		\begin{figure}
+			\includegraphics[width = 6cm]{./img/pd_dir_inv/ac.png}
+		\end{figure}~\\
+		\item<2-> Imagerie par ultrasons
+		\begin{figure}
+			\includegraphics[width = 6cm]{./img/pd_dir_inv/us.png}
+		\end{figure}
+	\end{itemize}
 	
 \end{frame}
 
