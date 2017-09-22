@@ -324,9 +324,325 @@
 
 \end{frame}
 
+\section{Inversions en milieu isotrope}
+\subsection*{}
+\begin{frame}{\insertsectionhead}
+	\begin{itemize}
+		\item<1-> Milieu 2D, isotrope, acoustique
+		\item<1-> Paramétrisation : vitesse + masse volumique
+		\item<2-> Excitation : Ricker centré à 2 MHz 
+	\end{itemize}	
+	\only<1-1>{
+	\begin{columns}
+		\column{0.5\textwidth}
+		\begin{figure}
+			\includegraphics[width=\textwidth]{img/vp_true.png}\\
+			{\small Vitesse vraie}
+		\end{figure}
+		\column{0.5\textwidth}
+		\begin{figure}
+			\includegraphics[width=\textwidth]{img/rho_true.png}\\
+			{\small Masse volumique vraie}
+		\end{figure}
+	\end{columns}
+	}
+	
+	\only<2->{
+	\begin{columns}
+		\column{0.5\textwidth}
+		\begin{figure}
+			\includegraphics[width=\textwidth]{img/vp_true_lambda.png}\\
+			{\small Vitesse vraie}
+		\end{figure}
+		\column{0.5\textwidth}
+		\begin{figure}
+			\includegraphics[width=\textwidth]{img/rho_true.png}\\
+			{\small Masse volumique vraie}
+		\end{figure}
+	\end{columns}
+	}
+	
+%	\vspace{1cm}
+%	\begin{itemize}
+%		\item 9 inversions successives de 200 kHz à 3 MHz pour
+%			\begin{itemize}
+%				\item mieux contraindre le problème
+%				\item lever les ambiguïtés de déphasage 
+%			\end{itemize}
+%	\end{itemize}
 
 
-\begin{frame}
-	Améliorations : 
-	Méthodes numériques (pb direct), régularisation (pb inverse), transport optimal
+\only<2->{
+\begin{picture}(0,0)(0,0)\put(220,110){	
+	\begin{tikzpicture}
+			\node (a) at (0,0) {\includegraphics[height=1.5cm]{img/ricker.png}};
+			\node (b) [below=-0cm of a] {\scriptsize Ondelette de Ricker};
+	\end{tikzpicture}
+}\end{picture}}
 \end{frame}
+
+\subsection{Stratégies d'inversion}
+\begin{frame}{\insertsubsectionhead}
+\begin{small}
+	\begin{columns}
+	\column{0.6\textwidth}
+	\begin{itemize}
+		\item pour contraindre le problème,  lever les ambiguïtés de phase
+	\end{itemize}
+	\onslide<2->{2 critères hiérarchiques :}
+	\begin{itemize}
+		\item<2-> influence des paramètres sur les données %(cinématique, dynamique, prépondérance, ...) %Fort lissage de $\bm{\Delta m}$ : gaussien sur 2 $\lambda$
+		\item<4-> contenu fréquentiel
+	\end{itemize}
+	\column{0.5\textwidth}
+		\centering
+		\vspace{-0.5cm}
+		\only<3-4>{
+		\includegraphics[height=2.7cm]{img/vp_smooth/vp_smooth.png}\\
+		\scriptsize{~~}\\
+		}
+		\only<5-5>{
+		\includegraphics[height=2.7cm]{img/vp_smooth/vp_200k.png}\\
+		\scriptsize{f$\sim$ 200 kHz}\\
+		}
+		\only<6-6>{
+		\includegraphics[height=2.7cm]{img/vp_smooth/vp_300k.png}\\
+		\scriptsize{f$\sim$ 300 kHz}\\
+		}	
+		\only<7-7>{
+		\includegraphics[height=2.7cm]{img/vp_smooth/vp_450k.png}\\
+		\scriptsize{f$\sim$ 450 kHz}\\
+		}
+		\only<8-8>{
+		\includegraphics[height=2.7cm]{img/vp_smooth/vp_675k.png}\\
+		\scriptsize{f$\sim$ 675 kHz}\\
+		}
+		\only<9-9>{
+		\includegraphics[height=2.7cm]{img/vp_smooth/vp_1000k.png}\\
+		\scriptsize{f$\sim$ 1000 kHz}\\
+		}
+		\only<10-10>{
+		\includegraphics[height=2.7cm]{img/vp_smooth/vp_1500k.png}\\
+		\scriptsize{f$\sim$ 1500 kHz}\\
+		}
+		\only<11->{
+		\includegraphics[height=2.7cm]{img/vp_smooth/vp_smooth.png}\\
+		\scriptsize{f$\sim$ 2200 kHz}\\
+		}			
+		\only<3->{\scriptsize{Construction d'un modèle de vitesse lissé}}
+	\end{columns}
+	\vspace{0.3cm}	
+	\begin{columns}
+		\column{0.3\textwidth}
+		\onslide<2->{
+		\centering
+		\includegraphics[height=4.3cm]{img/rho_mono/data_rho_uni.png}\\
+		\scriptsize{Données issues d'une masse volumique homogène}
+		\column{0.3\textwidth}
+		\centering
+		\includegraphics[height=4.3cm]{img/rho_mono/data_rho_vrai.png}\\
+		\scriptsize{Données issues de la vraie masse volumique}
+		}
+	\end{columns}
+	
+
+\end{small}
+\end{frame}
+
+\begin{frame}{\insertsectionhead}
+\setlength{\leftmargin}{-2cm}
+\setlength{\rightmargin}{-2cm}
+%\setlength{\textwidth}{29cm}
+\begin{picture}(0,0)(0,0)\put(-20,-33){
+	$v_{p}$
+}\end{picture}
+\begin{picture}(0,0)(0,0)\put(-20,-87){
+	$\rho$
+}\end{picture}
+\vspace{-0.5cm}
+\begin{itemize}
+	\small{\item 9 inversions successives de 200 kHz à 3 MHz }\\[0.3cm]
+\end{itemize}
+\vspace{0.3cm}
+	\begin{columns}
+		\column{0.3\textwidth}
+		\centering
+		\scriptsize{Modèles initiaux}
+		\includegraphics[height=1.9cm]{img/vp_mono_smooth/vp_smooth.png}\\
+		\includegraphics[height=1.9cm]{img/rho_mono/rho_init.png}		
+		\column{0.3\textwidth}
+		\centering
+		\scriptsize{Inversions monoparamètres}
+		\includegraphics[height=1.9cm]{img/vp_mono_uni/vp_3300k.png}\\
+		\includegraphics[height=1.9cm]{img/rho_mono/rho_mono.png}		
+		\column{0.3\textwidth}
+		\centering
+		\scriptsize{Inversion multiparamètre}
+		\includegraphics[height=1.9cm]{img/multi/vp_multi_6000k.png}\\		
+		\includegraphics[height=1.9cm]{img/multi/rho_6000k.png}\\		
+	\end{columns}
+
+\end{frame}
+
+
+\subsection*{}
+\begin{frame}{\insertsectionhead}
+\begin{small}
+\begin{itemize}
+	\item Inversion monoparamètre : \\[0.2cm]
+	\begin{columns}
+		\column{0.5\textwidth}
+		\centering
+		Vitesse : \\[0.2cm]
+		\includegraphics[width=0.6\textwidth]{img/multi/coupe_vp_mono_smooth_hor.png}\\
+		\column{0.5\textwidth}
+		\centering
+		Masse volumique  : \\[0.2cm]
+		\includegraphics[width=0.6\textwidth]{img/multi/coupe_rho_mono.png}\\
+	\end{columns}
+	\item Inversion multiparamètre : \\[0.2cm]
+	\begin{columns}
+		\column{0.5\textwidth}
+		\centering
+		Vitesse : \\[0.2cm]
+		\includegraphics[width=0.6\textwidth]{img/multi/coupe_vp_multi.png}\\
+		\column{0.5\textwidth}
+		\centering
+		Masse volumique : \\[0.2cm]
+		\includegraphics[width=0.6\textwidth]{img/multi/coupe_rho_multi.png}\\
+	\end{columns}
+	
+\end{itemize}
+\hspace{2.7cm}Coupes horizontales à 3 cm de profondeur
+\end{small}
+\end{frame}
+
+\begin{frame}{\insertsectionhead}
+\setlength{\leftmargin}{-2cm}
+\setlength{\rightmargin}{-2cm}
+%\setlength{\textwidth}{29cm}
+\begin{picture}(0,0)(0,0)\put(-20,-33){
+	$v_{p}$
+}\end{picture}
+\begin{picture}(0,0)(0,0)\put(-20,-87){
+	$\rho$
+}\end{picture}
+\vspace{-0.5cm}
+\begin{itemize}
+	\small{\item 9 inversions successives de 200 kHz à 3 MHz }
+\end{itemize}
+\vspace{0.3cm}
+	\begin{columns}
+		\column{0.3\textwidth}
+		\centering
+		\scriptsize{Modèles initiaux}
+		\includegraphics[height=1.9cm]{img/vp_mono_smooth/vp_smooth.png}\\
+		\includegraphics[height=1.9cm]{img/rho_mono/rho_init.png}		
+		\column{0.3\textwidth}
+		\centering
+		\scriptsize{Inversions monoparamètres}
+		\includegraphics[height=1.9cm]{img/vp_mono_uni/vp_3300k.png}\\
+		\includegraphics[height=1.9cm]{img/rho_mono/rho_mono.png}		
+		\column{0.3\textwidth}
+		\centering
+		\scriptsize{Inversion multiparamètre}
+		\includegraphics[height=1.9cm]{img/multi/vp_multi_6000k.png}\\		
+		\includegraphics[height=1.9cm]{img/multi/rho_6000k.png}\\		
+	\end{columns}
+	\vspace{0.5cm}
+	\onslide<2->{
+		\begin{columns}
+			\column{0.6\textwidth}
+			\small{
+			\begin{itemize}
+				\item Comparaison avec le beamformign\\[0.3cm]
+			\end{itemize}
+			 \centering
+			\begin{equation*}
+				I(\bm{r})= \displaystyle\sum_{r} \displaystyle\sum_{e} s_{r,e}\left( T_{\bm{r}\bm{r}_{r}+T_{\bm{r}\bm{r}_{e}}} \right)
+			\end{equation*}
+			}
+			\column{0.4\textwidth}
+			\centering
+			\includegraphics[height=2.5cm]{img/tfm_retouche.png}
+		\end{columns}
+	}
+\end{frame}
+
+
+
+
+\section{Conclusions, perspectives}
+\subsection*{}
+\begin{frame}{\insertsectionhead}
+\setlength{\leftmargin}{-1cm}
+\setlength{\rightmargin}{-1cm}
+
+	\begin{itemize}
+		\item<1-> Inversion multiparamètre : corrige les artefacts
+		\item<2-> Prise en compte de l'anisotropie, 3D : $6 \times C_{ij}$
+		\begin{figure}[!h]
+		    \centering
+		    \hspace{-1cm}\begin{subfigure}[b]{0.25\textwidth}
+		    	\centering
+		 		\includegraphics[height=2cm]{img/ogilvy_model.png}
+		 		\vspace{0.2cm}\caption{\centering \scriptsize Modèle d'orientation des grains}
+			\end{subfigure}
+			\begin{subfigure}[b]{0.7\textwidth}
+				\centering
+		 		\includegraphics[height=2cm]{img/ogilvy_ray1.png}
+		 		\includegraphics[height=2cm]{img/ogilvy_ray2.png}\\
+		 		\raggedright{\vspace{-0.25cm}\tiny{\itshape Images extraites de~Ogilvy, 1986}}
+		 		\caption{\scriptsize Courbure des rayons (ondes de compressions) \\~}
+			\end{subfigure}\\
+				
+		\end{figure}	
+		\item<3-> Élaboration d'un modèle initial fiable 
+		\item<4-> Géométrie d'acquisition à adapter
+			\begin{itemize}
+				\item à la géométrie de la soudure réelle
+				\item pour une une bonne illumination/résolution
+			\end{itemize}
+%		\item<5-> Prise en compte de la propagation 3D
+%	\end{itemize}
+%	\begin{picture}(0,0)(0,0)\put(240,0){
+%		\only<5->{
+%		\begin{tikzpicture}
+%			\node (a) at (0,0) {\includegraphics[width=2.5cm]{img/linear_array.png}};
+%			\node (b) [below=-0.2cm of a] {\tiny \itshape Image Olympus};
+%		\end{tikzpicture}
+%		}
+%	}\end{picture}
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}{\insertsectionhead}
+
+	\begin{wrapfigure}{r}{3.5cm}
+		\centering
+		\vspace{-1.2cm}\includegraphics[width=3.7cm]{img/data_3D/data_2freesurf.png}\\
+		\tiny{En bleu : réflexions OS sur PML (plan (xz))\\
+		En rouge : réflexion P et S de l'onde P sur l'inclusion\\
+		En vert : réflexion OS sur PML gauche  (plan (zy))}
+		\vspace{-5.3cm}
+	\end{wrapfigure}~
+	\begin{itemize}
+		 \item Régularisation empirique hiérarchique : 
+		\begin{itemize}
+			\item Gamme fréquentielle
+			\item Paramétrisation
+			\item Sources et récepteurs
+			\item Filtrage temporel
+		\end{itemize}~\\
+		\item Temps de calcul (2D) : \\
+		9 fréq. x 20 perturbations = 180 inversions\\
+		5 min/inversion $\rightarrow$ 15h\\
+		VS beamforming : 10 min sur pc\\~\\~\\		
+		
+		\item Codes ouverts (FORTRAN 90) : \url{ https://seiscope2.osug.fr}\\
+		 optimization toolbox + codes pb direct/inverse\\
+		Transport optimal (norme de Kantorovich-Rubinstein), Métivier 2016
+	\end{itemize}
+\end{frame}
+

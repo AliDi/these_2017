@@ -7,25 +7,33 @@
 		\footnotesize{Doctorante (1\textsuperscript{ère} année)\\[0.5cm]
 		\textit{alice.dinsenmeyer@insa-lyon.fr\\
 		1\textsuperscript{er} étage, Bât. J. Jacquard}}
-			
+		\vfill
+		\normalsize
+		Licence et master acoustique du Mans (2011-2016)\\[0.3cm]
+		- Ondes~~~~~- Traitement du signal~~~~~- Méthodes numériques\\
+		- Imagerie US~~~~- Psychoacoustique	
 	\end{center}
-	\begin{itemize}
-		\item 2011 -- 2014 : Licence en acoustique, Université du Maine, Le Mans %Bachelor of science in acoustics
-		\item 2014 --2016 : Master recherche en acoustique, Université du Maine, Le Mans %Master of science in acoustics
-		\begin{columns}
-			\hspace{2cm}\column{0.5\textwidth}
-			\begin{itemize}
-				\item[-] Ondes dans les solides et les fluides
-				\item[-] Imagerie ultrasonore
-				\item[-] Psychoacoustique
-			\end{itemize}
-			\column{0.5\textwidth}
-			\begin{itemize}
-				\item[-] Traitement du signal
-				\item[-] Informatique scientifique
-			\end{itemize}
-		\end{columns}
-	\end{itemize}
+
+
+	
+
+%	\begin{itemize}
+%		\item 2011 -- 2014 : Licence en acoustique, Université du Maine, Le Mans %Bachelor of science in acoustics
+%		\item 2014 --2016 : Master recherche en acoustique, Université du Maine, Le Mans %Master of science in acoustics
+%		\begin{columns}
+%			\hspace{2cm}\column{0.5\textwidth}
+%			\begin{itemize}
+%				\item[-] Ondes dans les solides et les fluides
+%				\item[-] Imagerie ultrasonore
+%				\item[-] Psychoacoustique
+%			\end{itemize}
+%			\column{0.5\textwidth}
+%			\begin{itemize}
+%				\item[-] Traitement du signal
+%				\item[-] Informatique scientifique
+%			\end{itemize}
+%		\end{columns}
+%	\end{itemize}
 \end{frame}
 
 \section{Sujet de thèse}
@@ -43,39 +51,48 @@
 
 
 \begin{frame}{Contexte}
-	\begin{itemize}
-		\item Réduction du bruit des avions (conception et validation) : aérodynamique et turbomachines
-		\item Caractériser acoustiquement des flucutations de pressions, dominées par la turbulence
-		\item Spécificité des sources aéroacoustique : 
+		\begin{wrapfigure}{r}{3cm}
+			\centering
+			\vspace{-0.9cm}\includegraphics[width=4cm]{img/bf_sijtsma.png}\\
+			\scriptsize{\itshape Beamforming, M=0.17,\\Sijtsma 2007}
+			\vspace{-3cm}
+		\end{wrapfigure}~
+		\begin{itemize}
+			\item Réduction du bruit des avions  : \\ aérodynamique et turbomachines\\   (conception et validation)\\~\\
+			\item Fluctuations de pressions\\ $\hookrightarrow$ caractérisation acoustique\\~\\
+			\item Sources aéroacoustiques : 
+				\begin{itemize}
+					\item[-] parcimonieuses spatialement,
+					\item[-]  large bande fréquentielle (domaine de l'audible)
+					\item[-]  mesures empreintes de bruit aérodynamique (en vol et en soufflerie)
+				\end{itemize}~\\
+			\item Méthodes actuelles : formation de voies \& déconvolution
+				\begin{itemize}
+					\item[-]  Avantages : flexible, simple et rapide
+					\item[-]  Limites : connaissance du modèle de sources, sources corrélées, niveaux
+				\end{itemize}
+		\end{itemize}
+	
+\end{frame}
+
+
+\begin{frame}{Axes de la thèse}
+	\begin{enumerate}
+		\item Débruitage des mesures : \\
 			\begin{itemize}
-				\item parcimonieuse spatialement,
-				\item large bande fréquentielle (not. domaine de l'audible)
-				\item mesures empreintes de bruit aérodynamique
-			\end{itemize}
-		\item Méthodes actuelles : formation de voies + déconvolution
+				\item Approche bayésienne
+				\item Connaissances a priori : modèles analytiques/numériques + autres données expérimentales
+				\item Qualité ?
+			\end{itemize}~\\
+		\item Localisation des sources : approche bayésienne
 			\begin{itemize}
-				\item Avantages : flexible, simple et rapide
-				\item Limites : connaissance du modèle de sources a priori, sources corrélées, artefacts, niveaux
+				\item Contraindre l'inversion : physique des sources
+				\item Critère de qualité ? (qualitatif et quantitatif)
+				\item Méthodes numériques
 			\end{itemize}
-	\end{itemize}
-	
+	\end{enumerate}
 \end{frame}
 
-
-\begin{frame}
-	approche bayésienne
-\end{frame}
-
-\begin{frame}
-	
-	Problématiques : \\
-	-extraction des composantes tonales, cyclostationnaires et aérodynamiques\\
-	-régularisation (prior information)
-	-interprétation des résultats
-	
-
-	
-\end{frame}
 
 \begin{frame}{Imagerie US vs localisation de sources}
 	\begin{itemize}
