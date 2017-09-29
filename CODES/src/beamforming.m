@@ -12,7 +12,13 @@ function [Sqq_diag , W ] = beamforming(Spp , G_map_mic , mic_weight)
        
 
 	[M Nmap ]=size(G_map_mic);
-    mic_weight=reshape(mic_weight,1,M);
+	
+	if (~exist('mic_weight'))
+		mic_weight=ones(1,M);
+	else
+		mic_weight=reshape(mic_weight,1,M);
+	end	
+    
     
         for n=1:Nmap
             %%% Calculates weighting vectors (source scaling)

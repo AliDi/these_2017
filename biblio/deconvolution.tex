@@ -187,11 +187,11 @@ Comme l'étape de déconvolution revient à résoudre un problème inverse où t
 
 \subsubsection{Prise en compte de la cohérence des sources}
 \paragraph{CLEAN-SC}
-\cite{Sijtsma2007} propose une version de CLEAN qui prend en compte la cohérence des sources. Le principe est le suivant : Le maximum  $S_{max}$ de la dirty map est trouvé au point $\bm{r}_{max}$.  Les composantes spatiales corrélées avec ce maximum sont sélectionnées puis soustraites à la dirty map.\\
+\cite{Sijtsma2007} propose une version de CLEAN basée sur une autre PSF, prenant en compte la cohérence des sources. CLEAN-SC repose sur le fait que le lobe principal d'une PSF est cohérent avec ses lobes secondaires. Le principe est le suivant : Le maximum  $S_{max}$ de la dirty map est trouvé au point $\bm{r}_{max}$.  Les composantes spatiales corrélées avec ce maximum sont sélectionnées puis soustraites à la dirty map.\\
 
 On veut trouver la matrice interspectrale $\bm{G}$ qui contient toutes les contributions des sources corrélées avec la source en $\bm{r}_{max}$. Ainsi, la projection de $\bm{G}$ sur le vecteur $\bm{w}_max$ est égale à la projection des données $\bm{S_{pp}}$ sur ce même vecteur $\bm{w}_max$ : \\
 \begin{equation}\label{Gw=Dw}
-	\bm{G}\bm{w}_max= \bm{D} \bm{w}_max
+	\bm{G}\bm{w}_{max}= \bm{D} \bm{w}_{max}
 \end{equation}
 \\
 
@@ -215,12 +215,14 @@ avec $\bm{H}$ contenant les éléments diagonaux de $\bm{hh}'$. En isolant $\bm{
 	\bm{h}=\frac{1}{\bm{h}'\bm{w}_{max}}  \left( \frac{\bm{S_{pp}}\bm{w}_{max}}{S_{max}} + \bm{H}\bm{w}_{max} \right)
 \end{equation}
 
-En réinjectant cette expression dans (Gwmax=Dwmax)~\ref{Gw=Dw}, on trouve que le scalaire $\bm{h}'\bm{w}_{max}$ doit être égal à $\sqrt{1+\bm{w}_{max}\bm{H}\bm{w}_{max}'}$.
+En réinjectant cette expression dans (Gwmax=Dwmax)~\ref{Gw=Dw}, on trouve que le scalaire $\bm{h}'\bm{w}_{max}$ doit être égal à $\sqrt{1+\bm{w}_{max}\bm{H}\bm{w}_{max}'}$.\\
+
+En théorie, la prise en compte de la cohérence permet bien d'enlever les lobes secondaires. Cependant, si on cherche à imager plusieurs sources corrélées, seule la source de plus fort niveau sera reconstruite et les autres seront considérées comme étant des lobes secondaires de la PSF et et leurs contributions seront supprimées.
 
 
 
 
-Cette méthode offre une meilleure résolution que CLEAN lorsque les sources sont corrélées.
+
 
 
 \paragraph{DAMAS-C}

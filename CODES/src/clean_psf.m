@@ -1,4 +1,4 @@
-function [cleanmap , dirtymap ] = clean_psf(LoopGain , Spp , G_map_mic , nb_itmax , trim)
+function [cleanmap , dirtymap ] = clean_psf(LoopGain , Spp , G_map_mic , nb_itmax , trim , mic_weight)
 %CLEAN-PSF (from Sijtsma, 2007)
 %
 %LoopGain (scalar 0< <1) : fraction of max value substracted too clean map
@@ -7,11 +7,19 @@ function [cleanmap , dirtymap ] = clean_psf(LoopGain , Spp , G_map_mic , nb_itma
 %nb_itmax (scalar) : max number of iterations
 %trim : 'on' or 'off' to remove or not diagonal of Spp for each
 %calculation
+%mic_weight : (1xM) weight applied to each microphone
+%
+%cleanmap : (1xNmap) cleanmap
+%dirtymap : (1xM) residuals
 
     [M Nmap]=size(G_map_mic);
     cleanmap=zeros(Nmap,1); 
     
-
+	if (~exist('mic_weight'))
+		mic_weight=ones(1,M);
+	else
+		mic_weight=reshape(mic_weight,1,M);
+	end	
 
 
     %Initialize stop criterion
@@ -28,10 +36,7 @@ function [cleanmap , dirtymap ] = clean_psf(LoopGain , Spp , G_map_mic , nb_itma
         end 
 
         %%%  Obtain dirty map from beamforming
-        [dirtymap , W] = beamforming(Spp(:,:) , G_map_mic(:,:));
-
-        %%% If source map is 2D or 3D
-        %dirty(:,:,f)=reshape(Sqq_diag(:,f),Nx,Ny,Nz);
+        [dirtymap , W] = beamforming(Spp(:,:) , G_map_mic(:,:) , mic_weight);
 
         %%% Find max of dirty and its position
         [valmax index_rmax] = max(real(dirtymap));
