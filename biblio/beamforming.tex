@@ -9,7 +9,7 @@ Les vecteurs de pointage (correspondant aux lignes de l'opérateur inverse $\bm{
 \begin{equation}
 	h_{im}=\frac{e^{-jkr_{mi}}}{4\pi r_{mi}}.
 \end{equation}
-Donc, le vecteur des pression pour une source ponctuelle au point $i$ d'amplitude $A_i$ est $\bm{p}=A_i\bm{h}_i$.\\
+Donc, le vecteur des pression pour une source ponctuelle au point $i$ d'amplitude $\bm{q}_i$ est $\bm{p}=\bm{q}_i\bm{h}_i$.\\
 Différents vecteurs de pointage sont utilisés dans la littérature (Sarradj, E., Three-Dimensional Acoustic Source Mapping with Different Beamforming Steering Vector Formulations).
 
 
@@ -25,7 +25,7 @@ Différents vecteurs de pointage sont utilisés dans la littérature (Sarradj, E
 \todo[inline]{
 inconvénient : quantification difficile car chaque source est estimée comme si elle est la seule (decor. 
 ref prise en compte des réflexions :
--ajouter la contribution des sources images au processus de formation de voies. B. A. Fenech, “Accurate aeroacoustic measurements in closed-section hard-walled wind tunnels,” Ph.D. dissertation, University of Southampton, June 2009
+-ajouter la contribution des sources images au processus de formation de voies. B. A. Fenech, “Accurate aeroacoustic measurements in closed-section hard-walled wind tunnels,” Ph.D. dissertation, University of Southampton, June 2009\\
  
 remarque : en beamforming classique, doubler le nombre de micro améliore le RSB de 3db
 
@@ -37,30 +37,30 @@ remarque : en beamforming classique, doubler le nombre de micro améliore le RSB
 
 La formation de voies peut être vue comme la solution d'un problème d'optimisation : afin d'optimiser le vecteur de pointage, on cherche à minimiser l'écart entre l'amplitude estimée $\bm{w}_i'\bm{p}$ et l'amplitude réelle $A_i$. Cette fonction coût est défini à partir d'une densité spectrale $\mathbb{E}\{\bullet\}$ puisque les sources sont des grandeurs aléatoires :
 \begin{align}
-	J=&\mathbb{E}\left\{ (\bm{w}_i'\bm{p}-A_i)(\bm{w}_i'\bm{p}-A_i)^* \right\}\\
-	 =& \bm{w}_i'\bm{S_{pp}}\bm{w}_i-\bm{w}_i'\bm{h}_iG_{ii}-\bm{h}_i'G_{ii}'\bm{w}_i + G_{ii}
+	J=&\mathbb{E}\left\{ (\bm{w}_i'\bm{p}-\bm{q}_i)(\bm{w}_i'\bm{p}-\bm{q}_i)^* \right\}\\
+	 =& \bm{w}_i'\bm{S_{pp}}\bm{w}_i-\bm{w}_i'\bm{h}_i\bm{S}_{\bm{qq}_{ii}}-\bm{h}_i'\bm{S}_{\bm{qq}_{ii}}'\bm{w}_i + \bm{S}_{\bm{qq}_{ii}}
 \end{align}
-$^*$ est l'opérateur conjugué, $\bm{S_{pp}}=\mathbb{E}\{\bm{p}\bm{p}'\}$ et $G_{ii}=E[A_iA_i']$ , soit : 
+$^*$ est l'opérateur conjugué, $\bm{S_{pp}}=\mathbb{E}\{\bm{p}\bm{p}'\}$ et $\bm{S}_{\bm{qq}_{ii}}=\mathbb{E}\{\bm{q}_i\bm{q}_i'\}$ , soit : 
 \begin{equation}
 	\frac{\dd J}{\dd \bm{w}_i'}=0 ~~~~~\Leftrightarrow ~~~~~ \bm{w}_i=\frac{\bm{h}_i}{\bm{h}_i'\bm{h}_i}.
 \end{equation}
 
-Le vecteur de pointage correspond donc au vecteur des fonctions de transferts normalisé de façon à que l'amplitude $S_i=\bm{w}_i'\bm{p}$ soit égale à 1 quand $\bm{p}=\bm{h}_i$.\\
+Le vecteur de pointage correspond donc au vecteur des fonctions de transferts normalisé de façon à que l'amplitude $\hat{\bm{q}}_i=\bm{w}_i'\bm{p}$ soit égale à 1 quand $\bm{p}=\bm{h}_i$.\\
 
 En présence d'un bruit décorrélé à chaque microphone, on peut montrer que le vecteur de pointage devient : 
 \begin{equation}
 	\bm{w}_i=\frac{\bm{h}_i}{\bm{h}_i'\bm{h}_i+\gamma},
 \end{equation}
-avec $\gamma=G_{nn}/G_{ii}$, $G_{nn}$ étant les termes diagonaux de la matrice interspectrale du bruit aux microphones.\\
+avec $\gamma=\sigma_{n}/\bm{S}_{\bm{qq}_{ii}}$, $\sigma_{n}$ étant les termes diagonaux de la matrice interspectrale du bruit aux microphones.\\
 
-Il est fréquent d'annuler la diagonale de $\bm{S_{pp}}$ afin de négliger la contribution du bruit de cohérence intermicrohponique nulle. Suite à cette opération, $\bm{S_{pp}}$  n'est plus définie positive et ses valeurs propres peuvent être négative\footnote{La somme des valeurs propres de $A$ est égale à la somme de ses éléments diagonaux.}, ce qui peut rendre la PSF négative.
+Il est fréquent d'annuler la diagonale de $\bm{S_{pp}}$ afin de négliger la contribution du bruit de cohérence intermicrohponique nulle. Suite à cette opération, $\bm{S_{pp}}$  n'est plus définie positive et ses valeurs propres peuvent être négatives\footnote{La somme des valeurs propres de $A$ est égale à la somme de ses éléments diagonaux.}, ce qui peut rendre la PSF négative.
 
 
 
 
 \subsection{Construction d'un vecteur de pointage à partir des données}
 Certaines méthodes de localisation n'utilisent pas un modèle de source mais construisent le vecteur de pointage à partir de l'ensemble des covariances des signaux de mesure. \\
-\cite{Capon1969} propose de minimiser l'énergie en sortie du processeur tout en conservant une contrainte de normalisation que le vecteur de pointage est dans la direction de la source (méthode dite "à variance minimale des sources"): minimiser $\bm{w}_i'\bm{S_{pp}}\bm{w}_i$ (i.e. la densité spectrale des sources) sous la contrainte $\bm{w}_i'\bm{h}_i=1$.
+\paragraph{\tbullet Capon}  \cite{Capon1969} propose de minimiser l'énergie en sortie du processeur tout en conservant une contrainte de normalisation que le vecteur de pointage est dans la direction de la source (méthode dite "à variance minimale des sources"): minimiser $\bm{w}_i'\bm{S_{pp}}\bm{w}_i$ (i.e. la densité spectrale des sources) sous la contrainte $\bm{w}_i'\bm{h}_i=1$.
 On résout donc, en utilisant le multiplicateur de Lagrange $\lambda$ : 
 \begin{equation}
 \frac{\dd J}{\dd\bm{w}_i}=0~~~~~\text{et}~~~~~\frac{\dd J}{\dd\lambda}=0
@@ -76,24 +76,36 @@ La résolution de ces 2 équations permet de construire le vecteur de pointage :
 
 Le spectre de puissance de la distribution des sources estimée est alors donné par la relation : 
 \begin{align}
-	\tilde{G_{ii}} &= \mathbb{E}\{S_iS_i^*\} = \mathbb{E}\{ \bm{w}_i'\bm{pp}'\bm{w}_i\}\\
+	\hat{\bm{S}_{\bm{qq}_{ii}}} & = \mathbb{E}\{ \bm{w}_i'\bm{pp}'\bm{w}_i\}\\
 	&=\frac{1}{\bm{h}_i'\bm{S_{pp}}^{-1}\bm{h}_i}\label{Gii}
 \end{align}
 
-Dougherty (2014) propose le "functional beamforming" qui généralise ce beamforming à variance minimale.
+Dougherty (2014) propose le \textbf{functional beamforming} qui généralise ce beamforming à variance minimale.
 
-L'algorithme MUltiple Signal Classification (MUSIC, \cite{Schmidt1986}) propose une décomposition en valeurs propres de la matrice interspectrale $\bm{S_{pp}}$ pour la décomposer en 2 sous-espaces, l’un associé au signal et l’autre au bruit, afin de diminuer la contribution énergétique du bruit.  Dans l'expression de $\tilde{G_{ii}}$ en équation~\ref{Gii}, $\bm{S_{pp}}$ est remplacé par les composantes correspondant au sous-espace bruit. Ainsi, ce nouvel estimateur sera maximal lorsque le processeur pointe vers une source, puisque les éléments du dénominateur seront décorrélés. Cet estimateur ne correspond alors plus à une densité spectrale des sources mais seulement à un indicateur de présence au point $i$.\\
+\paragraph{\tbullet MUSIC} L'algorithme MUltiple Signal Classification (MUSIC, \cite{Schmidt1986}) propose une décomposition en valeurs propres de la matrice interspectrale $\bm{S_{pp}}$ pour la décomposer en 2 sous-espaces, l’un associé au signal et l’autre au bruit, afin de diminuer la contribution énergétique du bruit.  Dans l'expression de $\tilde{G_{ii}}$ en équation~\ref{Gii}, $\bm{S_{pp}}$ est remplacé par les composantes correspondant au sous-espace bruit. Ainsi, ce nouvel estimateur sera maximal lorsque le processeur pointe vers une source, puisque les éléments du dénominateur seront décorrélés. Cet estimateur ne correspond alors plus à une densité spectrale des sources mais seulement à un indicateur de présence au point $i$.\\
 
 Ces méthodes font l'hypothèse de sources décorrélées et sont sensibles au non-respect de cette hypothèse. Des stratégies peuvent être mises en place pour prendre en compte la cohérence des sources \citep{Jiang2003}. De plus, l'utilisation des signaux de mesure pour construire le vecteur de pointage rend ce méthode sensibles à la qualité de ce mesures. Pour contourner cette limitation, une pondération peut être ajoutée à la diagonale de la matrice interspectrale \citep{Li2003}.\\
 
-Ces méthodes de formation de voies présentent l'avantages d'être simples à implémenter et relativement rapides à calculer. Mais leur résolution diminue fortement lorsque la longueur d'onde devient grande devant l'écart inter-microphonique et les images présentent alors des lobes secondaires qui rendent les sources difficile à localiser et à séparer. Ce problème peut être résolu par une étape de déconvolution décrite dans la section \ref{deconvolution}.
+Ces méthodes de formation de voies présentent l'avantage d'être simples à implémenter et relativement rapides à calculer. Mais leur résolution diminue fortement lorsque la longueur d'onde devient grande devant l'écart inter-microphonique et les images présentent alors des lobes secondaires qui rendent les sources difficile à localiser et à séparer. Ce problème peut être résolu par une étape de déconvolution décrite dans la section \ref{deconvolution}.\\
+
+\paragraph{Orthogonal beamforming}
+Cette méthode repose sur la décomposition en valeurs propres de la matrice interspectrale des pressions, qui est hermitenne et semi-définie positive. Le plus petites valeurs propres sont associées à un sous-espace bruit et les M plus grandes à un sous-espace signal : 
+\begin{equation}
+	\bm{S_{pp}} = \bm{V}\bm{\Lambda}\bm{V}' + \sigma^2\bm{1}
+\end{equation}
+
+Les sources peuvent alors être estimées par un beamforming classique appliqué au sous-espace bruit : 
+\begin{equation}
+	\hat{\bm{S}}_{\bm{qq}_{ii}} = \bm{h}_i' (\bm{V}_i \bm{\Lambda_{ii}}\bm{V}_i') \bm{h}_i
+\end{equation}
+L'amplitude des sources correspond donc aux valeurs propres de la matrice intrerspectrale des pressions.
+Le choix du nombre de sources (i.e le nombre de valeurs propres à associer à l'espace signal) nécessite l'utilisation d'un critère statistique de type Akaike Information Criterion (AIC) ou Minimum Description Length (MDL) \citep{Wax1985}.
 
 
 \todo[inline]{
 DORT (pas d'hypothèse sur la distance source-antenne, équation d'euler linéarisées invariantes par RT en changeant le sens de l'écoulement moyen (ex : Localisation de source acoustique en soufflerie anéchoïque par deux techniques d'antennerie : formation de voies et retournement temporel numérique par Thomas Padois))\\
 
-séparation de champ ?
 Décomposition en sous-espaces "Orthogonal Beamforming" ?\\
-Generalize Inverse Beamforming ?
+Generalize Inverse Beamforming ?\\
 SAFT, TFM
 }

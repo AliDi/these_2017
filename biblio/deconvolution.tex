@@ -19,11 +19,11 @@ Le beamforming standard permet d'estimer les sources $\bm{\tilde{q}}$ ainsi (cf 
 ou bien, en terme d'énergie : 
 
 \begin{align}\label{bf_psf}
-	~ & \bm{\tilde{S}_{qq}} = \bm{W}' \bm{S_{pp}} \bm{W}  \\
+	~ & \bm{\hat{S}_{qq}} = \bm{W}' \bm{S_{pp}} \bm{W}  \\
 	\text{avec, ~~~~} & \bm{S_{pp}} = \bm{G S_{qq}G}'
 \end{align}
 
-Comme les sources sont supposées décorrélées, on peut calculer avec uniquement les diagonales de  $\bm{\tilde{S}_{qq}}=\text{diag}(b_1, ... , b_j...,b_N)$ et $\bm{S_{qq}}=\text{diag}(q_1, ... , q_j...,q_N)$.\\
+Comme les sources sont supposées décorrélées, on peut calculer avec uniquement les diagonales de  $\bm{\hat{S}_{qq}}=\text{diag}(b_1, ... , b_j...,b_N)$ et $\bm{S_{qq}}=\text{diag}(q_1, ... , q_j...,q_N)$.\\
 
 On a alors : 
 \begin{equation}
@@ -68,7 +68,10 @@ Il existe de nombreuse extension de cette méthode de déconvolution \citep{Doug
 
  
 \subsubsection{Spectral Estimation Model (SEM)}
-Correction de différence entre deux matrices de covariance minimisée avec un gradient conjugué \citep{Blacodon2003}\\
+Cette méthode propose de minimiser une distance au sens des moindres carrés entre les CSM mesurées et estimée, à l'aide d'un gradient conjugué. La minimisation se fait par l'ajout de sources équivalentes, qui ne reflettent pas nécessairement la physique des vraies sources. Plusieurs modèles équivalents peuvent donc permettrent de minimiser la fonction-objectif. Cette méthode ne donne donc pas une solution unique.\\
+Pour contraindre le problème, la région d'étude est divisée en sous-espaces sur lesquels la recherche de monopoles équivalents est faites. La solution va donc dépendre du choix de ces zones.
+\citep{Blacodon2003}\\
+L'extension SODIX prend en compte la directivité des sources équivalentes.
 Equivalent à un filtre de Wiener ?
 Contrainte de positivité sur la solution de source difficile à appliquer ?
 
@@ -77,15 +80,18 @@ Contrainte de positivité sur la solution de source difficile à appliquer ?
 \subsubsection{Non-negative least squares (NNLS)}
 L'approche NNLS est de minimiser l'erreur au sens des moindres carrés entre $\bm{b}$ et $\bm{Aq}$, en imposant que $\bm{q}$ reste non-négatif : 
 \begin{eqnarray}
-\min_{\bm{q}}\left(||\bm{\tilde{S_{qq}}}-\bm{A}\bm{S_{qq}}||^2 \right)\\
+\min_{\bm{q}}\left(||\bm{\hat{S}_{qq}}-\bm{A}\bm{S_{qq}}||^2 \right)\\
 \text{~~~~sous la contrainte~~~~}\bm{S_{qq}}\geq 0
 \end{eqnarray}
 \todo[inline,color=green!10]{Possibilité d'utiliser la fonction Octave lsqnonneg}
 
 De manière similaire à DAMAS2, la version FFT-NNLS remplace la convolution par une multiplication dans le domaine des nombres d'onde pour accélérer les calculs.
 
+\subsubsection{LORE}
+
+
 \subsubsection{Déconvolution avec contrainte de parcimonie}
-Les algorithme ci après font l'hypothèse que le vecteur source est parcimonieux
+Les algorithme ci après font l'hypothèse que le vecteur source est parcimonieux. 
 
 \paragraph{CLEAN}
 Pour réduire les lobes secondaires produits par les méthodes d'imagerie, \citep{Hogbom1974} propose de traiter les données (issues des radiotéléscopes) de manière itérative à l'aide d'un algorithme CLEAN.\\
@@ -160,32 +166,6 @@ Le principe de l'algorithme est le suivant : on extrait la plus grande valeur du
 \end{figure}
 \todo[inline]{Pourquoi supprimer aussi la diagonale de $wpeak \times wpeak'$ ?}
 
- 
-\todo[inline,color=green!10]{algo Hogbom en python : \url{http://www.mrao.cam.ac.uk/~bn204/alma/python-clean.html}\\ algo Sijtsma en matlab : \url{https://github.com/jorgengrythe/beamforming/tree/master/algorithm}}
-
-
-
-
-%\cite{Dougherty1998} présente 3 façons de réduire les lobes secondaires liés au positionnement des michrophones sur l'antenne : \\
-%-CSM weighting : réduire le poids des termes de la CSM (cross-spectral matrix) correspondant aux paires de microphones dont l'espacement fait qu'ils apportent une information redondante (par exemple 2 microphones sur la même branche d'une antenne en croix)\\
-%-robust adaptative beamforming = minimum variance algorithm = CAPON\\
-%-CLEAN algorithme.\\
-%De ces trois méthodes, CLEAN ressort comme étant la plus efficace
-
-
-
-\paragraph{Sparcity constrained DAMAS (SC-DAMAS)}
-\cite{Yardibi2008}
-
-type basis pursuit
-
-\paragraph{bayésien}
-
-
-Comme l'étape de déconvolution revient à résoudre un problème inverse où toutes les sources sont traitées simultanément, les méthodes inverses décrites dans la section~\ref{methodes_inverses} peuvent être utilisées.
-
-
-\subsubsection{Prise en compte de la cohérence des sources}
 \paragraph{CLEAN-SC}
 \cite{Sijtsma2007} propose une version de CLEAN basée sur une autre PSF, prenant en compte la cohérence des sources. CLEAN-SC repose sur le fait que le lobe principal d'une PSF est cohérent avec ses lobes secondaires. Le principe est le suivant : Le maximum  $S_{max}$ de la dirty map est trouvé au point $\bm{r}_{max}$.  Les composantes spatiales corrélées avec ce maximum sont sélectionnées puis soustraites à la dirty map.\\
 
@@ -218,6 +198,33 @@ avec $\bm{H}$ contenant les éléments diagonaux de $\bm{hh}'$. En isolant $\bm{
 En réinjectant cette expression dans (Gwmax=Dwmax)~\ref{Gw=Dw}, on trouve que le scalaire $\bm{h}'\bm{w}_{max}$ doit être égal à $\sqrt{1+\bm{w}_{max}\bm{H}\bm{w}_{max}'}$.\\
 
 En théorie, la prise en compte de la cohérence permet bien d'enlever les lobes secondaires. Cependant, si on cherche à imager plusieurs sources corrélées, seule la source de plus fort niveau sera reconstruite et les autres seront considérées comme étant des lobes secondaires de la PSF et et leurs contributions seront supprimées.
+ 
+\todo[inline,color=green!10]{algo Hogbom en python : \url{http://www.mrao.cam.ac.uk/~bn204/alma/python-clean.html}\\ algo Sijtsma en matlab : \url{https://github.com/jorgengrythe/beamforming/tree/master/algorithm}}
+
+
+
+
+%\cite{Dougherty1998} présente 3 façons de réduire les lobes secondaires liés au positionnement des michrophones sur l'antenne : \\
+%-CSM weighting : réduire le poids des termes de la CSM (cross-spectral matrix) correspondant aux paires de microphones dont l'espacement fait qu'ils apportent une information redondante (par exemple 2 microphones sur la même branche d'une antenne en croix)\\
+%-robust adaptative beamforming = minimum variance algorithm = CAPON\\
+%-CLEAN algorithme.\\
+%De ces trois méthodes, CLEAN ressort comme étant la plus efficace
+
+
+
+\paragraph{Sparcity constrained DAMAS (SC-DAMAS)}
+\cite{Yardibi2008}
+
+type basis pursuit
+
+\paragraph{bayésien}
+
+
+Comme l'étape de déconvolution revient à résoudre un problème inverse où toutes les sources sont traitées simultanément, les méthodes inverses décrites dans la section~\ref{methodes_inverses} peuvent être utilisées.
+
+
+\subsubsection{Prise en compte de la cohérence des sources}
+
 
 
 
@@ -226,8 +233,7 @@ En théorie, la prise en compte de la cohérence permet bien d'enlever les lobes
 
 
 \paragraph{DAMAS-C}
-
-
+ref : \url{ T. F. Brooks and W. M. Humphreys, “Extension of damas phased array processing for spatial coherence determination (DAMAS-C),” 12th AIAA/ CEAS Aeroacoustics Conference, Cambridge, MA, 2006, AIAA-2006-2654.}
 
 
 
@@ -238,9 +244,9 @@ référence pour chaque méthode dans bahr2011 : \\
 
 -clean-sc\\
 
--cmf et son extension aux sources cohérentes (CFM-C)\\
+-cmf et son extension aux sources cohérentes (CFM-C) \cite{Yardibi2008} \\
 
--lore\\
+
 
 -macs\\
 

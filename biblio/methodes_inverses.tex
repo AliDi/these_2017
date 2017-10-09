@@ -133,7 +133,7 @@ La régularisation de Tikhonov cherchant à restreindre l'énergie de la solutio
 \subsubsection{Optimisation parcimonieuse }
 L'objectif d'une approche parcimonieuse est d'obtenir une solution approchée du problème avec le moins de composantes non nulles possible. On minimise alors à la fois l'écart entre les données mesurées et simulées, ainsi que la "norme" $L_0$ qui donne la parcimonie d'un vecteur $\bm{x}$ telle que : $||\bm{x}||_0 := \#\{i|x_i\neq0\}$. Le problème d'optimisation devient alors bi-objectif : 
 \begin{equation}
-	\min_{\bm{q}}(||\bm{q}||_0 , ||\bm{p}-\bm{G}\bm{q}||^2) .
+	\min_{\bm{q}}(||\bm{q}||_0 , dist(\bm{p},\bm{G}\bm{q})) .
 	\label{bi-objectif}
 \end{equation}
 Prendre en compte une distribution parcimonieuse des sources dans l'espace, par exemple, permet de réduire le caractère sous-déterminé du problème en exploitant les connaissances a priori sur les sources. Cette propriété de parcimonie sert notamment à compenser le rayonnement omnidirectionnel des sources qui n'est pas mesuré et qui engendre une sous-estimation du niveau des sources. \\

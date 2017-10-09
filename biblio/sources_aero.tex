@@ -82,8 +82,8 @@ cf fiche technique J. Antoni
 
 Le bruit aérodynamique a des propriétés qui peuvent permettre de l'extraire des signaux de mesure : \\
 -il est stationnaire et décorrélé des sources,\\
--sa longueur de corrélation spatiale est courte (à comparer avec l'espacement des micros ; voir aussi l'effet de l'écoulement qui fait une translation ?) \\
--il ne génère pas de bruit ?\\
+-sa longueur de corrélation spatiale est courte (à comparer avec l'espacement des micros) \\
+-il ne génère pas de bruit acoustique (à discuter)\\
 -son contenu spectral est connu (Empirical spectral model of surface pressure fluctuations ?) : large-bande et énergie équi-répartie sur les fréquences.\\
 
 Le champ acoustique a, au contraire, une longueur de corrélation spatiale plus importante (les signaux microphoniques sont très corrélés).\\
@@ -99,7 +99,39 @@ turbulence : matrice diagonale si on suppose qu'il y a une décorrélation total
 L'identification de ces matrice s'appelle "Structured Covariance Estimation problem".\todo[inline]{état de l'art}
 $\bm{B}=Diag(\sigma^{2})$
 
-Un filtrage dans le domaine des nombres d'ondes nécessite un grand nombre de microphone pour être fiable. De plus, il fait l'hypothèse que les parties acoustique et aérodynamique sont disjointes dans ce domaine, ce qui n'est vrai que pour $M<0.8$.
+Un filtrage dans le domaine des nombres d'ondes nécessite un grand nombre de microphone pour être fiable. De plus, il fait l'hypothèse que les parties acoustique et aérodynamique sont disjointes dans ce domaine, ce qui n'est vrai que pour $M<0.8$. D'autres stratégies de débruitage doivent donc être mises en place.
+
+\paragraph{Suppression des éléments diagonaux}
+Si les signausx sont stationnaires et moyennés, le bruit incohérent devrait impacter principalement la diagonale de la CSM. Il est fréquent de supprimer ces éléments diagonaux. Cette opération a pour effet de rendre la CSM singulière et en y appliquant les méthode de beamforming, les niveaux de sources sont sous-estimés et peuvent même être négatifs.\\
+Certaines méthodes comme le Functionnal BF  ou l'holographie fonctionne suuportent très mal la suppression de diagonale.
+
+\paragraph{Reconstruction de la diagonale de la CSM}
+Ce type de méthode propose de résoudre un problème d'optimisation : minimiser la somme des éléments diagonaux de la CSM, sous la condition que la CSM reste semi-définie positive. Pour cela, différetns algorithme d'opitmisation peuvent être employé.\\
+Le pseudo-code ci-dessous est un exemple de solveur utilisant les outils de programmation convexe de Michael Grant et Stephen Boyd : CVX: Matlab software for disciplined convex programming, version 2.0 beta.\url{http://cvxr.com/cvx}, September 2013. Cette procédure est très proche de celle proposée par \cite{Hald2016}.
+
+\begin{figure}[!h]
+	\centering
+	\fbox{
+	\begin{minipage}{0.45\textwidth}	
+		\begin{algorithmic}
+			\STATE cvx\_begin
+			\STATE variable d(M)
+			\STATE  minimize( sum(d) )
+			\STATE subject to
+			\STATE eig(CSM + diag(d)) $>=$ 0
+			\STATE cvx\_end
+		\end{algorithmic}
+	\end{minipage}
+	}
+	\caption{Exemple de code pour la reconstruction de diagonale}
+\end{figure}
+
+\paragraph{Décomposition en éléments propres de la CSM}
+
+
+
+
+
 
 \paragraph{Stochastic modelling}
 approche statistique

@@ -1,7 +1,7 @@
 %----------------------------------------------------------------------------------------
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
-\documentclass[twocolumn, 11pt]{article}
+\documentclass[twocolumn, 11pt, landscape]{article}
 \setlength{\columnsep}{1cm}
 
 %\usepackage{cite} 
@@ -32,8 +32,8 @@
 \usepackage{titlesec} % Allows customization of titles
 \renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
 \renewcommand\thesubsection{\arabic{section}.\arabic{subsection}} % Roman numerals for subsections
-\titleformat{\section}[block]{\bfseries\large\scshape\centering}{\thesection.}{1em}{}[{\titlerule[1.2pt]}] % Change the look of the section titles
-\titleformat{\subsection}[block]{\bfseries\large}{\thesubsection.}{1em}{} % Change the look of the section titles
+\titleformat{\section}[block]{\bfseries\LARGE\scshape\centering}{\thesection.}{1em}{}[{\titlerule[1.2pt]}] % Change the look of the section titles
+\titleformat{\subsection}[block]{\bfseries\Large}{\thesubsection.}{1em}{} % Change the look of the section titles
 \renewcommand\thesubsubsection{\small{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}}
 \titleformat{\subsubsection}[block]{\bfseries}{\thesubsubsection}{0.5em}{}
 \titleformat*{\paragraph}{\vspace{-0.3cm}\small\bfseries}
@@ -204,19 +204,24 @@ Problèmes : On distingue 4 sources de difficultés majeures pour la résolution
 \input{sources_aero}
 %
 %débruitage (tonal, cyclo, aerodynamique)
+\newpage
 \input{debruitage}
 
 %Les méthodes de formation de voies
+\newpage
 \input{beamforming}
 
 %Ajout d'une étape de déconvolution
+\newpage
 \input{deconvolution}
 
 
 %Les méthodes inverses
+\newpage
 \input{methodes_inverses}
 
 %Régularisation spécifique : Approche bayésienne
+\newpage 
 \input{approche_bayesienne}
 
 
@@ -238,6 +243,8 @@ Problèmes : On distingue 4 sources de difficultés majeures pour la résolution
 
 \bibliographystyle{my_plainnat}%\bibliographystyle{unsrt}
 \bibliography{biblio}
+
+
 
 %\end{multicols}
 

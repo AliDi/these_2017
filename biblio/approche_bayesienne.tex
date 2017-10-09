@@ -75,7 +75,9 @@ Dans le contexte de régression, la fonction de vraisemblance ($[p|q]$) sont sou
 \subsection{Estimation des hyperparamètres et des sources}
 
 
-\subsubsection{Choix de la fonction coût}
+
+
+\subsubsection{Méthodes analytiques}
 
 Il existe trois principales approches pour poser le problème d'optimisation et en définir une fonction objectif \footnote{détails des calculs dans le cours de E. Thiébaut et C. Pichon : \url{https://cral.univ-lyon1.fr/labo/perso/eric.thiebaut/downloads/documents/cargese-2006-thiebaut.pdf}} : 
 
@@ -135,10 +137,10 @@ Finalement, on ne conservant que les termes qui dépendent de $c$, on retrouve l
 avec pour terme de régularisation $\nu = \beta^2/\alpha^2$.
 
 
+\subsubsection{Méthodes numériques}
+\paragraph{Échantillonneur de Gibbs}
 
-
-
-\subsubsection{MCMC}
+\paragraph{MCMC}
 algo utilisé par Charles : Metropolis-Hasting
 
 
