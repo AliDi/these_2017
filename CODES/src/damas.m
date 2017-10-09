@@ -20,6 +20,7 @@ function [Sqq]= damas(BF_Sqq_diag , G_map_mic , W , itermax)
     %Sqq_old = BF_Sqq_diag;
     
     for i=1:itermax
+    i
         for n=1:Nmap
             Sqq(n) = BF_Sqq_diag(n) - PSF(n , 1:n-1) * Sqq(1 : n-1 )' ...
                 - PSF(n , n+1:end) * Sqq_old(n+1 : end)';

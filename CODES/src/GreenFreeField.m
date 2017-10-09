@@ -18,5 +18,6 @@ function G=GreenFreeField(r_src , r_mic , f , Gsign)
     R=pdist2(r_mic , r_src);
     
     
+    
     G = exp(Gsign*j*k*R)./(4*pi*R);          
 end

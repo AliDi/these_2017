@@ -65,4 +65,5 @@ function [cleanmap , dirtymap ] = clean_psf(LoopGain , Spp , G_map_mic , nb_itma
         %pause(1);
     end
     disp(['Number of iteration for CLEAN-PSF : ' num2str(count-1) ]);
+   
 end

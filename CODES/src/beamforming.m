@@ -3,12 +3,12 @@ function [Sqq_diag , W ] = beamforming(Spp , G_map_mic , mic_weight)
 %
 %Spp : (M x M ) matrix of mic pressures cross spectra
 %G_map_mic (M x Nmap): Transfert matrix from map points to mic position
+%mic_weight : (1 x M) weight vector for microphones
 %
 %Returns :
-%Sqq_est : (Nmap x Nmap ) matrix of source cross spectra
 %Sqq_diag : (1 x Nmap ) diagonal terms of Sqq_est, ie source auto spectra
 %W : (Nmap x M ) steering vectors 
-%mic_weight : (1 x M) weight vector for microphones
+%
        
 
 	[M Nmap ]=size(G_map_mic);

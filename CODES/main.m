@@ -66,6 +66,16 @@ end
 %%% DIRECT PB : generates mic pressures
 %%%------------------------------------------------------------------------
 
+%%% Matrix of acoustic transfert from real source position to mic position (for the direct pb)
+G_src_mic = GreenFreeField(r_src , r_mic , F);
+
+
+for f=1:nb_F	
+	%%% Direct problem : generate mic pressures
+	Spp(:,:,f) = G_src_mic(:,:,f)*Sqq(:,:,f)*G_src_mic(:,:,f)';
+end
+
+
 %%% Define grid for source map
 Nx=1000;
 Ny=1;
@@ -82,17 +92,6 @@ Ymap=Ymap';
 Zmap=Zmap';
 
 r_src_map = [Xmap(:) Ymap(:) Zmap(:)]; % vector of estimate source point positions (map)
-
-%%% Matrix of acoustic transfert from real source position to mic position (for the direct pb)
-G_src_mic = GreenFreeField(r_src , r_mic , F);
-
-
-for f=1:nb_F	
-	%%% Direct problem : generate mic pressures
-	Spp(:,:,f) = G_src_mic(:,:,f)*Sqq(:,:,f)*G_src_mic(:,:,f)';
-end
-
-
 
 %%%------------------------------------------------------------------------
 %%% BEAMFORMING
