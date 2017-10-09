@@ -58,14 +58,11 @@
 			\vspace{-3cm}
 		\end{wrapfigure}~
 		\begin{itemize}
-			\item Réduction du bruit des avions  : \\ aérodynamique et turbomachines\\   (conception et validation)\\~\\
-			\item Fluctuations de pressions\\ $\hookrightarrow$ caractérisation acoustique\\~\\
-			\item Sources aéroacoustiques : 
-				\begin{itemize}
-					\item[-] parcimonieuses spatialement,
-					\item[-]  large bande fréquentielle (domaine de l'audible)
-					\item[-]  mesures empreintes de bruit aérodynamique (en vol et en soufflerie)
-				\end{itemize}~\\
+			\item Réduction du bruit des avions  : \\ aérodynamique et turbomachines\\   (conception et validation)\\
+			 $\hookrightarrow$ fluctuation de pression acoustique et aérodynamique\\
+			 $\hookrightarrow$ large bande fréquentielle\\~\\
+
+				
 			\item Méthodes actuelles : formation de voies \& déconvolution
 				\begin{itemize}
 					\item[-]  Avantages : flexible, simple et rapide
@@ -78,33 +75,21 @@
 
 \begin{frame}{Axes de la thèse}
 	\begin{enumerate}
-		\item Débruitage des mesures : \\
+		\item Débruitage des mesures : $\bm{S_{pp}} = \bm{S}_{acoustique} + \bm{S}_{turbulence}$\\
 			\begin{itemize}
-				\item Approche bayésienne
-				\item Connaissances a priori : modèles analytiques/numériques + autres données expérimentales
-				\item Qualité ?
+				\item Approche probabiliste
+				\item Connaissances a priori : physique des sources (expériences, modèle numérique/analytique)
+				\item Critères de qualité ?
 			\end{itemize}~\\
-		\item Localisation des sources : approche bayésienne
+		\item Localisation des sources
 			\begin{itemize}
+				\item  Approche bayésienne
 				\item Contraindre l'inversion : physique des sources
 				\item Critère de qualité ? (qualitatif et quantitatif)
-				\item Méthodes numériques
 			\end{itemize}
 	\end{enumerate}
 \end{frame}
 
 
-\begin{frame}{Imagerie US vs localisation de sources}
-	\begin{itemize}
-		\item<1-> Localisation de sources acoustique
-		\begin{figure}
-			\includegraphics[width = 6cm]{./img/pd_dir_inv/ac.png}
-		\end{figure}~\\
-		\item<2-> Imagerie par ultrasons
-		\begin{figure}
-			\includegraphics[width = 6cm]{./img/pd_dir_inv/us.png}
-		\end{figure}
-	\end{itemize}
-	
-\end{frame}
+
 
