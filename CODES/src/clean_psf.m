@@ -28,7 +28,7 @@ function [cleanmap , dirtymap ] = clean_psf(LoopGain , Spp , G_map_mic , nb_itma
 
     while ~StopCriterion
 
-        count = count + 1;
+        count = count + 1
 
         %%% Trim Spp diagonal
         if strcmpi(trim,'on')

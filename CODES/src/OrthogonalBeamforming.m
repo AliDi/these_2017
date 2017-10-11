@@ -1,4 +1,4 @@
-function [Sqq_diag , W , Nsrc] = beamforming(Spp , G_map_mic , mic_weight)
+function [Sqq_diag , W , Nsrc] = OrthogonalBeamforming(Spp , G_map_mic , mic_weight)
 %Estimates sources through orthogonal beamfoming method (Sarradj 2010)
 %
 %Spp : (M x M ) matrix of mic pressures cross spectra
@@ -20,12 +20,23 @@ function [Sqq_diag , W , Nsrc] = beamforming(Spp , G_map_mic , mic_weight)
 	end	
     
     [V Lambda] = eig(Spp);
-    Lambda = abs(real(Lambda));
+    
+    
+    %%sort eigenvalues and eigenvectors 
+	[Lambda,ind] = sort(diag(Lambda),'descend');
+    V = V(:, ind);
+    
+    
+    Lambda=diag(Lambda); 
     
     figure
     stem(diag(Lambda))
     title('Eigenvalues of $S_{pp}$')
     Nsrc = input('Number of sources ? ');
+       
+    Lambda = abs(real(Lambda));
+    
+
     
     for i=1:Nsrc
     	Spp_i = V(:,i) * Lambda(i ,i ) * V(:,i)';
@@ -41,6 +52,5 @@ function [Sqq_diag , W , Nsrc] = beamforming(Spp , G_map_mic , mic_weight)
             Sqq_diag(n,i)=W(n,:)*Spp_i(:,:)*W(n,:)'; %save only auto spectra            
         end		
     	
-    end   
-        
+    end 
 end
