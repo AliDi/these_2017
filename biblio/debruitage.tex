@@ -16,7 +16,7 @@ Le bruit aérodynamique a des propriétés qui peuvent permettre de l'extraire d
 -il ne génère pas de bruit acoustique (à discuter)\\
 -son contenu spectral est connu (Empirical spectral model of surface pressure fluctuations ?) : large-bande et énergie équi-répartie sur les fréquences.\\
 
-Le champ acoustique a, au contraire, une longueur de corrélation spatiale plus importante (les signaux microphoniques sont très corrélés).\\
+Le champ acoustique a, au contraire, une longueur de corrélation spatiale plus importante.\\
 
 Finalement, la matrice d'autocorrélation du signal total peut s'écrire comme étant la somme des matrices d'autocorrélation des composantes acoustique et turbulente du signal. \\
 
@@ -37,7 +37,7 @@ Certaines méthodes comme le Functionnal BF  ou l'holographie fonctionne suuport
 
 \paragraph{Reconstruction de la diagonale de la CSM}
 Ce type de méthode propose de résoudre un problème d'optimisation : minimiser la somme des éléments diagonaux de la CSM, sous la condition que la CSM reste semi-définie positive. Pour cela, différetns algorithme d'opitmisation peuvent être employé.\\
-Le pseudo-code ci-dessous est un exemple de solveur utilisant les outils de programmation convexe de Michael Grant et Stephen Boyd : CVX: Matlab software for disciplined convex programming, version 2.0 beta.\url{http://cvxr.com/cvx}, September 2013. Cette procédure est très proche de celle proposée par \cite{Hald2016}.
+Le pseudo-code ci-dessous est un exemple de solveur utilisant les outils de programmation convexe de Michael Grant et Stephen Boyd : CVX: Matlab software for disciplined convex programming, version 2.0 beta.\url{http://cvxr.com/cvx}, September 2013. Cette procédure est proposée par \cite{Hald2016} et est similaire à celle de \cite{dougherty2016}.
 
 \begin{figure}[!h]
 	\centering
@@ -45,10 +45,10 @@ Le pseudo-code ci-dessous est un exemple de solveur utilisant les outils de prog
 	\begin{minipage}{0.45\textwidth}	
 		\begin{algorithmic}
 			\STATE cvx\_begin
-			\STATE variable d(M)
-			\STATE  minimize( sum(d) )
-			\STATE subject to
-			\STATE eig(CSM + diag(d)) $>=$ 0
+				\STATE variable d(M)
+				\STATE  minimize( sum(d) )
+				\STATE subject to
+					\STATE lambda\_min(CSM $+$ diag(d))$>=$ 0
 			\STATE cvx\_end
 		\end{algorithmic}
 	\end{minipage}
@@ -56,7 +56,38 @@ Le pseudo-code ci-dessous est un exemple de solveur utilisant les outils de prog
 	\caption{Exemple de code pour la reconstruction de diagonale}
 \end{figure}
 
+~\\
+\cite{finez:hal-01276687} proposent une autre méthode de reconstruction, fondée sur l'hypothèse que le champ acoustique de la CSM est parfaitement cohérent : 
+\begin{equation}
+\frac{|{\bm{S_{pp}}}_{ij}|^2}{{\bm{S_{pp}}}_{ii}{\bm{S_{pp}}}_{jj}} =1
+\end{equation}
+La diagonale est alors calculée à partir de cette expression pour chaque couple $ij$. Cette méthode ne modifie pas l'interspectre. L'hypothèse de cohérence est difficile à vérifier en environnement très bruyant, notamment quand le bruit a des longueurs de corrélation supérieur à l'espacement inter-microhonique.\\
+
+
+\cite{finez:hal-01276687} proposent une autre méthode fondée sur l'hypothèse que la CSM peut s'écrire comme la somme d'une matrice à rang réduit (ie résultant d'un nombre de source petit devant le nombre de microphones) et d'une matrice parcimonieuse (ie bruit impactant quelques valeurs de la CSM, la diagonale par exemple).
+
 \paragraph{Décomposition en éléments propres de la CSM}
+
+\paragraph{Décomposition en sous-espaces}
+Analyse en composantes principales de la CSM, par exemple (MUSIC), Proper orthogonal decomposition.\\
+\cite{Bulte2007} propose un décomposition en sous-espaces signal et bruit (nécessite une mesure de bruit) basée sur une une décomposition en valeurs singulires généralisée de la CSM.\\
+Empirical Mode Decomposition\\
+Proper orthogonal decomposition
+
+\paragraph{Utilisation d'une mesure de bruit référente}
+Différentes techniques sont basées sur une mesure de bruit de fond préliminaire pour le débruitage de la CSM : 
+\begin{itemize}
+\item Blacodon : Spectral Estimation Method With Additive Noise (SEMWAN)
+
+
+\end{itemize}•
+
+
+\todo[inline]{
+- Rejection of flow noise using a coherence function method , Chung\\
+-Biblio thèse PARISOT-DUPUIS (holographie soufflerie)
+}
+
 
 
 

@@ -118,7 +118,15 @@ Pour comprendre le problème, il est nécessaire de rappeler les expression anal
 Pour obtenir une représentation spatiale d'un champ stationnaire, les mesures peuvent être réalisées de plusieurs manières. Le ou les capteurs peuvent être déplacés dans l'espace pas à pas ou continûment (\cite{Comesana2013} pour un exemple de scan manuel, la position du capteur étant enregistrée par une vidéo) . Les mesures peuvent aussi être réalisées simultanément, moyennent l'utilisation d'une antenne fixe et d'une éventuelle carte d'acquisition multivoies. Pour caractériser un champ instationnaire à un instant donné, seules les mesures simultanées peuvent être réalisées.
 
 \subsubsection{Mesures en soufflerie}
-Les mesures en soufflerie sont plus simples à réaliser que les mesures en vol (échelle réduite, instrumentation facilitée, source fixe, ...) et permettent de réaliser les tests dans un environnement contrôlé. Cependant, pour assurer leur validité, il faut s'assurer que les conditions en soufflerie sont équivalentes aux conditions réelles. Les mesures peuvent être réaliser en soufflerie close ou ouverte. Le veine close permettent un meilleur contrôle des condition d'écoulement mais induisent un bruit de turbulence plus élevé que les veines ouvertes.
+Les mesures en soufflerie sont plus simples à réaliser que les mesures en vol (échelle réduite, instrumentation facilitée, source fixe, ...) et permettent de réaliser les tests dans un environnement contrôlé. Cependant, pour assurer leur validité, il faut s'assurer que les conditions en soufflerie sont équivalentes aux conditions réelles. Les mesures peuvent être réaliser en soufflerie à veine close ou ouverte.
+\paragraph{Veine close}
+ Les veines closes permettent un meilleur contrôle des condition d'écoulement mais induisent un bruit de turbulence plus élevé que les veines ouvertes. Elles induisent également des réflexion sur les parois qu'il faut prendre en compte par un modèle de sources images, par exemple (The Reflection Canceller, Giudati ?).\\
+ BiClean permet aussi de faire de la déréverbération. CLEAN-SC devrait aussi être capable de le faire...
+ 
+ \paragraph{Veine ouverte}
+ Les veines closes limitent les problèmes de réflexions et réduisent le bruit de fond, mais elles posent d'autres problèmes.\\
+ Si l'antenne est placées en dehors de l'écoulement, les ondes provenants de sources placées dans l'écoulement sont déviées par la couche de cisaillement situées entre les sources et l'antenne. Cette déviation doit être prise en compte par une approche géométrique (Design and use of microphone directional arrays for aeroacoustic measurements. Humphreys ou bien Shear layer correction validation using a non-intrusive acoustic point source, Bahr) ou par une fonction de Green adaptée. Cette déviation peut également être corrigée à l'aide d'une mesure de calibration (Investigation  of  the  systematic  phase  mismatch in  microphone-array  Analysis, Koop).
+
 
 \subsubsection{Mesures en vol}
 Si les capteurs sont positionnés au sol, la principale problématique est de mettre en oeuvre une dédopplerisation. Ces mesures sont plutôt pratiquées pour connaître le bruit à l’atterrissage ou au décollage.\\
