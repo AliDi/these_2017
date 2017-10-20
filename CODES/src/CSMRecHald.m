@@ -1,5 +1,5 @@
 function [Spp_out , d1] = CSMReconstruction( Spp)
-%calculates diagonal elements d to reduce noise on the diagonal of Spp, kipping Spp hermitian nonnegative semi-definite.
+%calculates diagonal elements d1 to reduce noise on the diagonal of Spp, kipping Spp hermitian nonnegative semi-definite.
 %M is the number of microphones (Spp : (MxM))
 %d1 : (M x 1)
 %from Hald 2016
@@ -15,7 +15,7 @@ cvx_end
 
 Spp_out = Spp+diag(d1);
 
-%which strictly equivalent to Dougherty 2016
+%equivalent to :
 %cvx_begin
 %	variable d2(M)
 %	CSM - diag(d2) == hermitian_semidefinite(M);
