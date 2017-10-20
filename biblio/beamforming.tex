@@ -1,5 +1,5 @@
 %====================================================
-\section{Méthodes de formation de voies}
+\chapter{Méthodes de formation de voies}
 %====================================================
 
 Le principe des méthodes de formation de voies est de pondérer les signaux de mesure à l'aide de vecteurs de pointage de manière à les focaliser dans chaque point du plan sur lequel les sources sont cherchées.
@@ -31,7 +31,7 @@ remarque : en beamforming classique, doubler le nombre de micro améliore le RSB
 
 }
 
-\subsection{Vecteur de pointage indépendant des données \label{bf_standard}}
+\section{Vecteur de pointage indépendant des données \label{bf_standard}}
 
 
 
@@ -58,7 +58,7 @@ Il est fréquent d'annuler la diagonale de $\bm{S_{pp}}$ afin de négliger la co
 
 
 
-\subsection{Construction d'un vecteur de pointage à partir des données}
+\section{Construction d'un vecteur de pointage à partir des données}
 Certaines méthodes de localisation n'utilisent pas un modèle de source mais construisent le vecteur de pointage à partir de l'ensemble des covariances des signaux de mesure. \\
 \paragraph{\tbullet Capon}  \cite{Capon1969} propose de minimiser l'énergie en sortie du processeur tout en conservant une contrainte de normalisation que le vecteur de pointage est dans la direction de la source (méthode dite "à variance minimale des sources"): minimiser $\bm{w}_i'\bm{S_{pp}}\bm{w}_i$ (i.e. la densité spectrale des sources) sous la contrainte $\bm{w}_i'\bm{h}_i=1$.
 On résout donc, en utilisant le multiplicateur de Lagrange $\lambda$ : 

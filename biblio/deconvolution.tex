@@ -1,4 +1,4 @@
-\section{Ajout d'une étape de déconvolution\label{deconvolution}}
+\chapter{Méthodes de déconvolution\label{deconvolution}}
 
 La distribution de sources obtenue obtenue par une méthode d'imagerie peut être vue comme la convolution entre la distribution de sources et la fonction d'étalement du point (PSF : point spread function). La PSF est comparable à une réponse impulsionnelle du système d'imagerie. En formation de voies, la PSF est souvent connue \citep{Bahr2011a}: elle est composée d'un lobe principal et de lobes secondaires. \\
 
@@ -9,7 +9,7 @@ On distingue 2 types de lobes secondaires : ceux liés à l'espacement entre les
 
 La PSF des méthodes inverses est difficile à estimer car elle dépend des données de mesure. C'est pourquoi les méthodes de déconvolution y sont moins appliquées. En revanche, la PSF du beamforming est bien connue et la résolution de cette méthode est souvent améliorée par une étape de déconvolution.\\
 
-\subsection{PSF du beamforming standard}
+\section{PSF du beamforming standard}
 
 Le beamforming standard permet d'estimer les sources $\bm{\tilde{q}}$ ainsi (cf paragraphe~\ref{bf_standard}) : 
 \begin{equation}
@@ -40,7 +40,7 @@ La déconvolution consiste théoriquement à inverser la matrice $\bm{A}$ afin d
 \todo[inline,color=green!10]{Notations inspirée de \url{http://www.bebec.eu/Downloads/BeBeC2014/Papers/BeBeC-2014-02.pdf} qui donne aussi g et w en présence d'un écoulement uniforme.}
 
 
-\subsubsection{DAMAS}
+\subsection{DAMAS}
 %article en francais : http://www.conforg.fr/cfa2014/cdrom/data/articles/000206.pdf
  \cite{Brooks2006} proposent l'algorithme DAMAS (deconvolution approach for the mapping of acoustic sources) pour résoudre le problème linéaire de déconvolution : 
 \begin{align}
@@ -67,7 +67,7 @@ Il existe de nombreuse extension de cette méthode de déconvolution \citep{Doug
 
 
  
-\subsubsection{Spectral Estimation Model (SEM)}
+\subsection{Spectral Estimation Model (SEM)}
 Cette méthode propose de minimiser une distance au sens des moindres carrés entre les CSM mesurées et estimée, à l'aide d'un gradient conjugué. La minimisation se fait par l'ajout de sources équivalentes, qui ne reflettent pas nécessairement la physique des vraies sources. Plusieurs modèles équivalents peuvent donc permettrent de minimiser la fonction-objectif. Cette méthode ne donne donc pas une solution unique.\\
 Pour contraindre le problème, la région d'étude est divisée en sous-espaces sur lesquels la recherche de monopoles équivalents est faites. La solution va donc dépendre du choix de ces zones.
 \citep{Blacodon2003}\\
@@ -77,7 +77,7 @@ Contrainte de positivité sur la solution de source difficile à appliquer ?
 
 
 
-\subsubsection{Non-negative least squares (NNLS)}
+\subsection{Non-negative least squares (NNLS)}
 L'approche NNLS est de minimiser l'erreur au sens des moindres carrés entre $\bm{b}$ et $\bm{Aq}$, en imposant que $\bm{q}$ reste non-négatif : 
 \begin{eqnarray}
 \min_{\bm{q}}\left(||\bm{\hat{S}_{qq}}-\bm{A}\bm{S_{qq}}||^2 \right)\\
@@ -87,10 +87,10 @@ L'approche NNLS est de minimiser l'erreur au sens des moindres carrés entre $\b
 
 De manière similaire à DAMAS2, la version FFT-NNLS remplace la convolution par une multiplication dans le domaine des nombres d'onde pour accélérer les calculs.
 
-\subsubsection{LORE}
+\subsection{LORE}
 
 
-\subsubsection{Déconvolution avec contrainte de parcimonie}
+\subsection{Déconvolution avec contrainte de parcimonie}
 Les algorithme ci après font l'hypothèse que le vecteur source est parcimonieux. 
 
 \paragraph{CLEAN}
@@ -223,7 +223,7 @@ type basis pursuit
 Comme l'étape de déconvolution revient à résoudre un problème inverse où toutes les sources sont traitées simultanément, les méthodes inverses décrites dans la section~\ref{methodes_inverses} peuvent être utilisées.
 
 
-\subsubsection{Prise en compte de la cohérence des sources}
+\subsection{Prise en compte de la cohérence des sources}
 
 
 

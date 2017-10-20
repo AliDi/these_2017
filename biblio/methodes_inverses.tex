@@ -1,4 +1,4 @@
-\section{Les méthodes inverses}
+\chapter{Les méthodes inverses}
 En formation de voies, chaque source est considérée indépendemment des autres. La surface contenant les sources potentielles est scannées point par point et l'éventuelle cohérence des sources n'est pas prise en compte.\\
 
 L'approche des méthodes inverses est de traiter le problème dans son ensemble, en recherchant toutes les sources simultanément, prenant ainsi en compte les effets d'interférence entre les sources. \todo[inline]{Quid des interactions non-linéaires entre sources ?} La résolution du problème inverse ne peut généralement pas reposer sur une inversion de la matrice de transfert, car le problème inverse est souvent sous-déterminé. De plus, la relation entre sources et mesures n'est pas toujours bijective.
@@ -13,9 +13,9 @@ Les méthodes varient selon le modèle de source choisi : \\
 itératif ou non ?
 
 
-\subsection{Holographie acoustique}
+\section{Holographie acoustique}
 De manière générale, les méthodes basées sur l'holographie acoustique présentent l'avantage de pouvoir reconstruire le champ source en tout point de l'espace et donc sur un plan source de géométrie arbitraire. Un autre avantage est son utilisation en milieu clos.
-\subsubsection{Holographie en champ proche (NAH)}
+\subsection{Holographie en champ proche (NAH)}
 L'holographie en champ proche propose d'exploiter des mesures réalisées à proximité des sources pour en reconstruire une image. Cette méthode tire profit de la mesure des ondes évanescentes, exponentiellement décroissantes avec la distance, qui viennent s'ajouter aux ondes propagatives \cite{Maynard1985}.\\
 Le champ de pression mesuré est d'abord décomposé dans le domaine des nombres d'ondes par une transformée de Fourier spatiale. A chaque onde est associé un propagateur (i.e. une fonction de transfert supposée connue) qui, inversé, permet de rétropropager le champ mesuré et ainsi reconstruire le champ source. \\
 
@@ -31,7 +31,7 @@ où $\mathcal{F}$ est  la transformée de Fourier spatiale et $G$ la fonction de
 \todo[inline, color=green!10]{Référence pour comprendre les méthodes suivantes : {Comparison of patch acoustic holography methods Zdeněk HAVRÁNEK}\\
 Référence pour leur implémentation : \url{http://www.sandv.com/downloads/1002wuxx.pdf}} 
  
-\subsubsection{Statically optimized near-field acoustical holography (SONAH)}
+\subsection{Statically optimized near-field acoustical holography (SONAH)}
  
 Cette méthode est notamment utilisée lorsque le plan source est plus grand que l'antenne de mesure (on parle de "patch methods"). Elle repose sur l'idée que la pression estimée sur un plan de prédiction (situé entre le plan de mesure et le plan source) est exprimée comme la somme pondérée des pressions mesurées en N points du plan source \citep{Hald2009} : 
 \begin{equation}
@@ -57,19 +57,19 @@ Cette méthode est notamment utilisée lorsque le plan source est plus grand que
 
 NAH et ses dérivés ne permettenty pas de reconstruire une champ source en 3D.
 
-\subsubsection{iBEM}
+\subsection{iBEM}
 
 iBEM propose de résoudre l'équation liant la pression pariétale à  la pression mesurée par la méthode des éléments de frontière.  La transformée de Fourier spatiale est remplacée par une SVD de la matrice de transfert\\
  
 
 + amélioration sur des géométrie quelconques par l'utilisation d'éléments de frontières (iBem : méthode des éléments de frontières inverse). La transformée de Fourier spatiale est remplacée par une SVD de la matrice de transfert (ref 29 thèse de T. Lemagueresse). L
-\subsubsection{ESM}
+\subsection{ESM}
 L'idée de la méthode des sources équivalentes est que le champ source recherché peut être représenté comme une superposition de points source équivalents. Une séparation du champ nécessite qu'il y ait deux plans de mesures et deux plans fictifs de reconstruction des sources équivalentes.\\
 L'inverse de la matrice de transfert peut se faire par SVD, par exemple.
 
 
 
-\subsubsection{Helmoltz equation least squares}
+\subsection{Helmoltz equation least squares}
 \cite{Wang1997}
 Peut-être vu comme un cas particulier de SEM. \\~\\
 
@@ -77,13 +77,13 @@ Peut-être vu comme un cas particulier de SEM. \\~\\
 
 En résumé, les méthodes inverses utilisées principalement sont de 2 sortes : 1) les méthodes basées sur la transformée de Fourier (holographie,...) ; 2) Les méthodes ``model based''. En pratiques, ces méthodes sont très proches (ce que montrent %W. A. VERONESI and J. D. MAYNARD 1989 Journal of the Acoustical Society of America 85,588}598. Digital holographic reconstruction of sources with arbitrarily shaped surfaces)
 
-\subsubsection{+soap, generalized BF, bayesian focusing ?}
+\subsection{+soap, generalized BF, bayesian focusing ?}
 
 
 
 L'holographie a une meilleure résolution que le beamforming, même à basse fréquence et donne accès à la puissance de sources. Elle est cependant limitée en résolution par l'espacement inter-microphonique et nécessite de réaliser des mesures en champ proche.
 
-\subsection{Les méthodes de régularisation}
+\section{Les méthodes de régularisation}
 \todo[inline, color=green!10]{liste des méthodes de régularisation : \url{http://www.imm.dtu.dk/~pcha/Regutools/RTv4manual.pdf}
 }
 
@@ -101,14 +101,14 @@ augmentation and a method for prediction\\
 Les problèmes inverses de localisation de sources acoustiques sont souvent mal posés car le nombre de sources est supérieur au nombre de capteur (la solution n'est pas unique) et la solution dépend des données d'entrée. Il est alors nécessaire de mettre en place des stratégies qui améliorent le conditionnement du problème, notamment en réduisant la sensibilité de la solution aux données d'entrée.\\
 
 
-\subsubsection{Décomposition en valeurs singulières}
+\subsection{Décomposition en valeurs singulières}
 
 
 Le conditionnement du problème peut être quantifié par le rapport entre la plus grande et la plus petite valeur singulière de la matrice de transfert. Plus ce rapport est faible, mieux le problème est conditionné. Le conditionnement du problème peut donc être amélioré en supprimant les petites valeurs singulières de la matrice de transfert. La question du nombre de valeurs singulières à conserver se pose alors. 
 
 
 
-\subsubsection{Régularisation de Tikhonov}
+\subsection{Régularisation de Tikhonov}
 
 La stratégie la plus souvent adoptée est la régularisation de Thikonov \citep{Tikhonov1963} qui consiste à rajouter un terme de contrôle de l'énergie de la solution dans la fonction coût. Cette dernière prend alors la forme suivante : 
 \begin{equation}
@@ -130,7 +130,7 @@ differentiation procedures for non-exact data\\
 
 La régularisation de Tikhonov cherchant à restreindre l'énergie de la solution a tendance à sous-estimer les niveaux des sources reconstruite. Cette régularisation ne prend pas correctement en compte le rayonnement omni-directionnel des sources : seule la partie rayonnée vers l'antenne est reconstruite. 
 
-\subsubsection{Optimisation parcimonieuse }
+\subsection{Optimisation parcimonieuse }
 L'objectif d'une approche parcimonieuse est d'obtenir une solution approchée du problème avec le moins de composantes non nulles possible. On minimise alors à la fois l'écart entre les données mesurées et simulées, ainsi que la "norme" $L_0$ qui donne la parcimonie d'un vecteur $\bm{x}$ telle que : $||\bm{x}||_0 := \#\{i|x_i\neq0\}$. Le problème d'optimisation devient alors bi-objectif : 
 \begin{equation}
 	\min_{\bm{q}}(||\bm{q}||_0 , dist(\bm{p},\bm{G}\bm{q})) .

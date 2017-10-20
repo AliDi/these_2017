@@ -1,4 +1,4 @@
-\section{Approche bayésienne}
+\chapter{Approche bayésienne}
 
 Rappel des estimation de sources et du paramètre de régularisation proposés par Antoni 2012.\\
 
@@ -13,7 +13,7 @@ la probabilité est la traduction d'un état de connaissance du système.
 
 Principe général des probabilités bayésiennes : on choisit une distribution a priori décrivant la fonction à modéliser $[\bm{q}]$. Cette distribution est corrigée progressivement sous forme de fonction de vraisemblance à partir des observations $[\bm{p|q}]$. Prises ensemble, la distribution a priori et la fonction de vraisemblance permettent de construire la distribution a posteriori : $[\bm{q|p}] = [\bm{p|q}][\bm{q}]/[\bm{p}]$.
 
-\subsection{Formulation probabiliste du problème direct}
+\section{Formulation probabiliste du problème direct}
 
 Le problème direct revient à exprimer la pression $\bm{p}$ au niveau de l'antenne de microphones en fonction du champ source $\bm{q}$, du modèle de propagation acoustique $\bm{G}$, du bruit de mesure et des erreurs de modèle représentés par le vecteur $\bm{n}$ : 
 \begin{equation}
@@ -72,12 +72,12 @@ fonction de vraisemblance : la vraisemblance varie  en fonction des paramètres 
 Dans le contexte de régression, la fonction de vraisemblance ($[p|q]$) sont souvent supposé suivre une distribution gaussienne, car ``corrompues'' par du bruit gaussien. Les observation sont supposées indépendantes et identiquement distribuées, ce qui fait qu'il est possible de factoriser la fonction de vraisemblance sur chaque point de mesure.
 }
 
-\subsection{Estimation des hyperparamètres et des sources}
+\section{Estimation des hyperparamètres et des sources}
 
 
 
 
-\subsubsection{Méthodes analytiques}
+\subsection{Méthodes analytiques}
 
 Il existe trois principales approches pour poser le problème d'optimisation et en définir une fonction objectif \footnote{détails des calculs dans le cours de E. Thiébaut et C. Pichon : \url{https://cral.univ-lyon1.fr/labo/perso/eric.thiebaut/downloads/documents/cargese-2006-thiebaut.pdf}} : 
 
@@ -112,7 +112,7 @@ Il existe trois principales approches pour poser le problème d'optimisation et 
 
 En faisant un analyse de la propagation des erreurs pour chaque méthode, on peut montrer que le maximum de vraisemblance en propage davantage.\\
 
-\subsubsection{Estimateur MAP}
+\subsection{Estimateur MAP}
 La résolution du problème inverse se fait donc par l'estimation de la probabilité $[\bm{q}|\bm{p},\alpha^2,\beta^2]$. Le vecteur $\bm{q}$ est ainsi approché en observant sa valeur la plus probable d'après les données, le  ``Maximum a posteriori'' (MAP) : 
 \begin{align}
 \bm{\tilde{q}}_{MAP} &= \arg\max([\bm{q}|\bm{p},\alpha^2,\beta^2])\\
@@ -137,13 +137,13 @@ Finalement, on ne conservant que les termes qui dépendent de $c$, on retrouve l
 avec pour terme de régularisation $\nu = \beta^2/\alpha^2$.
 
 
-\subsubsection{Méthodes numériques}
+\subsection{Méthodes numériques}
 \paragraph{Échantillonneur de Gibbs}
 
 \paragraph{MCMC}
 algo utilisé par Charles : Metropolis-Hasting
 
 
-\subsection{Confiance accordée à la reconstruction}
+\section{Confiance accordée à la reconstruction}
 
 	

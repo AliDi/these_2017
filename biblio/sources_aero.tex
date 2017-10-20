@@ -1,5 +1,5 @@
 %===================================================
-\section{Modèle de propagation et nature des sources aéroacoustiques}
+\chapter{Modèle de propagation et nature des sources aéroacoustiques}
 %===================================================
 
 
@@ -18,7 +18,7 @@ Séparer ces composantes dans le champ total mesuré permet de mieux comprendre 
 
 
 
-\subsection{Exemples de sources aéroacoustiques sur un avion}
+\section{Exemples de sources aéroacoustiques sur un avion}
 %=============================================================
 
 \todo[inline]{Un bref récap des sources est fait en intro de la thèse de G. Reboul et Simon B.}
@@ -54,7 +54,7 @@ Bruit d'interaction rotor-stator : dominant ?\\
 Les moteurs double flux ont permis de diminuer l'importance du bruit de jet, mais ont rajouté le bruit de soufflante.
 
 
-\subsubsection{Bruit de jet}
+\subsection{Bruit de jet}
 
 page 86 de Smith : Description du bruit de jet\\
 -small-scale Eddies (HF)\\
@@ -71,7 +71,7 @@ L'enjeu est donc de séparer ces composantes pour extraire seulement le bruit in
 
 
 
-\subsection{Physique de la Propagation acoustique en écoulement}
+\section{Physique de la Propagation acoustique en écoulement}
 %=================================================================
 
 Pour ces méthodes, on considère que la façon dont le son se propage est connue (matrice de transfert acoustique). Prendre en compte l'écoulement, sinon les sources apparaissent décalées vers l'aval (Amiet, par ex). 
@@ -80,7 +80,7 @@ Calibration de la matrice interspectrale avec et sans écoulement : ne nécessit
 
 Pour comprendre le problème, il est nécessaire de rappeler les expression analytique de l'intensité acoustique rayonnée par un écoulement.
 
-\subsubsection{Équations classiques de la mécanique des fluides}
+\subsection{Équations classiques de la mécanique des fluides}
 \vspace{0.3cm}\paragraph{Conservation de la quantité de mouvement : Navier-Stokes}
 \begin{equation}
 	\frac{\dd \rho u_i}{\dd t} + \frac{\dd \rho u_i u_j}{\dd x_j} = -\frac{\dd p}{\dd x_i} + \rho g_i + \frac{\dd \tau_{ij}}{\dd x_j}
@@ -111,13 +111,13 @@ Pour comprendre le problème, il est nécessaire de rappeler les expression anal
 %\todo[inline]{Prise en compte des réflexions sur le jet, interaction non-linéaire des sources, ...}
 
 %===================================================
-\subsection{Aspects expérimentaux}
+\section{Aspects expérimentaux}
 %===================================================
 \todo[inline]{Etat de l'art beamforming dans le doc \url{CEAS-special-issue-arrays_3-April-2017_error.pdf}}
 
 Pour obtenir une représentation spatiale d'un champ stationnaire, les mesures peuvent être réalisées de plusieurs manières. Le ou les capteurs peuvent être déplacés dans l'espace pas à pas ou continûment (\cite{Comesana2013} pour un exemple de scan manuel, la position du capteur étant enregistrée par une vidéo) . Les mesures peuvent aussi être réalisées simultanément, moyennent l'utilisation d'une antenne fixe et d'une éventuelle carte d'acquisition multivoies. Pour caractériser un champ instationnaire à un instant donné, seules les mesures simultanées peuvent être réalisées.
 
-\subsubsection{Mesures en soufflerie}
+\subsection{Mesures en soufflerie}
 Les mesures en soufflerie sont plus simples à réaliser que les mesures en vol (échelle réduite, instrumentation facilitée, source fixe, ...) et permettent de réaliser les tests dans un environnement contrôlé. Cependant, pour assurer leur validité, il faut s'assurer que les conditions en soufflerie sont équivalentes aux conditions réelles. Les mesures peuvent être réaliser en soufflerie à veine close ou ouverte.
 \paragraph{Veine close}
  Les veines closes permettent un meilleur contrôle des condition d'écoulement mais induisent un bruit de turbulence plus élevé que les veines ouvertes. Elles induisent également des réflexion sur les parois qu'il faut prendre en compte par un modèle de sources images, par exemple (The Reflection Canceller, Giudati ?).\\
@@ -128,13 +128,13 @@ Les mesures en soufflerie sont plus simples à réaliser que les mesures en vol 
  Si l'antenne est placées en dehors de l'écoulement, les ondes provenants de sources placées dans l'écoulement sont déviées par la couche de cisaillement situées entre les sources et l'antenne. Cette déviation doit être prise en compte par une approche géométrique (Design and use of microphone directional arrays for aeroacoustic measurements. Humphreys ou bien Shear layer correction validation using a non-intrusive acoustic point source, Bahr) ou par une fonction de Green adaptée. Cette déviation peut également être corrigée à l'aide d'une mesure de calibration (Investigation  of  the  systematic  phase  mismatch in  microphone-array  Analysis, Koop).
 
 
-\subsubsection{Mesures en vol}
+\subsection{Mesures en vol}
 Si les capteurs sont positionnés au sol, la principale problématique est de mettre en oeuvre une dédopplerisation. Ces mesures sont plutôt pratiquées pour connaître le bruit à l’atterrissage ou au décollage.\\
 Pour des mesures du bruit aérodynamique, les capteurs peuvent être posés sur l'avion en régime iddle. Le contenu des mesures dépend alors grandement de la position des capteurs (proximité des turbomachines, des ailes, ...).
 
 
 
-\subsubsection{Antenne}
+\subsection{Antenne}
 Les mesures en présence d'un fort écoulement sont fortement marquée par le bruit de turbulence. Pour réduire ce bruit, différentes stratégies peuvent être mises en place. Les microphones peuvent être montés dans des cavités de manière à filtrer les petites longueurs d'ondes associées au bruit de turbulence. En veine ouverte, les microphones peuvent être placés en dehors du jet.  
 
 
