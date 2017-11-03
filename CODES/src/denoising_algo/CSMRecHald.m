@@ -7,7 +7,8 @@ function [Spp_out , d1] = CSMReconstruction( Spp)
 M=size(Spp,1);
 CSM=double(Spp);
 M=double(M);
-cvx_begin 
+
+cvx_begin
 	variable d1(M);
 	CSM + diag(d1) == hermitian_semidefinite(M);
 	minimize( sum(d1) );
