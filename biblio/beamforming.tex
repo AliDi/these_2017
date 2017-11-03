@@ -89,7 +89,7 @@ Ces méthodes font l'hypothèse de sources décorrélées et sont sensibles au n
 Ces méthodes de formation de voies présentent l'avantage d'être simples à implémenter et relativement rapides à calculer. Mais leur résolution diminue fortement lorsque la longueur d'onde devient grande devant l'écart inter-microphonique et les images présentent alors des lobes secondaires qui rendent les sources difficile à localiser et à séparer. Ce problème peut être résolu par une étape de déconvolution décrite dans la section \ref{deconvolution}.\\
 
 \paragraph{Orthogonal beamforming}
-Cette méthode repose sur la décomposition en valeurs propres de la matrice interspectrale des pressions, qui est hermitenne et semi-définie positive. Le plus petites valeurs propres sont associées à un sous-espace bruit et les M plus grandes à un sous-espace signal : 
+Cette méthode \citep{Sarradj2010} repose sur la décomposition en valeurs propres de la matrice interspectrale des pressions, qui est hermitenne et semi-définie positive. Le plus petites valeurs propres sont associées à un sous-espace bruit et les M plus grandes à un sous-espace signal : 
 \begin{equation}
 	\bm{S_{pp}} = \bm{V}\bm{\Lambda}\bm{V}' + \sigma^2\bm{1}
 \end{equation}
@@ -102,9 +102,9 @@ Les sources peuvent alors être estimées par un beamforming classique appliqué
 L'amplitude des sources correspond donc aux valeurs propres de la matrice intrerspectrale des pressions.
 Le choix du nombre de sources (i.e le nombre de valeurs propres à associer à l'espace signal) nécessite l'utilisation d'un critère statistique de type Akaike Information Criterion (AIC) ou Minimum Description Length (MDL) \citep{Wax1985}.\\
 
-Proche de ce que fait Suzuki 2008 (même article republié en 2011) : il résoud un problème d'optimisation en essayant de trouver chaque source associée à chaque mode $\sqrt(\bm{\Lambda_{ii}})\bm{V}_i$.
+Proche de ce que fait Suzuki 2008 (article republié en 2011) : il résoud un problème d'optimisation en essayant de trouver chaque source associée à chaque mode $\sqrt{\bm{\Lambda_{ii}}}\bm{V}_i$ (pour des multipoles).
 
-\todo[inline]{
+~\\ \todo[inline]{
 DORT (pas d'hypothèse sur la distance source-antenne, équation d'euler linéarisées invariantes par RT en changeant le sens de l'écoulement moyen (ex : Localisation de source acoustique en soufflerie anéchoïque par deux techniques d'antennerie : formation de voies et retournement temporel numérique par Thomas Padois))\\
 
 Décomposition en sous-espaces "Orthogonal Beamforming" ?\\

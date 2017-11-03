@@ -50,7 +50,7 @@ Le pseudo-code ci-dessous est un exemple de solveur utilisant les outils de prog
 	}
 	\caption{Exemple de code pour la reconstruction de diagonale}
 \end{figure}
-
+Cet algorithme s'arrête lorsque la plus petite valeur propre de la CSM modifiée atteint zéro. L'erreur de reconstruction ne va donc pas dépendre du niveau de bruit mais du spectre aux valeurs propres de la CSM. \\
 ~\\
 \cite{finez:hal-01276687} proposent une autre méthode de reconstruction, fondée sur l'hypothèse que le champ acoustique de la CSM est parfaitement cohérent : 
 \begin{equation}
@@ -59,15 +59,67 @@ Le pseudo-code ci-dessous est un exemple de solveur utilisant les outils de prog
 La diagonale est alors calculée à partir de cette expression pour chaque couple $ij$. Cette méthode ne modifie pas l'interspectre. L'hypothèse de cohérence est difficile à vérifier en environnement très bruyant, notamment quand le bruit a des longueurs de corrélation supérieur à l'espacement inter-microhonique.\\
 
 
-\cite{finez:hal-01276687} proposent une autre méthode fondée sur l'hypothèse que la CSM peut s'écrire comme la somme d'une matrice à rang réduit (ie résultant d'un nombre de source petit devant le nombre de microphones) et d'une matrice parcimonieuse (ie bruit impactant quelques valeurs de la CSM, la diagonale par exemple).
 
 \subsection{Décomposition en éléments propres de la CSM}
 Analyse en composantes principales de la CSM : 
 \paragraph{\tbullet MUSIC} L'algorithme MUltiple Signal Classification (MUSIC, \cite{Schmidt1986}) propose une décomposition en valeurs propres de la matrice interspectrale $\bm{S_{pp}}$ pour la décomposer en 2 sous-espaces, l’un associé au signal et l’autre au bruit, afin de diminuer la contribution énergétique du bruit.  Dans l'équation~\ref{Gii}, $\bm{S_{pp}}$ est remplacé par les composantes correspondant au sous-espace bruit. Ainsi, ce nouvel estimateur sera maximal lorsque le processeur pointe vers une source, puisque les éléments du dénominateur seront décorrélés. Cet estimateur ne correspond alors plus à une densité spectrale des sources mais seulement à un indicateur de présence au point $i$. Cette méthode nécessite que le RSB soit suffisament bon et que la CSM ne soit pas de rang plein.\\
 
-\paragraph{\tbullet Alternate projections}\\
+\paragraph{\tbullet Alternating projections}
+Cet algorithme permet de trouver l'intersection  (ou la plus petite distance) entre deux ensembles. Soit $E_1$ et $E_2$ ces deux ensembles. Le principe est de calculer itérativement le résultat $y^{(k)}$ de la projection de $x^{(k)}$ sur l'ensemble $E_1$, puis le résultat $x^{(k+1)}$ de la projection de $y^{(k)}$ sur l'ensemble $E_2$. Si les deux ensembles sont convexes, la convergence est linéaire.
+Cyclic projections généralise AP à un nombre d'ensembles supérieur à 2.\\
 
-\paragraph{\tbullet  Proper orthogonal decomposition}\\
+Dans le cas du débruitage, les ensembles sont : l'ensemble des matrices semidéfinies positives, ensemble qui prend en compte la structure du bruit (éléments diagonaux).
+
+\paragraph{\tbullet  Proper orthogonal decomposition}
+
+\subsection{Classical Printcipal Component Analysis (PCA)}
+Méthode très utilisée en analyse, compression et visualisation de donnée (. Repose sur l'idée que dans une matrice de très grande dimension, l'information  se trouve dans un sous-espace de dimensions beaucoup plus petites. Si $Y$ est une matrice de dimension $m \times n$, elle eput alors s'écrire $S + N$ avec $S$ une matrice de rang $r$ très petit devant $m,n$ et les éléments de $N$ sont des variables gaussiennes. PCA propose donc de résoudre le problème suivant : 
+
+\begin{equation}
+    \min_{S,N} || S ||_F, ~~~\text{s. c.~~~} \rank(S) \le r ,~~Y=S+N.
+\end{equation}
+
+Ce problème peut être résolu par une décomposition en valeurs singulières de $Y$. $S$ est alors le résultat de la projection de $Y$ sur ses $r$ premières valeurs singulières (de gauche).
+Cependant, cette méthode est mise en échec quand $N$ est de forte amplitude devant $S$. \\
+Une autre formulation tente de remédier à ce problème : Robust PCA.
+
+\subsection{Robust PCA (RPCA)}
+Références et codes par l'université d'Illinois : \url{http://perception.csl.illinois.edu/matrix-rank/}//
+
+La version dite robuste de PCA permet d'estimer $A$ en présence d'un fort bruit $N$.
+
+\paragraph{\tbullet Méthodes non-convexes}
+
+
+\paragraph{\tbullet Relaxation convexe}
+
+Considérant que la matrice de bruit $N$  est de forte amplitude, mais parcimonieuse, on peut résoudre le problème suivant \citep{Wright2009a} : 
+\begin{equation}
+    \min_{S,N} ||S||_* + \lambda|N|_1,~~~~\text{s. c.~~~}Y=S+N.
+\end{equation}
+$\lambda$ est un paramètre de pondération.
+Ce problème peut être résolut par les algorithmes classiques d'optimisation convexe .
+ \cite{Wright2009a} utilisent un algorithme de seuillage itératif qui converge lentement. Depuis, de nombreux algortihmes ont été utilisés pour résoudre ce problème :  Augmented Lagrange multipllier,  Accelerated Proximal Gradient,  Dual Method, Singular Value Thresholding, Alternating Direction Method...\\
+ 
+ Note : Ce problème est étroitement lié au problème de \textit{matrix completion}.	
+
+Les méthodes de résolution du problème RPCA citées ci-dessus nécessitent d'ajuster $\lambda$  finement. La résolution de ce problème par une approche bayésienne permet de s'affranchir du choix de $\lambda$ (ref : X. Ding, L. He, and L. Carin, “Bayesian robust principal component  analysis,”). Bacadan (Sparse Bayesian Methods for Low-Rank Matrix Estimation) propose une méthode bayésienne qui permet, en plus, de ne pas choisir le rang de $S$. Dans cette méthode, la matrice $Y$ est décomposée comme suit : 
+
+\begin{equation}
+    S=AB^T = USV^T = \left(  US^{1/2} \right) \left(  S^{1/2}V^T \right)
+\end{equation}
+$S$ étant une matrice de rang réduit $r$. Le problème consiste alors à résoudre : 
+
+\begin{equation}
+    \min_{A,B} ||A||_{F}^{2}  + ||B||_{F}^{2},~~~~\text{s. c.~~~} ||Y-S-N||^2_{F} < \epsilon
+\end{equation}
+On peut montrer que  $\min_{A,B} ||A||_{F}^{2}  + ||B||_{F}^{2}$ est équivalent à $\min ||S||_*$ \footnote{pour la démo, voir Recht 201 : Guaranteed minimum-rank solutions of linear matrix equations via nuclear norm minimization}
+Ce problème peut assi être résolu 
+
+
+\subsection{Approche statistique}
+
+\cite{Tipping1999} proposent une approche probabiliste de la PCA (PPCA). Ils montrent que les axes principaux d'un ensemble peuvent être déterminés par une estimation de maximum de vraisemblance. Le principal sous-espace est déterminé par un algorithme EM.
 
 
 \subsection{Utilisation d'une mesure de bruit référente}
@@ -92,8 +144,6 @@ Empirical Mode Decomposition\\
 
 
 
-\subsection{Stochastic modelling}
-approche statistique
 
 \subsection{Méthodes expérimentales}
 
