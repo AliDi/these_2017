@@ -12,35 +12,38 @@ format long
 
 %%% Paramètres à faire varier
 q=196; %nombre de microphones
-p= 196 * 25; %nombre de snapshots
+p= 196 * 10; %nombre de snapshots
 nu=q/p;
 
-%%% Calcul de la pdf (DISTRIBUTION OF EIGENVALUES FOR SOME SETS OF RANDOM MATRICES, Marchenko & Pastur 1967)
+%%% Calcul des PDF et CDF (DISTRIBUTION OF EIGENVALUES FOR SOME SETS OF RANDOM MATRICES, Marchenko & Pastur 1967)
+n=10000;  %nombre de point pour le calcul de la pdf et de la cdf
 lm=(1-sqrt(nu))^2; %borne inférieure des VP
 lp=(1+sqrt(nu))^2; %borne supérieure des VP
+l=linspace(lm,lp,n); % VP
 
-l=linspace(lm,lp,q); %axes des valeurs propres échantillonné finement
-
+%pdf
 P=sqrt((lp-l).*(l-lm))./(2*pi*nu.*l); %pdf
 
-figure(2);
+%cdf
+for i=1:n
+	cdf(i)=sum(P(1:i));
+end
+cdf=cdf/max(cdf); %normalisation
+
+figure(1);
 plot(l,P);
 title('Densit\''e de probabilit\''e des valeurs propres')
 ylabel('$p(\lambda)$')
 xlabel('$\lambda$')
 
-for i=1:q
-	cdf(i)=sum(P(1:i));
-end
-
-%comparaison avec un résultat expériemental
+%%% Comparaison avec un résultat expériemental
 N(:,:) = (randn(q,p) + 1i*randn(q,p))/sqrt(2); %bruit 
 Sn(:,:) = N(:,:) * N(:,:)' /(p); %matrice de covariance de bruit
 
-figure(1);
+figure(2);
 hold on 
-plot(cdf/max(cdf)*(q-1),10*log10(linspace(lm,lp,q)))
-plot(0:(q-1),sort(10*log10(real(eig(Sn)))));
+plot(cdf*(q-1)+1,10*log10(l)) %CDF normalisée
+plot(sort(10*log10(real(eig(Sn)))));
 ylabel('Amplitude des valeurs propres en dB')
 legend('Pr\''ediction','Exp\''erience')
 title(['Nombre de snapshots : ' num2str(1/nu) '$\times N_{mic}$'])
