@@ -4,7 +4,7 @@
 %et Eigenvalues of the sample covariance matrix for a towed array, Gerstoft et al.2012
 
 
-clear all;
+%clear all;
 %close all;
 set(0,'DefaultTextInterpreter','latex');
 set(0,'DefaultLegendInterpreter','latex');
@@ -12,7 +12,7 @@ format long
 
 %%% Paramètres à faire varier
 q=196; %nombre de microphones
-p= 196 * 10; %nombre de snapshots
+p= 196 * 20; %nombre de snapshots
 nu=q/p;
 
 %%% Calcul des PDF et CDF (DISTRIBUTION OF EIGENVALUES FOR SOME SETS OF RANDOM MATRICES, Marchenko & Pastur 1967)
@@ -30,7 +30,7 @@ for i=1:n
 end
 cdf=cdf/max(cdf); %normalisation
 
-figure(1);
+figure(1); hold on;
 plot(l,P);
 title('Densit\''e de probabilit\''e des valeurs propres')
 ylabel('$p(\lambda)$')

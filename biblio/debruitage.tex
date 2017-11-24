@@ -72,7 +72,7 @@ Dans le cas du débruitage, les ensembles sont : l'ensemble des matrices semidé
 
 \paragraph{\tbullet  Proper orthogonal decomposition}
 
-\subsection{Classical Printcipal Component Analysis (PCA)}
+\subsection{Classical Principal Component Analysis (PCA)}
 Méthode très utilisée en analyse, compression et visualisation de donnée (. Repose sur l'idée que dans une matrice de très grande dimension, l'information  se trouve dans un sous-espace de dimensions beaucoup plus petites. Si $Y$ est une matrice de dimension $m \times n$, elle eput alors s'écrire $S + N$ avec $S$ une matrice de rang $r$ très petit devant $m,n$ et les éléments de $N$ sont des variables gaussiennes. PCA propose donc de résoudre le problème suivant : 
 
 \begin{equation}
@@ -98,7 +98,7 @@ Considérant que la matrice de bruit $N$  est de forte amplitude, mais parcimoni
     \min_{S,N} ||S||_* + \lambda|N|_1,~~~~\text{s. c.~~~}Y=S+N.
 \end{equation}
 $\lambda$ est un paramètre de pondération.
-Ce problème peut être résolut par les algorithmes classiques d'optimisation convexe .
+Ce problème peut être résolu par les algorithmes classiques d'optimisation convexe .
  \cite{Wright2009a} utilisent un algorithme de seuillage itératif qui converge lentement. Depuis, de nombreux algortihmes ont été utilisés pour résoudre ce problème :  Augmented Lagrange multipllier,  Accelerated Proximal Gradient,  Dual Method, Singular Value Thresholding, Alternating Direction Method...\\
  
  Note : Ce problème est étroitement lié au problème de \textit{matrix completion}.	
@@ -114,12 +114,17 @@ $S$ étant une matrice de rang réduit $r$. Le problème consiste alors à réso
     \min_{A,B} ||A||_{F}^{2}  + ||B||_{F}^{2},~~~~\text{s. c.~~~} ||Y-S-N||^2_{F} < \epsilon
 \end{equation}
 On peut montrer que  $\min_{A,B} ||A||_{F}^{2}  + ||B||_{F}^{2}$ est équivalent à $\min ||S||_*$ \footnote{pour la démo, voir Recht 201 : Guaranteed minimum-rank solutions of linear matrix equations via nuclear norm minimization}
-Ce problème peut assi être résolu 
+
 
 
 \subsection{Approche statistique}
 
+\paragraph{\tbullet Probabilistic PCA}
 \cite{Tipping1999} proposent une approche probabiliste de la PCA (PPCA). Ils montrent que les axes principaux d'un ensemble peuvent être déterminés par une estimation de maximum de vraisemblance. Le principal sous-espace est déterminé par un algorithme EM.
+
+\paragraph{\tbullet Analyse factorielle}
+Méthode très proche de PPCA. La différence est que le bruit recherché n'est pas une constante, mais une matrice diagonale (dont les éléments non-nuls ne sont pas constants).
+
 
 
 \subsection{Utilisation d'une mesure de bruit référente}

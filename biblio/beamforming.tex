@@ -94,15 +94,14 @@ Cette méthode \citep{Sarradj2010} repose sur la décomposition en valeurs propr
 	\bm{S_{pp}} = \bm{V}\bm{\Lambda}\bm{V}' + \sigma^2\bm{1}
 \end{equation}
 
-Les sources peuvent alors être estimées par un beamforming classique appliqué au sous-espace signal : 
+Les sources peuvent alors être estimées par un beamforming classique donnant une carter pour chaque valeur propre.
 \begin{equation}
 	\hat{\bm{S}}_{\bm{qq}_{ii}} = \bm{h}_i' (\bm{V}_i \bm{\Lambda_{ii}}\bm{V}_i') \bm{h}_i
 \end{equation}
 
-L'amplitude des sources correspond donc aux valeurs propres de la matrice intrerspectrale des pressions.
-Le choix du nombre de sources (i.e le nombre de valeurs propres à associer à l'espace signal) nécessite l'utilisation d'un critère statistique de type Akaike Information Criterion (AIC) ou Minimum Description Length (MDL) \citep{Wax1985}.\\
+Cette méthode permet donc d'estimer la position de sources virtuelles incohérentes, dont l'amplitude correspond aux valeurs propres de la matrice intrerspectrale des pressions. Le choix du nombre de sources (i.e le nombre de valeurs propres à associer à l'espace signal) nécessite l'utilisation d'un critère statistique de type Akaike Information Criterion (AIC) ou Minimum Description Length (MDL) \citep{Wax1985}. Les sources virtuelles estimées peuvent être strictement équivalentes aux vraies sourcesuniquement dans le cas où les sources sont orthgonales spatialement (par exemple ne se recouvrant pas spatiallement) dans le domaine d'intérêt et que la base spatiale sur laquelle sont décomposées les sources est choisie orthogonale (soit $\bm{G'G}\propto \bm{I}$).\\
 
-Proche de ce que fait Suzuki 2008 (article republié en 2011) : il résoud un problème d'optimisation en essayant de trouver chaque source associée à chaque mode $\sqrt{\bm{\Lambda_{ii}}}\bm{V}_i$ (pour des multipoles).
+Proche de ce que fait Suzuki 2008 (article republié en 2011) : il résoud un problème d'optimisation en essayant de trouver chaque source associée à chaque mode $\sqrt{\bm{\Lambda_{ii}}}\bm{V}_i$ (pour des multipoles). 
 
 ~\\ \todo[inline]{
 DORT (pas d'hypothèse sur la distance source-antenne, équation d'euler linéarisées invariantes par RT en changeant le sens de l'écoulement moyen (ex : Localisation de source acoustique en soufflerie anéchoïque par deux techniques d'antennerie : formation de voies et retournement temporel numérique par Thomas Padois))\\
@@ -111,3 +110,8 @@ Décomposition en sous-espaces "Orthogonal Beamforming" ?\\
 Generalize Inverse Beamforming ?\\
 SAFT, TFM
 }
+
+\section{Wavenumber beamforming}
+
+Les vecteurs de pointages sont exp(kxx+kyy). Permet de visualiser plusieurs méchanisme de propagation (sonic, subsonic,...).
+
