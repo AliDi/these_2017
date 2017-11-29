@@ -31,8 +31,13 @@ Si les signausx sont stationnaires et moyennés, le bruit incohérent devrait im
 Certaines méthodes comme le Functionnal BF  ou l'holographie fonctionne suuportent très mal la suppression de diagonale.
 
 \subsection{Reconstruction de la diagonale de la CSM}
-Ce type de méthode propose de résoudre un problème d'optimisation : minimiser la somme des éléments diagonaux de la CSM, sous la condition que la CSM reste semi-définie positive. Pour cela, différents algorithmes d'opitmisation peuvent être employé.\\
-Le pseudo-code ci-dessous est un exemple de solveur utilisant les outils de programmation convexe de Michael Grant et Stephen Boyd : CVX: Matlab software for disciplined convex programming, version 2.0 beta.\url{http://cvxr.com/cvx}, September 2013. Cette procédure est proposée par \cite{Hald2016} et est similaire à celle de \cite{dougherty2016}.
+Ce type de méthode propose de résoudre un problème d'optimisation : minimiser la somme des éléments diagonaux de la CSM, sous la condition que la CSM reste semi-définie positive : 
+\begin{equation}
+    \arg\max_{\bm{d}}\sum_i d_i~~~~~\text{s. c.}~~~~~\bm{S_y}-\bm{d}\geq 0
+\end{equation}
+
+Pour cela, différents algorithmes d'opitmisation peuvent être employé.\\
+Le pseudo-code ci-dessous est un exemple de solveur utilisant les outils de programmation convexe de Michael Grant et Stephen Boyd : CVX: Matlab software for disciplined convex programming, version 2.0 beta.\url{http://cvxr.com/cvx}, September 2013.
 
 \begin{figure}[!h]
 	\centering
@@ -52,6 +57,16 @@ Le pseudo-code ci-dessous est un exemple de solveur utilisant les outils de prog
 \end{figure}
 Cet algorithme s'arrête lorsque la plus petite valeur propre de la CSM modifiée atteint zéro. L'erreur de reconstruction ne va donc pas dépendre du niveau de bruit mais du spectre aux valeurs propres de la CSM. \\
 ~\\
+
+\cite{dougherty2016} résoud le même problème sous forme d'une succession de problèmes d'optimisation linéaire.
+
+
+\paragraph{\tbullet Alternating projections}
+Cet algorithme permet de trouver l'intersection  (ou la plus petite distance) entre deux ensembles. Soit $E_1$ et $E_2$ ces deux ensembles. Le principe est de calculer itérativement le résultat $y^{(k)}$ de la projection de $x^{(k)}$ sur l'ensemble $E_1$, puis le résultat $x^{(k+1)}$ de la projection de $y^{(k)}$ sur l'ensemble $E_2$. Si les deux ensembles sont convexes, la convergence est linéaire.
+Cyclic projections généralise AP à un nombre d'ensembles supérieur à 2.\\
+Dans le cas du débruitage, les ensembles sont : l'ensemble des matrices semidéfinies positives, ensemble qui prend en compte la structure du bruit (éléments diagonaux).
+
+\subsection{Exploitation de la cohérence du champ acoustique}
 \cite{finez:hal-01276687} proposent une autre méthode de reconstruction, fondée sur l'hypothèse que le champ acoustique de la CSM est parfaitement cohérent : 
 \begin{equation}
 \frac{|{\bm{S_{pp}}}_{ij}|^2}{{\bm{S_{pp}}}_{ii}{\bm{S_{pp}}}_{jj}} =1
@@ -59,16 +74,10 @@ Cet algorithme s'arrête lorsque la plus petite valeur propre de la CSM modifié
 La diagonale est alors calculée à partir de cette expression pour chaque couple $ij$. Cette méthode ne modifie pas l'interspectre. L'hypothèse de cohérence est difficile à vérifier en environnement très bruyant, notamment quand le bruit a des longueurs de corrélation supérieur à l'espacement inter-microhonique.\\
 
 
-
-\subsection{Décomposition en éléments propres de la CSM}
+\subsection{Idendification en sous espaces}
 Analyse en composantes principales de la CSM : 
 \paragraph{\tbullet MUSIC} L'algorithme MUltiple Signal Classification (MUSIC, \cite{Schmidt1986}) propose une décomposition en valeurs propres de la matrice interspectrale $\bm{S_{pp}}$ pour la décomposer en 2 sous-espaces, l’un associé au signal et l’autre au bruit, afin de diminuer la contribution énergétique du bruit.  Dans l'équation~\ref{Gii}, $\bm{S_{pp}}$ est remplacé par les composantes correspondant au sous-espace bruit. Ainsi, ce nouvel estimateur sera maximal lorsque le processeur pointe vers une source, puisque les éléments du dénominateur seront décorrélés. Cet estimateur ne correspond alors plus à une densité spectrale des sources mais seulement à un indicateur de présence au point $i$. Cette méthode nécessite que le RSB soit suffisament bon et que la CSM ne soit pas de rang plein.\\
 
-\paragraph{\tbullet Alternating projections}
-Cet algorithme permet de trouver l'intersection  (ou la plus petite distance) entre deux ensembles. Soit $E_1$ et $E_2$ ces deux ensembles. Le principe est de calculer itérativement le résultat $y^{(k)}$ de la projection de $x^{(k)}$ sur l'ensemble $E_1$, puis le résultat $x^{(k+1)}$ de la projection de $y^{(k)}$ sur l'ensemble $E_2$. Si les deux ensembles sont convexes, la convergence est linéaire.
-Cyclic projections généralise AP à un nombre d'ensembles supérieur à 2.\\
-
-Dans le cas du débruitage, les ensembles sont : l'ensemble des matrices semidéfinies positives, ensemble qui prend en compte la structure du bruit (éléments diagonaux).
 
 \paragraph{\tbullet  Proper orthogonal decomposition}
 

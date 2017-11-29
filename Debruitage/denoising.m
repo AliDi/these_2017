@@ -71,9 +71,9 @@ end
 
 %linprog (Dougherty)
 D_linprog=[];
-[CSM_linprog ii x1 D_linprog(:,:)] = recdiagd(double(CSM),1000,45);
+[CSM_linprog ii x1 D_linprog_cvx(:,:)] = recdiagd_cvx(double(CSM),1000,45);
 for i=1:ii
-    norm_linprog(i)=norm((D_linprog(:,i)-d_ref)./d_ref);
+    norm_linprog_cvx(i)=norm((D_linprog(:,i)-d_ref)./d_ref);
 end
 
 %Alternating projection
