@@ -13,8 +13,8 @@ Nsrc =150;
 rho=0;
 SNR=-20:2:20;
 
-option.max = 2000; %max number of iteration
-option.rerr=1e-6;
+option.max = 1000; %max number of iteration
+option.rerr=1e-9;
 
 k=92;
 
@@ -35,11 +35,21 @@ for i=1:length(SNR)
     Ini.Syc = 1e-16*ones(93,1);
     Ini.L=1e-16*ones(93,k);
     
+    %[Ini.Syc, Ini.L] = SS_CSM_Fit(CSM,92); %initialisation
+    
+    
     [L,sig2,beta2,flag,Sx, d1all, d2all] = EM_CSM_Fit(Sy,Mw,k,option,Ini);
     flag.count    
     
     d_EM(:,i)=real(diag(Sx));
     norm_k(i) = norm( d_ref(:,i) - d_EM(:,i) ) /  norm( d_ref(:,i));
+    %norm_k2(i)
+    
+    norm_it_snr(1,i)=norm(real(diag(Ini.L*Ini.L'))-d_ref(:,i))/norm(d_ref(:,i));
+    for j=1:flag.count
+        norm_it_snr(j+1,i)=norm(real(d1all(:,j))-d_ref(:,i))/norm(d_ref(:,i));
+        %norm_EM2(i,k)=norm(real(d2all(:,i))-d_ref)/norm(d_ref);
+    end
    
 end
 

@@ -58,9 +58,9 @@ y_src = 0;
 %[x_src y_src z_src]=meshgrid(x_src,y_src,z_src);
 
 %three lines
-z_src = [linspace(-1.2,1.2,floor(Nsrc/3)) linspace(-1.2,1.2,round(Nsrc/3))  linspace(-1.2,1.2,ceil(Nsrc/3))];
-x_src =[-0.5*ones(1,floor(Nsrc/3)) 0*ones(1,round(Nsrc/3)) 0.5*ones(1,ceil(Nsrc/3))]; 
-[x_src y_src]=meshgrid(x_src,y_src);
+%z_src = [linspace(-1.2,1.2,floor(Nsrc/3)) linspace(-1.2,1.2,round(Nsrc/3))  linspace(-1.2,1.2,ceil(Nsrc/3))];
+%x_src =[-0.5*ones(1,floor(Nsrc/3)) 0*ones(1,round(Nsrc/3)) 0.5*ones(1,ceil(Nsrc/3))]; 
+%[x_src y_src]=meshgrid(x_src,y_src);
 
 %two lines
 %z_src = [linspace(-1.2,1.2,floor(Nsrc/2))  linspace(-1.2,1.2,ceil(Nsrc/2))];
@@ -70,8 +70,17 @@ x_src =[-0.5*ones(1,floor(Nsrc/3)) 0*ones(1,round(Nsrc/3)) 0.5*ones(1,ceil(Nsrc/
 
 %one line : 
 %z_src = linspace(-1.2,1.2,Nsrc);
-%x_src =0;
+%x_src =0.2;
 %[x_src y_src z_src]=meshgrid(x_src,y_src,z_src);
+
+%one line with rotation theta
+theta=0.0175;
+R=1.2;
+z_src = linspace(-R,R,Nsrc);
+x_src =0.2 + z_src*sin(theta);
+z_src=z_src-z_src*(1-cos(theta));
+
+[x_src y_src]=meshgrid(x_src,y_src);
 
 r_src = [x_src(:) y_src(:) z_src(:)]; %coordinates of real sources
 

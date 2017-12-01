@@ -8,23 +8,22 @@ clear all
 addpath('/home/adinsenmey/Bureau/Codes_Exterieurs/codes_debruitage_jerome')
 addpath(genpath('/home/adinsenmey/Bureau/these_2017/Debruitage'))
 
-freq = 15000;
-Nsrc =1:2:95;
-Mw=9000;
+freq = 3800;
+Nsrc =25;
+Mw=[50 93 500 1000 5000 10000 50000];
 rho=0;
-SNR = 0;
-
+SNR = 10;
 j=1;
-for i=1:length(Nsrc)
+for i=1:length(Mw)
 i
     %%% Generate data
-    [Sq b Sp Sn] = generate_Spp_signal(freq, Nsrc(i) , rho , SNR , Mw);
-    Sy(:,:,i)=Sp+diag(diag((Sn)));
+    [Sq Sy Sp Sn] = generate_Spp_signal(freq, Nsrc , rho , SNR , Mw(i));
+    %Sy(:,:,i)=Sp+diag(diag((Sn)));
     %Rang(i,j)=rank(Sp,0.005*max(eig(Sp)));
     Rang2(i,j)=rank(Sp);
 
-    CSM = Sy(:,:,i);
-    d_ref(:,i,j)=real(diag(Sp));
+    CSM = Sy(:,:);
+    d_ref(:,i,j)=real(diag(Sy-Sn));
 
     %%%--------------------------------------------------------------------------------------------
     %%% SLDR solved with proximal gradient
