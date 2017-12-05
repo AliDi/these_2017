@@ -8,8 +8,9 @@ addpath(genpath('../../..'))
 addpath('/home/adinsenmey/Bureau/Codes_Exterieurs/codes_debruitage_jerome')
 
 freq = 3800;
-Mw=[50 93 1000 10000 50000];
-Nsrc =25
+%Nsrc =[20 60 80 96];
+Mw=round(logspace(log10(10),log10(50000),50));
+Nsrc =25;
 rho=0;
 SNR=10;
 
@@ -32,9 +33,9 @@ for i=1:length(Mw)
     Rang2(i)=rank(Sp);
     
     CSM = Sy(:,:);
-    d_ref(:,i)=real(diag(Sy-Sn));
+    d_ref(:,i)=real(diag(Sy-Sn)); 
     
-    %[Ini.Syc, Ini.L] = SS_CSM_Fit(Sy,k); %initialisation SI
+
 	 
 	%initialisation nulle
     Ini.Syc = 1e-16*ones(93,1);
@@ -47,7 +48,7 @@ for i=1:length(Mw)
 
     norm_k(i) = norm( d_EM(:,i)- d_ref(:,i)) /  norm( d_ref(:,i));
     
-    norm_k2(i) = norm(real( Sx-(Sy-Sn))) /  norm(real(Sy-Sn));
+
 
     
     norm_it_rang(1,i)=norm(real(diag(Ini.L*Ini.L'))-d_ref(:,i))/norm(d_ref(:,i));
