@@ -126,7 +126,9 @@ $S$ étant une matrice de rang réduit $r$. Le problème consiste alors à réso
 \end{equation}
 On peut montrer que  $\min_{A,B} ||A||_{F}^{2}  + ||B||_{F}^{2}$ est équivalent à $\min ||S||_*$ \footnote{pour la démo, voir Recht 201 : Guaranteed minimum-rank solutions of linear matrix equations via nuclear norm minimization}
 
-\cite{finez:hal-01276687} appliquent cette méthode dans un contexte aéroacoustique. \cite{amailland2017} l'étend au bruit spatialement corrélé.
+\cite{finez:hal-01276687} appliquent cette méthode dans un contexte aéroacoustique. \cite{amailland2017} l'étend au bruit spatialement corrélé.\\
+
+\cite{Amailland2017phd} ajoute une contrainte de positivité sur les matrices bruit et signal. Il applique également la RPCA à un cas de bruit aérodynamique partiellement corrélé. Dans ce cas, la matrice bruit est rendue parcimonieuse en utilisant une mesure de bruit de fond. 
 
 \subsection{Approche statistique}
 
@@ -151,7 +153,7 @@ voir Blacodon, D., Array Processing for Noisy Data: Application for Open and Clo
 \cite{Bulte2007} propose un décomposition en sous-espaces signal et bruit (nécessite une mesure de bruit) basée sur une une décomposition en valeurs singulires généralisée de la CSM.\\
 Empirical Mode Decomposition\\
 
-\cite{Bahr2015} se basent sur une décomposition en VP de la CSM du bruit. Une seconde décomposition en VP permet de garantir un maintient de la CSM positive. Analogue à une PCA.
+\cite{Bahr2015} construit à partir d'unemesure de bruit de fond un opérateur de blanchiment à appliquer à la matrice signal bruitée. Cet opérateur se base sur une décomposition en VP de la CSM du bruit. Une seconde décomposition en VP permet de garantir un maintient de la CSM positive. Analogue à une PCA.
 
 \paragraph{\tbullet Filtrage adaptatif}
 Spalt 2011 : A Background Noise Reduction Technique using Adaptive Noise Cancellation for Microphone Arrays\\
@@ -175,6 +177,7 @@ Spalt 2011 : A Background Noise Reduction Technique using Adaptive Noise Cancell
 \paragraph{\tbullet Microphones à membrane large}
 
 \paragraph{\tbullet Mesures vibratoires} \cite{Lecoq2013} : L'écoulement perturbe la couche limite au niveau de l'antenne de microphones, ce qui génère un fort bruit aérodynamique. La mesure de ce bruit peut être fortement réduite en captant le champ acoustique à l'aide d'une antenne d'accéléromètres fixés à une plaque fine. Seuls les bas nombres d'onde, correspondant à la partie acoustique du champ d'onde sont alors mesurés. (Acoustic beamforming through a thin plate using vibration measurements  +   Design and Experimental Validation of an Array of Accelerometers for In-flow Acoustic Beamforming Applications) \\
++ \cite{leclere:hal-01279944}
 
 \paragraph{\tbullet Calibration} Fleury 2012 Optimization of microphone array wall mountings in closed-section wind tunnels
 
