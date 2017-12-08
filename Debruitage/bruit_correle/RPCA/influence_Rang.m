@@ -8,40 +8,31 @@ clear all
 addpath('/home/adinsenmey/Bureau/Codes_Exterieurs/codes_debruitage_jerome')
 addpath(genpath('/home/adinsenmey/Bureau/these_2017/Debruitage'))
 
-freq = 3800;
-Nsrc =1:1:150;
-Mw=9000;
+freq = 15000;
+Nsrc =1:2:93;
+Mw=10^4;
 rho=0;
 SNR = 10;
+lambda=0:0.1:1;
+for j=1:length(lambda)
+    j
+    for i=1:length(Nsrc)
+        %%% Generate data
+        [Sq Sy Sp Sn] = generate_Spp_signal(freq, Nsrc(i) , rho , SNR , Mw);
+        
+        CSM = Sy(:,:);
+        %d_ref(:,i)=real(diag(Sp));
+        d_ref(:,i,j)=real(diag(Sy-Sn));
 
-for i=1:length(Nsrc)
-i
-	%%% Generate data
-	[Sq b Sp Sn] = generate_Spp_signal(freq, Nsrc(i) , rho , SNR , Mw);
-	Sy(:,:,i)=Sp+diag(diag((Sn)));
-	%Rang(i,j)=rank(Sp,0.005*max(eig(Sp)));
-	Rang2(i)=rank(Sp);
+        %%%--------------------------------------------------------------------------------------------
+        %%% RPCA solved with proximal gradient
+        %%%--------------------------------------------------------------------------------------------
+        [A E Nit out] = proximal_gradient_rpca(CSM , lambda(j), 300,1e-7,-1,-1,-1,-1);
 
-	CSM = Sy(:,:,i);
-	d_ref(:,i)=real(diag(Sp));
-
-	%%%--------------------------------------------------------------------------------------------
-	%%% RPCA solved with proximal gradient
-	%%%--------------------------------------------------------------------------------------------
-	lambda= 0.5;
-	[A E Nit out] = proximal_gradient_rpca(CSM , lambda, 300,1e-8,-1,-1,-1,-1);
-
-	d_pg(:,i) = real( diag(A) );	
-	err_pg(i)= norm( diag(d_ref(:,i) - d_pg(:,i))) / norm(d_ref(:,i));
+        d_pg(:,i,j) = real( diag(A) );	
+        err_pg(i,j)= norm( diag(d_ref(:,i,j) - d_pg(:,i,j))) / norm(d_ref(:,i,j));
+    end
 end
+%save('RPCA_rang','err_pg','lambda','d_pg','d_ref');
 
-save('RPCA_rang','err_pg','Rang2','d_pg','d_ref');
 
-[c ia ic]=unique(Rang2);
-
-figure
-plot(c,10*log10(err_pg(ia)))
-xlabel('Rank of $\boldmath{S_p}$')
-ylabel('Relative error on diag($\boldmath{S_y}$) (dB)')
-xlim([0 93])
-plot_fig(gcf,11,8.5)
