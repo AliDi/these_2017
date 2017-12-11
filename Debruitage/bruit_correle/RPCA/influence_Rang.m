@@ -9,11 +9,11 @@ addpath('/home/adinsenmey/Bureau/Codes_Exterieurs/codes_debruitage_jerome')
 addpath(genpath('/home/adinsenmey/Bureau/these_2017/Debruitage'))
 
 freq = 15000;
-Nsrc =1:2:93;
+Nsrc =1:93;
 Mw=10^4;
 rho=0;
 SNR = 10;
-lambda=0:0.1:1;
+lambda=0:0.01:1;
 for j=1:length(lambda)
     j
     for i=1:length(Nsrc)
@@ -21,8 +21,8 @@ for j=1:length(lambda)
         [Sq Sy Sp Sn] = generate_Spp_signal(freq, Nsrc(i) , rho , SNR , Mw);
         
         CSM = Sy(:,:);
-        %d_ref(:,i)=real(diag(Sp));
-        d_ref(:,i,j)=real(diag(Sy-Sn));
+        d_ref(:,i,j)=real(diag(Sp));
+        %d_ref(:,i,j)=real(diag(Sy-Sn));
 
         %%%--------------------------------------------------------------------------------------------
         %%% RPCA solved with proximal gradient
@@ -30,7 +30,7 @@ for j=1:length(lambda)
         [A E Nit out] = proximal_gradient_rpca(CSM , lambda(j), 300,1e-7,-1,-1,-1,-1);
 
         d_pg(:,i,j) = real( diag(A) );	
-        err_pg(i,j)= norm( diag(d_ref(:,i,j) - d_pg(:,i,j))) / norm(d_ref(:,i,j));
+        err_pg(i,j)= norm( (d_ref(:,i,j) - d_pg(:,i,j))) / norm(d_ref(:,i,j));
     end
 end
 %save('RPCA_rang','err_pg','lambda','d_pg','d_ref');

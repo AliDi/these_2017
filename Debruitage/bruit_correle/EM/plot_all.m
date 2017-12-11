@@ -20,11 +20,11 @@ l=line([93 93],[-50 0],'color','black');
 l.Color(4)=0.3;
 %legend('$1/\sqrt{M_w}$','EM','location','southwest');
 set(legend,'Box','off')
-text(6*10^4, -30,'R=20')
+text(6*10^4, -28,'R=20')
 text(6*10^4,-17,'R=80','color', C(2))
 text(6*10^4,-13,'R=93','color', C(3))
 xlim([Mw(1) 3*10^5])
-ylim([-35 -10])
+ylim([-30 -7])
 xlabel('Number of snapshots $M_w$')
 ylabel('Relative error on diag(${S_p}$) (dB)')
 plot_fig(gcf,11,8.5)

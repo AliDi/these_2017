@@ -9,7 +9,7 @@ addpath('/home/adinsenmey/Bureau/Codes_Exterieurs/codes_debruitage_jerome')
 addpath(genpath('/home/adinsenmey/Bureau/these_2017/Debruitage'))
 
 freq = 15000;
-Nsrc =1:2:93;
+Nsrc =1:1:93;
 Mw=10^4;
 rho=0;
 SNR = 10;
@@ -62,7 +62,7 @@ for j=1:length(Mw)
 
 	end
 end
-% save('cvx_rang','err_cvx','Mw','Nsrc','d_cvx', 'd_ref');
+save('cvx_rang','err_cvx','Mw','Nsrc','d_cvx', 'd_ref');
 % 
 % save('AP_it_rang','err_it','Mw','Nsrc','d_it','d_ref');
 % 

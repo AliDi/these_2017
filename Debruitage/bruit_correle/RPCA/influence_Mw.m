@@ -10,10 +10,10 @@ addpath(genpath('/home/adinsenmey/Bureau/these_2017/Debruitage'))
 
 freq = 15000;
 Nsrc =20;
-Mw=round(logspace(log10(10),log10(50000),20));
+Mw=round(logspace(log10(10),log10(50000),40));
 rho=0;
 SNR = 10;
-lambda=0:0.1:1;
+lambda=0:0.01:1;
 for j=1:length(lambda)
     j
     for i=1:length(Mw)
@@ -21,7 +21,7 @@ for j=1:length(lambda)
         [Sq Sy Sp Sn] = generate_Spp_signal(freq, Nsrc , rho , SNR , Mw(i));
         
         CSM = Sy(:,:);
-        d_ref(:,i)=real(diag(Sp));
+        d_ref(:,i,j)=real(diag(Sp));
         %d_ref(:,i,j)=real(diag(Sy-Sn));
 
         %%%--------------------------------------------------------------------------------------------
@@ -30,7 +30,7 @@ for j=1:length(lambda)
         [A E Nit out] = proximal_gradient_rpca(CSM , lambda(j), 300,1e-7,-1,-1,-1,-1);
 
         d_pg(:,i,j) = real( diag(A) );	
-        err_pg(i,j)= norm( diag(d_ref(:,i,j) - d_pg(:,i,j))) / norm(d_ref(:,i,j));
+        err_pg(i,j)= norm( (d_ref(:,i,j) - d_pg(:,i,j))) / norm(d_ref(:,i,j));
     end
 end
 %save('RPCA_Mw','err_pg','Mw','lambda','d_pg','d_ref');
