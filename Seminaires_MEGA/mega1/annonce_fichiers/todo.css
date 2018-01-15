@@ -1,0 +1,11 @@
+table.todolist td, table.todolist th { padding:0.2em 0.5em; }
+table.todolist td.rang span { opacity:0.3; -moz-opacity:0.3; -webkit-opacity:0.3; }
+table.todolist.fermee {}
+
+.titre del { color: #aaa; background-color: inherit; }
+.titre span.majeure { color: #8a1f11; background-color:#fbe3e4; }
+.titre span.mineure { color: #514721; background-color:#fff6bf; }
+
+ul.liste-tags { list-style: none outside none; margin-left: 0;}
+li.tag { background: url(img/tag.gif) no-repeat scroll left center transparent;
+	padding-left: 14px; margin-right: 1em; display: inline-block; font-size: 0.9em; }

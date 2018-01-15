@@ -1,0 +1,102 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*********************************************/
+/*   Feuille de style du Kit Spip CNRS       */
+/*   Styles pour Spip sur la charte n°2      */
+/*   Auteur : CNRS Dircom                    */
+/*********************************************/
+
+.spip_surligne {
+  color:#000;
+  background-color: #fff59b;
+}
+blockquote.spip, blockquote.spip p {
+  font-style:italic;
+}
+blockquote.spip {
+  margin:0 7%
+}
+#texte .spip_cadre {
+  border:1px solid #ccc;
+  padding:1%;
+}
+table.spip {
+  margin: 15px 0px 15px 10px;
+  border: 1px solid;
+  border-collapse: collapse;
+}
+table.spip caption {
+  caption-side: top; /* bottom pas pris en compte par IE */
+  text-align: center;
+  margin: auto;
+  padding: 1%;
+  font-weight: bold;
+}
+table.spip td, table.spip th {
+  border-style : solid;
+  border-width : 1px;
+  padding: 3px 5px 3px 5px;
+}
+table.spip th {
+  text-align: left;
+}
+h3.spip {
+  font-size: 16px;
+  padding:2% 0 1% 0;
+  font-weight:bold;
+  color:#333;
+}
+h4.spip {
+  font-size: 15px;
+  padding:1.5% 0 0.75% 0;
+  font-weight:bold;
+  color:#333;
+}
+h5.spip {
+  font-size: 14px;
+  padding:1% 0 0.75% 0;
+  font-weight:bold;
+  color:#666;
+}
+h6.spip {
+  font-size: 14px;
+  padding:0.8% 0 0.75% 0;
+  font-weight:bold;
+  font-style: italic;
+  color:#888;
+}
+a.spip_note {
+  text-decoration: none;
+}
+ul.spip, ol.spip {
+  margin:0 3% 1% 7%;
+}
+ul.spip li, ol.spip li {
+  font-size:0.9em;
+  color:#333;
+  line-height:1.35em;
+}
+ul.spip li {
+  list-style:square;
+}
+ol.spip li {
+  list-style:decimal
+}
+a.spip_out {
+  color:#06C
+}
+a.spip_mail {
+  text-decoration:underline !important
+}
+.notes {
+  margin-top:4%;
+  padding-top:1%;
+  border-top:solid 1px #ccc;
+}
+.notes p {
+  font-size:0.75em !important;
+  padding:0 !important;
+}
+
+/* Fin styles pour Spip */

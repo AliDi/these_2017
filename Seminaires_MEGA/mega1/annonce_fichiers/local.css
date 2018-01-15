@@ -1,0 +1,20 @@
+#bandeau a {
+  height: 100px;
+} 
+
+a.spip_in{
+  color: #1c6dd9;
+  text-decoration: none;
+}
+
+#texte_droite h2 a {
+  color: #fff;
+}
+
+.content{
+  text-align:justify
+}
+
+.resume{
+cursor:auto
+}

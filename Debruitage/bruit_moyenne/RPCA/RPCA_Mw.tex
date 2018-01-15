@@ -1,0 +1,72 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=3.453in,
+height=2.595in,
+at={(0.698in,0.629in)},
+scale only axis,
+xmode=log,
+xmin=1,
+xmax=100000,
+xminorticks=true,
+xlabel style={font=\color{white!15!black}},
+xlabel={Number of snapshots $M_w$},
+ymin=-30,
+ymax=-5,
+ylabel style={font=\color{white!15!black}},
+ylabel={Relative error on diag(${S_p}$) (dB)},
+axis background/.style={fill=white}
+]
+\addplot [color=mycolor1, line width=1.0pt, forget plot]
+  table[row sep=crcr]{%
+10	-8.04423727769268\\
+12	-8.74060261466692\\
+15	-9.64898786109813\\
+19	-10.1703597676673\\
+24	-10.6501737307356\\
+30	-11.502536070116\\
+37	-11.8749763466953\\
+46	-12.3104612741415\\
+57	-13.3823007743079\\
+71	-12.9085606402836\\
+89	-13.7069865565045\\
+110	-14.3244628385622\\
+137	-14.7353108425884\\
+171	-15.1362867532209\\
+213	-15.5738852759716\\
+265	-16.0292721242303\\
+329	-16.5217106215345\\
+410	-16.9124355661491\\
+510	-17.3375273357062\\
+634	-17.7196103898458\\
+789	-18.3639850550106\\
+981	-18.9328549686725\\
+1221	-19.8167708934542\\
+1519	-19.8363132949747\\
+1889	-20.5357912231537\\
+2350	-20.8748670095958\\
+2924	-21.2262396191164\\
+3638	-21.0483858035689\\
+4526	-22.3864021476288\\
+5630	-22.4788258852375\\
+7004	-22.6748023450124\\
+8714	-23.3736511399419\\
+10841	-24.2258216234844\\
+13486	-25.0590301215763\\
+16778	-24.5276067872591\\
+20873	-25.5964195498788\\
+25968	-25.9451815612112\\
+32306	-26.0208248378913\\
+40191	-27.0107976329655\\
+50000	-27.8569812947405\\
+};
+\end{axis}
+\end{tikzpicture}%

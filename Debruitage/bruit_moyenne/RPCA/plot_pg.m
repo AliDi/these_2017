@@ -1,0 +1,1 @@
+set(gca,'yScale','log')

@@ -1,0 +1,36 @@
+/*********************************************/
+/*   Feuille de style  du Kit Spip CNRS      */
+/*   pour impression                         */
+/*   Auteur : CNRS Dircom                    */
+/*********************************************/
+
+#menu_lang, #bandeau, #menu, #chemin, #pied-de-page, #colgauche, #texte_droite, h2.toutes-actus, #bas-de-page, #nom-labo a img {
+  display:none !important
+}
+#top, #top h1, #pageune, #pageseconde {
+  background:#fff !important;
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=0 ) !important; /* IE6-8 */
+}
+#wrapper-top, #nom-labo h1, #nom-labo h1 a {
+  width:100% !important;
+  position:absolute !important;
+  top:0 !important;
+  left:0 !important;
+  color:#000 !important;
+  font-weight:bold !important;
+  z-index:1000 !important;
+  float:none !important;
+  background:none !important;
+}	
+#slogan {
+  line-height:4.5em !important;
+}
+#texte_gauche {
+  width:100% !important;
+  position:absolute !important;
+  top:70px !important;
+  left:0 !important;
+}
+
+
+

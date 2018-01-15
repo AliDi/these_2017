@@ -1,0 +1,5 @@
+.playerVideo figure{margin:0;background-color:#494949;} /* Compense les défauts constatés sur FF notamment sous Mac */
+.playerVideo video{background-color:#000000;} /* C'est toujours plus classe */
+.capsule-video {max-width: 100%;}
+	.mini_capsule-video { position: relative;	padding-bottom: 56.25%;	padding-top: 30px;height: 0;overflow: hidden; }
+		.mini_capsule-video iframe,.mini_capsule-video object,.mini_capsule-video embed {position: absolute;top: 0;left: 0;width: 100%;height: 100%;}

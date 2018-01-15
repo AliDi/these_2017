@@ -1,0 +1,51 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=3.505in,
+height=2.647in,
+at={(0.698in,0.577in)},
+scale only axis,
+xmin=-10,
+xmax=10,
+xlabel style={font=\color{white!15!black}},
+xlabel={SNR (dB)},
+ymin=-25,
+ymax=-5,
+ylabel style={font=\color{white!15!black}},
+ylabel={Relative error on diag(${S_p}$) (dB)},
+axis background/.style={fill=white}
+]
+\addplot [color=mycolor1, line width=1.0pt, forget plot]
+  table[row sep=crcr]{%
+-10	-9.75032167089913\\
+-9	-10.5728849025019\\
+-8	-11.4236388781563\\
+-7	-12.2802084313768\\
+-6	-13.1056278764477\\
+-5	-13.9143807444781\\
+-4	-14.709564437359\\
+-3	-15.4874763091054\\
+-2	-16.243501758213\\
+-1	-16.9788258425809\\
+0	-17.6990005776615\\
+1	-18.3925575658329\\
+2	-19.0608321530724\\
+3	-19.7037259997912\\
+4	-20.3235547512165\\
+5	-20.9250709942472\\
+6	-21.5104255519569\\
+7	-22.0804363166986\\
+8	-22.6383903509184\\
+9	-23.1848316998976\\
+10	-23.721756526464\\
+};
+\end{axis}
+\end{tikzpicture}%

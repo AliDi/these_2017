@@ -1,0 +1,516 @@
+/*********************************************/
+/*   Feuille de style du Kit Spip CNRS       */
+/*   Habillage structurel charte 2           */
+/*   Auteur : CNRS Dircom                    */
+/*********************************************/
+
+#top, #wrapper-top, #nom-labo, #menu, #pied-de-page {
+  width: 100%;
+}
+#nom-labo, #bandeau, #menu ul.level1, #menu > ul.menu-liste,  /* plugin Menus */ #centre, #bas-de-page, #pied-de-page ul {
+  margin: 0 auto;
+  width: 980px;
+}
+/* HEADER */
+#wrapper-top {
+  background-color: #fff
+}
+#nom-labo {
+  position: relative;
+  min-height: 40px;
+  padding-bottom: 20px;
+}
+#titre-site, #slogan {
+  display: block;
+}
+#nom-labo h1 {
+  width: 98.5%;
+  margin-left: 1.5%;
+  height: 40px;
+  background-color: #fff
+}
+#nom-labo h1 a {
+  padding-left: 1%;
+  font-family: Arial Narrow, "NimbusSansLReguCond", Arial, Helvetica, sans-serif;
+  font-size: 1.6em;
+  line-height: 1.6em;
+}
+#nom-labo h1 a:hover, body.avec-logo a#logo-site {
+  opacity: 1;
+  text-decoration: none;
+}
+#slogan {
+  margin-left: 2.5%;
+  font-family: Arial Narrow, "NimbusSansLReguCond", Arial, Helvetica, sans-serif;
+  font-size: 1.2em;
+}
+body.sans-logo #slogan {
+  line-height: 0.3;
+}
+html.ie67 #slogan {
+  line-height: 1;
+}
+#nom-labo ul#menu_lang {
+  width: auto;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+body.avec-logo #nom-labo {
+  padding-bottom: 0;
+}
+body.avec-logo #nom-labo h1, body.avec-logo #nom-labo h1 a {
+  height: auto;
+}
+body.avec-logo #nom-labo h1 {
+  background: none;
+  width: auto;
+  float: right;
+  position: absolute;
+  top: 30px;
+  right: 0;
+}
+body.avec-logo #nom-labo h1 a {
+  width: auto;
+  margin: 0;
+  padding: 0;
+}
+body.avec-logo #slogan {
+  position: absolute;
+  top: 70px;
+  right: 0;
+}
+#bandeau a {
+  display: block;
+  height: 210px;
+}
+#bandeau a:hover {
+  opacity: 1;
+}
+/* Header fin */
+
+
+
+
+
+/* MENU principal */
+#menu {
+  min-height: 40px;
+  position:relative\9;
+  z-index:100\9;
+}
+#menu ul.level1, #menu > ul.menu-liste  /* plugin Menus */ {
+  min-height: 30px;
+  padding-bottom: 10px;
+}
+#menu li {
+  margin: 0 5px;
+  padding: 0 0 8px;
+  float: left;
+  position: relative;
+  list-style: none;
+}
+#menu li a, #menu li.menu-entree span.texte_libre,  /* plugin Menus */ #menu li.rubrique div {
+  display: block;
+  padding: 16px 20px 0 20px;
+  font-family: "OpenSansBold", Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+  font-size: 0.75em;
+  color: #FFF;
+}
+#menu li.menu-entree span.texte_libre  /* plugin Menus */ {
+  font-style: italic;
+  font-weight: bold;
+}
+#menu ul.level1 ul li:hover a, #menu ul.level1 li:hover li a, #menu > ul.menu-liste ul.menu-liste li.menu-entree:hover a,  /* plugin Menus */ #menu > ul.menu-liste li.menu-entree:hover li.menu-entree a  /* plugin Menus */ {
+  background: none;
+  border: none;
+  padding: 8px !important;
+}
+#menu ul.level1 li:hover > ul, #menu > ul.menu-liste li.menu-entree:hover > ul.menu-liste  /* plugin Menus */ {
+  display: block;
+}
+#menu ul.level1 ul, #menu > ul.menu-liste ul.menu-liste  /* plugin Menus */ {
+  display: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  min-width: 250px;
+  position: absolute;
+  top: 35px;
+  left: 15px;
+  z-index: 1000
+}
+#menu > ul.menu-liste ul.menu-liste ul.menu-liste  /* plugin Menus */ {
+  top: -1px;
+  left: 250px;
+  border-left: 1px solid #FFF;
+}
+#menu ul.level1 ul li, #menu > ul.menu-liste ul.menu-liste li.menu-entree  /* plugin Menus */ {
+  float: none;
+  margin: 0;
+  padding: 0;
+  border-top: solid 1px #fff;
+}
+#menu ul.level1:after, #menu > ul.menu-liste:after  /* plugin Menus */ {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+#menu ul.level1, #menu > ul.menu-liste  /* plugin Menus */ {
+  display: inline-block;
+}
+html[xmlns] #menu ul.level1, html[xmlns] #menu > ul.menu-liste  /* plugin Menus */ {
+  display: block;
+}
+* html #menu ul.level1, * html #menu > ul.menu-liste  /* plugin Menus */ {
+  height: 1%;
+}
+#menu ul.level1 ul.level2 li a, #menu > ul.menu-liste ul.menu-liste li.menu-entree a  /* plugin Menus */ {
+  text-transform: none;
+  font-size: 0.8em;
+  line-height: 1.35em;
+}
+#menu li.menu-entree.active > a  /* plugin Menus */ {
+  text-decoration: underline;
+}
+html.ie67 #menu ul.level1 li a.spip_out {
+  margin-top: -3px;
+}
+.spip_out img {
+  line-height: 0
+}
+/* Menu fin */
+
+
+
+/*COLONNE GAUCHE*/
+#colgauche {
+  float: left;
+  width: 180px;
+  font-family: "OpenSansBold", Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+  font-size: 0.75em;
+  color: #333;
+}
+#colgauche div.menu2 a {
+  color: #333;
+}
+#colgauche .partenaire, #colgauche #recherche, #colgauche div.menu2, #deconnexion {
+  float: left;
+  background-color: #ddd;
+  width: 96%;
+  padding: 2%;
+  margin-bottom: 5%;
+  border-top: solid 5px #ccc;
+  border-bottom: solid 1px #ccc;
+}
+#colgauche #deconnexion {
+  background-color: transparent;
+  border-top: solid 1px #ccc;
+}
+#colgauche div.menu2 li a {
+  text-transform: none;
+  display: block;
+  border-top: solid 1px #fff;
+  padding-top: 4px;
+  margin: 2% 0;
+}
+#colgauche div.menu2 > ul > li > a {
+  text-transform: uppercase;
+  border-top: none;
+  padding-top: 0;
+  margin: 0;
+}
+#colgauche h2 {
+  padding: 2%;
+}
+#colgauche #partenaires a {
+  display: block;
+  width: 80px;
+  height: 80px;
+  float: left;
+  margin: 2px;
+  background-color: #fff;
+  border: solid 1px #666;
+  text-align: center;
+}
+#colgauche #partenaires a.pleinelargeur {
+  width: 165px;
+  height: 55px;
+}
+#recherche p {
+  position: relative;
+}
+#recherche .bouton-rechercher {
+  width: 20px;
+  height: 22px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+#recherche .bouton-rechercher:hover {
+  opacity: 0.5;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {  /* hack chrome */
+  #recherche .bouton-rechercher {
+    bottom: 2px;
+  }
+}
+#colgauche #recherche input.box {
+  width: 147px;
+}
+#texte_droite #recherche input.box {
+  width: 175px;
+}
+#colgauche div.menu2 ul.level1 ul {
+  display: none;
+  padding-top: 3px;
+}
+#colgauche div.menu2 ul.level1 li:hover > ul {
+  display: block;
+}
+/* Colonne gauche fin */
+
+
+
+/* CENTRE */
+#pageune, #pageseconde {
+  float: right;
+  width: 780px;
+  height: auto;
+  min-height: 700px;
+  padding-bottom: 5%;
+}
+#centre {
+  /*float: left; supprimé 3/3/15 problème de positionnement de #bas-de-page */
+  position: relative;
+  left: 50%;
+  margin-left: -490px;
+}
+#centre, #bas-de-page {
+  background: rgb(255,255,255); /* Old browsers */
+  /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSI3MCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZGRkZGRkIiBzdG9wLW9wYWNpdHk9IjEiLz4KICA8L2xpbmVhckdyYWRpZW50PgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZ3JhZC11Y2dnLWdlbmVyYXRlZCkiIC8+Cjwvc3ZnPg==);
+  background: -moz-linear-gradient(left, rgba(255,255,255,1) 70%, rgba(221,221,221,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(70%, rgba(255,255,255,1)), color-stop(100%, rgba(221,221,221,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left, rgba(255,255,255,1) 70%, rgba(221,221,221,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left, rgba(255,255,255,1) 70%, rgba(221,221,221,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left, rgba(255,255,255,1) 70%, rgba(221,221,221,1) 100%); /* IE10+ */
+  background: linear-gradient(to right, rgba(255,255,255,1) 70%, rgba(221,221,221,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#dddddd', GradientType=1 ); /* IE6-8 */
+}
+#texte, #colgauche {
+  margin: 25px 0 0 0;
+}
+#texte_gauche {
+  float: left;
+  width: 550px;
+}
+/* Centre fin */  
+
+
+/* FOOTER */
+#pied-de-page {
+  float: left;
+}
+#pied-de-page ul {
+  text-align: center;
+  padding: 1% 0 2% 0;
+}
+#pied-de-page li {
+  display: inline;
+  margin: 0 1% 0 1%;
+  padding: 0 3% 0 0;
+  border-right: solid 1px #fff;
+}
+#pied-de-page li.last {
+  border: none;
+}
+#pied-de-page li a {
+  font-family: "OpenSansBold", Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+  font-size: 0.75em;
+  color: #fff;
+}
+/* Footer fin */
+
+
+
+
+
+
+
+/* DROITE */
+#texte_droite {
+  float: right;
+  width: 200px;
+}
+/*Col droite page d'accueil */
+#pageune #texte_droite h2 {
+  padding: 6px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-family: "OpenSansSemiBold", Arial, Helvetica, sans-serif;
+  color: #fff;
+}
+#pageune #texte_droite h2 a {
+  color: #fff;
+}
+#pageune #texte_droite h2.menu-titre {
+  text-align: left;
+}
+#pageune #texte_droite h3 a {
+  font-size: 0.75em;
+  font-weight: bold;
+}
+#pageune #texte_droite p {
+  margin-bottom: 6px;
+  font-size: 0.75em
+}
+#pageune #texte_droite > div.bloc {
+  margin-bottom: 24px;
+  clear: both;
+}
+/*Col droite pages secondes */
+.page-seconde #texte_droite {
+  font-size: 0.75em;
+  font-family: "OpenSansRegular", Arial, Helvetica, sans-serif;
+  letter-spacing: 0.025em;
+}
+
+.page-seconde #texte_droite h2 {
+  color: #fff;
+  font-size: 14px;
+  font-family: "OpenSansSemiBold", Arial, Helvetica, sans-serif;
+  padding: 12px 6px;
+}
+.page-seconde #texte_droite nav {
+  margin-bottom: 20px;
+  float:right\9;
+  width:200px\9;
+}
+.page-seconde #texte_droite nav li {
+  border-top: solid 1px #fff;
+  padding: 6px;
+  line-height: 1.3em;
+}
+.page-seconde #texte_droite nav li h3, .page-seconde #texte_droite nav.nav-art li.active {
+  font-family: "OpenSansSemiBold", Arial, Helvetica, sans-serif;
+  color: #000;
+}
+.page-seconde #texte_droite nav.nav-art, .page-seconde #texte_droite nav.nav-rub {
+  margin-left: 20px;
+}
+.page-seconde #texte_droite #seminaire {
+  font-size: 1.25em;
+}
+.page-seconde #texte_droite #seminaire .liste_items.evenements {
+  line-height:1.5em;
+}
+/*Bouton de connexion admin*/
+body.non-connecte div#seminaire span.bouton {
+  display: none;
+}
+span.bouton {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  padding: 0;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  display: block;
+  width: 160px;
+  background-color: #999;
+  border: solid 1px #ccc;
+  color: #fff;
+  margin: 24px auto 24px auto;
+}
+span.bouton:hover {
+  background-color: #999;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+span.bouton a {
+  display: block;
+  color: #fff;
+  margin: 2% 0;
+  padding: 2%;
+  font-size: 0.75em;
+  font-weight: bold;
+  text-align: center;
+}
+body.p-calendrier span.bouton a {
+  padding: 0;
+  font-size: 0.95em;
+}
+body.p-article div.content {
+  width: 100%;
+  margin-top: 1%;
+}
+
+
+/* seminaires */
+
+div#texte_droite #seminaire ul.evenements {
+  font-size: 0.8em;
+}
+div#texte_droite #seminaire div.pagination {
+  font-size: 0.8em;
+}
+div#texte_droite #seminaire .plier_deplier {
+  width: 100%;
+}
+div#texte_droite #seminaire .plier_deplier a {
+  font-weight: bold;
+  line-height: 2em;
+}
+div#texte_droite #seminaire h3 {
+  font-weight: bold;
+  color: #333;
+  width: 100%;
+  margin-top: 2%;
+}
+div#texte_droite #seminaire div.formulaire_spip, div#texte_droite #seminaire div.formulaire_spip fieldset, div#texte_droite #seminaire div.formulaire_spip fieldset ul, div#texte_droite #seminaire div.formulaire_spip fieldset ul li, #seminaire div.formulaire_spip p.boutons input {
+  width: 100%;
+}
+div#texte_droite #seminaire div.formulaire_spip input, div#texte_droite #seminaire div.formulaire_spip label {
+  width: auto !important
+}
+div#texte_droite #seminaire div.formulaire_spip fieldset legend {
+  padding-top: 5%;
+}
+div#texte_droite #seminaire div.formulaire_spip fieldset ul {
+  background-color: transparent !important
+}
+/* menu langues  */
+#menu_lang li strong, #menu_lang li a, #menu_lang li a strong {
+  font-family: Arial Narrow, "NimbusSansLReguCond", Arial, Helvetica, sans-serif;
+  border: none !important;
+  font-size: 1em !important;
+  display: block;
+  margin: 1%;
+}
+div#formulaire_menu_lang {
+  margin: 0 auto;
+  margin-top: -25px;
+  width: 955px;
+  height: 20px;
+  padding: 0 0 5px 25px;
+}
+div#formulaire_menu_lang label {
+  font-weight: normal;
+  font-size: 0.8em;
+  color: #666;
+}
+/* boutons d'accès à l'espace privé, affichés sur l'espace public */
+.spip-admin-float {
+  left: 20%;
+  right: auto !important;
+}
