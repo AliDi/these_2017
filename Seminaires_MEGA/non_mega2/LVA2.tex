@@ -1,0 +1,184 @@
+\documentclass[12pt]{article}
+\setlength{\columnsep}{2cm}
+
+%\usepackage{cite} 
+%\usepackage[round,authoryear,numbers]{natbib}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx} %pour mettre des figures dans multicol avec l'environnement figure*
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+%\linespread{1.05} % Line spacing - Palatino needs more space between lines
+%\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+
+\usepackage[hmarginratio=1:1,top=2cm, right=2cm]{geometry} % Document margins
+\usepackage[textfont=it]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{booktabs} % Horizontal rules in tables
+%\usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
+\usepackage{hyperref} % For hyperlinks in the PDF
+
+\usepackage{bm}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tabularx}
+
+%\usepackage{titlesec} % Allows customization of titles
+%\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+%\renewcommand\thesubsection{\arabic{section}.\arabic{subsection}} % Roman numerals for subsections
+%\titleformat{\section}[block]{\bfseries\centering}{\thesection.}{1em}{}[{\titlerule[1.2pt]}] % Change the look of the section titles
+%\titleformat{\subsection}[block]{\bfseries}{\thesubsection.}{1em}{} % Change the look of the section titles
+%\renewcommand\thesubsubsection{\small{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}}
+%\titleformat{\subsubsection}[block]{\bfseries}{\thesubsubsection}{0.5em}{}
+%\titleformat*{\paragraph}{\vspace{-0.3cm}\small\bfseries}
+
+\newcommand{\tbullet}{$\vcenter{\hbox{\tiny$\bullet$}}~$}
+
+\usepackage{fancyhdr} % Headers and footers
+\pagestyle{fancy} % All pages have headers and footers
+\fancyhead{} % Blank out the default header
+%\fancyfoot{} % Blank out the default footer
+\renewcommand{\headrulewidth}{0pt} %pour enlever la ligne du header
+%\fancyhead[C]{titre, date, noms...	} % Custom header text
+%\fancyfoot[RO,RE]{\thepage} % Custom footer text
+%\fancyfoot[LO,LE]{A. DINSENMEYER, \today}
+%\renewcommand{\footrulewidth}{0.4pt} 
+
+%modif des espacement avant et après l'environnement equation
+\let\oldequation=\equation
+\let\endoldequation=\endequation
+\renewenvironment{equation}{\vspace{-0.2cm}\begin{oldequation}}{\vspace{-0.2cm}\end{oldequation}}
+ 
+%agrandissement de la zone de texte
+%\addtolength{\oddsidemargin}{-1cm}
+%\addtolength{\evensidemargin}{-1cm}
+%\addtolength{\textwidth}{2cm}
+%\addtolength{\topmargin}{-0.7cm}
+\addtolength{\textheight}{1cm}
+
+\usepackage{color}
+\usepackage[color=blue!20]{todonotes}
+\usepackage{mathtools}
+
+%pour écrire du pseudo code :
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\usepackage{hyperref}
+\hypersetup{
+     colorlinks   = true,
+     citecolor    = blue!90
+}
+
+\newcommand{\dd}{\partial}
+\newcommand{\ok}{ \textcolor{orange}{\bfseries \textsc ok }}
+
+
+\usepackage{subcaption}
+\usepackage{tabulary}
+\usepackage{pgfplots} 
+
+\usepackage{multicol}
+
+%pour la biblio en fin de page
+\usepackage{filecontents}
+
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{ {\fontsize{14pt}{14pt}\selectfont Rapport de séminaire, ED MEGA par Alice Dinsenmeyer} \\[1cm]
+\fontsize{18pt}{18pt}\selectfont\textbf{Plateforme HAL \& Publications : Pourquoi/Comment ?}} % Article title
+\author{
+\large{Présenté par Claire Viennois et Jérôme Antoni}\\% Your name %\thanks{}
+%\normalsize École doctorale MEGA \\ % Your institution
+%\normalsize \href{mailto:john@smith.com}{john@smith.com} % Your email address
+\vspace{-5mm}
+}
+\date{le 18/01/18}
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+\maketitle
+
+\section{Première partie : HAL}
+Claire Viennois est embauchée par la direction de la recherche de l'INSA pendant quelques mois pour assainir la visibilité de la structure sous HAL.\\
+HAL (\url{https://hal.archives-ouvertes.fr/}) est la plateforme choisie par le ministère et utilisé par la majorité des université pour la publication scientifique. HAL offre deux majeurs avantages : 
+\begin{itemize}
+    \item l'accès aux articles et le dépôt y sont gratuits,
+    \item elle permet une protection juridique grâce à la date de dépôt,
+    \item elle permet de contacter les auteurs pour leur demander l'accès à un document soumis à embargo.
+\end{itemize}
+
+L'outils en ligne Sherpa/Romeo (\url{http://www.sherpa.ac.uk}) aide à connaître les droits de diffusion et archivage des articles selon les maisons d'édition.\\
+Claire proposera des formation mi-mars 2018 d'une heure environ pour apprendre à déposer, référencer, etc sur HAL.
+
+\section{Deuxième partie :  Publications : Pourquoi/Comment ?}
+Cette présentation a pour but de présenter aux jeunes publiants les rouages de la publication scientifiques et de donner des conseils pour la rédaction et la publication dans des journaux. En effet, le taux d'acceptation pour certains journaux est de 25\% et Jérôme donne donc des conseils pour augmenter ses chances d'être accepté.
+
+\subsection{Pourquoi publier ?}
+Selon Jérôme, la publication a pour but premier de transmettre des connaissances. Le fonctionnement actuel impose de publier afin d'être lu et cité. 
+
+\subsection{Processus de publication}
+Le processus de publication, chronologiquemet est le suivant (le tout durant au moins 4 mois, variable selon le journaux) : 
+\begin{enumerate}
+	\item Soumission sur le site internet du journal. Une verification automatique de la forme et du plagia peut être faite à ce moment-là.
+	\item Filtrage par l'éditeur en chef
+	\item Si accepté, envoi aux éditeurs associés
+	\item Si accepté, envoi au reviewers (4-5 maximum)
+	\item Décision de l'éditeur associé
+	\item Décision de l'éditeur en chef
+\end{enumerate}
+
+\subsection{Qu'est-ce qui est publiable ?}
+Les critères de l'éditeur pour la publication sont les suivants : 
+\begin{multicols}{2}
+	\begin{itemize}
+	    \item la thématique
+	    \item le nombre de pages de l'article
+	    \item le potentiel
+	    \item les consignes politiques
+	    \item la déontologie (plagia, neutralité,...) \columnbreak
+	    \item qualité de la rédaction (forme, langues,...)
+	    \item scientifique (originalité, reproductibilité des expériences, justification, bibliographie, portée de la contribution,...)
+	\end{itemize}
+\end{multicols}
+Ces cirtères déterminent aussi le choix du journal pour l'auteur.
+
+
+\subsection{Conseils}
+Voici quelques conseils donnés : \\
+$\bullet$ Il est nécessaire de penser au passage par les éditeurs et les reviewers à la rédaction de l'article, afin notamment d'adapter la bibliographie : citer les reviewers et des articles du journal peut aider.\\
+$\bullet$ Il faut également donner une garantie de crédibilité scientifique, notamment par une rigueur sur le fond et la forme de l'article. Avoir recours au besoin à des services de traduction en anglais, par exemple.\\
+$\bullet$ Éviter les articles trop longs, sauf cas particulier comme les articles de review ou les tutorials. Actuellement, préférer des articles courts et incisifs, contenant 1 ou 2 messages, pas plus.\\
+$\bullet$ Suivre l'organisation classique, qui permet 2 niveaux de lecture (rapide/approfondi) : titre, résumé, intro, corps, conclusion, biblio).\\
+$\bullet$ Penser aux résumés graphiques avec contenu multimedia.
+
+\subsection{Étape de l'expertise}
+Lorsque l'article doit être révisé après le passage par les reviewers, il faut persévérer, même s'il y a de nombreuses corrections majeures. Accepter les corrections suggérées et écrire une lettre au reviewers contenant : 
+\begin{itemize}
+    \item remerciements,
+    \item détails des corrections,
+    \item détails supplémentaires au besoin et discussion sur les points de désaccord
+    \item éviter de s'adresser directement au reviewer (ex : ''The reviewer is right...'')
+    \item faire apparaître les corrections en rouge dans l'article
+\end{itemize}
+
+
+
+
+
+
+%\bibliographystyle{plainnat}
+
+%\begin{thebibliography}{9}
+%\bibitem{doug} 
+% {Dougherty, R. P.},
+%\textit {Functional beamforming for aeroacoustic source distributions},
+% {AIAA paper},
+% {2014},
+% {vol. 3066}.
+%\end{thebibliography}
+\end{document}
