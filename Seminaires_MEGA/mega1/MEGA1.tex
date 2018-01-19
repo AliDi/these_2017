@@ -1,0 +1,156 @@
+\documentclass[12pt]{article}
+\setlength{\columnsep}{2cm}
+
+%\usepackage{cite} 
+%\usepackage[round,authoryear,numbers]{natbib}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx} %pour mettre des figures dans multicol avec l'environnement figure*
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+%\linespread{1.05} % Line spacing - Palatino needs more space between lines
+%\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+
+\usepackage[hmarginratio=1:1,top=2cm, right=2cm]{geometry} % Document margins
+\usepackage[textfont=it]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{booktabs} % Horizontal rules in tables
+%\usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
+\usepackage{hyperref} % For hyperlinks in the PDF
+
+\usepackage{bm}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tabularx}
+
+%\usepackage{titlesec} % Allows customization of titles
+%\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+%\renewcommand\thesubsection{\arabic{section}.\arabic{subsection}} % Roman numerals for subsections
+%\titleformat{\section}[block]{\bfseries\centering}{\thesection.}{1em}{}[{\titlerule[1.2pt]}] % Change the look of the section titles
+%\titleformat{\subsection}[block]{\bfseries}{\thesubsection.}{1em}{} % Change the look of the section titles
+%\renewcommand\thesubsubsection{\small{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}}
+%\titleformat{\subsubsection}[block]{\bfseries}{\thesubsubsection}{0.5em}{}
+%\titleformat*{\paragraph}{\vspace{-0.3cm}\small\bfseries}
+
+\newcommand{\tbullet}{$\vcenter{\hbox{\tiny$\bullet$}}~$}
+
+\usepackage{fancyhdr} % Headers and footers
+\pagestyle{fancy} % All pages have headers and footers
+\fancyhead{} % Blank out the default header
+%\fancyfoot{} % Blank out the default footer
+\renewcommand{\headrulewidth}{0pt} %pour enlever la ligne du header
+%\fancyhead[C]{titre, date, noms...	} % Custom header text
+%\fancyfoot[RO,RE]{\thepage} % Custom footer text
+%\fancyfoot[LO,LE]{A. DINSENMEYER, \today}
+%\renewcommand{\footrulewidth}{0.4pt} 
+
+%modif des espacement avant et après l'environnement equation
+\let\oldequation=\equation
+\let\endoldequation=\endequation
+\renewenvironment{equation}{\vspace{-0.2cm}\begin{oldequation}}{\vspace{-0.2cm}\end{oldequation}}
+ 
+%agrandissement de la zone de texte
+%\addtolength{\oddsidemargin}{-1cm}
+%\addtolength{\evensidemargin}{-1cm}
+%\addtolength{\textwidth}{2cm}
+%\addtolength{\topmargin}{-0.7cm}
+\addtolength{\textheight}{1cm}
+
+\usepackage{color}
+\usepackage[color=blue!20]{todonotes}
+\usepackage{mathtools}
+
+%pour écrire du pseudo code :
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\usepackage{hyperref}
+\hypersetup{
+     colorlinks   = true,
+     citecolor    = blue!90
+}
+
+\newcommand{\dd}{\partial}
+\newcommand{\ok}{ \textcolor{orange}{\bfseries \textsc ok }}
+
+
+\usepackage{subcaption}
+\usepackage{tabulary}
+\usepackage{pgfplots} 
+
+%pour la biblio en fin de page
+\usepackage{filecontents}
+
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{ {\fontsize{14pt}{14pt}\selectfont Rapport de séminaire, ED MEGA par Alice Dinsenmeyer} \\[1cm]
+\fontsize{18pt}{18pt}\selectfont\textbf{Séminaire anciens doctorants \\ Labellisé MEGA}} % Article title
+
+\author{
+\large{Présenté par Florence de Crécy et Jorge Morales}\\% Your name %\thanks{}
+%\normalsize École doctorale MEGA \\ % Your institution
+%\normalsize \href{mailto:john@smith.com}{john@smith.com} % Your email address
+\vspace{-5mm}
+}
+\date{le 19/01/18}
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+\maketitle
+Florence et Jorge sont deux chercheurs invités pour la journée d'accueil des nouveaux doctorants du LMFA. Ils sont venus parler de leur parcours depuis leur thèse soutenue en 2013.
+
+\section{Florence de Crécy}
+Florence a fait sa thèse au LMFA sur le pompage des compresseurs d'avion. Cette thèse Cifre avec Snecma était donc très en lien avec l'industrie. Elle travaille actuellement chez CS Communication et systèmes. Cette entreprise est spécialisée dans les réseaux et les systèmes d'information, par exemple dans les domaines du trafic aérien, routier,...\\
+
+\subsection{Son évolution chez CS}
+Elle est entrée chez CS sur un projet de radioprotection, sujet qu'elle ne connaissait pas. Ayant la volonté de retourner à la CFD, elle a demandé à changer de projet, ce qui a été possible. Elle a alors rejoint le projet ProLB sur lequel elle travaille encore actuellement. C'est un projet de codes pour Renault de couplage thermique très en lien avec sa thèse. Elle évolue donc dans une équipe de R\&D constituée de 3 personnes qui ont le rôle d'experts pour les autres équipes.\\
+
+\subsection{Son ressenti}
+Elle code et ne fait pas de physique mais elle est satisfaite de communiquer avec ses collègue qui font de la physique, d'autant que la validation académique/théorique ne lui plaît pas beaucoup.
+
+\subsection{Ses conseils}
+\paragraph{Pour la recherche d'emploi : }
+\begin{itemize}
+	\item Si la période de rédaction est stressante, il vaut mieux éviter de commencer à chercher du travail en même temps car les entretiens seront mal préparés et se passeront mal.
+	\item Il semblerait que les industriels privilégient mes gens qu'ils connaissent pour les recrutements, devant les qualifications.
+\end{itemize}
+\paragraph{Que lui apporte le doctorat ?} Une capacité d'adaptation qui lui a permis de changer de projet et de travailler dans des équipe de R\&D.
+\paragraph{Quelles compétences valoriser en entretien ?} La technique, la gestion de projet, la communication (conférences et manuscrit de thèse), la capacité à être critique sur son travail scientifique.
+
+
+\section{Jorge Morales}
+Jorge travaille actuellement au CEA Cadarache. Il est en début de carrière de chercheur sur la fusion nucléaire.
+
+\subsection{Parcours}
+Il a fait deux post-docs sur les instabilités et les turbulences de plasma.
+\subsection{Son poste en détails}
+Jorge travaille sur deux aspects de la recherche. Il fait du post-traitement de données expérimentales ainsi que de la simulation et de la modélisation. Il passe presque la moitié de son temps à vérifier que les codes qu'il a développé sont en adéquation avec ce qu'il a modélisé.
+\subsection{Ses conseils}
+\paragraph{Pour progresser dans la recherche : }si possible, accepter les partenariats qui permettent de mener un projet de A à Z.
+\paragraph{Pour améliorer la compréhension de son sujet : } faire des enseignements.
+\paragraph{Les qualités d'un chercheur selon lui : }Savoir poser le problème avant d'essayer de le résoudre. Être organisé pour gagner du temps. Savoir communiquer, en conférence et avec les collègue pour obtenir de l'aide. Avoir de la persévérance.
+\paragraph{Astuces diverses : }Utiliser un gestionnaire de version type Git. Documenter ses travaux. Python.
+\paragraph{Retour d'expérience : }Ce qui peut poser problème dans un post-doc, c'est l'environnement et la communication avec les collègues plutôt que le sujet.
+
+
+
+
+
+
+
+
+
+
+%\begin{thebibliography}{9}
+%\bibitem{doug} 
+% {Dougherty, R. P.},
+%\textit {Functional beamforming for aeroacoustic source distributions},
+% {AIAA paper},
+% {2014},
+% {vol. 3066}.
+%\end{thebibliography}
+\end{document}
