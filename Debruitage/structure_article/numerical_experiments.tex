@@ -111,6 +111,10 @@
 \usepackage{pgfplots} 
 \pgfplotsset{compat=newest}
 
+%pour les notes Todo
+\usepackage{todonotes}
+
+
 
 
 \begin{document}
@@ -151,7 +155,7 @@ ON THE DENOISING OF CROSS-SPECTRAL MATRICES FOR (AERO)ACOUSTIC APPLICATIONS
 %\end{spacing}
 
 \begin{abstract}
-Array systems and multichannel pressure measurements are widely used for source localization and quantification. Measurement noise such as calibration, electronic or ambient noise affects the performance of acoustic imaging algorithms. In aeroacoustic applications, acoustic pressure measurements can be highly disturbed by the presence of flow-induced noise \citep{Fenech2009}. However, signals are supposed to be stationnary and performing averaging of cross-spectral quantities over several time snapshots will concentrate uncorrelated noise along the diagonal of the cross-spectral matrix (CSM). A common practice is thus to set the diagonal of the CSM to zero, which is known to improve the dynamic range of the source localization maps, yet this also leads to underestimated source levels \citep{Dougherty2002a}. More advanced techniques have been recently developped to avoid such problems by preserving or reconstructing source information that lies in the CSM diagonal \citep{dougherty2016,Hald2017}.
+Array systems and multichannel pressure measurements are widely used for source localization and quantification. Measurement noise such as calibration, electronic or ambient noise affects the performance of acoustic imaging algorithms. In aeroacoustic applications, acoustic pressure measurements can be highly disturbed by the presence of flow-induced noise \citep{Fenech2009}. However, signals are supposed to be stationary and performing averaging of cross-spectral quantities over several time snapshots will concentrate uncorrelated noise along the cross-spectral matrix (CSM) diagonal. A common practice is thus to set the CSM diagonal to zero, which is known to improve the dynamic range of the source localization maps, yet this also leads to underestimated source levels \citep{Dougherty2002a}. More advanced techniques have been recently developed to avoid such problems by preserving or reconstructing source information that lies in the CSM diagonal \citep{dougherty2016,Hald2017}.
 
 
 
@@ -190,6 +194,7 @@ and a Gaussian noise is added :
 with
 \begin{equation}
     \bo{n}\sim \mathcal{N}(0,\frac{n_{rms}}{\sqrt{2}})
+    \label{noise}
 \end{equation}
 where $n_{rms}=\langle \bo{a} \rangle_M \times 10^{-SNR/20}$ and $\langle \bullet \rangle$ is the average value over the M receivers.\\
 
@@ -202,7 +207,7 @@ Finally, cross-spectra are calculated :
 \end{align}
 
 
-\subsection{Configuration of the simulated acoustical propagation}
+\subsection{Configuration for the simulated acoustical propagation}
 The acoustical field produced by a line of $K$ uncorrelated monopoles is measured by $M=93$ receivers  distributed as a spiral.
 Default values for each parameter are given by the table~\ref{default_values}.
 \begin{table}[H]
@@ -227,14 +232,14 @@ Default values for each parameter are given by the table~\ref{default_values}.
 
 
 \section{Diagonal reconstruction}
-In this section, three methods for diagonal reconstruction are presented. The idea of these method is to reduce as much as possible the self-induced noise concentrated on the diagonal elements of the CSM. The diagonale is minimized as long as the denoised CSM stay positive semidefinite. This problem can be written as : 
+In this section, three methods for diagonal reconstruction are presented. The idea of these methods is to reduce as much as possible the self-induced noise concentrated on the diagonal elements of the CSM. The diagonal is minimized as long as the denoised CSM stays positive semidefinite. This problem can be written as : 
 \begin{equation}
     \text{maximize~} \sum_i D_{ii} \text{~~subject to~~} \bo{S}_{pp}-\bo{D}\geq 0
 \end{equation}
 $\bo{D}$ being a diagonal matrix.\\
 
  \subsection{Convex optimization}
- Hald use sconvex programming with the CVX toolbox \cite{cvx,Grant_cvx} to solve this problem \cite{Hald2017}.
+ Hald use convex programming with the CVX toolbox \cite{cvx,Grant_cvx} to solve this problem \cite{Hald2017}.
 
 \subsection{Linear optimization}
 Dougherty express this problem as a linear programming problem :
@@ -261,11 +266,11 @@ Alternating projections method can also be used. The solution is the intersectio
 This algorithm stops when all the eigenvalues of the denoised CSM are nonnegative.
 
 \subsection{Comparison of diagonal reconstruction methods}
-For each of these methods, we study the relative error of the estimated signal spectra $\hat{\bo{S}}_{aa}$ defined as : 
+For each of these methods, we study the relative error on the estimated signal matrix $\hat{\bo{S}}_{aa}$ defined as : 
 \begin{equation}
     err = \frac{\| \operatorname{diag}(\bo{S}_{aa} ) - \operatorname{diag}(\hat{\bo{S}}_{aa})\|_2}{\|\operatorname{diag}(\bo{S}_{aa} ) \|_2}
 \end{equation}
-$\|\bullet\|$ being the $L_2$ norm. For each method, three parameters are successively changed : 
+For each method, three parameters are successively changed : 
 \begin{itemize}
     \item rank of signal matrix $\bo{S}_{aa}$ by increasing the number of monopoles from 1 to $M$,
     \item SNR from -10 to 10 dB,
@@ -273,22 +278,102 @@ $\|\bullet\|$ being the $L_2$ norm. For each method, three parameters are succes
 \end{itemize}
 When one parameter is changed, the others are constant, given by the table~\ref{default_values}.\\
 
-\subsubsection{Rank of $\bo{S}_{aa}$}
 
-
-\begin{figure}
+\begin{figure}[H]
 	\hspace{-0.1\textwidth}
 	\begin{minipage}{1.2\textwidth}
 		\centering
 		\input{img/diagonal_reconstruction/AP_rang.tex}
 		\hspace{-0.2cm}\input{img/diagonal_reconstruction/AP_SNR.tex}
-		\hspace{-0.3cm}\input{img/diagonal_reconstruction/AP_Mw.tex} \hfill\\
+		\hspace{-0.5cm}\input{img/diagonal_reconstruction/AP_Mw.tex} \hfill\\
 		\tikz[baseline]{\draw[dashed,line width=1.0pt] (0,.5ex)--++(.5,0) ;} Hald, 
 		\tikz[baseline]{\draw[dotted,line width=1.0pt] (0,.5ex)--++(.5,0) ;} Alternating projections, 
 		\tikz[baseline]{\draw[dash dot,line width=1.0pt] (0,.5ex)--++(.5,0) ;} Dougherty\\
 	\end{minipage}
 	\caption{ Error on the reconstructed diagonal, for different simulation parameters. On the right, error is plotted for 20, 80 and 93 sources.}
 \end{figure}
+
+
+\section{Robust principal component analysis (RPCA)}
+
+The optimisation problem : 
+\begin{equation}
+	\text{minimize~} \|\bo{\hat{S}}_{aa} \|_* + \lambda \| \bo{\hat{S}}_{nn} \|_1  \text{~~~~subject to~~~~}  \bo{\hat{S}}_{aa} +  \bo{\hat{S}}_{nn} = \bo{S}_{pp}
+	\label{rpca}
+\end{equation}
+where $\|\bullet\|_*$ is the nuclear norm (sum of the eigenvalues), is solved using an accelerated proximal gradient algorithm, developed by Wright \textit{et al.} \cite{Wright2009}.\\
+
+\subsection{Choosing the regularization parameter}
+
+According to \cite{Wright2009,Candes2011}, a constant parameter equal to $1/\sqrt{M}$ can be chosen as far as the rank of the signal matrix is reasonably low. As shown by \cite{Amailland2017phd}, this parameter is not very accurate but far easier to implement than a trade-off curve analysis. The reason is that the trade-off curve  is very fluctuating, as shown on figure~\ref{l-curve}.
+
+\begin{figure}
+	\centering
+	\input{img/rpca/Lcurve_Mw10000_Nsrc20.tex}
+	\caption{Trade-off curve as a function of $\lambda$ (for default values from table~\ref{default_values}). \label{l-curve}}
+\end{figure}
+
+\todo[inline]{Figure~\ref{error_rpca} shows relative error for different regularization parameters and as a function of the number of sources. The parameter called ''optimal'' is the one that gives the smallest relative error (unknown on non-synthetic case). \\
+Détailler optimal et minimisation reconstruction}
+
+\begin{figure}[H]
+		\centering		
+		%include figures
+		\input{img/rpca/choose_lambda2.tex}
+		\hspace{0.5cm}\input{img/rpca/choose_lambda1.tex}\\
+		
+		%legend 
+		\definecolor{optim}{rgb}{0,0.447,0.741}
+		\definecolor{minest}{rgb}{0.85,0.325,0.098}
+		\definecolor{wright}{rgb}{0.929,0.694,0.125}
+		Regularization parameters : \tikz[baseline]{\draw[line width=1.0pt,color=optim] (0,.5ex)--++(.5,0) ;} optimal, 
+		\tikz[baseline]{\draw[line width=1.0pt,color=minest] (0,.5ex)--++(.5,0) ;} minimize reconstruction errors, 
+		\tikz[baseline]{\draw[line width=1.0pt,color=wright] (0,.5ex)--++(.5,0) ;} $1/\sqrt{M}$
+		
+		%caption
+		\caption{Error on the reconstructed diagonal solving RPCA with different regularization parameter, as a function of the rank of the signal matrix.
+		\label{error_rpca}}
+\end{figure}
+
+
+
+\section{Probabilistic factorial analysis}
+
+\paragraph{Expectation-Maximisation algorithm:} Noise CSM supposed to be a diagonal matrix.
+
+\paragraph{Gibbs sampling:} hyperparameters are chosen to be small (all equal to 1.1)\\
+For both algorithms, the number of parameters $\kappa$ is fixed by the user.
+
+\subsection{Choosing the number of factors}
+
+\begin{figure}[H]
+	\centering
+	\input{img/factor_analysis/EM_MCMC_factors.tex}
+	\caption{Error on the diagonal of the signal CSM for increasing number of factors. Error is minimal when the number of factors is equal to the number of uncorrelated sources (default value is 20).}
+\end{figure}
+As the number of sources is unknown, we choose $\kappa=M$. 
+
+
+\section{Comparison of the different methods}
+
+\subsection{Homogeneous noise}
+Previous methods are first compared when the noise is homogeneously added on the receivers. In the equation~\ref{noise}, $,n_{rms}$ is the same for all the receivers, given by the SNR.
+
+\subsection{Heterogeneous noise}
+Ten receivers randomly chosen are now affected by a strong noise, for which SNR is 10 dB lower than for the other receivers.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
