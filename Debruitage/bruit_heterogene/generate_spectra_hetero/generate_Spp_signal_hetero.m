@@ -157,7 +157,14 @@ end
 % xlabel('x (m)')
 % ylabel('y (m)')
 % zlabel('z (m)')
-
+% 
+% figure
+% plot3(r_mic(:,1),r_mic(:,2),r_mic(:,3),'ob')
+% hold on
+% plot3(r_mic(noisy_mic,1),r_mic(noisy_mic,2),r_mic(noisy_mic,3),'or')
+% xlabel('x (m)')
+% ylabel('y (m)')
+% zlabel('z (m)')
 %%
 
 % %%%--------------------------------------------------------------------------------------------

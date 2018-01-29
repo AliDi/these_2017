@@ -13,7 +13,7 @@ Nsrc =20;
 Mw=10^4;
 rho=0;
 SNR = -10:1:10;
-extra_SNR=0;
+%extra_SNR=0;
 
 option.max = 200; %max number of iteration
 option.rerr=0.5e-7;
@@ -21,7 +21,7 @@ j=1;
 for i=1:length(SNR)
 i
 	%%% Generate data
-	[Sq Sy Sp Sn] = generate_Spp_signal_hetero(freq, Nsrc , rho , SNR(i) , Mw,extra_SNR);
+	[Sq Sy Sp Sn] = generate_Spp_signal_hetero(freq, Nsrc , rho , SNR(i) , Mw,SNR(i)-10);
 	
 	CSM = Sy(:,:);
 	d_ref(:,i,j)=real(diag(Sp));

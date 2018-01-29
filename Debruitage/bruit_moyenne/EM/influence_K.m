@@ -29,10 +29,10 @@ j=1;
 for i=1:length(K)
 i	
 	%initialisation nulle
-	%Ini.Syc = 1e-16*ones(93,1);
-	%Ini.L=1e-16*ones(93,K(i));
+	Ini.Syc = 1e-16*ones(93,1);
+	Ini.L=1e-16*ones(93,K(i));
 	
-	[Ini.Syc, Ini.L] = SS_CSM_Fit(Sy,K(i));
+	%[Ini.Syc, Ini.L] = SS_CSM_Fit(Sy,K(i));
 	
 	    
 	[L,sig2,beta2,flag,Sx, d1all, d2all] = EM_CSM_Fit(Sy,93,K(i),option,Ini);

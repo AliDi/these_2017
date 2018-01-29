@@ -10,7 +10,7 @@ addpath(genpath('/home/adinsenmey/Bureau/these_2017/Debruitage'))
 
 freq = 15000;
 Nsrc =20;
-Mw=[50 500 5000];
+Mw=round(logspace(log10(10),log10(50000),40));
 rho=0;
 SNR = 10;
 

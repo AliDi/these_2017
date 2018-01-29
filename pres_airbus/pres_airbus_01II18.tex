@@ -1,0 +1,163 @@
+\documentclass[10pt,xcolor=x11names,compress, notes=show]{beamer}% pour l'impression, tout n'apparait qu'une fois \documentclass[handout,12pt]{beamer}
+
+%\documentclass[xcolor=x11names]{beamer}
+%\usepackage[scaled]{helvet}
+\usepackage[round]{natbib}
+\usepackage[utf8x]{inputenc}
+%\usepackage{ucs}
+\usepackage[french]{babel}
+\usepackage{todonotes}
+\usepackage{tikz}
+\usepackage{color}
+%\usepackage{subfigure}
+%\usepackage[]{geometry}
+\usepackage{changepage}
+\usetikzlibrary{calc}
+
+\usepackage{bm}
+\usepackage{pifont} %pour les symbole sympa \ding{nb}
+\usepackage[export]{adjustbox}
+\usepackage{subcaption}
+
+\usepackage{pdfpages}
+\setbeamertemplate{navigation symbols}{} 
+%\usepackage{palatino}
+
+%pour le theme
+%\usetheme{CambridgeUS}
+
+%\usetheme{Goettingen}
+%\useinnertheme{default}
+%\useoutertheme[subsection=false]{miniframes} %%pour avoir le défilement en en-tête des diapos par section
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\setbeamercolor{block title}{fg=DeepSkyBlue4,bg=DeepSkyBlue4!10}
+\setbeamercolor{block title alerted}{bg=DeepSkyBlue4!0} 
+\setbeamercolor{block title example}{bg=DeepSkyBlue4!20}
+%\setbeamercolor*{lower separation line head}{bg=DeepSkyBlue4} 
+
+\setbeamerfont{title like}{shape=\scshape}
+\setbeamercolor{frametitle}{fg=DeepSkyBlue4}
+\setbeamercolor{title}{fg=DeepSkyBlue4}
+\setbeamercolor{itemize item}{fg=black}
+\setbeamercolor{itemize subitem}{fg=black}
+\setbeamercolor{toc}{fg=DeepSkyBlue4}
+\usepackage{amsmath,mathtools}
+\usefonttheme[onlymath]{serif}
+\usepackage{bm}
+
+\setbeamertemplate{frametitle}{\vspace{0.5cm}\hspace{-0.9cm} \insertframetitle}
+\setbeamerfont{frametitle}{size=\Large}
+
+\setlength{\fboxrule}{1pt}
+
+%\setbeamertemplate{bibliography item}[]
+
+%couleur table des matières
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=DeepSkyBlue4}
+
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+
+%Mettre la section courante en titre de diapo (pour champ de titre non-vide)
+%\addtobeamertemplate{frametitle}{\frametitle{\insertsubsectionhead}}{}
+
+%\addtobeamertemplate{footline}{\hspace{11cm} \insertframenumber}
+\setbeamertemplate{footline}[frame number]
+%\newcommand{\tr}[1]{\prescript{t\hspace{-0.08cm}}{}{#1}}
+
+\usepackage{wrapfig}
+
+
+%page de titre
+\author{J. {Antoni}, A. {Dinsenmeyer} and Q. {Leclère} \\ Laboratoire Vibrations Acoustique}
+
+\title{Denoising of the CSM}
+\subtitle{}
+\date{February 2018}
+
+%\titlegraphic{}
+
+
+\begin{document}
+
+\begin{frame}
+	\maketitle
+\end{frame}
+
+\begin{frame}{Context}
+
+\end{frame}
+
+\begin{frame}{CSM properties}
+
+$$\bm{S}_{p} = \frac{1}{N_s} \sum_i  \bm{p}_i\bm{p}_i'$$
+\begin{itemize}
+   	 \item Hermitian (conjugate symmetric)
+   	 \item Positive semidefinite (nonnegative eigenvalues)
+\end{itemize}~\\
+
+$$\underbracket[0.5pt]{\bm{S}_p}_{\text{measured CSM}} =\underbracket[0.5pt]{ \bm{S}_a}_{\text{signal of interest}} +\underbracket[0.5pt]{\bm{S}_n}_{\text{unwanted noise}}$$
+
+\begin{itemize}
+     \item Signal CSM : one eigenvalue for one incoherent source
+    \item Noise CSM : off-diagonal elements $\rightarrow 0$ with averaging
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Denoising algorithms}
+
+\begin{block}{Diagonal reconstruction}
+\begin{equation*}
+    \text{maximize~} \sum_i \sigma_{n_i} \text{~~subject to~~} \bm{S}_{pp}-\operatorname{diag}(\bm{\sigma}_n)\geq 0
+\end{equation*}
+Solved with CVX Matlab toolbox
+\todo[inline]{citation}
+\end{block}
+
+\begin{block}{Robust Principal Component Analysis}
+\begin{equation*}
+	\text{minimize~} \|\bm{{S}}_{a} \|_* + \lambda \| \bm{{S}}_{n} \|_1  \text{~~~~subject to~~~~}  \bm{{S}}_{aa} +  \bm{{S}}_{nn} = \bm{S}_{pp}
+\end{equation*}
+Solved with proximal gradient algorithm \todo[inline]{citation}
+\end{block}
+
+\begin{block}{Probabilistic Factorial Analysis}
+\begin{equation*}
+        \bm{p} = \bm{L}\operatorname{diag}(\bm{\alpha})\bm{C} +\operatorname{diag}(\bm{\sigma}^2)
+\end{equation*}
+\begin{equation*}
+   \bm{L},\bm{C},\bm{\sigma}^2\sim \mathcal{N}(0,\bm{\Omega}_{L,C,\sigma}^2)~~~~\text{and}~~~~\bm{\alpha}\sim \mathcal{N}(\bm{\mu}_{\alpha},\bm{\Omega}_{\alpha}^2)
+\end{equation*}
+Solved with Gibbs sampling algorithm
+\todo[inline]{citation}
+\end{block}
+\end{frame}
+
+\begin{frame}{Results}
+
+\end{frame}
+
+\begin{frame}
+ 
+%Texte du diapo \cite{Solomaa1973} et \cite{Dijkstra1982}
+%\vfill
+% 
+%{\tiny 
+%\usebibitemtemplate{\color{black}\insertbiblabel} 
+%\usebibliographyblocktemplate{\color{black}}{\color{black}}{\color{black}}{\color{black}} 
+% 
+%\begin{thebibliography}{} 
+%\bibitem{Solomaa1973} 
+%A.~Salomaa. 
+%\newblock {\em Formal Languages}. 
+%\newblock Academic Press, 1973. 
+%\bibitem{Dijkstra1982} 
+%E.~Dijkstra. 
+%\newblock Smoothsort, an alternative for sorting in situ. 
+%\newblock {\em Science of Computer Programming}, 1(3):223--233, 1982. 
+%\end{thebibliography} }
+\end{frame}
+
+
+
+\end{document}

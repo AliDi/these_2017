@@ -39,7 +39,7 @@ for j=1:length(Mw)
 		cvx_quiet('true')
 		cvx_precision('high')
 		[CSM_cvx d1 cvx_it]=CSMRecHald(CSM);     
-		d_cvx(:,i,j)=diag(CSM_cvx);
+		d_cvx(:,i,j)=real(diag(CSM_cvx));
 		err_cvx(i,j)= norm( d_ref(:,i,j)-real(d_cvx(:,i,j)) ,2)/norm(d_ref(:,i,j),2); 
 
 

@@ -11,7 +11,7 @@ Mw=round(logspace(log10(10),log10(50000),40));
 rho=0;
 SNR = 10;
 M=93; %nb of microphones
-
+k=93;
 j=1;
 for i=1:length(Mw)
 disp(['Mw : ' num2str(Mw(i))])
@@ -20,7 +20,7 @@ disp(['Mw : ' num2str(Mw(i))])
 
 	d_ref(:,i,j)=real(diag(Sp));
 			
-    k=Nsrc+round(0.5*Nsrc);
+    %k=Nsrc+round(0.5*Nsrc);
 	%initialisation
 	
 	%Ini.Lambda=(randn(M,k) + 1i*randn(M,k))/sqrt(2);
@@ -37,7 +37,7 @@ disp(['Mw : ' num2str(Mw(i))])
 	opt='hetero';
 	
 	
-	[Sc,Lambda,alpha2,beta2] = MCMC_AnaFac_Quad(Sy,k,a,b,Mw,Nrun,opt);
+	[Sc,Lambda,alpha2,beta2] = MCMC_AnaFac_Quad(Sy,k,a,b,Mw(i),Nrun,opt);
 	
 	for jj=1:Nrun
 		d_mcmc(:,jj,i)=real(diag(squeeze(Lambda(jj,:,:))*squeeze(Sc(jj,:,:))*squeeze(Lambda(jj,:,:))'));
@@ -56,7 +56,7 @@ disp(['Mw : ' num2str(Mw(i))])
 
 end
 
-save('MCMC_Mw','err_mcmc','Mw','Nsrc','d_mcmc', 'd_ref');
+%save('MCMC_Mw','err_mcmc','Mw','Nsrc','d_mcmc', 'd_ref');
 %figure
 %plot(Nsrc,10*log10(err_EM))
 

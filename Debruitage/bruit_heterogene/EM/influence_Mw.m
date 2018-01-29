@@ -16,7 +16,7 @@ SNR = 10;
 extra_SNR=0;
 
 option.max = 200; %max number of iteration
-option.rerr=0.5e-7;
+option.rerr=0.5e-8;
 j=1;
 for i=1:length(Mw)
 i
@@ -26,10 +26,10 @@ i
 	CSM = Sy(:,:);
 	d_ref(:,i,j)=real(diag(Sp));
 			
-	if Mw(j)<93
-   		 k=Mw(j)-1;
+	if Mw(i)<93
+   		 k=Mw(i)-1;
 	else
-    	k=92;
+    	k=93;
 	end
 	
 	%initialisation nulle

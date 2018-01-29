@@ -10,18 +10,24 @@ Nsrc =20;
 Mw=10^4;
 rho=0;
 SNR = -10:10;
-extra_SNR=0;
+%extra_SNR=0;
 M=93; %nb of microphones
 
 j=1;
 for i=1:length(SNR)
 disp(['SNR : ' num2str(SNR(i))])
 	%%% Generate data
-	[Sq Sy Sp Sn] = generate_Spp_signal_hetero(freq, Nsrc , rho , SNR(i) , Mw,extra_SNR);
+	[Sq Sy Sp Sn] = generate_Spp_signal_hetero(freq, Nsrc , rho , SNR(i) , Mw,SNR(i)-10);
 
 	d_ref(:,i,j)=real(diag(Sp));
 			
     k=Nsrc+round(0.5*Nsrc);
+    
+    if k>M
+    	k=M
+    end
+    
+    
 	%initialisation
 	
 	%Ini.Lambda=(randn(M,k) + 1i*randn(M,k))/sqrt(2);
@@ -38,7 +44,7 @@ disp(['SNR : ' num2str(SNR(i))])
 	opt='hetero';
 	
 	
-	[Sc,Lambda,alpha2,beta2] = MCMC_AnaFac_Quad(Sy,k,a,b,Mw,Nrun,opt);
+	[Sc,Lambda,alpha2(:,:,i),beta2(:,:,i)] = MCMC_AnaFac_Quad(Sy,k,a,b,Mw,Nrun,opt);
 	
 	for jj=1:Nrun
 		d_mcmc(:,jj,i)=real(diag(squeeze(Lambda(jj,:,:))*squeeze(Sc(jj,:,:))*squeeze(Lambda(jj,:,:))'));
@@ -57,7 +63,7 @@ disp(['SNR : ' num2str(SNR(i))])
 
 end
 
-save('MCMC_SNR','err_mcmc','SNR','Nsrc','d_mcmc', 'd_ref');
+save('MCMC_SNR','err_mcmc','SNR','Nsrc','d_mcmc', 'd_ref','alpha2','beta2');
 %figure
 %plot(Nsrc,10*log10(err_EM))
 
