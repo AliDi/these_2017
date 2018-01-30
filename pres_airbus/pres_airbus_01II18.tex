@@ -50,8 +50,6 @@
 
 \setlength{\fboxrule}{1pt}
 
-%\setbeamertemplate{bibliography item}[]
-
 %couleur table des matières
 \usepackage{hyperref}
 \hypersetup{colorlinks=true, linkcolor=DeepSkyBlue4}
@@ -67,78 +65,134 @@
 
 \usepackage{wrapfig}
 
+%pour les plots matlab en tikz
+\usepackage{pgfplots} 
+\pgfplotsset{compat=newest}
 
-%page de titre
+\usepackage{multicol}
+\setlength{\columnsep}{0cm}
+
+\usepackage{pifont} %pour les symbole sympa \ding{nb}
+
+
+%%% Page de titre
+%======================
 \author{J. {Antoni}, A. {Dinsenmeyer} and Q. {Leclère} \\ Laboratoire Vibrations Acoustique}
-
 \title{Denoising of the CSM}
 \subtitle{}
 \date{February 2018}
-
 %\titlegraphic{}
 
-
 \begin{document}
-
+%%%		Title
+%======================
 \begin{frame}
 	\maketitle
 \end{frame}
 
-\begin{frame}{Context}
+%%% Context
+%======================
+\section{Context}
+\begin{frame}{\insertsectionhead}
 
-\end{frame}
-
-\begin{frame}{CSM properties}
-
-$$\bm{S}_{p} = \frac{1}{N_s} \sum_i  \bm{p}_i\bm{p}_i'$$
+Unwanted random noise : 
 \begin{itemize}
-   	 \item Hermitian (conjugate symmetric)
-   	 \item Positive semidefinite (nonnegative eigenvalues)
-\end{itemize}~\\
-
-$$\underbracket[0.5pt]{\bm{S}_p}_{\text{measured CSM}} =\underbracket[0.5pt]{ \bm{S}_a}_{\text{signal of interest}} +\underbracket[0.5pt]{\bm{S}_n}_{\text{unwanted noise}}$$
-
+	\item electronic, ambient, flow-induced,...
+	\item short correlation lengths
+\end{itemize}
+~\\
+Existing denoising methods : 
 \begin{itemize}
-     \item Signal CSM : one eigenvalue for one incoherent source
-    \item Noise CSM : off-diagonal elements $\rightarrow 0$ with averaging
+	\item Physical removal : mic recession, porous treatment, ...
+	\item Use of a background noise measurement
+	\item Wavenumber filtering
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Denoising algorithms}
-
-\begin{block}{Diagonal reconstruction}
-\begin{equation*}
-    \text{maximize~} \sum_i \sigma_{n_i} \text{~~subject to~~} \bm{S}_{pp}-\operatorname{diag}(\bm{\sigma}_n)\geq 0
-\end{equation*}
-Solved with CVX Matlab toolbox
-\todo[inline]{citation}
-\end{block}
-
-\begin{block}{Robust Principal Component Analysis}
-\begin{equation*}
-	\text{minimize~} \|\bm{{S}}_{a} \|_* + \lambda \| \bm{{S}}_{n} \|_1  \text{~~~~subject to~~~~}  \bm{{S}}_{aa} +  \bm{{S}}_{nn} = \bm{S}_{pp}
-\end{equation*}
-Solved with proximal gradient algorithm \todo[inline]{citation}
-\end{block}
-
-\begin{block}{Probabilistic Factorial Analysis}
-\begin{equation*}
-        \bm{p} = \bm{L}\operatorname{diag}(\bm{\alpha})\bm{C} +\operatorname{diag}(\bm{\sigma}^2)
-\end{equation*}
-\begin{equation*}
-   \bm{L},\bm{C},\bm{\sigma}^2\sim \mathcal{N}(0,\bm{\Omega}_{L,C,\sigma}^2)~~~~\text{and}~~~~\bm{\alpha}\sim \mathcal{N}(\bm{\mu}_{\alpha},\bm{\Omega}_{\alpha}^2)
-\end{equation*}
-Solved with Gibbs sampling algorithm
-\todo[inline]{citation}
-\end{block}
+\begin{frame}{CSM properties}
+	$$\bm{S}_{p} = \frac{1}{N_s} \sum_i  \bm{p}_i\bm{p}_i'$$
+	\begin{itemize}
+	   	 \item Hermitian (conjugate symmetric)
+	   	 \item Positive semidefinite (nonnegative eigenvalues)
+	\end{itemize}~\\
+	
+	$$\underbracket[0.5pt]{\bm{S}_p}_{\text{measured CSM}} =\underbracket[0.5pt]{ \bm{S}_a}_{\text{signal of interest}} +\underbracket[0.5pt]{\bm{S}_n}_{\text{unwanted noise}}$$
+	
+	\begin{itemize}
+	     \item Signal CSM : one eigenvalue for one incoherent source
+	    \item Noise CSM : off-diagonal elements $\rightarrow 0$ with averaging
+	\end{itemize}
 \end{frame}
 
-\begin{frame}{Results}
-
+%%% Algorithms
+%==========================
+\section{Denoising algorithms}
+\begin{frame}{\insertsectionhead}
+	\begin{block}{Diagonal reconstruction}
+		\begin{equation*}
+		    \text{maximize~} \sum_i \sigma_{n_i} \text{~~subject to~~} \bm{S}_{pp}-\operatorname{diag}(\bm{\sigma}_n)\geq 0
+		\end{equation*}
+		Solved with CVX Matlab toolbox.
+	\end{block}	
+	\begin{block}{Robust Principal Component Analysis}
+		\begin{equation*}
+			\text{minimize~} \|\bm{{S}}_{a} \|_* + \lambda \| \bm{{S}}_{n} \|_1  \text{~~~~subject to~~~~}  \bm{{S}}_{a} +  \bm{{S}}_{n} = \bm{S}_{p}
+		\end{equation*}
+		Solved with proximal gradient algorithm.
+	\end{block}	
+	\begin{block}{Probabilistic Factorial Analysis}
+		\begin{equation*}
+		        \bm{p} = \bm{L}\operatorname{diag}(\bm{\alpha})\bm{C} +\operatorname{diag}(\bm{\sigma})\bm{\epsilon}
+		\end{equation*}
+		\begin{equation*}
+		   \bm{L},\bm{C},\bm{\sigma}\sim \mathcal{N}(0,\bm{\Omega}_{L,C,\sigma}^2)~~~~\text{and}~~~~\bm{\alpha}\sim \mathcal{N}(\bm{\mu}_{\alpha},\bm{\Omega}_{\alpha}^2)
+		\end{equation*}
+		Solved with Gibbs sampling algorithm.
+	\end{block}
 \end{frame}
 
-\begin{frame}
- 
+%%% Results
+%==============================
+\section{Results}
+\begin{frame}{Test case}
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item frequency : 15 kHz
+			\item 20 monopoles
+			\item 93 receivers
+			\item SNR : 10 dB
+			\item $10^4$ snapshots
+		\end{itemize}	
+	\end{multicols}	\vspace{-16pt}
+	\begin{itemize}
+    		\item heterogeneous noise : SNR 10 dB lower on 10 random receivers
+	\end{itemize}
+	\vfill
+	\centering
+	\input{img/config.tex}
+\end{frame}
+
+\begin{frame}{\insertsectionhead}	
+	\resizebox{1.1\textwidth}{!}{
+	\begin{minipage}{1.2\textwidth}
+		\centering		
+		\hspace{-1cm}\input{img/all_hetero_rang.tex}
+		\hspace{-0.2cm}\input{img/all_hetero_SNR.tex}
+		\hspace{-0.5cm}\input{img/all_hetero_Mw.tex}
+		 \hfill\\[1cm]
+		 
+		 
+		 %legend
+		\definecolor{hald}{rgb}{0.00000,0.44700,0.74100}%
+		\definecolor{rpca}{rgb}{0.85000,0.32500,0.09800}%
+		\definecolor{mcmc}{rgb}{0.49400,0.18400,0.55600}%
+		\tikz[baseline]{\draw[line width=1.0pt,color=hald] (0,.5ex)--++(.5,0) ;} DRec, 
+		\tikz[baseline]{\draw[dashed,line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;} RPCA using $\lambda_{opt}$,
+		\tikz[baseline]{\draw[line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;} RPCA using $\lambda=1/\sqrt{M}$,
+		\tikz[baseline]{\draw[line width=1.0pt , color=mcmc] (0,.5ex)--++(.5,0) ;} MCMC\\
+	\end{minipage}
+	}
+\end{frame} 
 %Texte du diapo \cite{Solomaa1973} et \cite{Dijkstra1982}
 %\vfill
 % 
@@ -156,8 +210,6 @@ Solved with Gibbs sampling algorithm
 %\newblock Smoothsort, an alternative for sorting in situ. 
 %\newblock {\em Science of Computer Programming}, 1(3):223--233, 1982. 
 %\end{thebibliography} }
-\end{frame}
-
 
 
 \end{document}
