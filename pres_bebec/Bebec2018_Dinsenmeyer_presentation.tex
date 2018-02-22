@@ -1,0 +1,399 @@
+\documentclass[9pt,xcolor=x11names,compress, notes=show]{beamer}% pour l'impression, tout n'apparait qu'une fois \documentclass[handout,12pt]{beamer}
+
+%\documentclass[xcolor=x11names]{beamer}
+%\usepackage[scaled]{helvet}
+\usepackage[round]{natbib}
+\usepackage[utf8x]{inputenc}
+%\usepackage{ucs}
+\usepackage[USenglish]{babel}
+\usepackage{todonotes}
+\usepackage{tikz}
+\usepackage{color}
+%\usepackage{subfigure}
+%\usepackage[]{geometry}
+\usepackage{changepage}
+\usetikzlibrary{calc}
+
+\usepackage{bm}
+\usepackage{pifont} %pour les symbole sympa \ding{nb}
+\usepackage[export]{adjustbox}
+\usepackage{subcaption}
+
+\usepackage{pdfpages}
+\setbeamertemplate{navigation symbols}{} 
+%\usepackage{palatino}
+
+%pour le theme
+%\usetheme{CambridgeUS}
+%\usetheme{metropolis}
+
+%\usetheme{Goettingen}
+%\useinnertheme{default}
+%\useoutertheme[subsection=false]{miniframes} %%pour avoir le défilement en en-tête des diapos par section
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\setbeamercolor{block title}{fg=DeepSkyBlue4,bg=DeepSkyBlue4!10}
+\setbeamercolor{block title alerted}{bg=DeepSkyBlue4!0} 
+\setbeamercolor{block title example}{bg=DeepSkyBlue4!20}
+%\setbeamercolor*{lower separation line head}{bg=DeepSkyBlue4} 
+
+%\setbeamerfont{title like}{shape=\scshape,series=\bfseries}
+\setbeamerfont{title}{shape=\scshape,series=\bfseries}
+\setbeamercolor{frametitle}{fg=DeepSkyBlue4}
+\setbeamercolor{title}{fg=DeepSkyBlue4}
+\setbeamercolor{itemize item}{fg=black}
+\setbeamercolor{itemize subitem}{fg=black}
+\setbeamercolor{toc}{fg=DeepSkyBlue4}
+\usepackage{amsmath,mathtools}
+\usefonttheme[onlymath]{serif}
+\usepackage{bm}
+\usepackage{subcaption}
+
+\setbeamertemplate{frametitle}{\vspace{0.1cm}\hspace{-0.9cm} \insertframetitle}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+
+\setlength{\fboxrule}{1pt}
+
+%couleur table des matières
+\usepackage{hyperref}
+\hypersetup{colorlinks,linkcolor=DeepSkyBlue4}
+\definecolor{colorAlice}{rgb}{0,0.407843137,0.545098039} %Correspond au DeepBlueSky4 ici
+
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+
+
+%Mettre la section courante en titre de diapo (pour champ de titre non-vide)
+%\addtobeamertemplate{frametitle}{\frametitle{\insertsubsectionhead}}{}
+
+%\addtobeamertemplate{footline}{\hspace{11cm} \insertframenumber}
+%\setbeamertemplate{footline}[frame number]
+%\newcommand{\tr}[1]{\prescript{t\hspace{-0.08cm}}{}{#1}}
+\setbeamertemplate{headline}{
+	\usebeamerfont{section in head/foot}%
+	\vspace{0.1cm}
+	\insertsectionnavigationhorizontal{0pt}{\hskip0.2cm}{}%
+}
+
+\setbeamertemplate{footline}{
+	%\linethickness{0.1pt}
+	%\framelatex{
+    	\usebeamerfont{section in head/foot}%
+    	~~~A. {Dinsenmeyer}, J. {Antoni}, Q. {Leclère} and A. Pereira~|~\insertshorttitle
+    	\hfill
+    	\insertframenumber/\inserttotalframenumber~~~
+   	 \vspace{0.1cm}
+    %}
+}
+
+\usepackage{wrapfig}
+
+%pour les plots matlab en tikz
+\usepackage{pgfplots} 
+\pgfplotsset{compat=newest}
+
+\usepackage{multicol}
+\setlength{\columnsep}{0cm}
+
+\usepackage{pifont} %pour les symbole sympa \ding{nb}
+\usepackage[framemethod=TikZ]{mdframed}
+\newcommand{\diag}[1]{\operatorname{diag}\left(#1\right)}
+
+%\usetikzlibrary{arrows,shapes,trees,positioning}  
+\newcommand{\tikzmark}[1]{\tikz[remember picture] \coordinate (#1) ++ (-3pt,3pt) {};}
+
+
+
+%%% Page de titre
+%======================
+\author{\underline{A. {Dinsenmeyer}}$^{1,2}$, J. {Antoni}$^1$, Q. {Leclère}$^1$ and A. Pereira$^2$}
+\institute{$^1$ Laboratoire Vibrations Acoustique\\ $^2$ Laboratoire de Mécanique des Fluides et d’Acoustique\\Lyon, France}
+\title{On the Denoising of Cross-Spectral Matrices for (Aero)Acoustic Applications}
+\subtitle{}
+\date{\small March 5, 2018 -- 7\textsuperscript{th} BeBeC}
+\titlegraphic{\vfill \includegraphics[height=1cm]{img/logo/celya-XL.png} \hfill  \includegraphics[height=1cm]{img/logo/logo_lmfa.pdf} \hfill \includegraphics[height=1cm]{img/logo/LVA_compact_couleur_transparent.png} \hfill   \includegraphics[height=1cm]{img/logo/logo_ADAPT.png} }
+
+\begin{document}
+%%%		Title
+%======================
+\begin{frame}[plain,t]
+	\maketitle	
+\end{frame}
+
+%%% Context
+%======================
+\section{Context}
+	\begin{frame}{\insertsectionhead}
+	Unwanted random noise:
+	\begin{itemize}
+		\item electronic, ambient, flow-induced,...
+		\item short correlation lengths
+	\end{itemize}
+
+	Existing denoising methods:
+	\begin{itemize}
+	        \item Physical removal : mic recession, porous treatment, \dots
+	        \item  Use of a background noise measurement, 
+	        \item Wavenumber filtering.
+	\end{itemize}
+\end{frame}
+
+
+%%% CSM properties
+%======================
+%\section{CSM properties}
+\begin{frame}{CSM properties}
+		$$\bm{S}_{p} = \frac{1}{N_s} \sum_i  \bm{p}_i\bm{p}_i'$$
+		\begin{itemize}
+			\item Hermitian (conjugate symmetric)
+			\item Positive semidefinite (nonnegative eigenvalues)
+		\end{itemize}~\\
+		
+		$$\underbracket[0.5pt]{\bm{S}_p}_{\text{measured CSM}} =\underbracket[0.5pt]{ \bm{S}_a}_{\text{signal of interest}} +\underbracket[0.5pt]{\bm{S}_n}_{\text{unwanted noise}}$$
+		
+		\begin{itemize}
+			\item Signal CSM : one eigenvalue for one incoherent source
+			\item Noise CSM : off-diagonal elements $\rightarrow 0$ with averaging
+		\end{itemize}
+	\vfill
+\end{frame}
+
+%%% Test case
+\section{Test case}
+\begin{frame}{\insertsectionhead}
+	\begin{center}
+		\noindent\begin{minipage}{\linewidth}
+		     	\begin{minipage}{0.4\linewidth}
+	         			\begin{itemize}
+					\item frequency: 15 kHz
+					\item 20  uncorrelated monopoles: \textcolor{red}{$\vcenter{\hbox{\tiny$\blacklozenge$}}$}
+					\item 93 receiver: \textcolor{colorAlice}{$\vcenter{\hbox{\small$\bm{\circ}$}}$}
+					\item SNR: 10 dB
+					\item $10^4$ snapshots
+				\end{itemize}	
+	               		\vfill
+	     		\end{minipage}
+	      		%\hspace{0.02\linewidth}
+	      		\hfill
+	     		 \begin{minipage}{0.55\linewidth}
+             			\centering
+				\input{img/config.tex}
+	      		\end{minipage}
+		\end{minipage}
+	\end{center}
+	Error on the signal CSM:
+	\begin{equation*}
+   		 \delta = \frac{\|\diag{\bm{S}_{aa}}  - \diag{\bm{\hat{S}}_{aa}}\|_2}{\|\diag{\bm{S}_{aa} } \|_2}
+	\end{equation*}
+\end{frame}
+
+%%% Diagonal reconstruction
+%======================
+\section{Diagonal Reconstruction}
+\begin{frame}{\insertsectionhead}	
+	\begin{block}{Convex optimization}<1->
+		\begin{equation*}
+        			\text{maximize~} \| \bm{\sigma}_{n}^2\|_1 \text{~~subject to~~} \bm{S}_{pp}- \diag{\bm{\sigma}_n^2} \geq 0
+		\end{equation*}
+		Problem solved with CVX Matlab toolbox \citep{Hald2017}.
+	\end{block}
+	\begin{block}{Linear optimization}<2->
+		\begin{equation*}
+			\text{maximize~} \| \bm{\sigma}_{n}^2\|_1   \text{~~subject to~~}  \bm{V}^{H}_{(k-1)} \left( \bm{S}_{pp}- \diag{\bm{\sigma}_n^2}_{(k)} \right) \bm{V}_{(k-1)} \geq 0 
+		\end{equation*}
+		Solved with \textit{linprog} Matlab function \citep{dougherty2016}.
+	\end{block}
+	\begin{block}{Alternating Projections}<3->
+		\begin{equation*}
+        			 \bm{S}_{{pp}_{(k+1)}} := \bar{\bm{S}}_{{pp}_{(0)}} + \bm{V}^{H}_{(k)} \bm{s}_{(k)}^{\textcolor{red}{\textbf{+}}}\bm{V}^{~}_{(k)}
+		\end{equation*}
+		with $\bm{V}^{H}_{(k)}$ and $\bm{s}_{(k)}$ eigenvector/values of  $\bm{S}_{{pp}_{(k)}}$.\\
+		Algorithm from \cite{leclere:hal-01279944}	
+	\end{block}	
+\end{frame}
+
+\begin{frame}{\insertsectionhead}
+	%legend
+	\begin{mdframed}[
+		linecolor=black,%
+		innertopmargin =0.2cm,
+		innerbottommargin =0.2cm,
+		innerrightmargin =0.1cm,
+		innerleftmargin =0.1cm,
+		roundcorner=1pt
+		%usetwoside=true,
+		]		
+		\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+		\definecolor{mycolor2}{rgb}{0.92900,0.69400,0.12500}%
+		\definecolor{mycolor3}{rgb}{0.46600,0.67400,0.18800}%
+		{\footnotesize \tikz[baseline=-1pt]\draw[line width=1.0pt,color=mycolor1](0,.5ex)--++(.5,0) ; Convex optimization \hfill
+		\tikz[baseline=-1pt]\draw[color=mycolor2,line width=1.0pt] (0,.5ex)--++(.5,0) ; Alternating~projections\hfill
+		 \tikz[baseline=-1pt]\draw[color=mycolor3,line width=1.0pt] (0,.5ex)--++(.5,0) ; Linear~optimization}
+	\end{mdframed}
+	\vfill
+	\resizebox{1.05\textwidth}{!}{
+	\begin{minipage}{1.2\textwidth}
+		\centering
+		\hspace{-1cm}\input{img/diagonal_reconstruction/AP_rang.tex}
+		\hspace{-0.2cm}\input{img/diagonal_reconstruction/AP_SNR.tex}
+		\hspace{-0.4cm}\input{img/diagonal_reconstruction/AP_Mw.tex}
+	\end{minipage}
+	}
+	\todo[inline]{keep convex optimization : \newline
+	+ fast, simple code\newline
+	 - local optimization}
+\end{frame}
+
+%%% RPCA
+%======================
+\section{RPCA}
+\begin{frame}{\insertsectionhead}
+\todo[inline]{citations}
+	\begin{equation*}
+		\text{minimize~} \|\bm{{S}}_{aa} \|_* + \lambda \| \bm{{S}}_{nn} \|_1  \text{~~~~subject to~~~~}  \bm{{S}}_{aa} +  \bm{{S}}_{nn} = \bm{S}_{pp}
+	\end{equation*}
+	Solved with a proximal gradient algorithm.
+	\todo[inline]{+ joue théoriquement sur toute la CSM\newline
+	- choose regularization parameter : l-curve, cross validation, ...\newline
+	- local optimization ?}	
+\end{frame}
+
+%%% PFA
+%======================
+\section{Probabilistic Factor Analysis}
+\begin{frame}{\insertsectionhead}
+%\centering
+\begin{equation*}
+        		\bm{p} = \tikzmark{L}\bm{L}   \tikzmark{c}\bm{c} + \tikzmark{n}\bm{n}
+	\end{equation*}
+	\begin{tikzpicture}[overlay, remember picture]
+		% L
+		\node(Ldescr) [below left=0.5cm and 2cm of L] {
+			$\bm{L}\sim\mathcal{N}_{\mathbb{C}}(0,\bm{\gamma}^2)$
+		};
+    		%\draw[] (Ldescr.east) to [in=-90,out=45]  (L.south) ;
+    		\draw[] (Ldescr.east)++(0,2pt) to (L.south) ;
+    		
+    		% c
+    		\node(cdescr) [below  =0.5cm  of c]{
+    			$\bm{c}\sim\mathcal{N}_{\mathbb{C}}(0,\bm{I\alpha}^2)$
+    		};
+    		\draw (cdescr.north) to (c.south);
+    		
+    		% n
+    		\node(ndescr) [below right=0.5cm and 2cm of n]{
+    			$\bm{n}\sim\mathcal{N}_{\mathbb{C}}(0,\bm{I\sigma}^2)$
+    		};
+    		\draw (ndescr.west)++(0,2pt) to (n.south);
+	\end{tikzpicture}
+	\vfill
+
+	Hyperparameters:
+	\begin{multicols}{3}
+	\hspace{1cm}$\bm{\gamma}^2\sim\mathcal{IG}(a_{\gamma},b_{\gamma})$\\
+	\hspace{0.7cm}$\bm{\alpha}^2\sim\mathcal{IG}(a_{\alpha},b_{\alpha})$\\
+	\hspace{1cm}$\bm{\sigma}^2\sim\mathcal{IG}(a_{\sigma},b_{\sigma})$\\
+	\end{multicols}
+	
+	Inferred using Gibb's sampling (MCMC algorithm)
+	
+	$\bm{\hat{S}}_{aa}={N_s}^{-1}\bm{L}( \sum_{i=1}^{N_s}\bm{c}_i\bm{c}^H_i) \bm{L}^H$
+	
+	
+	\todo[inline]{$+$ convergence théorique assurée\newline
+	- computationally expensive\newline
+	+ flexible formulation
+	+ takes into account finite length record ?  }
+\end{frame}
+
+%%% Comparison
+%======================
+\section{Comparison}
+\begin{frame}{\insertsectionhead}
+	\vspace{-0.1cm}
+	%legend
+	\begin{mdframed}[
+		linecolor=black,%
+		innertopmargin =0.05cm,
+		innerbottommargin =0cm,
+		innerrightmargin =0.1cm,
+		innerleftmargin =0.1cm,
+		roundcorner=1pt
+		%usetwoside=true,
+		]
+		\definecolor{hald}{rgb}{0.00000,0.44700,0.74100}%
+		\definecolor{rpca}{rgb}{0.85000,0.32500,0.09800}%
+		\definecolor{mcmc}{rgb}{0.49400,0.18400,0.55600}%
+		{\footnotesize \tikz[baseline=-1.5pt]{\draw[line width=1.0pt,color=hald] (0,.5ex)--++(.5,0) ;} DRec \hfill
+			\tikz[baseline=-1.5pt]{\draw[dashed,line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;} RPCA, $\lambda_{opt}$ \hfill
+			\tikz[baseline=-1.5pt]{\draw[line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;} RPCA, $\lambda=M^{\frac{1}{2}}$ \hfill
+			\tikz[baseline=-1.5pt]{\draw[line width=1.0pt , color=mcmc] (0,.5ex)--++(.5,0) ;} PFA}
+	\end{mdframed}
+	\begin{itemize}
+		\item 	{\small \bfseries Homogeneous noise\\}	
+		\begin{center}
+			\resizebox{0.9\textwidth}{!}{
+				\begin{minipage}{1.2\textwidth}
+					\centering		
+					\hspace{-1cm}\input{img/comparison/all_homo_rang.tex}
+					\hspace{-0.2cm}\input{img/comparison/all_homo_SNR.tex}
+					\hspace{-0.4cm}\input{img/comparison/all_homo_Mw.tex}\\
+				\end{minipage}
+			}
+		\end{center}
+		
+		
+		\item 	{\small {\bfseries Heterogeneous noise}: SNR 10 dB lower on 10 random receivers\\}
+		\begin{center}		
+			\resizebox{0.9\textwidth}{!}{
+				\begin{minipage}{1.2\textwidth}			
+					\hspace{-1cm}\input{img/comparison/all_hetero_rang.tex}
+					\hspace{-0.2cm}\input{img/comparison/all_hetero_SNR.tex}
+					\hspace{-0.4cm}\input{img/comparison/all_hetero_Mw.tex}
+				\end{minipage}
+			}
+		\end{center}
+			%\caption{Relative error $\delta$ on the diagonal of the signal CSM. Denoising methods: DRec~(\protect\tikz[baseline]\protect\draw[line width=1.0pt,color=hald] (0,.5ex)--++(.5,0) ;), RPCA with $\lambda_{opt}$~(\protect\tikz[baseline]\protect\draw[dashed,line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;),
+			%	RPCA with $\lambda=M^{-\frac{1}{2}}$~(\protect\tikz[baseline]\protect\draw[line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;) and
+			%	PFA~(\protect\tikz[baseline]\protect\draw[line width=1.0pt , color=mcmc] (0,.5ex)--++(.5,0) ;).
+			%	(a,b,c) Noise is added homogeneously to the 93 receivers.	 (d,e,f) Noise is 10~dB higher on 10 random receivers. When one parameter varies, the other are constant, given by %Tab.~\ref{default_values}.
+			%}
+	\end{itemize}
+\end{frame}
+
+%%% Conclusion
+%==================
+\section{Conclusion}
+\begin{frame}{\insertsectionhead}
+	contenu...
+\end{frame}
+
+
+\appendix
+\begin{frame}{References}
+	%\begin{adjustwidth}{-2em}{-2.5em}
+		\scriptsize
+		\bibliographystyle{abbrvnat}
+		\bibliography{biblio}
+	%\end{adjustwidth}
+\end{frame}
+
+
+%Texte du diapo \cite{Solomaa1973} et \cite{Dijkstra1982}
+%\vfill
+% 
+%{\tiny 
+%\usebibitemtemplate{\color{black}\insertbiblabel} 
+%\usebibliographyblocktemplate{\color{black}}{\color{black}}{\color{black}}{\color{black}} 
+% 
+%\begin{thebibliography}{} 
+%\bibitem{Solomaa1973} 
+%A.~Salomaa. 
+%\newblock {\em Formal Languages}. 
+%\newblock Academic Press, 1973. 
+%\bibitem{Dijkstra1982} 
+%E.~Dijkstra. 
+%\newblock Smoothsort, an alternative for sorting in situ. 
+%\newblock {\em Science of Computer Programming}, 1(3):223--233, 1982. 
+%\end{thebibliography} }
+
+
+\end{document}
