@@ -12,7 +12,7 @@
 \begin{tikzpicture}
 
 \begin{axis}[%
-width=7cm,
+width=3.5cm,
 height=3.5cm,
 at={(0.4in,0.577in)},
 scale only axis,
@@ -26,7 +26,8 @@ ylabel style={font=\color{white!15!black}},
 ylabel={Relative error $\delta$ (dB)},
 axis background/.style={fill=white},
 legend style={legend cell align=left, align=left, draw=white!15!black},
-ticklabel style={font=\scriptsize}
+ticklabel style={font=\scriptsize},
+inner sep=1ex
 ]
 \addplot [color=mycolor1, line width=1.0pt]
   table[row sep=crcr]{%

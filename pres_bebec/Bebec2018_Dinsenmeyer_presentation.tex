@@ -1,123 +1,57 @@
-\documentclass[9pt,xcolor=x11names,compress, notes=show]{beamer}% pour l'impression, tout n'apparait qu'une fois \documentclass[handout,12pt]{beamer}
+\documentclass[8pt,xcolor=x11names,compress, notes=show]{beamer}% pour l'impression, tout n'apparait qu'une fois \documentclass[handout,12pt]{beamer}
 
-%\documentclass[xcolor=x11names]{beamer}
 %\usepackage[scaled]{helvet}
 \usepackage[round]{natbib}
 \usepackage[utf8x]{inputenc}
 %\usepackage{ucs}
 \usepackage[USenglish]{babel}
 \usepackage{todonotes}
-\usepackage{tikz}
 \usepackage{color}
 %\usepackage{subfigure}
 %\usepackage[]{geometry}
 \usepackage{changepage}
-\usetikzlibrary{calc}
-
-\usepackage{bm}
 \usepackage{pifont} %pour les symbole sympa \ding{nb}
-\usepackage[export]{adjustbox}
-\usepackage{subcaption}
 
-\usepackage{pdfpages}
-\setbeamertemplate{navigation symbols}{} 
-%\usepackage{palatino}
-
-%pour le theme
-%\usetheme{CambridgeUS}
-%\usetheme{metropolis}
-
-%\usetheme{Goettingen}
-%\useinnertheme{default}
-%\useoutertheme[subsection=false]{miniframes} %%pour avoir le défilement en en-tête des diapos par section
-\setbeamertemplate{blocks}[rounded][shadow=true]
-\setbeamercolor{block title}{fg=DeepSkyBlue4,bg=DeepSkyBlue4!10}
-\setbeamercolor{block title alerted}{bg=DeepSkyBlue4!0} 
-\setbeamercolor{block title example}{bg=DeepSkyBlue4!20}
-%\setbeamercolor*{lower separation line head}{bg=DeepSkyBlue4} 
-
-%\setbeamerfont{title like}{shape=\scshape,series=\bfseries}
-\setbeamerfont{title}{shape=\scshape,series=\bfseries}
-\setbeamercolor{frametitle}{fg=DeepSkyBlue4}
-\setbeamercolor{title}{fg=DeepSkyBlue4}
-\setbeamercolor{itemize item}{fg=black}
-\setbeamercolor{itemize subitem}{fg=black}
-\setbeamercolor{toc}{fg=DeepSkyBlue4}
-\setbeamertemplate{section in toc}[square]
-\setbeamercolor{section in toc}{bg=white,fg=structure}
-\usepackage{amsmath,mathtools}
-\usefonttheme[onlymath]{serif}
-\usepackage{bm}
-\usepackage{subcaption}
-\usepackage{cancel} %pour barrer des math
-\usepackage{array}
-
-\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
-\setbeamerfont{framesubtitle}{size=\normalsize,series=\bfseries}
-\setbeamertemplate{frametitle}{
-	\vspace{0.1cm}\hspace{-0.6cm} \usebeamerfont*{frametitle}\insertframetitle
-	 %\hspace{-0.6cm}\usebeamerfont*{framesubtitle}\insertframesubtitle
-	}
-
-
-
-
-\setlength{\fboxrule}{1pt}
-
-%couleur table des matières
-\usepackage{hyperref}
-\hypersetup{colorlinks,linkcolor=DeepSkyBlue4}
-\definecolor{colorAlice}{rgb}{0,0.407843137,0.545098039} %Correspond au DeepBlueSky4 ici
-\definecolor{green}{rgb}{0,0.5,0} %Correspond au DeepBlueSky4 ici
-
-\setbeamertemplate{caption}{\raggedright\insertcaption\par}
-
-
-%Mettre la section courante en titre de diapo (pour champ de titre non-vide)
-%\addtobeamertemplate{frametitle}{\frametitle{\insertsubsectionhead}}{}
-
-%\addtobeamertemplate{footline}{\hspace{11cm} \insertframenumber}
-%\setbeamertemplate{footline}[frame number]
-%\newcommand{\tr}[1]{\prescript{t\hspace{-0.08cm}}{}{#1}}
-\setbeamertemplate{headline}{
-	\usebeamerfont{section in head/foot}%
-	\vspace{0.1cm}
-	\insertsectionnavigationhorizontal{0pt}{\hskip0.2cm}{}%
-}
-
-\setbeamertemplate{footline}{
-	%\linethickness{0.1pt}
-	%\framelatex{
-    	\usebeamerfont{section in head/foot}%
-    	~~~A. {Dinsenmeyer}, J. {Antoni}, Q. {Leclère} and A. Pereira~|~\insertshorttitle
-    	\hfill
-    	\insertframenumber/\inserttotalframenumber~~~
-   	 \vspace{0.1cm}
-    %}
-}
-
-\usepackage{wrapfig}
+% Pour Tikz
+\usepackage{tikz}
+\usetikzlibrary{calc}
+%\usetikzlibrary{arrows,shapes,trees,positioning}  
 
 %pour les plots matlab en tikz
 \usepackage{pgfplots} 
 \pgfplotsset{compat=newest}
 
+% Pour les maths
+\usepackage{bm}
+\usepackage{amsmath,mathtools}
+\usefonttheme[onlymath]{serif}
+\usepackage{cancel} %pour barrer des math
+
+% Pour la mise en forme
+\usepackage[export]{adjustbox}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+\usepackage{pdfpages}
+\setbeamertemplate{navigation symbols}{} 
+\usepackage{array}
+%\usepackage{palatino}
+%\setbeamertemplate{caption}{\raggedright\insertcaption\par}
 \usepackage{multicol}
 \setlength{\columnsep}{0cm}
-
-\usepackage{pifont} %pour les symbole sympa \ding{nb}
 \usepackage[framemethod=TikZ]{mdframed}
+
+%pour le theme
+\usetheme{Alice}
+
+%\useoutertheme[subsection=false]{miniframes} %%pour avoir le défilement en en-tête des diapos par section
+%\setbeamercolor*{lower separation line head}{bg=DeepSkyBlue4} 
+
+% Customisation 
+\setlength{\fboxrule}{0.2pt}
+\definecolor{green}{rgb}{0,0.5,0} 
 \newcommand{\diag}[1]{\operatorname{diag}\left(#1\right)}
-
-%\usetikzlibrary{arrows,shapes,trees,positioning}  
 \newcommand{\tikzmark}[1]{\tikz[remember picture] \coordinate (#1) ++ (-3pt,6pt) {};}
-
 \newcommand{\citeTransp}[1]{\color{fg!50} \citep{#1}}
-\setbeamertemplate{itemize subitem}{-}
-
-
-
-
 
 
 %%% Page de titre
@@ -130,6 +64,7 @@
 \titlegraphic{\vfill \includegraphics[height=1cm]{img/logo/celya-XL.png} \hfill  \includegraphics[height=1cm]{img/logo/logo_lmfa.pdf} \hfill \includegraphics[height=1cm]{img/logo/LVA_compact_couleur_transparent.png} \hfill   \includegraphics[height=1cm]{img/logo/logo_ADAPT.png} }
 
 \begin{document}
+
 %%%		Title
 %======================
 \begin{frame}[plain,t]
@@ -185,7 +120,7 @@
 	$$\underbracket[0.5pt]{~\bm{p}~}_{\text{measured spectra}} =\underbracket[0.5pt]{~\textcolor{green}{\bm{a}}~}_{\text{source spectrum}} + \underbracket[0.5pt]{~\textcolor{red}{\bm{n}}~}_{\text{Gaussian noise}} $$
 	}
 	\only<2->{
-	$$\Bigg\langle \underbracket[0.5pt]{~\bm{p}~}_{\text{measured spectra}} =\underbracket[0.5pt]{~\textcolor{green}{\bm{a}}~}_{\text{source spectrum}} + \underbracket[0.5pt]{~\textcolor{red}{\bm{n}}~}_{\text{Gaussian noise}}  \Bigg\rangle_{\text{\normalsize $ N_s$ snapshots}}$$
+	$$\Big\langle \underbracket[0.5pt]{~\bm{p}~}_{\text{measured spectra}} =\underbracket[0.5pt]{~\textcolor{green}{\bm{a}}~}_{\text{source spectrum}} + \underbracket[0.5pt]{~\textcolor{red}{\bm{n}}~}_{\text{Gaussian noise}}  \Big\rangle_{\text{\normalsize $ N_s$ snapshots}}$$
 	}
 	\end{overlayarea}
 	
@@ -222,9 +157,10 @@
 	
 	\end{overlayarea}
 	
-	\textbf{For $N_s \rightarrow \infty$}\\
+	\hspace{0.8cm}\textbf{For $N_s \rightarrow \infty$}\\
 	\pause
 	\begin{itemize}
+		\setlength{\itemindent}{1cm}
 		\item Short correlation length : off-diagonal elements of $S_{nn}\rightarrow 0$
 		\pause
 		\item Independent signal/noise : cross-terms $\rightarrow 0$
@@ -236,22 +172,32 @@
 
 %%% Plan
 %======================
-\begin{frame}{Problématique}
-	How to separate signal part from noise ? 
+\begin{frame}{How to separate signal part from noise ?}
+	 
 	
-	Studied existing methods:
 	\begin{itemize}
-	        \item 	3 diagonal reconstruction methods
-        		\item Robust Principal Component Analysis (RPCA)
-	\end{itemize}
+	%\setlength{\itemindent}{0.5cm}
+		\item Existing methods:
+			\begin{itemize}
+			        \item 	3 diagonal reconstruction methods
+		        		\item Robust Principal Component Analysis (RPCA)
+			\end{itemize}
+			
+		\vfill\pause
 	
-	Proposed method:
-	\begin{itemize}
-        \item PFA
-\end{itemize}
-	
-	What are there performance when noise level, Ns or the  number of sources vary ?
+		\item Proposed method:
+			\begin{itemize}
+       			 	\item PFA
+			\end{itemize}
 
+		\vfill \pause
+		\item What is the influence on denoising performance of : 
+		\begin{itemize}
+		        \item noise level,
+		        \item number of snapshots,
+		        \item number of sources ?
+		\end{itemize}
+	\end{itemize}
 \end{frame}
 
 
@@ -372,7 +318,7 @@
 	}
 	\begin{block}{Select Convex Optimization (DRec) for further comparison}
 		\ding{51} Fast, simple code		 \hfill\parbox{0.5\linewidth}{\ding{55} Local optimization}\\
-		\ding{51} Better performance		 \hfill\parbox{0.5\linewidth}{\ding{55} Denoises only diagonal}\\
+		\ding{51} Better performance		 \hfill\parbox{0.5\linewidth}{\ding{55} Denoises only auto-spectra}\\
 	\end{block}
 
 \end{frame}
@@ -384,18 +330,21 @@
 \tableofcontents[currentsection,hideothersubsections]
 \end{frame}
 \begin{frame}{\insertsectionhead}
-
-\textit{''Search $\bm{S}_{aa}$ as a low rank matrix and $\bm{S}_{nn}$ as a sparse matrix''}
-	\begin{equation*}
-		\boxed{
-		\text{minimize~} \|\bm{{S}}_{aa} \|_* + \lambda \| \bm{{S}}_{nn} \|_1  \text{~~~~subject to~~~~}  \bm{{S}}_{aa} +  \bm{{S}}_{nn} = \bm{S}_{pp}
+	\vspace{-0.5cm}
+	\begin{center}
+		\textit{''Search $\bm{S}_{aa}$ as a low rank matrix and $\bm{S}_{nn}$ as a sparse matrix''}\\~\\
+		\colorbox{gray!20}{
+		 $\text{minimize~} \|\textcolor{green}{\bm{{S}}_{aa}} \|_* + \lambda \| \textcolor{red}{\bm{{S}}_{nn}} \|_1  \text{~~~~subject to~~~~} \textcolor{green}{ \bm{{S}}_{aa}} +  \textcolor{red}{\bm{{S}}_{nn} = \bm{S}_{pp}}$
 		}
-	\end{equation*}
+	\end{center}
+
+
 	
 	$\| \cdot \|_*$: nuclear norm (related to rank)\\
 	$\| \cdot \|_1$: $\ell_1$-norm (related to sparsity)\\~\\
 	
 	Solved with a proximal gradient algorithm.
+	\vfill
 
 	\begin{block}{RPCA  \citeTransp{Wright2009a}}
 		\ding{51} Modifies the whole CSM		\hfill\parbox{0.57\linewidth}{\ding{55} Local optimization}\\[2pt]
@@ -424,58 +373,130 @@
 \tableofcontents[currentsection,hideothersubsections]
 \end{frame}
 
-\begin{frame}
-Diapo d'intro aux méthodes bayésiennes ?
-\end{frame}
-
 \begin{frame}{\insertsectionhead}
+
 	\begin{itemize}
-	        \item 	Gibbs sampling in the Bayesian hierarchical model : \\[.5cm]
-		\hspace{-1.7cm}\begin{tikzpicture}[remember picture]
-			$\bm{p} = \tikzmark{L}\bm{L}   \tikzmark{c}\bm{c} + \tikzmark{n}\bm{n}$
+        		\item<1-> \textbf{Latent variable model}\\~\\       		
+        		
+        		\begin{tikzpicture}[remember picture]
+			\colorbox{gray!20}{$\tikzmark{p}\bm{p} = \tikzmark{L}\textcolor{blue}{\bm{L}} \tikzmark{c}\textcolor{green}{\bm{c}} + \tikzmark{n}\textcolor{red}{\bm{n}}$}
+			
+			%p
+			\node (pdescr) [below left=-0.5cm and 1cm of p, align=center]{
+				\footnotesize observable\\[-3pt] \footnotesize variables
+			};
+			\draw[->,>=stealth] (pdescr) -- ($(p.east)+(-7pt,6pt)$);
 			
 			% L
-			\node(Ldescr) [below left=0.5cm and 2cm of L,align=center] {
-				Loading factors\\
-				$\bm{L}\sim\mathcal{N}_{\mathbb{C}}(0,\bm{\gamma}^2)$
+			\node(Ldescr) [below left=0.3cm and 0.5cm of L,align=center] {
+				\footnotesize matrix of\\[-3pt] \footnotesize loading factors
 			};
 	    		%\draw[] (Ldescr.east) to [in=-90,out=45]  (L.south) ;
-	    		\draw[] (Ldescr.east)++(0,10pt) to [in=-130,out=45] (L);
+	    		\draw[->,>=stealth] ($(Ldescr.east)+(-5pt,5pt)$) to ($(L)+(-2pt,0)$);
 	    		
 	    		% c
-	    		\node(cdescr) [below  =0.5cm  of c,align=center]{
-	    			Latent variables\\
-	    			$\bm{c}\sim\mathcal{N}_{\mathbb{C}}(0,\bm{I\alpha}^2)$
+	    		\node(cdescr) [below right  =0.3cm  and 0.1cm of c , align=center]{
+	    			\footnotesize latent\\[-3pt] \footnotesize factors
 	    		};
-	    		\draw (cdescr.north) to (c.south);
+	    		\draw[->,>=stealth] (cdescr) to ($(c.south)+(2pt,0)$);
 	    		
 	    		% n
-	    		\node(ndescr) [below right=0.5cm and 2cm of n,align=center]{
-	    			Uncorrelated noise\\
-	    			$\bm{n}\sim\mathcal{N}_{\mathbb{C}}(0,\bm{I\sigma}^2)$
+	    		\node(ndescr) [below right=0.2cm and 1cm of n,align=center]{
+	    			\footnotesize error (noise)
 	    		};
-	    		\draw (ndescr.west)++(0,10pt) to [in=-40,out=135] (n.east)++(0,2pt);
+	    		\draw[->,>=stealth] (ndescr) to ($(n)+(5pt,2pt)$);
 		\end{tikzpicture}
-		\item Hyperparameters:\\[-7pt]
-		\begin{multicols}{3}
-		\hspace{0.5cm}$\bm{\gamma}^2\sim\mathcal{IG}(a_{\gamma},b_{\gamma})$\\
-		\hspace{0.2cm}$\bm{\alpha}^2\sim\mathcal{IG}(a_{\alpha},b_{\alpha})$\\
-		\hspace{0.2cm}$\bm{\sigma}^2\sim\mathcal{IG}(a_{\sigma},b_{\sigma})$\\
-		\end{multicols}
-		
-		\item Signal CSM : 		$$\bm{\hat{S}}_{aa}=\frac{1}{N_s}\bm{L} \left(\sum_{i=1}^{N_s}\bm{c}_i\bm{c}^H_i\right) \bm{L}^H$$
-	
+		\pause
+		\begin{itemize}
+		        \item Capture dominant correlation with fewer parameters (close to PCA) \pause
+		        \item Extract anisotropic noise\\[6pt] \pause
+		\end{itemize}
 	\end{itemize}
-		
+
+        		\vfill
+        	\begin{overlayarea}{\textwidth}{0.5\textheight}
+        	\only<4-7>{
+	\begin{itemize}        		
+        		\item \textbf{Statistical inference: } See parameters as random variables
+        		\vspace{-0.2cm}\begin{multicols}{3}
+		\hspace{0.5cm}$\textcolor{blue}{\bm{L}}\sim\mathcal{N}_{\mathbb{C}}(0,\bm{\gamma}^2)$\\
+		\hspace{0.2cm}$\textcolor{green}{\bm{c}}\sim\mathcal{N}_{\mathbb{C}}(0,\bm{I\alpha}^2)$\\
+		\hspace{0.2cm}$\textcolor{red}{\bm{n}}\sim\mathcal{N}_{\mathbb{C}}(0,\bm{I\sigma}^2)$\\
+		\end{multicols}
+		\pause
+		\vspace{-0.2cm}+ non-informative priors : $\bm{\gamma}^2, \bm{\alpha}^2, \bm{\sigma}^2\sim\mathcal{IG}(a_{\gamma,\alpha,\sigma},b_{\gamma,\alpha,\sigma})$\\[6pt]      	
+		\pause			 
+        		\vfill
+        		
+        		\item \textbf{Solved using MCMC algorithm} (Gibb's sampling)\\
+		Iteratively draws in the marginal conditional distribution of each parameter\\[6pt]
+		\pause		
+        		\vfill        		
+        		\item \textbf{Finally}, signal CSM:\\[-0.5cm]
+        		 $$\bm{\hat{S}}_{aa}=\frac{1}{N_s}\sum_{i=1}^{N_s}\bm{L}\bm{c}_i\bm{c}^H_i\bm{L}^H$$        
+        		 \vspace{-3cm}
+		 
+	\end{itemize}
+	}
+	
+	\only<8->{
 	\begin{block}{PFA}
 		\ding{51} Global optimization \hfill\parbox{0.5\linewidth}{\ding{55} Computationally expensive}\\
-		\ding{55} Here, model for uncorrelated noise $\bm{\rightarrow}$ \ding{51} but flexible
+		\ding{51} Flexible model
 	\end{block}~\\
-	
-	
-	%How to fix number of factor $\kappa$ ?
-	%	Enforce sparsity on factors $\rightarrow$ will set useless factors will be set to zero
+	}
+	\end{overlayarea}	
+
 \end{frame}
+
+%\begin{frame}{\insertsectionhead}
+%	\begin{itemize}
+%	        \item 	Gibbs sampling in the Bayesian hierarchical model : \\[.5cm]
+%		\hspace{-1.7cm}\begin{tikzpicture}[remember picture]
+%			$\bm{p} = \tikzmark{L}\bm{L}   \tikzmark{c}\bm{c} + \tikzmark{n}\bm{n}$
+%			
+%			% L
+%			\node(Ldescr) [below left=0.5cm and 2cm of L,align=center] {
+%				Loading factors\\
+%				$\bm{L}\sim\mathcal{N}_{\mathbb{C}}(0,\bm{\gamma}^2)$
+%			};
+%	    		%\draw[] (Ldescr.east) to [in=-90,out=45]  (L.south) ;
+%	    		\draw[] (Ldescr.east)++(0,10pt) to [in=-130,out=45] (L);
+%	    		
+%	    		% c
+%	    		\node(cdescr) [below  =0.5cm  of c,align=center]{
+%	    			Latent variables\\
+%	    			$\bm{c}\sim\mathcal{N}_{\mathbb{C}}(0,\bm{I\alpha}^2)$
+%	    		};
+%	    		\draw (cdescr.north) to (c.south);
+%	    		
+%	    		% n
+%	    		\node(ndescr) [below right=0.5cm and 2cm of n,align=center]{
+%	    			Uncorrelated noise\\
+%	    			$\bm{n}\sim\mathcal{N}_{\mathbb{C}}(0,\bm{I\sigma}^2)$
+%	    		};
+%	    		\draw (ndescr.west)++(0,10pt) to [in=-40,out=135] (n.east)++(0,2pt);
+%		\end{tikzpicture}
+%		\item Hyperparameters:\\[-7pt]
+%		\begin{multicols}{3}
+%		\hspace{0.5cm}$\bm{\gamma}^2\sim\mathcal{IG}(a_{\gamma},b_{\gamma})$\\
+%		\hspace{0.2cm}$\bm{\alpha}^2\sim\mathcal{IG}(a_{\alpha},b_{\alpha})$\\
+%		\hspace{0.2cm}$\bm{\sigma}^2\sim\mathcal{IG}(a_{\sigma},b_{\sigma})$\\
+%		\end{multicols}
+%		
+%		\item Signal CSM : 		$$\bm{\hat{S}}_{aa}=\frac{1}{N_s}\bm{L} \left(\sum_{i=1}^{N_s}\bm{c}_i\bm{c}^H_i\right) \bm{L}^H$$
+%	
+%	\end{itemize}
+%		
+%	\begin{block}{PFA}
+%		\ding{51} Global optimization \hfill\parbox{0.5\linewidth}{\ding{55} Computationally expensive}\\
+%		\ding{55} Here, model for uncorrelated noise $\bm{\rightarrow}$ \ding{51} but flexible
+%	\end{block}~\\
+%	
+%	
+%	%How to fix number of factor $\kappa$ ?
+%	%	Enforce sparsity on factors $\rightarrow$ will set useless factors will be set to zero
+%\end{frame}
 
 %%% Comparison
 %======================
@@ -503,8 +524,10 @@ Diapo d'intro aux méthodes bayésiennes ?
 			\tikz[baseline=-1.5pt]{\draw[line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;} RPCA, $\lambda=M^{-\frac{1}{2}}$ \hfill
 			\tikz[baseline=-1.5pt]{\draw[line width=1.0pt , color=mcmc] (0,.5ex)--++(.5,0) ;} PFA}
 %		\end{mdframed}
+	\vspace{0.2cm}
 	\begin{itemize}
 		\item<1-> 	{\small \bfseries Homogeneous noise\\}	
+		\begin{overprint}
 		\begin{center}
 			\resizebox{0.9\textwidth}{!}{
 				\begin{minipage}{1.2\textwidth}
@@ -514,22 +537,25 @@ Diapo d'intro aux méthodes bayésiennes ?
 					\hspace{-0.4cm}\input{img/comparison/all_homo_Mw.tex}
 				\end{minipage}
 			}
-		\end{center}	
-	\only<2>{
+		\end{center}
+		\end{overprint}
+
+		\pause	
+	\only<2-4>{
 		\vspace{1cm}
 		 \begin{itemize}
 		 \setlength{\itemindent}{0.5cm}
-       		 	\item[$\hookrightarrow$] Error linearly decreases with increasing SNR\\[5pt]
-       		 	\item[$\hookrightarrow$] Error linearly decreases with logarithmically increasing $N_s$\\[5pt]
-       			\item[$\hookrightarrow$] For $N_{src} \geq 0.75 M$: denoising problem becomes poorly conditioned       \\[5pt]		 
-		\end{itemize}
+		 	\item[$\hookrightarrow$] For $N_{src} \geq 0.75 M$: denoising problem becomes poorly conditioned       \\[5pt] \pause
+       		 	\item[$\hookrightarrow$] Error linearly decreases with increasing SNR\\[5pt] \pause
+       		 	\item[$\hookrightarrow$] Error linearly decreases with logarithmically increasing $N_s$\\[5pt] \pause
+       		\end{itemize}
 	}	
-		\item<3-> 	{\vspace{4pt} \small {\bfseries Heterogeneous noise}: SNR 10 dB lower on 10 random receivers\\}
+		\item<5-> 	{\vspace{4pt} \small {\bfseries Heterogeneous noise}: SNR 10 dB lower on 10 random receivers\\}
 		\begin{center}		
 			\resizebox{0.9\textwidth}{!}{
 				\begin{minipage}{1.2\textwidth}	
 					\centering	
-					\hspace{-1cm}\input{img/comparison/all_hetero_rang.tex}
+					\hspace{-1cm}\input{img/comparison/all_hetero_rang_carree.tex}
 					\hspace{-0.2cm}\input{img/comparison/all_hetero_SNR.tex}
 					\hspace{-0.4cm}\input{img/comparison/all_hetero_Mw.tex}
 				\end{minipage}
@@ -548,30 +574,54 @@ Diapo d'intro aux méthodes bayésiennes ?
 \section*{Conclusion}
 \begin{frame}{\insertsectionhead}
 	\begin{itemize}
-		\item DRec: fast and simple but error at least 5 dB higher in all configurations
+		\item DRec: fast and simple but error at least 5 dB higher for rank under 70\\
+		\vfill
+		\pause
 		\item PFA 
 		\begin{itemize}
 		        \item performance similar to RPCA using $\lambda_{opt}$
 			\item PFA and RPCA more robust to heterogeneous noise	
 			\item flexible model $\rightarrow$ to be adapted for correlated noise	
 		\end{itemize}
+		\vfill \pause
+		\item Choose your denoising method according to the expected number of sources\\[10pt]
+		\vfill			
+		\noindent\hspace{-1cm}\begin{minipage}{1.1\textwidth}
+			\begin{minipage}{0.72\textwidth}
+				\centering
+				\begin{tikzpicture}
+			   		\node[anchor=south west] (image) at (0,0) {\input{img/comparison/all_hetero_rang_large.tex}};
+					\begin{scope}[x={(image.south east)},y={(image.north west)}]
+			       			\pause
+			       			\draw[thick] (0.33,0.1) to (0.33,1.05);
+			       			\node at (0.25,1) {RPCA};
+			       			\pause
+			       			\draw[thick] (0.75,0.1) to (0.75,1.05);
+			       			\node at (0.54,1) {PFA};
+			       			\pause
+			       			\node at (0.88,1) {DRec};
+			   		 \end{scope}
+				\end{tikzpicture}
+			\end{minipage}	
+			\hfill
+			\begin{minipage}{0.25\textwidth}
+				\definecolor{hald}{rgb}{0.00000,0.44700,0.74100}%
+				\definecolor{rpca}{rgb}{0.85000,0.32500,0.09800}%
+				\definecolor{mcmc}{rgb}{0.49400,0.18400,0.55600}%
+				{\footnotesize \tikz[baseline=-1.5pt]{\draw[line width=1.0pt,color=hald] (0,.5ex)--++(.5,0) ;} DRec\\[5pt]
+					\tikz[baseline=-1.5pt]{\draw[dashed,line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;} RPCA, $\lambda_{opt}$\\[5pt]
+					\tikz[baseline=-1.5pt]{\draw[line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;} RPCA, $\lambda=M^{-\frac{1}{2}}$\\[5pt]
+					\tikz[baseline=-1.5pt]{\draw[line width=1.0pt , color=mcmc] (0,.5ex)--++(.5,0) ;} PFA}
+			\end{minipage}		
+		\end{minipage}		
 	\end{itemize}
-	
-	\begin{center}
-		\hspace{-1cm}\input{img/comparison/all_hetero_rang.tex}
-		\begin{multicols}{3}
-				RPCA\\ PFA \\DRec
-		\end{multicols}
-	\end{center}
-
-	
-
 \end{frame}
 
 
 \appendix
 \begin{frame}{References}
 	%\begin{adjustwidth}{-2em}{-2.5em}
+		\setlength{\bibsep}{18pt}
 		\bibliographystyle{abbrvnat}
 		\bibliography{biblio}
 	%\end{adjustwidth}
