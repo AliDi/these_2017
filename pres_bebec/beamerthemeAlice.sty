@@ -6,7 +6,7 @@
 \setbeamerfont{title}{shape=\scshape,series=\bfseries}
 \setbeamercolor{frametitle}{fg=DeepSkyBlue4}
 \setbeamercolor{title}{fg=DeepSkyBlue4}
-\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
 \setbeamerfont{framesubtitle}{size=\normalsize,series=\bfseries}
 \setbeamertemplate{frametitle}{
 	\vspace{0.1cm}\hspace{-0.6cm} \usebeamerfont*{frametitle}\insertframetitle
@@ -18,15 +18,14 @@
 \setbeamercolor{itemize subitem}{fg=black}
 \setbeamertemplate{itemize subitem}{-}
 
-% Liens
-\usepackage{hyperref}
-\hypersetup{colorlinks,linkcolor=DeepSkyBlue4}
+
 
 % Blocks
 \setbeamertemplate{blocks}[rounded][shadow=true]
 \setbeamercolor{block title}{fg=DeepSkyBlue4,bg=DeepSkyBlue4!10}
 \setbeamercolor{block title alerted}{bg=DeepSkyBlue4!0} 
 \setbeamercolor{block title example}{bg=DeepSkyBlue4!20}
+\setbeamerfont{block title}{size=\normalsize}
 
 % Table des matières
 \setbeamercolor{toc}{fg=DeepSkyBlue4}
@@ -36,7 +35,8 @@
 %\setbeamercolor{subsection number projected}{fg=white,bg=DeepSkyBlue4}
 
 % En-tête
-\setbeamercolor{myheadline}{fg=DeepSkyBlue4!10!black,bg=DeepSkyBlue4!10}
+\setbeamercolor{myheadline}{fg=DeepSkyBlue4,bg=DeepSkyBlue4!10}
+\setbeamercolor{palette horizontalbar secondary}{fg=yellow,bg=blue}
 \setbeamertemplate{headline}{%
 \leavevmode%
   \hbox{%
@@ -66,6 +66,10 @@
    	 \vspace{0.1cm}
     %}
 }
+
+% Liens
+\usepackage{hyperref}
+\hypersetup{colorlinks,linkcolor=DeepSkyBlue4}
 
 
 

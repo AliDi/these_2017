@@ -1,4 +1,4 @@
-\documentclass[8pt,xcolor=x11names,compress, notes=show]{beamer}% pour l'impression, tout n'apparait qu'une fois \documentclass[handout,12pt]{beamer}
+\documentclass[10pt,xcolor=x11names,compress, notes=show]{beamer}% pour l'impression, tout n'apparait qu'une fois \documentclass[handout,12pt]{beamer}
 
 %\usepackage[scaled]{helvet}
 \usepackage[round]{natbib}
@@ -61,7 +61,7 @@
 \title{On the Denoising of Cross-Spectral Matrices for (Aero)Acoustic Applications}
 \subtitle{}
 \date{\small March 5, 2018 -- 7\textsuperscript{th} BeBeC}
-\titlegraphic{\vfill \includegraphics[height=1cm]{img/logo/celya-XL.png} \hfill  \includegraphics[height=1cm]{img/logo/logo_lmfa.pdf} \hfill \includegraphics[height=1cm]{img/logo/LVA_compact_couleur_transparent.png} \hfill   \includegraphics[height=1cm]{img/logo/logo_ADAPT.png} }
+\titlegraphic{\vfill \includegraphics[height=1cm]{img/logo/celya-XL.png} \hfill  \includegraphics[height=1cm]{img/logo/logo_lmfa.pdf} \hfill \includegraphics[height=1cm]{img/logo/LVA_compact_couleur_transparent.png} \hfill   \includegraphics[trim={0 3cm 0 3cm},clip=true,height=1cm]{img/logo/logo_ADAPT.png} }
 
 \begin{document}
 
@@ -87,12 +87,12 @@
 			\item<2-> Existing denoising methods:
 			
 			\begin{itemize}
-			        \item<3-> Physical removal : mic recession, porous treatment, vibrating structure filtering\dots\\[3pt]
-			        \item<4->  Use a background noise measurement, $\rightarrow$ not always available or representative\\[3pt]
-			        \item<5-> Wavenumber filtering\\[3pt]
-			        \item<6-> Diagonal removal $\rightarrow$ underestimation of source level\\[3pt]
-			        \only<7>{\item   Exploit noise/signal properties \& solve an optimization problem}
-			        \onslide<8->{\item \fcolorbox{black}{white}{ Exploit noise/signal properties \& solve an optimization problem}}
+			        \item physical removal : mic recession, porous treatment, vibrating structure filtering\dots\\[3pt]
+			        \item  use a background noise measurement $\rightarrow$ not always available or representative\\[3pt]
+			        \item wavenumber filtering $\rightarrow$ needs high spatial sampling\\[3pt]
+			        \item diagonal removal $\rightarrow$ underestimation of source level\\[3pt]
+			        \only<2>{\item   exploit noise/signal properties \& solve an optimization problem}
+			        \onslide<3->{\item \fcolorbox{black}{white}{ exploit noise/signal properties \& solve an optimization problem}}
 			\end{itemize}
 			%Use spatial properties of signal and noise to separate them.
 		\end{itemize}
@@ -114,8 +114,8 @@
 %%% CSM properties
 %======================
 %\section{CSM properties}
-\begin{frame}[t]{\insertsectionhead~--~CSM properties}
-	\begin{overlayarea}{\textwidth}{1.8cm}
+\begin{frame}[t]{Problem Statement}
+	\begin{overlayarea}{\textwidth}{1.5cm}
 	\only<1>{
 	$$\underbracket[0.5pt]{~\bm{p}~}_{\text{measured spectra}} =\underbracket[0.5pt]{~\textcolor{green}{\bm{a}}~}_{\text{source spectrum}} + \underbracket[0.5pt]{~\textcolor{red}{\bm{n}}~}_{\text{Gaussian noise}} $$
 	}
@@ -126,15 +126,15 @@
 	
 	\onslide<2->{\textbf{Cross-Spectral Matrix} (covariance of Fourier component):
 	$$\bm{S}_{pp} = \frac{1}{N_s} \sum_i  \bm{p}_i\bm{p}_i^H$$
-	}
+	
 	
 	\begin{itemize}
-		\item<3-> Hermitian (conjugate symmetric)
-		\item<4-> Positive semidefinite (nonnegative eigenvalues)
+		\item Hermitian (conjugate symmetric)
+		\item Positive semidefinite (nonnegative eigenvalues)
 	\end{itemize}~\\
-	
+	}
 
-	\onslide<5->{
+	\onslide<3->{
 	$$\underbracket[0.5pt]{~\bm{S}_{pp}~}_{\text{measured CSM}} =\underbracket[0.5pt]{ ~\textcolor{green}{\bm{S}_{aa}}~}_{\text{signal of interest}} +\underbracket[0.5pt]{~\textcolor{red}{\bm{S}_{nn}}~}_{\text{unwanted noise}} + \underbracket[0.5pt]{~\bm{S}_{an}+\bm{S}_{na}}_{\text{cross-terms}}$$
 	
 	\begin{itemize}	
@@ -149,26 +149,25 @@
 		\only<1>{$$\underbracket[0.5pt]{~\bm{S}_{pp}~}_{\text{measured CSM}} =\underbracket[0.5pt]{ ~\textcolor{green}{\bm{S}_{aa}}~}_{\text{signal of interest}} +\underbracket[0.5pt]{~\textcolor{red}{\bm{S}_{nn}}~}_{\parbox[t]{2cm}{\centering \text{\scriptsize unwanted noise}}} + \underbracket[0.5pt]{~\bm{S}_{an}+\bm{S}_{na}}_{\parbox[t]{2cm}{\centering \text{\scriptsize cross-terms}}}$$
 		}
 		
-		\only<2>{$$\underbracket[0.5pt]{~\bm{S}_{pp}~}_{\text{measured CSM}} =\underbracket[0.5pt]{ ~\textcolor{green}{\bm{S}_{aa}}~}_{\text{signal of interest}} +\underbracket[0.5pt]{\bcancel{~\textcolor{red}{\bm{S}_{nn}}~}}_{\parbox[t]{2cm}{\centering \text{\scriptsize unwanted noise} \\ $\approx \diag{\textcolor{red}{\sigma^2}}$ }} + \underbracket[0.5pt]{~\bm{S}_{an}+\bm{S}_{na}}_{\parbox[t]{2cm}{\centering \text{\scriptsize cross-terms}}}$$
+		\only<2>{$$\underbracket[0.5pt]{~\bm{S}_{pp}~}_{\text{measured CSM}} =\underbracket[0.5pt]{ ~\textcolor{green}{\bm{S}_{aa}}~}_{\text{signal of interest}} +\underbracket[0.5pt]{\bcancel{~\textcolor{red}{\bm{S}_{nn}}~}}_{\parbox[t]{2cm}{\centering \text{\scriptsize unwanted noise} \\ $\approx \diag{\textcolor{red}{\bm{\sigma}^2}}$ }} + \underbracket[0.5pt]{~\bm{S}_{an}+\bm{S}_{na}}_{\parbox[t]{2cm}{\centering \text{\scriptsize cross-terms}}}$$
 		}
 	
-		\only<3>{$$\underbracket[0.5pt]{~\bm{S}_{pp}~}_{\text{measured CSM}} =\underbracket[0.5pt]{ ~\textcolor{green}{\bm{S}_{aa}}~}_{\text{signal of interest}} +\underbracket[0.5pt]{\bcancel{~\textcolor{red}{\bm{S}_{nn}}~}}_{\parbox[t]{2cm}{\centering \text{\scriptsize unwanted noise} \\ $\approx \diag{\textcolor{red}{\sigma^2}}$ }} + \underbracket[0.5pt]{\bcancel{~\bm{S}_{an}+\bm{S}_{na}}}_{\parbox[t]{2cm}{\centering  \text{\scriptsize cross-terms}\\ $\rightarrow 0$ }}$$
+		\only<3>{$$\underbracket[0.5pt]{~\bm{S}_{pp}~}_{\text{measured CSM}} =\underbracket[0.5pt]{ ~\textcolor{green}{\bm{S}_{aa}}~}_{\text{signal of interest}} +\underbracket[0.5pt]{\bcancel{~\textcolor{red}{\bm{S}_{nn}}~}}_{\parbox[t]{2cm}{\centering \text{\scriptsize unwanted noise} \\ $\approx \diag{\textcolor{red}{\bm{\sigma}^2}}$ }} + \underbracket[0.5pt]{\bcancel{~\bm{S}_{an}+\bm{S}_{na}}}_{\parbox[t]{2cm}{\centering  \text{\scriptsize cross-terms}\\ $\rightarrow 0$ }}$$
 		}
 	
 	\end{overlayarea}
 	
-	\hspace{0.8cm}\textbf{For $N_s \rightarrow \infty$}\\
+	\hspace{0.8cm}\textbf{For $N_s \rightarrow \infty$}\\[1em]
 	\pause
 	\begin{itemize}
 		\setlength{\itemindent}{1cm}
-		\item Short correlation length : off-diagonal elements of $S_{nn}\rightarrow 0$
+		\item Short correlation length : off-diagonal elements of $S_{nn}\rightarrow 0$\\[1em]
 		\pause
 		\item Independent signal/noise : cross-terms $\rightarrow 0$
 	\end{itemize}
 	%$$\bm{S}_{pp} \approx \textcolor{green}{\bm{S}_{aa}} + \diag	{\textcolor{red}{\sigma^2}}$$
 
 \end{frame}
-
 
 %%% Plan
 %======================
@@ -185,10 +184,7 @@
 			
 		\vfill\pause
 	
-		\item Proposed method:
-			\begin{itemize}
-       			 	\item PFA
-			\end{itemize}
+		\item Proposed method: Probabilistic Factor Analysis
 
 		\vfill \pause
 		\item What is the influence on denoising performance of : 
@@ -213,36 +209,36 @@
 
 
 \begin{frame}{\insertsectionhead}	
-\textit{''Remove as much noise as possible as long as denoised CSM remains positive''}
-	\begin{block}{Convex optimization   \citeTransp{Hald2017}}<1->
+\textit{\small ``Remove as much noise as possible as long as denoised CSM remains positive''}
+	\begin{block}{\normalsize Convex optimization   \citeTransp{Hald2017}}<2->
 		\begin{equation*}
         			\text{maximize~} \| \bm{\sigma}_{n}^2\|_1 \text{~~subject to~~} \bm{S}_{pp}- \diag{\bm{\sigma}_n^2} \geq 0
 		\end{equation*}
-		Problem solved with CVX Matlab toolbox.
+		Problem solved with CVX Matlab toolbox
 	\end{block}
-	\begin{block}{Linear optimization \citeTransp{dougherty2016}}<2->
+	\begin{block}{\normalsize Linear optimization \citeTransp{dougherty2016}}<3->
 		\vspace{-0.2cm}
 		\begin{equation*}
 			\text{maximize~} \| \bm{\sigma}_{n}^2\|_1   \text{~~subject to~~}  \bm{V}^{H}_{(k-1)} \left( \bm{S}_{pp}- \diag{\bm{\sigma}_n^2}_{(k)} \right) \bm{V}_{(k-1)} \geq 0 
 		\end{equation*}
 		 $\bm{V}_{(k-1)}$: eigenvectors of $\bm{S}_{pp}-\diag{\bm{\sigma}_n^2}_{(1,...,k-1)} $\\[1pt]
-		Solved with \textit{linprog} Matlab function .
+		Solved with \textit{linprog} Matlab function
 	\end{block}
-	\begin{block}{Alternating Projections  \citeTransp{leclere:hal-01279944}}<3->
+	\begin{block}{\normalsize Alternating Projections  \citeTransp{leclere:hal-01279944}}<4->
 		\begin{equation*}
         			 \bm{S}_{{pp}_{(k+1)}} := \bar{\bm{S}}_{{pp}_{(0)}} + \bm{V}^{H}_{(k)} \bm{s}_{(k)}^{\textcolor{red}{\textbf{+}}}\bm{V}^{~}_{(k)}
 		\end{equation*}
-		$\bm{V}^{H}_{(k)}$ and $\bm{s}_{(k)}$: eigenvectors/values of  $\bm{S}_{{pp}_{(k)}}$.\\[1pt]
+		$\bm{V}^{H}_{(k)}$ and $\bm{s}_{(k)}$: eigenvectors/values of  $\bm{S}_{{pp}_{(k)}}$\\[1pt]
 	\end{block}	
 \end{frame}
 
 %%% Test case
 \subsection{Comparison on a test case}
-\begin{frame}{\insertsectionhead}
+\begin{frame}{\insertsectionhead~--~Test case}
 	
 	\begin{itemize}
 	\item Default parameters:
-		\noindent\begin{minipage}{\linewidth}
+		\noindent\begin{minipage}{1.1\linewidth}
 		     	\begin{minipage}{0.4\linewidth}		     		
 	         			\begin{itemize}
 					\item 20  uncorrelated free field monopoles: \textcolor{red}{$\vcenter{\hbox{\tiny$\blacklozenge$}}$}
@@ -254,19 +250,21 @@
 	               		\vfill
 	     		\end{minipage}
 	      		%\hspace{0.02\linewidth}
-	      		\hfill
+	      		\hspace{0.5cm}
 	     		 \begin{minipage}{0.5\linewidth}
              			\centering
              			\vspace{-0.5cm}
-				\input{img/config.tex}
+				\input{img/config.tex}\\
+				{\scriptsize \textcolor{black!50}{\hspace{0.5cm} From a benchmark case provided by PSA3}\vspace{-1cm}
+}
 	      		\end{minipage}
 		\end{minipage}
 	
 	\item Varying parameters: \\
 	\begin{itemize}
-	        \item number of   \textcolor{red}{$\vcenter{\hbox{\tiny$\blacklozenge$}}$} (rank of $\bm{S}_{aa}$) : from 1 to 93\\[3pt]
-	        \item SNR from -10 to 10 dB\\[3pt]
-	        \item Number of snapshots (level of extra-diagonal terms): from 10 to $5.10^4$
+	        \item number of   \textcolor{red}{$\vcenter{\hbox{\tiny$\blacklozenge$}}$} (rank of $\bm{S}_{aa}$)\\[3pt]
+	        \item SNR\\[3pt]
+	        \item number of snapshots (level of extra-diagonal terms)
 \end{itemize}~\\	
 	
 	\item Error on the signal CSM:
@@ -281,12 +279,14 @@
 \begin{frame}{\insertsectionhead}
 
 	%default values
-	Default values:
+	\small
+	Default values:\\[1ex]
     \setlength\extrarowheight{3pt}
 	\begin{tabular}{|c|c|c|c|c|}
 	\hline
 	 20  sources & 93 receivers & SNR: 10 dB & $10^4$ snapshots & frequency: 15 kHz	\\ \hline
 	\end{tabular}
+	
 	\vfill
 
 
@@ -325,16 +325,16 @@
 
 %%% RPCA
 %======================
-\section{RPCA}
+\section{Robust Principal Component Analysis}
 \begin{frame}
 \tableofcontents[currentsection,hideothersubsections]
 \end{frame}
-\begin{frame}{\insertsectionhead}
+\begin{frame}{RPCA}
 	\vspace{-0.5cm}
 	\begin{center}
-		\textit{''Search $\bm{S}_{aa}$ as a low rank matrix and $\bm{S}_{nn}$ as a sparse matrix''}\\~\\
+		\textit{``Search $\bm{S}_{aa}$ as a low rank matrix and $\bm{S}_{nn}$ as a sparse matrix''}\\~\\
 		\colorbox{gray!20}{
-		 $\text{minimize~} \|\textcolor{green}{\bm{{S}}_{aa}} \|_* + \lambda \| \textcolor{red}{\bm{{S}}_{nn}} \|_1  \text{~~~~subject to~~~~} \textcolor{green}{ \bm{{S}}_{aa}} +  \textcolor{red}{\bm{{S}}_{nn} = \bm{S}_{pp}}$
+		 $\text{minimize~} \|\textcolor{green}{\bm{{S}}_{aa}} \|_* + \lambda \| \textcolor{red}{\bm{{S}}_{nn}} \|_1  \text{~~~~subject to~~~~} \textcolor{green}{ \bm{{S}}_{aa}} +  \textcolor{red}{\bm{{S}}_{nn}} = \bm{S}_{pp}$
 		}
 	\end{center}
 
@@ -343,12 +343,12 @@
 	$\| \cdot \|_*$: nuclear norm (related to rank)\\
 	$\| \cdot \|_1$: $\ell_1$-norm (related to sparsity)\\~\\
 	
-	Solved with a proximal gradient algorithm.
+	Solved with a proximal gradient algorithm
 	\vfill
 
 	\begin{block}{RPCA  \citeTransp{Wright2009a}}
-		\ding{51} Modifies the whole CSM		\hfill\parbox{0.57\linewidth}{\ding{55} Local optimization}\\[2pt]
-		~\hfill\parbox{0.57\linewidth}{\ding{55} Choose regularization parameter:
+		\ding{51} Modifies the whole CSM		\hfill\parbox{0.56\linewidth}{\ding{55} Local optimization}\\[2pt]
+		\parbox{0.42\linewidth}{\ding{51} Widely used in image\\ processing}\hfill\parbox{0.56\linewidth}{\ding{55} Choose regularization parameter:
 		\small
 		\begin{itemize}
 			\setlength{\itemindent}{0.3cm}
@@ -361,7 +361,7 @@
 	\vfill
 	\begin{tabular}{rl}
 	$\hookrightarrow$ For comparison :& - optimal $\lambda$  (unknown on real case)\\
-	& - ''universal'' constant  parameter $\lambda=M^{-\frac{1}{2}}=0.1$
+	& - ``universal'' constant  parameter $\lambda=M^{-\frac{1}{2}}=0.1$
 	\end{tabular}
 
 \end{frame}
@@ -374,11 +374,10 @@
 \end{frame}
 
 \begin{frame}{\insertsectionhead}
-
+	\vspace{-0.5em}
 	\begin{itemize}
-        		\item<1-> \textbf{Latent variable model}\\~\\       		
-        		
-        		\begin{tikzpicture}[remember picture]
+        		\item<1-> \textbf{Latent variable model}\\    ~\\    		
+        		\hspace{-2em}\begin{tikzpicture}[remember picture]
 			\colorbox{gray!20}{$\tikzmark{p}\bm{p} = \tikzmark{L}\textcolor{blue}{\bm{L}} \tikzmark{c}\textcolor{green}{\bm{c}} + \tikzmark{n}\textcolor{red}{\bm{n}}$}
 			
 			%p
@@ -406,47 +405,43 @@
 	    		};
 	    		\draw[->,>=stealth] (ndescr) to ($(n)+(5pt,2pt)$);
 		\end{tikzpicture}
-		\pause
+		
 		\begin{itemize}
-		        \item Capture dominant correlation with fewer parameters (close to PCA) \pause
-		        \item Extract anisotropic noise\\[6pt] \pause
+		        \item Capture dominant correlation with fewer parameters (close to PCA) 
+		        \item Extract anisotropic noise\pause
 		\end{itemize}
 	\end{itemize}
-
-        		\vfill
         	\begin{overlayarea}{\textwidth}{0.5\textheight}
-        	\only<4-7>{
+        	\only<2-4>{
 	\begin{itemize}        		
-        		\item \textbf{Statistical inference: } See parameters as random variables
+        		\item \textbf{Statistical inference: }See parameters as random variables
         		\vspace{-0.2cm}\begin{multicols}{3}
 		\hspace{0.5cm}$\textcolor{blue}{\bm{L}}\sim\mathcal{N}_{\mathbb{C}}(0,\bm{\gamma}^2)$\\
 		\hspace{0.2cm}$\textcolor{green}{\bm{c}}\sim\mathcal{N}_{\mathbb{C}}(0,\bm{I\alpha}^2)$\\
 		\hspace{0.2cm}$\textcolor{red}{\bm{n}}\sim\mathcal{N}_{\mathbb{C}}(0,\bm{I\sigma}^2)$\\
 		\end{multicols}
-		\pause
-		\vspace{-0.2cm}+ non-informative priors : $\bm{\gamma}^2, \bm{\alpha}^2, \bm{\sigma}^2\sim\mathcal{IG}(a_{\gamma,\alpha,\sigma},b_{\gamma,\alpha,\sigma})$\\[6pt]      	
+		\vspace{-0.2cm}+ non-informative priors : $\bm{\gamma}^2, \bm{\alpha}^2, \bm{\sigma}^2\sim\mathcal{IG}(a_{\gamma,\alpha,\sigma},b_{\gamma,\alpha,\sigma})$\\[1ex]      	
 		\pause			 
-        		\vfill
-        		
+        		   \vfill     		
         		\item \textbf{Solved using MCMC algorithm} (Gibb's sampling)\\
-		Iteratively draws in the marginal conditional distribution of each parameter\\[6pt]
+		\small Iterative draws in the marginal conditional distributions of each parameter\normalsize
 		\pause		
-        		\vfill        		
-        		\item \textbf{Finally}, signal CSM:\\[-0.5cm]
-        		 $$\bm{\hat{S}}_{aa}=\frac{1}{N_s}\sum_{i=1}^{N_s}\bm{L}\bm{c}_i\bm{c}^H_i\bm{L}^H$$        
-        		 \vspace{-3cm}
+        		 \vfill 
+        		 \vspace{-0.5em}
+        		 \item \textbf{Finally}, signal CSM: 
+        		 \hspace{4ex}\parbox{0.3\textwidth}{
+        		 $$\bm{\hat{S}}_{aa}=\frac{1}{N_s}\sum_{i=1}^{N_s}\textcolor{blue}{\bm{L}}\textcolor{green}{\bm{c}}_i\textcolor{green}{\bm{c}}^H_i\textcolor{blue}{\bm{L}}^H$$        
+        		}
 		 
 	\end{itemize}
-	}
-	
-	\only<8->{
+	}	
+	\only<5->{
 	\begin{block}{PFA}
 		\ding{51} Global optimization \hfill\parbox{0.5\linewidth}{\ding{55} Computationally expensive}\\
 		\ding{51} Flexible model
 	\end{block}~\\
 	}
 	\end{overlayarea}	
-
 \end{frame}
 
 %\begin{frame}{\insertsectionhead}
@@ -505,7 +500,7 @@
 \tableofcontents[currentsection,hideothersubsections]
 \end{frame}
 \begin{frame}{\insertsectionhead}
-	%\vspace{-0.1cm}
+	\vspace{-0.5ex}
 	%legend
 %	\begin{mdframed}[
 %		linecolor=black,%
@@ -519,14 +514,13 @@
 		\definecolor{hald}{rgb}{0.00000,0.44700,0.74100}%
 		\definecolor{rpca}{rgb}{0.85000,0.32500,0.09800}%
 		\definecolor{mcmc}{rgb}{0.49400,0.18400,0.55600}%
-		{\footnotesize \tikz[baseline=-1.5pt]{\draw[line width=1.0pt,color=hald] (0,.5ex)--++(.5,0) ;} DRec \hfill
+		{\scriptsize \tikz[baseline=-1.5pt]{\draw[line width=1.0pt,color=hald] (0,.5ex)--++(.5,0) ;} DRec \hfill
 			\tikz[baseline=-1.5pt]{\draw[dashed,line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;} RPCA, $\lambda_{opt}$ \hfill
 			\tikz[baseline=-1.5pt]{\draw[line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;} RPCA, $\lambda=M^{-\frac{1}{2}}$ \hfill
 			\tikz[baseline=-1.5pt]{\draw[line width=1.0pt , color=mcmc] (0,.5ex)--++(.5,0) ;} PFA}
 %		\end{mdframed}
-	\vspace{0.2cm}
 	\begin{itemize}
-		\item<1-> 	{\small \bfseries Homogeneous noise\\}	
+		\item<1-> 	{\small \bfseries Homogeneous noise}	
 		\begin{overprint}
 		\begin{center}
 			\resizebox{0.9\textwidth}{!}{
@@ -539,18 +533,17 @@
 			}
 		\end{center}
 		\end{overprint}
-
 		\pause	
 	\only<2-4>{
-		\vspace{1cm}
+		\vspace{0.7cm}
 		 \begin{itemize}
 		 \setlength{\itemindent}{0.5cm}
-		 	\item[$\hookrightarrow$] For $N_{src} \geq 0.75 M$: denoising problem becomes poorly conditioned       \\[5pt] \pause
-       		 	\item[$\hookrightarrow$] Error linearly decreases with increasing SNR\\[5pt] \pause
-       		 	\item[$\hookrightarrow$] Error linearly decreases with logarithmically increasing $N_s$\\[5pt] \pause
+		 	\item[$\hookrightarrow$] For $N_{src} \geq 0.75 M$: denoising problem becomes poorly conditioned       \\[1ex] \pause
+       		 	\item[$\hookrightarrow$] Error linearly decreases with increasing SNR\\[1ex] \pause
+       		 	\item[$\hookrightarrow$] Error linearly decreases with logarithmically increasing $N_s$\\[1ex] \pause
        		\end{itemize}
 	}	
-		\item<5-> 	{\vspace{4pt} \small {\bfseries Heterogeneous noise}: SNR 10 dB lower on 10 random receivers\\}
+		\item<5-> 	{\small {\bfseries Heterogeneous noise}: SNR 10 dB lower on 10 random receivers}
 		\begin{center}		
 			\resizebox{0.9\textwidth}{!}{
 				\begin{minipage}{1.2\textwidth}	
@@ -574,58 +567,100 @@
 \section*{Conclusion}
 \begin{frame}{\insertsectionhead}
 	\begin{itemize}
-		\item DRec: fast and simple but error at least 5 dB higher for rank under 70\\
+		\item DRec: fast and simple but error 5 dB higher for rank under 70\\
 		\vfill
-		\pause
 		\item PFA 
 		\begin{itemize}
 		        \item performance similar to RPCA using $\lambda_{opt}$
 			\item PFA and RPCA more robust to heterogeneous noise	
 			\item flexible model $\rightarrow$ to be adapted for correlated noise	
 		\end{itemize}
-		\vfill \pause
-		\item Choose your denoising method according to the expected number of sources\\[10pt]
-		\vfill			
-		\noindent\hspace{-1cm}\begin{minipage}{1.1\textwidth}
-			\begin{minipage}{0.72\textwidth}
-				\centering
-				\begin{tikzpicture}
-			   		\node[anchor=south west] (image) at (0,0) {\input{img/comparison/all_hetero_rang_large.tex}};
-					\begin{scope}[x={(image.south east)},y={(image.north west)}]
-			       			\pause
-			       			\draw[thick] (0.33,0.1) to (0.33,1.05);
-			       			\node at (0.25,1) {RPCA};
-			       			\pause
-			       			\draw[thick] (0.75,0.1) to (0.75,1.05);
-			       			\node at (0.54,1) {PFA};
-			       			\pause
-			       			\node at (0.88,1) {DRec};
-			   		 \end{scope}
-				\end{tikzpicture}
-			\end{minipage}	
-			\hfill
-			\begin{minipage}{0.25\textwidth}
-				\definecolor{hald}{rgb}{0.00000,0.44700,0.74100}%
-				\definecolor{rpca}{rgb}{0.85000,0.32500,0.09800}%
-				\definecolor{mcmc}{rgb}{0.49400,0.18400,0.55600}%
-				{\footnotesize \tikz[baseline=-1.5pt]{\draw[line width=1.0pt,color=hald] (0,.5ex)--++(.5,0) ;} DRec\\[5pt]
-					\tikz[baseline=-1.5pt]{\draw[dashed,line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;} RPCA, $\lambda_{opt}$\\[5pt]
-					\tikz[baseline=-1.5pt]{\draw[line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;} RPCA, $\lambda=M^{-\frac{1}{2}}$\\[5pt]
-					\tikz[baseline=-1.5pt]{\draw[line width=1.0pt , color=mcmc] (0,.5ex)--++(.5,0) ;} PFA}
-			\end{minipage}		
-		\end{minipage}		
+		\vfill
+		\item Future work : 
+		\begin{itemize}
+		        \item denoising of the whole CSM
+		        \item effect of denoising on imaging ?
+		\end{itemize}
 	\end{itemize}
 \end{frame}
 
+\begin{frame}{\insertsectionhead}
+	\begin{itemize}
+		\item Choose your denoising method according to the expected number of sources\\[10pt]
+	\end{itemize}
+		\vfill
+				
+	\noindent\hspace{-0.5cm}\begin{minipage}{1.1\textwidth}
+		\begin{minipage}{0.72\textwidth}
+			\centering
+			\begin{tikzpicture}
+		   		\node[anchor=south west] (image) at (0,0) {\input{img/comparison/all_hetero_rang_large.tex}};
+				\begin{scope}[x={(image.south east)},y={(image.north west)}]
+		       			\node<1-> at (0.25,1) {\textcolor{white}{\Large RPCA}};
+		       			\draw<2->[thick] (0.33,0.1) to (0.33,1.05);
+		       			\node<2-> at (0.25,1) {RPCA};
+		       			\draw<3->[thick] (0.75,0.1) to (0.75,1.05);
+		       			\node<3-> at (0.54,1) {PFA};
+		       			\node<4-> at (0.88,1) {DRec};
+		   		 \end{scope}
+			\end{tikzpicture}
+		\end{minipage}	
+		\hfill
+		\begin{minipage}{0.25\textwidth}
+			\definecolor{hald}{rgb}{0.00000,0.44700,0.74100}%
+			\definecolor{rpca}{rgb}{0.85000,0.32500,0.09800}%
+			\definecolor{mcmc}{rgb}{0.49400,0.18400,0.55600}%
+			{\footnotesize \tikz[baseline=-1.5pt]{\draw[line width=1.0pt,color=hald] (0,.5ex)--++(.5,0) ;} DRec\\[5pt]
+				\tikz[baseline=-1.5pt]{\draw[dashed,line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;} RPCA, $\lambda_{opt}$\\[5pt]
+				\tikz[baseline=-1.5pt]{\draw[line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;} RPCA, $\lambda=M^{-\frac{1}{2}}$\\[5pt]
+				\tikz[baseline=-1.5pt]{\draw[line width=1.0pt , color=mcmc] (0,.5ex)--++(.5,0) ;} PFA}
+		\end{minipage}		
+	\end{minipage}	
+	
+	\vfill	
+\end{frame}
 
-\appendix
-\begin{frame}{References}
+
+%%% APPENDIX
+\setbeamertemplate{headline}{%
+\leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=\paperwidth,ht=3ex,dp=1.125ex]{myheadline}%
+    \hspace{1cm}\insertsectionhead%
+    \end{beamercolorbox}%
+  }
+}
+\newcounter{finalframe}
+\setcounter{finalframe}{\value{framenumber}}
+
+\section*{References}
+\begin{frame}{\insertsectionhead}
 	%\begin{adjustwidth}{-2em}{-2.5em}
-		\setlength{\bibsep}{18pt}
+		\setlength{\bibsep}{2em}
 		\bibliographystyle{abbrvnat}
 		\bibliography{biblio}
 	%\end{adjustwidth}
 \end{frame}
+
+\section*{Appendix}
+\begin{frame}{PFA -- Choosing the number of factor}
+	\centering
+	
+	The model enforce sparsity on factors\\
+	
+	\input{img/factor_analysis/EM_MCMC_factors.tex}
+
+\end{frame}
+
+\begin{frame}
+	FAIRE UNE SLIDE SUR : \\
+	Bayésien\\
+	MCMC
+\end{frame}
+
+\setcounter{framenumber}{\value{finalframe}}
+
+
 
 
 %Texte du diapo \cite{Solomaa1973} et \cite{Dijkstra1982}
