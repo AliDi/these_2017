@@ -52,6 +52,7 @@
 \newcommand{\diag}[1]{\operatorname{diag}\left(#1\right)}
 \newcommand{\tikzmark}[1]{\tikz[remember picture] \coordinate (#1) ++ (-3pt,6pt) {};}
 \newcommand{\citeTransp}[1]{\color{fg!50} \citep{#1}}
+\renewcommand\bibsection{\section[]{~}}
 
 
 %%% Page de titre
@@ -138,7 +139,7 @@
 	$$\underbracket[0.5pt]{~\bm{S}_{pp}~}_{\text{measured CSM}} =\underbracket[0.5pt]{ ~\textcolor{green}{\bm{S}_{aa}}~}_{\text{signal of interest}} +\underbracket[0.5pt]{~\textcolor{red}{\bm{S}_{nn}}~}_{\text{unwanted noise}} + \underbracket[0.5pt]{~\bm{S}_{an}+\bm{S}_{na}}_{\text{cross-terms}}$$
 	
 	\begin{itemize}	
-		\item Rank of $\bm{S}_{aa}=$ number of uncorrelated monopoles
+		\item Rank of $\textcolor{green}{\bm{S}_{aa}}=$ number of equivalent uncorrelated monopoles
 	\end{itemize}
 	}
 \end{frame}
@@ -149,10 +150,10 @@
 		\only<1>{$$\underbracket[0.5pt]{~\bm{S}_{pp}~}_{\text{measured CSM}} =\underbracket[0.5pt]{ ~\textcolor{green}{\bm{S}_{aa}}~}_{\text{signal of interest}} +\underbracket[0.5pt]{~\textcolor{red}{\bm{S}_{nn}}~}_{\parbox[t]{2cm}{\centering \text{\scriptsize unwanted noise}}} + \underbracket[0.5pt]{~\bm{S}_{an}+\bm{S}_{na}}_{\parbox[t]{2cm}{\centering \text{\scriptsize cross-terms}}}$$
 		}
 		
-		\only<2>{$$\underbracket[0.5pt]{~\bm{S}_{pp}~}_{\text{measured CSM}} =\underbracket[0.5pt]{ ~\textcolor{green}{\bm{S}_{aa}}~}_{\text{signal of interest}} +\underbracket[0.5pt]{\bcancel{~\textcolor{red}{\bm{S}_{nn}}~}}_{\parbox[t]{2cm}{\centering \text{\scriptsize unwanted noise} \\ $\approx \diag{\textcolor{red}{\bm{\sigma}^2}}$ }} + \underbracket[0.5pt]{~\bm{S}_{an}+\bm{S}_{na}}_{\parbox[t]{2cm}{\centering \text{\scriptsize cross-terms}}}$$
+		\only<2>{$$\underbracket[0.5pt]{~\bm{S}_{pp}~}_{\text{measured CSM}} =\underbracket[0.5pt]{ ~\textcolor{green}{\bm{S}_{aa}}~}_{\text{signal of interest}} +\underbracket[0.5pt]{\bcancel{~\textcolor{red}{\bm{S}_{nn}}~}}_{\parbox[t]{2cm}{\centering \text{\scriptsize unwanted noise} \\ $\approx \diag{\textcolor{red}{\bm{\sigma}_n^2}}$ }} + \underbracket[0.5pt]{~\bm{S}_{an}+\bm{S}_{na}}_{\parbox[t]{2cm}{\centering \text{\scriptsize cross-terms}}}$$
 		}
 	
-		\only<3>{$$\underbracket[0.5pt]{~\bm{S}_{pp}~}_{\text{measured CSM}} =\underbracket[0.5pt]{ ~\textcolor{green}{\bm{S}_{aa}}~}_{\text{signal of interest}} +\underbracket[0.5pt]{\bcancel{~\textcolor{red}{\bm{S}_{nn}}~}}_{\parbox[t]{2cm}{\centering \text{\scriptsize unwanted noise} \\ $\approx \diag{\textcolor{red}{\bm{\sigma}^2}}$ }} + \underbracket[0.5pt]{\bcancel{~\bm{S}_{an}+\bm{S}_{na}}}_{\parbox[t]{2cm}{\centering  \text{\scriptsize cross-terms}\\ $\rightarrow 0$ }}$$
+		\only<3>{$$\underbracket[0.5pt]{~\bm{S}_{pp}~}_{\text{measured CSM}} =\underbracket[0.5pt]{ ~\textcolor{green}{\bm{S}_{aa}}~}_{\text{signal of interest}} +\underbracket[0.5pt]{\bcancel{~\textcolor{red}{\bm{S}_{nn}}~}}_{\parbox[t]{2cm}{\centering \text{\scriptsize unwanted noise} \\ $\approx \diag{\textcolor{red}{\bm{\sigma}_n^2}}$ }} + \underbracket[0.5pt]{\bcancel{~\bm{S}_{an}+\bm{S}_{na}}}_{\parbox[t]{2cm}{\centering  \text{\scriptsize cross-terms}\\ $\rightarrow 0$ }}$$
 		}
 	
 	\end{overlayarea}
@@ -161,7 +162,7 @@
 	\pause
 	\begin{itemize}
 		\setlength{\itemindent}{1cm}
-		\item Short correlation length : off-diagonal elements of $S_{nn}\rightarrow 0$\\[1em]
+		\item Short correlation length : off-diagonal elements of $\textcolor{red}{S_{nn}}\rightarrow 0$\\[1em]
 		\pause
 		\item Independent signal/noise : cross-terms $\rightarrow 0$
 	\end{itemize}
@@ -209,24 +210,24 @@
 
 
 \begin{frame}{\insertsectionhead}	
-\textit{\small ``Remove as much noise as possible as long as denoised CSM remains positive''}
+\hspace{-0.6cm}\textit{\small ``Remove as much noise as possible as long as denoised CSM remains non-negative''}
 	\begin{block}{\normalsize Convex optimization   \citeTransp{Hald2017}}<2->
 		\begin{equation*}
-        			\text{maximize~} \| \bm{\sigma}_{n}^2\|_1 \text{~~subject to~~} \bm{S}_{pp}- \diag{\bm{\sigma}_n^2} \geq 0
+        			\text{maximize~} \| \textcolor{red}{\bm{\sigma}_{n}^2}\|_1 \text{~~subject to~~} \bm{S}_{pp}- \diag{\textcolor{red}{\bm{\sigma}_n^2}} \geq 0
 		\end{equation*}
-		Problem solved with CVX Matlab toolbox
+		{\small Problem solved with CVX Matlab toolbox}
 	\end{block}
 	\begin{block}{\normalsize Linear optimization \citeTransp{dougherty2016}}<3->
 		\vspace{-0.2cm}
 		\begin{equation*}
-			\text{maximize~} \| \bm{\sigma}_{n}^2\|_1   \text{~~subject to~~}  \bm{V}^{H}_{(k-1)} \left( \bm{S}_{pp}- \diag{\bm{\sigma}_n^2}_{(k)} \right) \bm{V}_{(k-1)} \geq 0 
+			\text{maximize~} \| \textcolor{red}{\bm{\sigma}_{n}}^2\|_1   \text{~~subject to~~}  \bm{V}^{H}_{(k-1)} \left( \bm{S}_{pp}- \diag{\textcolor{red}{\bm{\sigma}_n^2}}_{(k)} \right) \bm{V}_{(k-1)} \geq 0 
 		\end{equation*}
-		 $\bm{V}_{(k-1)}$: eigenvectors of $\bm{S}_{pp}-\diag{\bm{\sigma}_n^2}_{(1,...,k-1)} $\\[1pt]
-		Solved with \textit{linprog} Matlab function
+		 $\bm{V}_{(k-1)}$: eigenvectors of $\bm{S}_{pp}-\diag{\textcolor{red}{\bm{\sigma}_n^2}}_{(1,...,k-1)} $\\[1pt]
+		{\small Solved with \textit{linprog} Matlab function}
 	\end{block}
 	\begin{block}{\normalsize Alternating Projections  \citeTransp{leclere:hal-01279944}}<4->
 		\begin{equation*}
-        			 \bm{S}_{{pp}_{(k+1)}} := \bar{\bm{S}}_{{pp}_{(0)}} + \bm{V}^{H}_{(k)} \bm{s}_{(k)}^{\textcolor{red}{\textbf{+}}}\bm{V}^{~}_{(k)}
+        			 \bm{S}_{{pp}_{(k+1)}} := \bar{\bm{S}}_{{pp}_{(0)}} + \diag{\bm{V}^{H}_{(k)} \bm{s}_{(k)}^{\textcolor{orange}{\textbf{+}}}\bm{V}^{~}_{(k)}}
 		\end{equation*}
 		$\bm{V}^{H}_{(k)}$ and $\bm{s}_{(k)}$: eigenvectors/values of  $\bm{S}_{{pp}_{(k)}}$\\[1pt]
 	\end{block}	
@@ -262,14 +263,14 @@
 	
 	\item Varying parameters: \\
 	\begin{itemize}
-	        \item number of   \textcolor{red}{$\vcenter{\hbox{\tiny$\blacklozenge$}}$} (rank of $\bm{S}_{aa}$)\\[3pt]
+	        \item number of   \textcolor{red}{$\vcenter{\hbox{\tiny$\blacklozenge$}}$} (rank of $\textcolor{green}{\bm{S}_{aa}}$)\\[3pt]
 	        \item SNR\\[3pt]
 	        \item number of snapshots (level of extra-diagonal terms)
 \end{itemize}~\\	
 	
 	\item Error on the signal CSM:
 	\begin{equation*}
-   		 \delta = \frac{\|\diag{\bm{S}_{aa}}  - \diag{\bm{\hat{S}}_{aa}}\|_2}{\|\diag{\bm{S}_{aa} } \|_2}
+   		 \delta = \frac{\|\diag{\textcolor{green}{\bm{S}_{aa}}}  - \diag{\textcolor{green}{\bm{\hat{S}}_{aa}}}\|_2}{\|\diag{\textcolor{green}{\bm{S}_{aa} }} \|_2}
 	\end{equation*}
 	\end{itemize}
 
@@ -573,7 +574,9 @@
 		\begin{itemize}
 		        \item performance similar to RPCA using $\lambda_{opt}$
 			\item PFA and RPCA more robust to heterogeneous noise	
-			\item flexible model $\rightarrow$ to be adapted for correlated noise	
+			\item flexible model $\rightarrow$ to be adapted for correlated noise
+			\item can be solved using Expectiation-Maximization algorithm
+			\item initialize with DRec  to increase convergence speeds
 		\end{itemize}
 		\vfill
 		\item Future work : 
@@ -621,12 +624,14 @@
 \end{frame}
 
 
+\appendix
 %%% APPENDIX
+\setcounter{section}{0}
 \setbeamertemplate{headline}{%
 \leavevmode%
   \hbox{%
     \begin{beamercolorbox}[wd=\paperwidth,ht=3ex,dp=1.125ex]{myheadline}%
-    \hspace{1cm}\insertsectionhead%
+   \insertsectionnavigationhorizontal{\paperwidth}{}{}%
     \end{beamercolorbox}%
   }
 }
@@ -634,7 +639,8 @@
 \setcounter{finalframe}{\value{framenumber}}
 
 \section*{References}
-\begin{frame}{\insertsectionhead}
+
+\begin{frame}{References}
 	%\begin{adjustwidth}{-2em}{-2.5em}
 		\setlength{\bibsep}{2em}
 		\bibliographystyle{abbrvnat}
@@ -642,7 +648,7 @@
 	%\end{adjustwidth}
 \end{frame}
 
-\section*{Appendix}
+\section*{PFA -- $\kappa$}
 \begin{frame}{PFA -- Choosing the number of factor}
 	\centering
 	
@@ -655,7 +661,8 @@
 \begin{frame}
 	FAIRE UNE SLIDE SUR : \\
 	Bayésien\\
-	MCMC
+	MCMC\\
+	EM
 \end{frame}
 
 \setcounter{framenumber}{\value{finalframe}}
