@@ -53,6 +53,8 @@
 \newcommand{\tikzmark}[1]{\tikz[remember picture] \coordinate (#1) ++ (-3pt,6pt) {};}
 \newcommand{\citeTransp}[1]{\color{fg!50} \citep{#1}}
 \renewcommand\bibsection{\section[]{~}}
+\usepackage{algorithm}
+\usepackage{algorithmic}
 
 
 %%% Page de titre
@@ -88,9 +90,9 @@
 			\item<2-> Existing denoising methods:
 			
 			\begin{itemize}
-			        \item physical removal : mic recession, porous treatment, vibrating structure filtering\dots\\[3pt]
+			        \item physical removal : windscreen, mic recession, porous treatment, vibrating structure filtering\dots\\[3pt]
 			        \item  use a background noise measurement $\rightarrow$ not always available or representative\\[3pt]
-			        \item wavenumber filtering $\rightarrow$ needs high spatial sampling\\[3pt]
+			        \item wavenumber filtering $\rightarrow$ requires high spatial sampling\\[3pt]
 			        \item diagonal removal $\rightarrow$ underestimation of source level\\[3pt]
 			        \only<2>{\item   exploit noise/signal properties \& solve an optimization problem}
 			        \onslide<3->{\item \fcolorbox{black}{white}{ exploit noise/signal properties \& solve an optimization problem}}
@@ -118,10 +120,10 @@
 \begin{frame}[t]{Problem Statement}
 	\begin{overlayarea}{\textwidth}{1.5cm}
 	\only<1>{
-	$$\underbracket[0.5pt]{~\bm{p}~}_{\text{measured spectra}} =\underbracket[0.5pt]{~\textcolor{green}{\bm{a}}~}_{\text{source spectrum}} + \underbracket[0.5pt]{~\textcolor{red}{\bm{n}}~}_{\text{Gaussian noise}} $$
+	$$\underbracket[0.5pt]{~\bm{p}~}_{\text{measured spectra}} =\underbracket[0.5pt]{~\textcolor{green}{\bm{a}}~}_{\text{source spectra}} + \underbracket[0.5pt]{~\textcolor{red}{\bm{n}}~}_{\text{Gaussian noise}} $$
 	}
 	\only<2->{
-	$$\Big\langle \underbracket[0.5pt]{~\bm{p}~}_{\text{measured spectra}} =\underbracket[0.5pt]{~\textcolor{green}{\bm{a}}~}_{\text{source spectrum}} + \underbracket[0.5pt]{~\textcolor{red}{\bm{n}}~}_{\text{Gaussian noise}}  \Big\rangle_{\text{\normalsize $ N_s$ snapshots}}$$
+	$$\Big\langle \underbracket[0.5pt]{~\bm{p}~}_{\text{measured spectra}} =\underbracket[0.5pt]{~\textcolor{green}{\bm{a}}~}_{\text{source spectra}} + \underbracket[0.5pt]{~\textcolor{red}{\bm{n}}~}_{\text{Gaussian noise}}  \Big\rangle_{\text{\normalsize $ N_s$ snapshots}}$$
 	}
 	\end{overlayarea}
 	
@@ -139,7 +141,7 @@
 	$$\underbracket[0.5pt]{~\bm{S}_{pp}~}_{\text{measured CSM}} =\underbracket[0.5pt]{ ~\textcolor{green}{\bm{S}_{aa}}~}_{\text{signal of interest}} +\underbracket[0.5pt]{~\textcolor{red}{\bm{S}_{nn}}~}_{\text{unwanted noise}} + \underbracket[0.5pt]{~\bm{S}_{an}+\bm{S}_{na}}_{\text{cross-terms}}$$
 	
 	\begin{itemize}	
-		\item Rank of $\textcolor{green}{\bm{S}_{aa}}=$ number of equivalent uncorrelated monopoles
+		\item Rank of $\textcolor{green}{\bm{S}_{aa}}=$ number of equivalent uncorrelated sources
 	\end{itemize}
 	}
 \end{frame}
@@ -162,7 +164,7 @@
 	\pause
 	\begin{itemize}
 		\setlength{\itemindent}{1cm}
-		\item Short correlation length : off-diagonal elements of $\textcolor{red}{S_{nn}}\rightarrow 0$\\[1em]
+		\item Short correlation length : off-diagonal elements of $\textcolor{red}{\bm{S}_{nn}}\rightarrow 0$\\[1em]
 		\pause
 		\item Independent signal/noise : cross-terms $\rightarrow 0$
 	\end{itemize}
@@ -172,7 +174,7 @@
 
 %%% Plan
 %======================
-\begin{frame}{How to separate signal part from noise ?}
+\begin{frame}{How to separate signal from noise ?}
 	 
 	
 	\begin{itemize}
@@ -220,7 +222,7 @@
 	\begin{block}{\normalsize Linear optimization \citeTransp{dougherty2016}}<3->
 		\vspace{-0.2cm}
 		\begin{equation*}
-			\text{maximize~} \| \textcolor{red}{\bm{\sigma}_{n}}^2\|_1   \text{~~subject to~~}  \bm{V}^{H}_{(k-1)} \left( \bm{S}_{pp}- \diag{\textcolor{red}{\bm{\sigma}_n^2}}_{(k)} \right) \bm{V}_{(k-1)} \geq 0 
+			\text{maximize~} \| \textcolor{red}{\bm{\sigma}_{n}^2}\|_1   \text{~~subject to~~}  \bm{V}^{H}_{(k-1)} \left( \bm{S}_{pp}- \diag{\textcolor{red}{\bm{\sigma}_n^2}}_{(k)} \right) \bm{V}_{(k-1)} \geq 0 
 		\end{equation*}
 		 $\bm{V}_{(k-1)}$: eigenvectors of $\bm{S}_{pp}-\diag{\textcolor{red}{\bm{\sigma}_n^2}}_{(1,...,k-1)} $\\[1pt]
 		{\small Solved with \textit{linprog} Matlab function}
@@ -229,7 +231,7 @@
 		\begin{equation*}
         			 \bm{S}_{{pp}_{(k+1)}} := \bar{\bm{S}}_{{pp}_{(0)}} + \diag{\bm{V}^{H}_{(k)} \bm{s}_{(k)}^{\textcolor{orange}{\textbf{+}}}\bm{V}^{~}_{(k)}}
 		\end{equation*}
-		$\bm{V}^{H}_{(k)}$ and $\bm{s}_{(k)}$: eigenvectors/values of  $\bm{S}_{{pp}_{(k)}}$\\[1pt]
+		$\bm{V}_{(k)}$ and $\bm{s}_{(k)}$: eigenvectors/values of  $\bm{S}_{{pp}_{(k)}}$\\[1pt]
 	\end{block}	
 \end{frame}
 
@@ -270,7 +272,7 @@
 	
 	\item Error on the signal CSM:
 	\begin{equation*}
-   		 \delta = \frac{\|\diag{\textcolor{green}{\bm{S}_{aa}}}  - \diag{\textcolor{green}{\bm{\hat{S}}_{aa}}}\|_2}{\|\diag{\textcolor{green}{\bm{S}_{aa} }} \|_2}
+   		 \varepsilon = \frac{\|\diag{\textcolor{green}{\bm{S}_{aa}}}  - \diag{\textcolor{green}{\bm{\hat{S}}_{aa}}}\|_2}{\|\diag{\textcolor{green}{\bm{S}_{aa} }} \|_2}
 	\end{equation*}
 	\end{itemize}
 
@@ -333,7 +335,7 @@
 \begin{frame}{RPCA}
 	\vspace{-0.5cm}
 	\begin{center}
-		\textit{``Search $\bm{S}_{aa}$ as a low rank matrix and $\bm{S}_{nn}$ as a sparse matrix''}\\~\\
+		\textit{``Search \textcolor{green}{$\bm{S}_{aa}$} as a low rank matrix and \textcolor{red}{$\bm{S}_{nn}$} as a sparse matrix''}\\~\\
 		\colorbox{gray!20}{
 		 $\text{minimize~} \|\textcolor{green}{\bm{{S}}_{aa}} \|_* + \lambda \| \textcolor{red}{\bm{{S}}_{nn}} \|_1  \text{~~~~subject to~~~~} \textcolor{green}{ \bm{{S}}_{aa}} +  \textcolor{red}{\bm{{S}}_{nn}} = \bm{S}_{pp}$
 		}
@@ -341,7 +343,7 @@
 
 
 	
-	$\| \cdot \|_*$: nuclear norm (related to rank)\\
+	$\| \cdot \|_*$: nuclear norm (sum of eigenvalues: related to rank)\\
 	$\| \cdot \|_1$: $\ell_1$-norm (related to sparsity)\\~\\
 	
 	Solved with a proximal gradient algorithm
@@ -424,7 +426,7 @@
 		\vspace{-0.2cm}+ non-informative priors : $\bm{\gamma}^2, \bm{\alpha}^2, \bm{\sigma}^2\sim\mathcal{IG}(a_{\gamma,\alpha,\sigma},b_{\gamma,\alpha,\sigma})$\\[1ex]      	
 		\pause			 
         		   \vfill     		
-        		\item \textbf{Solved using MCMC algorithm} (Gibb's sampling)\\
+        		\item \textbf{Solved using MCMC algorithm} (Gibbs sampling)\\
 		\small Iterative draws in the marginal conditional distributions of each parameter\normalsize
 		\pause		
         		 \vfill 
@@ -439,7 +441,8 @@
 	\only<5->{
 	\begin{block}{PFA}
 		\ding{51} Global optimization \hfill\parbox{0.5\linewidth}{\ding{55} Computationally expensive}\\
-		\ding{51} Flexible model
+		\ding{51} Flexible model\\
+		\ding{51} Cross-terms  taken into account in the model
 	\end{block}~\\
 	}
 	\end{overlayarea}	
@@ -516,8 +519,10 @@
 		\definecolor{rpca}{rgb}{0.85000,0.32500,0.09800}%
 		\definecolor{mcmc}{rgb}{0.49400,0.18400,0.55600}%
 		{\scriptsize \tikz[baseline=-1.5pt]{\draw[line width=1.0pt,color=hald] (0,.5ex)--++(.5,0) ;} DRec \hfill
-			\tikz[baseline=-1.5pt]{\draw[dashed,line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;} RPCA, $\lambda_{opt}$ \hfill
-			\tikz[baseline=-1.5pt]{\draw[line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;} RPCA, $\lambda=M^{-\frac{1}{2}}$ \hfill
+			\parbox{0.3\linewidth}{
+				\makebox[4em]{RPCA:~}\tikz[baseline=-1.5pt]{\draw[dashed,line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;} $\lambda_{opt}$\\
+				\makebox[4em]{~}\tikz[baseline=-1.5pt]{\draw[line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;} $\lambda=M^{-\frac{1}{2}}$
+		} \hfill
 			\tikz[baseline=-1.5pt]{\draw[line width=1.0pt , color=mcmc] (0,.5ex)--++(.5,0) ;} PFA}
 %		\end{mdframed}
 	\begin{itemize}
@@ -535,16 +540,16 @@
 		\end{center}
 		\end{overprint}
 		\pause	
-	\only<2-4>{
+	\only<2>{
 		\vspace{0.7cm}
 		 \begin{itemize}
 		 \setlength{\itemindent}{0.5cm}
-		 	\item[$\hookrightarrow$] For $N_{src} \geq 0.75 M$: denoising problem becomes poorly conditioned       \\[1ex] \pause
-       		 	\item[$\hookrightarrow$] Error linearly decreases with increasing SNR\\[1ex] \pause
-       		 	\item[$\hookrightarrow$] Error linearly decreases with logarithmically increasing $N_s$\\[1ex] \pause
+		 	\item[$\hookrightarrow$] For $N_{src} \geq 0.75 M$: denoising problem becomes poorly conditioned       \\[1ex] 
+       		 	\item[$\hookrightarrow$] Error linearly decreases with increasing SNR\\[1ex] 
+       		 	\item[$\hookrightarrow$] Error linearly decreases with logarithmically increasing $N_s$\\[1ex] 
        		\end{itemize}
 	}	
-		\item<5-> 	{\small {\bfseries Heterogeneous noise}: SNR 10 dB lower on 10 random receivers}
+		\item<3-> 	{\small {\bfseries Heterogeneous noise}: SNR 10 dB lower on 10 random receivers}
 		\begin{center}		
 			\resizebox{0.9\textwidth}{!}{
 				\begin{minipage}{1.2\textwidth}	
@@ -568,20 +573,21 @@
 \section*{Conclusion}
 \begin{frame}{\insertsectionhead}
 	\begin{itemize}
-		\item DRec: fast and simple but error 5 dB higher for rank under 70\\
+		\item Hard to denoise full rank CSM
+		\item DRec: fast and simple but error 5 dB higher
 		\vfill
 		\item PFA 
 		\begin{itemize}
 		        \item performance similar to RPCA using $\lambda_{opt}$
 			\item PFA and RPCA more robust to heterogeneous noise	
-			\item flexible model $\rightarrow$ to be adapted for correlated noise
-			\item can be solved using Expectiation-Maximization algorithm
+			\item can be solved using Expectation-Maximization algorithm
 			\item initialize with DRec  to increase convergence speeds
 		\end{itemize}
 		\vfill
 		\item Future work : 
 		\begin{itemize}
 		        \item denoising of the whole CSM
+		        \item adapt PFA to correlated noise
 		        \item effect of denoising on imaging ?
 		\end{itemize}
 	\end{itemize}
@@ -623,7 +629,6 @@
 	\vfill	
 \end{frame}
 
-
 \appendix
 %%% APPENDIX
 \setcounter{section}{0}
@@ -658,11 +663,105 @@
 
 \end{frame}
 
-\begin{frame}
-	FAIRE UNE SLIDE SUR : \\
-	Bayésien\\
-	MCMC\\
-	EM
+\section{MAP}
+\begin{frame}{Bayesian inference -- MAP}
+	\vspace{-0.2cm}
+	\centering $\bm{p} = \bm{Lc}$
+	\vfill
+	\begin{itemize}
+        		\item Bayes theorem:~~~~~ $[\bm{c}|\bm{p}] = \frac{[\bm{p}|\bm{c}][\bm{c}]}{[\bm{p}]}$
+        		\vfill
+        		\item Maximize a posteriori density: 
+        		\begin{align*}
+			\bm{c} &= \arg\max_{\bm{c}}[\bm{c}|\bm{p}]\\
+			& \arg\min_{\bm{c}}(-\log[\bm{p}|\bm{c}]-\log[\bm{c}])
+		\end{align*}
+		\item If you know which family your posterior is from\\ $\hookrightarrow$ optimization problem
+		\vfill
+		\item If no analytical notion of the posterior\\ $\hookrightarrow$ sampling: visit a collection of $\bm{c}$ with a Markov Chain
+		\vfill
+		\item MCMC : performs a biased random walk to explore the distribution (each sample is correlated with nearby samples).
+	\end{itemize}
+
+\end{frame}
+
+\section{EM}
+\begin{frame}{Expectation-Maximization Algorithm}
+	Deterministic algorithm for Bayesian inference\\
+	
+	$$\bm{p} = \bm{Lc} + \bm{n}$$
+	
+	\begin{enumerate}
+		\item Calculate the expected value of the likelihood function
+		$$ Q=\mathbb{E}( [\bm{p}~|~\bm{c},\bm{L},\bm{n}])$$
+		
+		\item Find $\bm{c,~L,~n}$ that maximize $Q$
+	\end{enumerate}
+
+\end{frame}
+
+\begin{frame}{Gibbs sampling}
+\centering
+	\begin{minipage}{0.4\textwidth}
+	\centering
+	Hierarchical model:\\
+		\begin{tikzpicture}
+			\node(a1) at (0,0) {$a_{\gamma}$};
+			\node(b1) at ($(a1)+(2em,0)$) {$b_{\gamma}$};
+			\node(a2) at ($(b1)+(3em,0)$) {$a_{\alpha}$};
+			\node(b2) at ($(a2)+(2em,0)$) {$b_{\alpha}$};
+			\node(a3) at ($(b2)+(3em,0)$) {$a_{\sigma}$};
+			\node(b3) at ($(a3)+(2em,0)$) {$b_{\sigma}$};
+			
+			\node at ($(a1)!0.5!(b1)+(0,-2em)$) (gam) {$\bm{\gamma}^2$};
+			\node at ($(a2)!0.5!(b2)+(0,-2em)$) (alp) {$\bm{\alpha}^2$};
+			\node at ($(a3)!0.5!(b3)+(0,-2em)$) (sig) {$\bm{\sigma}^2$};
+			
+			\draw[->] (a1)--(gam);
+			\draw[->] (b1)--(gam);
+			\draw[->] (a2)--(alp);
+			\draw[->] (b2)--(alp);
+			\draw[->] (a3)--(sig);
+			\draw[->] (b3)--(sig);
+			
+			\node at ($(gam)+(0,-2em)$) (L) {$\bm{L}$};
+			\node at ($(alp)+(0,-2em)$) (c) {$\bm{c}$};
+			\node at ($(sig)+(0,-2em)$) (n) {$\bm{n}$};
+			
+			\draw[->] (gam)--(L);
+			\draw[->] (alp)--(c);
+			\draw[->] (sig)--(n);
+			
+			\node at ($(c)+(0,-2em)$) (p) {$\bm{p}$};
+			
+			\draw[->] (L)--(p);
+			\draw[->] (c)--(p);
+			\draw[->] (n)--(p);
+			
+			%hline
+			\draw[dashed,color=gray]  ($(a1)+(-1em,-1em)$) -- ($(b3)+(1em,-1em)$) ;
+			\draw[dashed,color=gray]  ($(a1)+(-1em,-3em)$) -- ($(b3)+(1em,-3em)$) ;
+			\draw[dashed,color=gray]  ($(a1)+(-1em,-5em)$) -- ($(b3)+(1em,-5em)$) ;		
+		\end{tikzpicture}
+	\end{minipage}
+	\vfill
+	\begin{minipage}{\textwidth}
+			Gibbs sampling: update successively each variable			
+			\begin{center}				
+				\begin{minipage}{0.9\textwidth}
+					\begin{algorithmic}
+						\REQUIRE $\bm{p},~a_\gamma^{(0)},~b_\gamma^{(0)},~a_\alpha^{(0)},~b_\alpha^{(0)},~a_\sigma^{(0)},~b_\sigma^{(0)}$ % \hfill\parbox{6cm}{$\triangleright$ \textit{computes eigenvalues}}\\
+						\FOR{$k$}
+							\STATE~~~~ sample $\bm{c}$ in $[\bm{c}~|~\bm{p},\bm{L}^{(k-1)},\bm{\gamma}^{(k-1)},\bm{\alpha}^{(k-1)},\bm{\sigma}^{(k-1)} ]$\\
+							\STATE~~~~ sample $\bm{L}$ in $[\bm{L}~|~\text{rest}  ]$\\
+							\STATE~~~~ sample $\bm{\gamma}^2$ in $[\bm{\gamma}^2~|~ \text{rest}  ]$\\
+							\STATE~~~~ sample $\bm{\alpha}^2$ in $[\bm{\alpha}^2~|~\text{rest}  ]$\\
+							\STATE~~~~ sample $\bm{\sigma}^2$ in $[\bm{\sigma}^2~|~ \text{rest}  ]$\\
+						\ENDFOR
+					\end{algorithmic}
+				\end{minipage}				
+			\end{center}
+	\end{minipage}
 \end{frame}
 
 \setcounter{framenumber}{\value{finalframe}}
