@@ -14,15 +14,15 @@ scale only axis,
 xmin=-1,
 xmax=1,
 tick align=outside,
-xlabel style={at={(0.15,0)}, font=\color{white!15!black}},
+xlabel style={at={(0.15,0)}, font=\color{white!15!black},font=\scriptsize},
 xlabel={x (m)},
 ymin=-1,
 ymax=0,
-ylabel style={at={(0.7,-0.05)}, font=\color{white!15!black}},
+ylabel style={at={(0.7,-0.05)}, font=\color{white!15!black},font=\scriptsize},
 ylabel={y (m)},
 zmin=-1,
 zmax=1,
-zlabel style={at={(-0.08,0.5)}, font=\color{white!15!black}},
+zlabel style={at={(-0.08,0.5)}, font=\color{white!15!black},font=\scriptsize},
 zlabel={z (m)},
 view={-125.1}{10},
 axis background/.style={fill=white},
@@ -34,7 +34,7 @@ xmajorgrids,
 ymajorgrids,
 zmajorgrids,
 legend style={at={(0.2,1)}, anchor=south west, legend cell align=left, align=left, draw=white!15!black},
-ticklabel style={font=\footnotesize}
+ticklabel style={font=\scriptsize}
 ]
 \addplot3 [color=white, line width=1.0pt, draw=none, mark size=1.2pt, mark=o, mark options={line width=0.8pt,solid, colorAlice}]
  table[row sep=crcr] {%
