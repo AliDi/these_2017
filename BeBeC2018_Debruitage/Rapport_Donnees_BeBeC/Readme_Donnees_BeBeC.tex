@@ -1,0 +1,243 @@
+\documentclass[ 12pt]{article}
+\setlength{\columnsep}{2cm}
+
+%\usepackage{cite} 
+\usepackage[round,authoryear,numbers]{natbib}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx} %pour mettre des figures dans multicol avec l'environnement figure*
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+%\linespread{1.05} % Line spacing - Palatino needs more space between lines
+%\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+
+\usepackage[hmarginratio=1:1,bottom=0.8cm,top=0.8cm, right=12mm]{geometry} % Document margins
+\usepackage[textfont=it]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{booktabs} % Horizontal rules in tables
+%\usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
+\usepackage{hyperref} % For hyperlinks in the PDF
+
+\usepackage{bm}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tabularx}
+
+\usepackage{titlesec} % Allows customization of titles
+\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+\renewcommand\thesubsection{\arabic{section}.\arabic{subsection}} % Roman numerals for subsections
+\titleformat{\section}[block]{\bfseries\centering}{\thesection.}{1em}{}[{\titlerule[1.2pt]}] % Change the look of the section titles
+\titleformat{\subsection}[block]{\bfseries}{\thesubsection.}{1em}{} % Change the look of the section titles
+\renewcommand\thesubsubsection{\small{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}}
+\titleformat{\subsubsection}[block]{\bfseries}{\thesubsubsection}{0.5em}{}
+\titleformat*{\paragraph}{\vspace{-0.3cm}\small\bfseries}
+
+\newcommand{\tbullet}{$\vcenter{\hbox{\tiny$\bullet$}}~$}
+
+\usepackage{fancyhdr} % Headers and footers
+\pagestyle{fancy} % All pages have headers and footers
+\fancyhead{} % Blank out the default header
+\fancyfoot{} % Blank out the default footer
+\renewcommand{\headrulewidth}{0pt} %pour enlever la ligne du header
+%\fancyhead[C]{titre, date, noms...	} % Custom header text
+%\fancyfoot[RO,RE]{\thepage} % Custom footer text
+%\fancyfoot[LO,LE]{A. DINSENMEYER, \today}
+%\renewcommand{\footrulewidth}{0.4pt} 
+
+%modif des espacement avant et après l'environnement equation
+\let\oldequation=\equation
+\let\endoldequation=\endequation
+\renewenvironment{equation}{\vspace{-0.2cm}\begin{oldequation}}{\vspace{-0.2cm}\end{oldequation}}
+ 
+%agrandissement de la zone de texte
+%\addtolength{\oddsidemargin}{-1cm}
+%\addtolength{\evensidemargin}{-1cm}
+%\addtolength{\textwidth}{2cm}
+%\addtolength{\topmargin}{-0.7cm}
+%\addtolength{\textheight}{1cm}
+
+\usepackage{color}
+\usepackage[color=blue!20]{todonotes}
+\usepackage{mathtools}
+
+%pour écrire du pseudo code :
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\usepackage{hyperref}
+\hypersetup{
+     colorlinks   = true,
+     citecolor    = blue!90
+}
+
+\newcommand{\dd}{\partial}
+\newcommand{\ok}{ \textcolor{orange}{\bfseries \textsc ok }}
+\renewcommand{\tt}[1]{\texttt{\detokenize{#1}}}
+
+
+
+\usepackage{subcaption}
+\usepackage{tabulary}
+
+%pour les plots matlab en tikz
+\usepackage{pgfplots} 
+\pgfplotsset{compat=newest}
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{\vspace{-0.8cm}\fontsize{14pt}{14pt}\selectfont\textbf{Obtentions des données présentées au BeBeC\\Mi-mars 2018}\vspace{-1cm}} % Article title
+
+%\author{
+%\large{Alice \textsc{Dinsenmeyer}}\\[2mm] % Your name %\thanks{}
+%\normalsize University of California \\ % Your institution
+%\normalsize \href{mailto:john@smith.com}{john@smith.com} % Your email address
+%\vspace{-5mm}
+%}
+\date{\vspace{-1cm}
+}
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+\maketitle
+Ce rapport présente les détails techniques ayant permis l'obtention des figures (avec Matlab) pour l'article du BeBeC 2018 sur le débruitage (notament sur le réglage des hyperparamètres de chaque méthode).
+
+\section{Structure générale}
+L'étude des paramètre SNR, nombre de sources et nombre de snapshots se fait respectivement dans les fichiers \tt{influence_SNR.m}, \tt{influence_rang.m} et \tt{influence_Mw.m}. Dans ces fichiers, les CSM signal et bruit sont générées avec la fonction \tt{generate_Spp_signal.m} et les algorithmes de débruitage sont ensuite appliqué à la CSM bruitée.\\
+
+Les codes EM et MCMC de Jérôme sont conservés en local uniquement dans \\ \tt{/Debruitage_Jerome_VersionMars2018}
+
+\section{Génération des CSM}
+Le dossier \tt{Generate_Spectra} contient la fonction de génération des CSM \tt{generate_Spp_signal.m}, ainsi que les coordonnées de l'antenne utilisée (dans \tt{spiral_array_coord.mat}, provenant du benchmark de P. Sijstma) et la graine pour générer tout le temps le même spectre \tt{s.mat}.\\
+Remarque : il se peut que les données avec bruits hétérogène aient été obtenue sans utiliser la graine.
+
+
+\section{Types de bruit étudiés}
+Le dossier \tt{Bruit_Decorrele} contient l'étude d'un bruit parfaitement décorrélé
+\begin{verbatim}
+Sy = Sp+diag(diag((Sn)));
+\end{verbatim}
+Cette étude se veut être proche de celle qui était faite par Hald. Elle donne des reconstructions de diagonale parfaites.\\
+
+Le dossier \tt{Bruit_Heterogene} contient l'étude d'un bruit corrélé par les termes croisés obtenus lors du calcul de la CSM à partir des spectres. Ce bruit est homogène sur la plupart des micros, sauf sur 10 d'entre eux, où il est 10dB plus fort.\\
+Le dossier \tt{Bruit_Homogene} contient l'étude d'un bruit corrélé par les termes croisés obtenus lors du calcul de la CSM à partir des spectres. Ce bruit est homogène sur tous les micros.
+
+\section{Reconstruction de diagonale}
+
+\subsection{Optimisation convexe (Hald) : \tt{CSMRecHald}}
+Réglage unique : \tt{cvx_precision(`high')}
+
+\subsection{Alternating projection : \tt{recdiag}}
+Code de Quentin Leclère. Réglages :
+\begin{itemize}
+        \item \tt{ro=1} : loop gain
+        \item 	\tt{nmax=1000} nombre d'itération max
+        \item \tt{tol=1e-7} l'algo s'arrête lorsque toutes les valeurs propres sont supérieures à \tt{-tol}
+        \item \tt{timetol=30} l'algo s'arrête au bout de 30 secondes de calcul max
+\end{itemize}
+
+\subsection{Optimisation linéaire (Dougherty) : \tt{recdiagd.m}}
+Cet algo étant plus long, le calculs sont effectués sur 2 fois moins de paramètres.\\
+Réglages : 
+\begin{itemize}
+        \item \tt{nit=500} Nombre d'itérations max
+        \item \tt{timtol=60} l'algo s'arrête au bout de 60 sec max
+\end{itemize}
+
+\section{RPCA}
+Code : \tt{proximal_gradient_rpca.m} développé par Arvind Ganesh, 2009.\\
+Réglages : 
+\begin{itemize}
+        \item  $\lambda$ paramètre de régularisation : le débruitage est effectué pour tous les $\lambda$ allant de 0 à 1 par pas de 0,1. 
+        \item \tt{maxIter=300} nombre d'itérations max
+        \item \tt{tol=1e-7} tolérance pour le critère d'arrêt
+        \item \tt{lineSearchFlag=-1} la direction de descente est calculée à chaque itération
+        \item \tt{continuationFlag=-1} à sa valeur par défaut : 1. Pour prendre en compte \tt{mu}
+	\item \tt{eta=-1} paramètre pour la recherche de descente à sa valeur par défaut : $0.9$
+	\item \tt{mu=-1} paramètre de relaxation à sa valeur par défaut : $1e-3$
+	\item \tt{outputFileName} Non renseigné
+\end{itemize}
+
+Les données calculées pour RPCA ne sont pas sauvergardées sur Github.
+
+\section{EM : \tt{EM_CSM_Fit.m} développé par Jérôme Antoni}
+Le bruit \tt{Syc} est initialisé à \tt{1e-16}.\\
+La matrice de facteurs \tt{L} est aussi initialisée à \tt{1e-16}.\\
+Le nombre de facteurs choisi est
+\begin{verbatim}
+	if Nsnap(j)<Nmic
+	   	 k=Nsnap(j)-1;
+	else
+	    	k=92;
+	end
+\end{verbatim}
+
+J'ai testé différentes valeurs pour le nombre d'itérations et le seuil pour le critère d'arrêt et il semble difficile d'arrêter l'algo pour obtenir une erreur optimale étant donné que l'erreur diminue puis réaugmente (cf Rapport du 22 décembre 2017). Selon le temps de calcul disponible il faut donc fiwer le seuil bas et le nombre d'itération grand.
+
+
+\section{MCMC : \tt{MCMC_AnaFac_Quad_Sparse3.m} développé par Jérôme Antoni}
+
+\subsection{Choix du  nombre de facteurs}
+C'est la version sparse qui est utilisée pour le BeBeC, qui donne de bons résultats même si le nombre de facteur est grand. Le nombre de facteurs \tt{k} est donc fixé à 
+\begin{verbatim}
+	k=Nsnap(i)+5;
+	if k>Nmic
+	        k=Nmic;
+	end 
+\end{verbatim}
+
+\subsection{Initialisation}
+Pour le bruit : \tt{noise} est la moyenne de la diagonale de la CSM bruitée.\\
+la valeur moyenne pour les \tt{alpha} sont les valeurs propres de la CSM bruitée, normalisée par la plus grande :
+\begin{verbatim}
+	alpha2_mean = abs(real(sort(eig(Sy)/max(eig(Sy)),'descend')));
+\end{verbatim}
+L'initialisation pour les \tt{alpha} est
+\begin{verbatim}
+	for k = 1:K_est		
+    	         a.alpha(k) = 1/alpha2_mean(k); %hyper-paramètre
+	end	
+	Ini.alpha(1,:) = 1./a.alpha(:)';
+\end{verbatim}
+Pour le paramètre \tt{beta} :
+\begin{verbatim}
+	[a.beta2,b.beta2] = Convert_InvGamma(mean(noise.^2),10*mean(noise.^2)); %hyper-paramètre
+	Ini.beta2(1,:) = b.beta2/a.beta2*ones(M,1);
+\end{verbatim}
+avec \tt{Convert_InvGamma} un code de Jérôme qui calcul les coefficients d'une loi Gamma à partir d'une moyenne et d'un écart-type.\\
+Pour le paramètre \tt{gamma} :
+\begin{verbatim}
+	gamma_mean = (real(trace(Sy))/M)/mean(alpha2_mean); %pas de bruit retiré a priori
+	[a.gamma2,b.gamma2] = Convert_InvGamma(gamma_mean,10*gamma_mean); %hyper-paramètre
+	Ini.gamma2(1) = b.gamma2/a.gamma2;
+\end{verbatim}
+
+Pour \tt{Lambda} :
+\begin{verbatim}
+	Ini.Lambda(1,:,:) = (randn(M,K_est) + 1i*randn(M,K_est))/sqrt(2);
+\end{verbatim}
+
+\subsection{Nombre d'itération de la chaîne}
+Certains résultats sont obtenus pour 500 itérations, par manque de temps de calcul. Dans ce cas, la moyenne des diagonales est effectuée sur les 200 dernières itérations.\\
+D'autres résultats sont obtenus pour 1000 itérations. Dans ce cas, la moyenne des diagonales est obtenue à partir des 500 dernières itération. Dans ce cas, double le nombre d'itérations améliore le résultat d'environ 1-2 dB.
+
+
+\subsection{Autres remarques}
+Ce code est parallélisé avec \tt{parfor} ce qui explique l'utilisation de nombreuses variables temporaires.
+
+
+\section{Affichage}
+Les figures sont tracées en utilisant les scripts dans le dossier \tt{Figures} nommés \tt{plot_XX} avec \tt{XX} le nom du paramètre concerné. Ces figures sont ensuite exportées en utilisant l'outil \tt{matlab2tikz}.
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
