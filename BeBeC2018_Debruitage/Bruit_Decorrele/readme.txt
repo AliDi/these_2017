@@ -1,0 +1,1 @@
+Ce dossier contient les premiers essais de débruitage sur du bruit ne prenant pas en compte les effet de moyennes : le bruit ajouté est parfaitement diagonal (très proche de ce qui est fait dans Hald 2017).

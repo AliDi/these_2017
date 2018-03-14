@@ -1,0 +1,589 @@
+\documentclass[fontsize=12pt,DIV13,paper=a4,abstract=true,titlepage=false]{scrartcl}
+% KOMA Script is used for BeBeC template
+% KOMA is part ofmost LaTeX installations.It can be downloaded from
+% http://www.ctan.org/tex-archive/macros/latex/contrib/koma-script/
+% Manual is generally located under /usr/share/texmf/doc/latex/koma-script/scrguide.pdf
+\usepackage{scrpage2} % Part of KOMA: Control of format, header, and footer
+%\usepackage{fancyhdr}  % Alternative to scrpage2 if KOMA is not used
+\usepackage{amsmath,bm}  % extended math
+\usepackage{amssymb}  % more symbols
+%\usepackage{mathptmx} % provide times -> Alice : enlevé car conflit pour le grec gras
+\usepackage[scaled=.90]{helvet} % provide helvetica font
+\usepackage{courier}  % replace computer modern teletype (cmtt) by courier font
+%\usepackage{upgreek} % provide upright greek characters, e.g. $\uppi$
+\usepackage{color} % permits to print paper number over BeBeC logo
+
+\KOMAoptions{DIV=last} % recalculate pagestyle for new font
+\usepackage{setspace} % provides environment 'spacing' for interleaf change
+
+% make LaTeX understand utf8 or UNICODE (e.g. use of German Umlaute, French accents,
+%   Scandinavian and Czech Letters)
+\usepackage[utf8x]{inputenc}% make LaTeX understand utf8
+\usepackage[square,comma,sort&compress,numbers]{natbib}
+\usepackage[ngerman,UKenglish,USenglish]{babel} % Provide language specifics like hyphenation
+\addto{\captionsenglish}{% This line required when package babel used
+\renewcommand*{\abstractname}{ABSTRACT}
+} % This line required when babel package loaded
+
+\usepackage{graphicx} % leave filename extension .eps .jpg .png away
+\usepackage{epstopdf} % converts eps-figures to pdf automatically for use with pdflatex
+
+% % The following packages may be used in addition
+\usepackage{float} % incorporates style option [H] which means
+% \usepackage{picinpar} % wrap figures with text
+% \usepackage{wrapfig}  % wrap figures/tables in text (i.e., Di Vinci style)
+% \usepackage{verbatim}
+% \usepackage{fancyvrb}%  extended verbatim environments
+% \usepackage[font=it]{caption} % control caption appearance
+% \usepackage{floatflt}
+% \usepackage{varioref}%  smart page, figure, table, and equation referencing
+% \usepackage{threeparttable}% tables with footnotes
+% \usepackage{dcolumn}%   decimal-aligned tabular math columns \newcolumntype{d}{D{.}{.}{-1}}
+ %\usepackage{subfig}% subcaptions for subfigures
+% \usepackage{subfigmat}% matrices of similar subfigures, aka small multiples
+% \fvset{fontsize=\footnotesize,xleftmargin=2em}
+\usepackage[section]{placeins}   % provides \FloatBarrier
+%\usepackage[below]{placeins} % allow floats to be in the next section
+% \usepackage{afterpage}
+\usepackage{multicol}
+% \usepackage{morefloats}
+% \usepackage{threeparttable} % tables with footnotes
+% \usepackage{subfigure} % subcaptions for subfigures
+% \usepackage{subfigmat} % matrices of similar subfigures, aka small multiples
+% \fvset{fontsize=\footnotesize,xleftmargin=2em}
+\usepackage[pdftex,bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,hypertexnames=false,breaklinks=true]{hyperref} % This produses a pdf in which you can jump to links
+
+% Alter some LaTeX defaults for better treatment of figures:
+    % See p.105 of "TeX Unbound" for suggested values.
+    % See pp. 199-200 of Lamport's "LaTeX" book for details.
+    %   General parameters, for ALL pages:
+    \renewcommand{\topfraction}{0.9}  % max fraction of floats at top
+    \renewcommand{\bottomfraction}{0.8} % max fraction of floats at bottom
+%   \renewcommand{\textfraction}{0.07}  % allow minimal text w. figs
+    \renewcommand{\textfraction}{0.0}
+    \renewcommand{\topfraction}{1.0}
+%   Parameters for FLOAT pages (not text pages):
+%   \renewcommand{\floatpagefraction}{0.8}      % require fuller float pages
+    \renewcommand{\floatpagefraction}{0.95}
+% N.B.: floatpagefraction MUST be less than topfraction !!
+%   \renewcommand{\dblfloatpagefraction}{0.8}   % require fuller float pages
+%  remember to use [htp] or [htpb] for placement
+
+% In case the spacing between lines needs to be smaller
+\renewcommand{\baselinestretch}{0.95}
+\sloppy
+%   This declaration makes TeX less fussy about line breaking. This can
+%   prevent overfull boxes, but may leave too much space between words.
+%   Lasts until a `\fussy' command is issued. Usually, only those paragraphs
+%   need to be enclosed in \sloppy and \fuzzy in which lines become too long.
+
+% \addtokomafont{section}{\sffamily} % is default in KOMA
+\addtokomafont{caption}{\itshape} % captions italic
+\addtokomafont{captionlabel}{\itshape} % captions italic
+\addtokomafont{section}{\large}
+\addtokomafont{subsection}{\normalsize}
+
+% Prerender nonstandard letters of utf8 font
+\PrerenderUnicode{äöüÄÖÜßéè}
+\areaset{16cm}{22.2cm}
+\recalctypearea
+\headsep = 15mm
+% The purpose of the large bottom margin is that copies can be
+% made on US Letter paper, which has a smaller vertical size than A4.
+%\setkomafont{title}{\sffamily\bfseries}
+
+\setcounter{secnumdepth}{2}% Only sections and subsections shall get numbers
+
+%%% Ajouts
+%pour les plots matlab en tikz
+\usepackage{pgfplots} 
+\pgfplotsset{compat=newest}
+\usepackage[color=blue!10]{todonotes}%pour les notes Todo
+\usepackage{tabularx}
+\usepackage{subcaption}
+%\newcommand{\bo}[1]{\mathbf{#1} }
+\newcommand{\diag}[1]{\operatorname{diag}\left(#1\right)}
+\usepackage[mathcal]{eucal}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\newcommand{\ci}{\text{j}} %nombre complexe dans les equations
+
+
+
+
+
+\begin{document}
+%\thispagestyle{scrplain} % automatically performed by KOMA
+\def\papernumber{BeBeC-2018-S2}
+% Please replace the last two digits by number assigned to your paper.
+\title{%
+\vspace{-30mm} % move logo obove typearea
+\includegraphics[width=50mm]{logo_BeBeC_lrg_CMYK}\\
+\null\vspace{-54mm}
+% Paper number (assigned in acceptance Email)
+{\hfill\large{\papernumber}}\\
+\vspace{45mm}
+%\null\box0 % typeset paper number
+\Large{
+ON THE DENOISING OF CROSS-SPECTRAL MATRICES FOR (AERO)ACOUSTIC APPLICATIONS
+}}
+
+\author{
+% KOMA Standard would be:
+%  Peter Sciman\thanks{German Aerospace Center, Müller-Breslau-Str. 8, 10623 Berlin, Germany,
+% peter.science@dlr.de}
+% \and Sarah Techwoman\thanks{Technical University of Berlin, Straße des 17.~Juni 135,
+% 10623 Berlin, Germany, sarah.technology@tu-berlin.de}
+% Word template is better approximated by
+ \normalsize{Alice Dinsenmeyer$^{1,2}$, Jérôme Antoni$^1$, Quentin Leclère$^1$ and  Antonio Pereira$^2$}\\[-0.4em]
+ \small{$^1$ Laboratoire Vibrations Acoustique}\\[-0.4em]
+ \small{Univ Lyon, INSA-Lyon, LVA EA677, F-69621 Villeurbanne, France}\\[-0.4em]
+ \small{$^2$ Laboratoire de Mécanique des Fluides et d’Acoustique }\\[-0.4em]
+ \small{Univ Lyon, École Centrale de Lyon, F-69134, Écully, France}
+\date{}
+}
+
+\maketitle
+\begin{abstract}
+The use of multichannel measurements is a current practice for source characterization in multiple fields. But common to all experimental approaches is the presence of extraneous noise such as calibration, electronic or ambient noise.
+ However, signals are supposed to be stationary and performing averaging of cross-spectral quantities over several time snapshots will concentrate uncorrelated noise along the cross-spectral matrix (CSM) diagonal. A common practice is thus to set the CSM diagonal to zero, which is known to improve the dynamic range of the source localization maps, yet this also leads to underestimated source levels. More advanced techniques have been recently developed to avoid such problems by preserving or reconstructing source information that lies in the CSM diagonal.
+
+Several existing approaches for CSM denoising are investigated in this paper and a new one is proposed as well. We consider an unknown number of uncorrelated sources and no reference background noise. The proposed method is based on the decomposition of the CSM into a low-rank part and a residual diagonal part attached to the unwanted noise; the corresponding inference problem is set up within a probabilistic framework which is ideally suited to take the non-deterministic nature of the estimated CSM into account. This is then solved by computing the maximum a posteriori estimates of the decomposition by estimating the full a posteriori probability distribution by running a Markov chain Monte Carlo. For each method, reconstruction errors are compared in the frame of various numerical experiments, for different acoustic signals and noise structures.
+\end{abstract}
+
+
+\pagestyle{scrheadings}
+% Place headers on the inner and outer sides of the header line
+% \ihead and \ohead are from the KOMA script
+\ihead{7\textsuperscript{th} Berlin Beamforming Conference 2018}
+
+%%% QUESTIONS
+%========================================
+%\todo[inline]{
+%- Pourquoi calculer l'erreur en utilisant que la diagonale ?\\
+%-Que se passe-t-il si $N_{src} \geq N_{mic}$ ?
+%}
+
+%%% INTRO
+%========================================
+\section*{Introduction}
+
+Array systems and multichannel pressure measurements are widely used for source localization and quantification. Measurement noise such as calibration, electronic or ambient noise affects the performance of acoustic imaging algorithms. In aeroacoustic applications, acoustic pressure measurements can be highly disturbed by the presence of flow-induced noise \citep{Fenech2009}.
+
+Since the 70s, multiple algorithms have exploited the eigenstructures of the measured cross-spectral matrix (CSM) to extract a signal and a noise part; so does multiple signal classification (MUSIC) \citep{Schmidt1986}, for example. But this subspace identification is possible only in the cases where the signal-to-noise ratio (SNR) is high and the number of uncorrelated sources sufficiently low.
+
+In the field of underwater acoustics, Forster and Asté \citep{Forster1999} also exploited the CSM structure to built a projection basis from Hermitian matrix that depends on the array geometry. 
+In the aeracoustic field, a widespread practice is to set the diagonal entries of the CSM to zero. It is based on the assumption that flow induced noise has a correlation length smaller than the microphone inter-spacing. It is known to improve the dynamic range of source localization maps, but it leads to an underestimation of source levels \citep{Dougherty2002a}.
+
+More advanced methods have been proposed using wavenumber decomposition to filter out high wavenumbers associated with turbulent boundary layer noise \citep{Arguillat2010}. Other techniques make use of a preliminary background noise measurement, based on generalized singular value decomposition \citep{Bulte2007}, spectral subtraction \citep{Boll1979} or an extension of spectral estimation method \citep{Blacodon2010}.
+
+However, even when available, a background noise reference is not always representative since the source itself can generate the unwanted noise. The problem addressed in this paper is the suppression of uncorrelated noise with no reference measurement of the noise. This problem is stated in the first section of this paper. In the second section, CSM simulation is detailed, to be used as a reference to compare different denoising algorithms. In a third section, different approaches are investigated  to suppress the noise and a new one is proposed as well.  The denoising problem is set up within a probabilistic framework and is solved by estimating an a posteriori probability distribution, using a Markov chain Monte Carlo algorithm. The last section is dedicated to a comparison based on the numerical simulations that highlights sensitivity of each denoising method to averaging, noise level and increasing number of sources.
+
+
+%%% PROBLEM STATEMENT
+%========================================
+\section{Problem statement}
+We consider measured signals given by $M$ receivers, resulting of a linear combination of $K$ source signals emitted by uncorrelated monopoles of power $\bm{c}$ and an independent additive noise $\bm{n}$:
+\begin{equation}
+    \bm{p}=\bm{Hc}+\bm{n}.
+    \label{pb}
+\end{equation}
+$\bm{H} \in \mathbb{C}^{M\times K}$ is the propagation matrix from sources to receivers.
+
+The measured field is supposed to be statistically stationary and an averaging is performed over $N_s$ snapshots. The covariance matrix of measurements is then given by 
+\begin{equation}
+        \bm{S}_{pp} = \frac{1}{N_s}\sum_{i=1}^{N_s}\bm{p}_i\bm{p}^H_i,
+        \label{CSM}
+        	%&=\bm{HS}_{cc}\bm{H}' + \bm{S}_{nn} + \frac{1}{N_s}\sum_{i=1}^{N_s}\bm{n}_i\bm{H}'\bm{c}'_i + \frac{1}{N_s}\sum_{i=1}^{N_s}\bm{Hc}_i\bm{n}_i'
+\end{equation}
+thereafter called cross-spectral matrix (CSM) because calculations are performed over Fourier coefficients. The superscript $H$ stands for the conjugate transpose operator. 
+
+Using Eq.~\eqref{pb}, this measured CSM can be written as the sum of a signal CSM $\bm{S}_{aa}=\bm{HS}_{cc}\bm{H}^H$, a noise CSM $\bm{S}_{nn}= \frac{1}{N_s}\sum_{i=1}^{N_s}\bm{n}_i\bm{n}_i^H$ and additional crossed terms.
+As noise signal  is independent of the source signals, crossed-terms tend to zero when the number of snapshots tends to infinity. Moreover, spatial coherence of noise is supposed to be smaller than the receiver spacing. In this case, the noise CSM tends to be diagonal when the number of snapshots increases, which gives:
+\begin{equation}
+    \bm{S}_{pp}\approx \bm{S}_{aa} + \diag{\bm{\sigma}_n^2}.
+\end{equation}
+The notation $\diag{\bm{\sigma}_n^2}$ stands for a diagonal matrix whose diagonal entries are the elements in vector $\bm{\sigma}_n^2$.
+
+Denoising methods presented in this paper exploit these properties on $\bm{S}_{aa}$ and $\bm{S}_{nn}$ to solve optimization problems. In order to compare these different denoising methods, each of them is implemented and tested on simulated noisy CSM. 
+
+%%% SIMULATION
+%===========================================
+\section{Simulation of CSM}
+This section explains how CSM are synthesized. 
+First, source spectra is supposed to follow a Gaussian law: $\bm{c}\sim \mathcal{N}_{\mathbb{C}} \left(0,\frac{c_{rms}^2}{2}\bm{I} \right)$, with $\bm{I}$ the identity matrix. Throughout the paper, the term Gaussian is a shortcut that refers to circularly-symmetric multivariate complex Gaussian. The acoustic signal is then obtained from source propagation $\bm{a} = \bm{Hc}$, using Green functions for free field monopoles: 
+\begin{equation}
+	\bm{H}=\frac{\operatorname{e}^{-\ci k r}}{4 \pi r},
+\end{equation}
+$k$ being the wavenumber and $r$ the distance between sources and receivers. 
+Gaussian noise is then added, whose covariance is given by a signal-to-noise ratio (SNR) that may vary between the receivers:
+\begin{equation}
+  \bm{n}\sim \mathcal{N}_{\mathbb{C}} \left(0,\frac{n_{rms}^2}{2}\bm{I}\right)   \text{,~with } n_{rms}=\mathbb{E}\{|\bm{a}|\}10^{-\text{\itshape SNR}/20}
+  \label{noise}
+\end{equation}
+where $\mathbb{E}\{ ~\cdot~\}$ is the expectation operator. 
+
+Finally, the cross-spectral matrix $\bm{S}_{pp}$ is calculated using Eq.~\eqref{CSM}.  The signal CSM given by \hbox{$\bm{S}_{aa}=\frac{1}{N_s}\sum_{i=1}^{N_s}\bm{a}_i\bm{a}_i^H$} is also calculated in order to be used as a reference for the relative error calculation:
+\begin{equation}
+    \delta = \frac{\|\diag{\bm{S}_{aa}}  - \diag{\bm{\hat{S}}_{aa}}\|_2}{\|\diag{\bm{S}_{aa} } \|_2}
+    \label{err}
+\end{equation}
+where $\bm{\hat{S}}_{aa}$ is the signal matrix denoised  by means of the different algorithms and $\| \cdot \|_2$ is the $\ell_2$ norm. This work is limited to the study of the diagonal denoising and thus errors are calculated using only diagonal elements of the signal CSM.
+
+\subsection*{Configuration for the simulated acoustical propagation\label{config_section}}
+
+The acoustical field produced by a vertical\footnote{Source line is tilted of 1 degree from the vertical to break antenna symmetry.} line of $K$ uncorrelated monopoles is measured by $M=93$ receivers as shown on Fig.~\ref{config}.
+Default values for each parameter are given by Tab.~\ref{default_values}.
+
+
+\begin{center}
+\noindent\begin{minipage}{\linewidth}
+      %\centering
+      \begin{minipage}{0.47\linewidth}
+          \begin{table}[H]
+          	%\centering
+                   \setlength\extrarowheight{0.22cm}
+		\begin{tabular}{c|c}%>{\centering\arraybackslash}m{0.59\linewidth}|>{\centering\arraybackslash}m{0.43\linewidth}}
+			\hline \textbf{Parameter} &  \textbf{Default value} \\[0.2cm]\hline
+			Frequency	&	$f=$ 		15 kHz \\ \hline
+			Number of monopoles	&	$K=$		20\\ \hline
+			Number of receivers	&	$M=$ 		93\\ \hline
+			SNR	&	$\text{\itshape SNR}= $10 dB\\ \hline
+			Number of snapshots	&	$N_s=$		10\textsuperscript{4} \\\hline
+		\end{tabular}
+		\vspace{0.3cm}\caption{Default values for the numerical simulations. \label{default_values}}
+          \end{table}
+                \vfill
+      \end{minipage}
+      \hspace{0.02\linewidth}
+      \begin{minipage}{0.5\linewidth}
+          \begin{figure}[H]
+             	\centering
+		\input{img/config.tex}
+		\caption{Receiver ($\vcenter{\hbox{\small$\bm{\circ}$}}$) and source ($\vcenter{\hbox{\tiny$\blacklozenge$}}$) positions for acoustic field simulations. \label{config}}
+          \end{figure}
+      \end{minipage}
+\end{minipage}
+\end{center}
+
+%%% DENOISING METHODS
+%===========================================
+\section{Denoising methods}
+
+%%% DRec
+\subsection{Diagonal reconstruction}
+In this section, three methods for diagonal reconstruction are presented. The idea of these methods is to reduce as much as possible the self-induced noise concentrated on the diagonal elements of the measured CSM. The diagonal is minimized as long as the denoised CSM stays positive semidefinite. This problem can be written as: 
+\begin{equation}
+    \text{maximize~} \| \bm{\sigma}_{n}^2\|_1 \text{~~subject to~~} \bm{S}_{pp}- \diag{\bm{\sigma}_n^2} \geq 0
+    \label{eq_drec}
+\end{equation}
+where $\|\cdot\|_1$ the $\ell_1$ norm.
+Denoising methods that solve this problem are subsequently referred as DRec.
+
+ \subsubsection{Convex optimization} 
+ Hald \citep{Hald2017} identifies this problem as being a semidefinite program and uses the CVX toolbox \cite{cvx,Grant_cvx} to solve it. In the following, Hald's formulation is solved with SDPT3 solver implemented in CVX toolbox. This solver uses  a specific interior-point method (Mehrotra-type predictor-corrector methods) to solve that kind of conic optimization problems \citep{Tuetuencue2003}.
+
+\subsubsection{Linear optimization}
+Dougherty \citep{dougherty2016} expresses this problem as a linear programming problem that can be solved iteratively:
+\begin{equation}
+	\text{maximize~} \| \bm{\sigma}_{n}^2\|_1   \text{~~subject to~~}  \bm{V}^{H}_{(k-1)} \left( \bm{S}_{pp}- \diag{\bm{\sigma}_n^2}_{(k)} \right) \bm{V}_{(k-1)} \geq 0 
+\end{equation}
+at the $k$\textsuperscript{th} iteration. $\bm{V}_{(k-1)}$ are the eigenvectors of $\bm{S}_{pp}-\diag{\bm{\sigma}_n^2}_{(1,...,k-1)} $, concatenated  from the $k-1$ previous iterations. This problem is solved using a dual-simplex algorithm implemented in the Matlab \textit{linprog} function.
+ 
+ \subsubsection{Alternating projections}
+Alternating projections method can be used to solve problem~\eqref{eq_drec} by finding the intersection between two convex sets: the first set is the set of positive semi-definite matrices and the second is the set of diagonal matrices for the noise matrix. The method is used in \cite{leclere:hal-01279944} with the following algorithm: 
+\begin{center}
+	\fbox{
+	\begin{minipage}{0.9\textwidth}
+		\begin{algorithmic}
+			\STATE $\bm{\bar{S}}_{{pp}_{(0)}} := \bm{S}_{pp}-\diag{\bm{S}_{pp}}$ 										 \hfill\parbox{6cm}{$\triangleright$ \textit{set diagonal to zero}}\\
+			\FOR{$k$}
+				\STATE~~~~ $\bm{s}_{(k)}  := \operatorname{eigenvalues}(\bm{S}_{{pp}_{(k)}})$ 								 \hfill\parbox{6cm}{$\triangleright$ \textit{computes eigenvalues}}\\
+			    	\STATE~~~~ $\bm{V}_{(k)} :=  \operatorname{eigenvectors}(\bm{S}_{{pp}_{(k)}})$ 								 \hfill\parbox{6cm}{$\triangleright$ \textit{computes eigenvectors}}\\
+			    	\STATE~~~~ $\bm{s}_{(k)} := \bm{s}_{{(k)}}^{+}$															 \hfill\parbox{6cm}{$\triangleright$ \textit{set negative eigenvalues to zero}}\\
+			    	\STATE~~~~ $\bm{S}_{{pp}_{(k+1)}} := \bar{\bm{S}}_{{pp}_{(0)}} + \bm{V}^{H}_{(k)} \bm{s}_{(k)}\bm{V}_{(k)}$			\hfill\parbox{6cm}{$\triangleright$ \textit{inject in measured CSM}}\\
+			\ENDFOR
+		\end{algorithmic}
+	\end{minipage}
+	}
+\end{center}
+
+This algorithm stops when all the eigenvalues of the denoised CSM are nonnegative.
+
+\subsection{Comparison of diagonal reconstruction methods}
+For each of these methods, we study the relative error on the estimated signal matrix $\bm{\hat{S}}_{aa}$ defined by Eq.~\eqref{err}. Three parameters are successively changed: \\%[0.2cm]
+\indent - the rank of signal matrix $\bm{S}_{aa}$ by increasing the number of uncorrelated monopoles from 1 to $M$,\\
+\indent - the SNR from -10 to 10 dB,\\
+\indent - the number of snapshots $N_s$ from 10 to 5.10$^4$.\\
+When one parameter is changed, the others remain constant, given by Tab.~\ref{default_values}. Relative errors are plotted in Fig.~\ref{drec_comp}.
+\begin{figure}[h]
+	%\centering
+	\hspace{-0.04\textwidth}
+	\resizebox{1.05\textwidth}{!}{
+	\begin{minipage}{1.2\textwidth}
+		\centering
+		\begin{subfigure}{0.3\textwidth}
+			\input{img/diagonal_reconstruction/AP_rang.tex}\\[-0.8cm]
+			\subcaption{\hspace{-3cm}~}
+		\end{subfigure}
+		\hspace{0.6cm}
+		\begin{subfigure}{0.3\textwidth}
+			\input{img/diagonal_reconstruction/AP_SNR.tex}\\[-0.8cm]
+			\subcaption{\hspace{-1cm}~}
+		\end{subfigure}
+		\begin{subfigure}{0.3\textwidth}
+			\input{img/diagonal_reconstruction/AP_Mw.tex}\\[-0.8cm]
+			\subcaption{\hspace{-1cm}~}
+		\end{subfigure}
+	\end{minipage}
+	}
+	\caption{ Error $\delta$ on the reconstructed diagonal, for different simulation parameters : (a) rank of signal matrix $\bm{S}_{aa}$, (b) noise level on receivers, (c) number of snapshots $N_s$. Diagonal reconstruction methods: convex optimization~(\protect\tikz[baseline]\protect\draw[dashed,line width=1.0pt](0,.5ex)--++(.5,0) ;), \hbox{alternating~projections~(\protect\tikz[baseline]\protect\draw[dotted,line width=1.0pt] (0,.5ex)--++(.5,0) ;)} and linear~optimization~(\protect\tikz[baseline]\protect\draw[dash dot,line width=1.0pt] (0,.5ex)--++(.5,0) ;). On~(c), the error is plotted for 20 (black), 80 (blue) and 93 (red) sources.\label{drec_comp}}
+\end{figure}
+
+%\begin{figure}[H]
+%	%\centering
+%	\hspace{-0.04\textwidth}
+%	\resizebox{1.05\textwidth}{!}{
+%	\begin{minipage}{1.2\textwidth}
+%		\centering
+%			\input{img/diagonal_reconstruction/AP_rang.tex}
+%			\hspace{-0.2cm}\input{img/diagonal_reconstruction/AP_SNR.tex}
+%			\hspace{-0.5cm}\input{img/diagonal_reconstruction/AP_Mw.tex} \\
+%		\tikz[baseline]{\draw[dashed,line width=1.0pt] (0,.5ex)--++(.5,0) ;} Convex optimization; 
+%		\tikz[baseline]{\draw[dotted,line width=1.0pt] (0,.5ex)--++(.5,0) ;} Alternating projections; 
+%		\tikz[baseline]{\draw[dash dot,line width=1.0pt] (0,.5ex)--++(.5,0) ;} Linear optimization\\
+%	\end{minipage}
+%	}
+%	\caption{Error on the reconstructed diagonal, for different simulation parameters. On the right, error is plotted for 20 (black), 80 (blue) and 93 (red) sources.\label{drec_comp}}
+%\end{figure}
+
+When the rank of the signal matrix is sufficiently low (below 30), all the three algorithms have the same performance. In this case, the error decreases linearly when SNR and $N_s$ increase respectively linearly and logarithmically.
+When the rank of $\bm{S}_{aa}$ increases, linear optimization does not give results as good as convex optimization because its convergence is slower to reach. In linear optimization algorithm, concatenation of eigenvectors enlarges $\bm{V}$ matrix at each iteration, which increases computational time drastically, and the algorithm has to be stopped before total convergence.
+
+As expected from reference \citep{Hald2017}, the error suddenly increases when the number of sources exceeds a specific value (75 here). It may be interpreted as a threshold beyond which the problem become poorly conditioned.
+Note that the minimal error here is near -20 dB, and not -100 dB as in  \citep{Hald2017} because noise is slightly correlated due to the finite number of snapshots.
+
+As convex optimization is faster and gives better results, we choose this method for comparison with other denoising algorithms presented below.
+
+
+%%% RPCA
+\subsection{Robust principal component analysis}
+Another strategy to denoise CSM is to use signal and noise structures, as sparsity and low-rankness. As explained previously, the rank of signal matrix is given by the number of uncorrelated components that are necessary to reproduce the acoustical field. Considering that the number of receivers is higher than the number of equivalent monopoles, one can assume that the signal CSM is low-rank. It is also assumed that the measurement noise has spatially small correlation length compared to receiver interspacing so that off-diagonal elements tend to vanish. The noise CSM can then be approximated by a sparse matrix.
+
+Robust Principal Component Analysis (RPCA) aims at recovering a low-rank matrix from corrupted measurements. It  is widely used for data analysis, compression and visualization, written as the following optimization problem: 
+\begin{equation}
+	\text{minimize~} \|\bm{\hat{S}}_{aa} \|_* + \lambda \| \bm{\hat{S}}_{nn} \|_1  \text{~~~~subject to~~~~}  \bm{\hat{S}}_{aa} +  \bm{\hat{S}}_{nn} = \bm{S}_{pp}
+	\label{rpca}
+\end{equation}
+where $\|\cdot\|_*$ is the nuclear norm (sum of the eigenvalues).
+This method has been used in \cite{finez:hal-01276687} and  \cite{Amailland2017phd} on aeroacoustic measurements, achieved by an accelerated proximal gradient algorithm developed by Wright \textit{et al.} \cite{Wright2009}.  In this formulation, noise CSM is not constrained to be fully diagonal so weakly correlated noise can theoretically be taken into account.
+
+\subsubsection{Choosing the regularization parameter}
+The trade-off parameter $\lambda$ has to be chosen appropriately given that it may impact greatly the solution. According to \cite{Wright2009,Candes2011}, a constant parameter equal to $M^{-\frac{1}{2}}$ can be chosen as far as the rank of the signal matrix is reasonably low. As shown by \cite{Amailland2017phd}, this parameter is not always accurate but it is far easier to implement than a trade-off curve analysis. As shown on Fig.~\ref{l-curve}, the trade-off curve  is very oscillating and its use can be thorny since it has several maximum curvature points.
+
+\begin{figure}[H]
+	\centering
+	\input{img/rpca/Lcurve_Mw10000_Nsrc20.tex}
+	\caption{Trade-off curve as a function of $\lambda$ (for default values from Tab.~\ref{default_values}). \label{l-curve}}
+\end{figure}
+
+Another solution is to chose the regularization parameter that minimizes the reconstruction error $\| \bm{\hat{S}}_{pp}-\bm{S}_{pp}\|_2$, excluding the case where $\bm{\hat{S}}_{nn}$ is null. In Fig.~\ref{error_rpca}, this regularization parameter is compared to Wright's ($M^{-\frac{1}{2}}$) and to the optimal regularization parameter that gives the smallest relative error (unknown on non-synthetic case).
+
+\begin{figure}[h]		
+		%include figures
+		\begin{subfigure}{0.49\textwidth}
+			\input{img/rpca/choose_lambda2.tex}\\[-0.8cm]
+			\subcaption{}
+		\end{subfigure}
+		%\hspace{0.2cm}
+		\begin{subfigure}{0.48\textwidth}
+			\input{img/rpca/choose_lambda1.tex}\\[-0.8cm]
+			\subcaption{\label{error_rpca_b}}
+		\end{subfigure}
+		
+		%legend 
+		\definecolor{optim}{rgb}{0,0.447,0.741}
+		\definecolor{minest}{rgb}{0.85,0.325,0.098}
+		\definecolor{wright}{rgb}{0.929,0.694,0.125}
+		
+		%caption
+		\caption{Error $\delta$ on the reconstructed diagonal solving RPCA as a function of the rank of the signal matrix, for three selection methods for the regularization parameter $\lambda$: 
+		\protect\tikz[baseline]\protect\draw[line width=1.0pt,color=optim](0,.5ex)--++(.5,0) ; optimal;  
+		\protect\tikz[baseline]\protect\draw[line width=1.0pt,color=minest] (0,.5ex)--++(.5,0) ; minimize reconstruction error;  
+		\protect\tikz[baseline]\protect\draw[line width=1.0pt,color=wright] (0,.5ex)--++(.5,0) ; $M^{-\frac{1}{2}}=0.1$.\\
+		  (b) Lines highlight the value of the regularization parameter for each selection method and their associated errors, depending of the rank of the signal matrix.
+		\label{error_rpca}}
+\end{figure}
+
+On Fig.~\ref{error_rpca_b}, grayscale map corresponds to the relative error as a function of the rank of the signal matrix and the regularization parameter. From this map one can see that optimal $\lambda$ (given by the blue curve) has to increase with the rank of $\bm{S}_{aa}$, in order to maintain a balance in Eq.~\eqref{rpca}. That is why a constant $\lambda$ gives good results only for very low rank of $\bm{S}_{aa}$. 
+The regularization parameter that minimizes the reconstruction error gives a very unstable solution mostly far from the optimal solution.\\
+RPCA results highly depend on the choice for $\lambda$ and it is essential to find an appropriate way to set this parameter, for any configuration.
+
+%%%PFA
+\subsection{Probabilistic factorial analysis}
+Probabilistic factorial analysis (PFA) is based on fitting the experimental CSM of Eq. (2) with the independent and identically distributed (iid) random variables  
+\begin{equation}
+        \bm{p}_i = \bm{L}\bm{c}_i +\bm{n}_i, \quad i=1,...,{N_s}
+\end{equation}
+generated from independent draws of the random coefficients $c_{i,k}$, $k=1,...,\kappa$, and of the noise $n_{i,m}$ , $m=1,...,M$, in the complex Gaussians $\mathcal{N}_{\mathbb{C}} \left(0,\alpha_k^2 \right) $ and $\mathcal{N}_{\mathbb{C}} \left(0,\sigma_m^2 \right) $, respectively. The parameters in the PFA model are the matrix of factorial weights, $\bm{L}$, the factor strengths $\alpha_k^2$ and the noise variances $\sigma_m^2$. They may be inferred with various methods. Here, a Bayesian hierarchical approach is followed, where all unknown parameters are seen as random variables with assigned probability density functions (PDFs), i.e.
+\begin{align*}
+	&{L_{kl}}\sim \mathcal{N}_{\mathbb{C}}(0,\gamma^2)\\
+    &{\sigma_{m}}^2\sim \mathcal{IG}(a_{\beta},b_{\beta})\\
+    &{\alpha_k^2}\sim \mathcal{IG}(a_{\alpha},b_{\alpha})
+\end{align*}
+as well as the hyperparameter ${\gamma^2}\sim \mathcal{IG}(a_{\gamma},b_{\gamma})$ ($\mathcal{IG}(a,b)$ stands for the inverse gamma PDF with shape parameter $a$ and scale parameter $b$, which is conjugate to the Gaussian PDF \cite{Gamerman2006}). This hierarchical model is inferred by using Gibb's sampling, a Monte Carlo Markov Chain algorithm, which consists in iterating draws in the marginal conditional distributions of $\sigma_m^2$, $\alpha_k^2$, $L_{kl}$, and $\gamma^2$ until convergence. Draws of the CSM are then obtained as $\bm{\hat{S}}_{aa}={N_s}^{-1}\bm{L}( \sum_{i=1}^{N_s}\bm{c}_i\bm{c}^H_i) \bm{L}^H$. The advantage of this approach is that it perfectly accounts for statistical variability in the measured CSM due to finite length records.  
+
+The introduction of the independent factor strengths $\alpha_k^2$ also enforces sparsity on factors. Even if the chosen number of factors is higher than the real number of uncorrelated monopoles, the appropriate number of factors will be set to zero, and the reconstruction error will not be affected (see Fig.~\ref{factors_FA}). As the number of sources is unknown, we always choose $\kappa=M$. 
+
+Initial values of $\alpha$ are chosen with the normalized decrease of the first $\kappa$ eigenvalues of $\bm{S}_{pp}$. For $\sigma_m^2$ and $\gamma^2$, the hyperparameter $a$ is set close to 2 and $b$ is about 1.
+1000 iterations are performed and $\bm{\hat{S}}_{aa}$ is an averaged value of the 200 last iterations.
+\begin{figure}[h]
+	\centering
+	\input{img/factor_analysis/EM_MCMC_factors.tex}
+	\caption{Error on the diagonal of the signal CSM for increasing number of factors in the PFA model. Error is minimal when the number of factors is equal to the number of uncorrelated sources (default value is 20).
+	\label{factors_FA}}
+\end{figure}
+
+%%% APPLICATIONS
+%==================================================
+\section{Comparison of the different methods on synthetic data}
+In this section, diagonal reconstruction are compared, using convex optimization (referred as DRec), along with RPCA and PFA solutions on data simulated as describe in subsection~\ref{config_section}. In a first part, we show algorithm performance in the situation where the noise has the same variance on each channel, called homogeneous noise. In a second part,  the noise is heterogeneously distributed on the receivers.
+
+\subsection{Homogeneous noise}
+Previous methods are first compared when the noise is homogeneously added on the receivers. In Eq.~\eqref{noise}, $n_{rms}$ is the same for all the receivers, given by the SNR. Results for varying number of sources,  values of SNR and number of snapshots are shown on Fig.~\ref{homo_a},~\ref{homo_b} and~\ref{homo_c}. As previously, when one parameter varies the other remain constant, given by Tab.~\ref{default_values}.
+
+%\begin{figure}[H]
+%	%\centering
+%	\hspace{-0.04\textwidth}
+%	\resizebox{1.05\textwidth}{!}{
+%	\begin{minipage}{1.2\textwidth}
+%		\centering
+%		
+%		%include figure
+%		\input{img/comparison/all_homo_rang.tex}
+%		\hspace{-0.2cm}\input{img/comparison/all_homo_SNR.tex}
+%		\hspace{-0.5cm}\input{img/comparison/all_homo_Mw.tex}
+%		 \hfill\\
+%		 
+%		 %legend
+%		\definecolor{hald}{rgb}{0.00000,0.44700,0.74100}%
+%		\definecolor{rpca}{rgb}{0.85000,0.32500,0.09800}%
+%		\definecolor{mcmc}{rgb}{0.49400,0.18400,0.55600}%
+%		\tikz[baseline]{\draw[line width=1.0pt,color=hald] (0,.5ex)--++(.5,0) ;} DRec; 
+%		\tikz[baseline]{\draw[dashed,line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;} RPCA using $\lambda_{opt}$;
+%		\tikz[baseline]{\draw[line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;} RPCA using $\lambda=M^{-\frac{1}{2}}$;
+%		\tikz[baseline]{\draw[line width=1.0pt , color=mcmc] (0,.5ex)--++(.5,0) ;} PFA.\\
+%	\end{minipage}
+%	}
+%	\caption{Relative error on the diagonal of the signal CSM when the unwanted noise is homogeneously added to the 93 receivers.}
+%\end{figure}
+
+Except when the signal CSM is high rank, the PFA errors are similar to the one given by RPCA using optimal regularization parameter, while the DRec error are most of the time 5 dB higher.
+
+Convergence time is not given here, because implementations and solvers are very different from one method to the other.  But in general, MCMC are known to be computationally expensive, compared to the proximal gradient algorithm or the interior-point method. When the number of snapshots is lower than the number of receivers, MCMC convergence greatly depends on the initialization and thus can be slow, as it is the case here.
+ 
+\subsection{Heterogeneous noise}
+For aeroacoustical applications, flow-induced noise can impact the antenna non-homogeneously. We now test the denoising methods on an unfavorable academic case. Ten receivers randomly chosen are now affected by a strong noise, for which the SNR is 10 dB lower than for the other receivers.  Results for different configurations are shown on Fig.~\ref{hetero_a},~\ref{hetero_b} and~\ref{hetero_c}.
+
+%\begin{figure}[H]
+%	%\centering
+%	\hspace{-0.04\textwidth}
+%	\resizebox{1.05\textwidth}{!}{
+%	\begin{minipage}{1.2\textwidth}	
+%		\centering
+%				
+%		%include figure
+%		\input{img/comparison/all_hetero_rang.tex}
+%		\hspace{-0.2cm}\input{img/comparison/all_hetero_SNR.tex}
+%		\hspace{-0.5cm}\input{img/comparison/all_hetero_Mw.tex}
+%		 \hfill\\
+%		 
+%		 %legend
+%		\definecolor{hald}{rgb}{0.00000,0.44700,0.74100}%
+%		\definecolor{rpca}{rgb}{0.85000,0.32500,0.09800}%
+%		\definecolor{mcmc}{rgb}{0.49400,0.18400,0.55600}%
+%		\tikz[baseline]{\draw[line width=1.0pt,color=hald] (0,.5ex)--++(.5,0) ;} DRec;  
+%		\tikz[baseline]{\draw[dashed,line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;} RPCA using $\lambda_{opt}$; 
+%		\tikz[baseline]{\draw[line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;} RPCA using $\lambda=M^{-\frac{1}{2}}$; 
+%		\tikz[baseline]{\draw[line width=1.0pt , color=mcmc] (0,.5ex)--++(.5,0) ;} PFA.\\
+%	\end{minipage}
+%	}
+%	\caption{Relative error on the diagonal of the signal CSM when the unwanted noise is 10 dB higher on 10 random receivers.}
+%\end{figure}
+
+All the methods provide higher errors when dealing with heterogenous noise. The DRec method is a bit more affected, increasing of about 4 dB, whereas errors from RPCA and MCMC increases of about 1 or 2 dB. When the noise is heterogenous, its eigenvalue spectrum is not flat anymore, which reduces the DRec performance.  
+
+\begin{figure}[h]
+	%\centering
+	\hspace{-0.04\textwidth}
+	\resizebox{1.05\textwidth}{!}{
+	\begin{minipage}{1.2\textwidth}
+		\centering		
+		%include figure
+		%bruit homogène
+		\begin{subfigure}[b]{0.3\textwidth}
+			\input{img/comparison/all_homo_rang.tex}\\[-0.8cm]
+			\subcaption{\hspace{-3cm}~\label{homo_a}}
+		\end{subfigure}
+		\hspace{0.6cm}		
+		\begin{subfigure}[b]{0.3\textwidth}
+			\input{img/comparison/all_homo_SNR.tex}\\[-0.8cm]
+			\subcaption{\hspace{-1cm}~\label{homo_b}}
+		\end{subfigure}		
+		\begin{subfigure}[b]{0.3\textwidth}
+			\input{img/comparison/all_homo_Mw.tex}\\[-0.8cm]
+		 	\subcaption{\hspace{-1cm}~\label{homo_c}}
+		\end{subfigure}
+		\hfill		 
+		 %bruit hétérogène
+		 \begin{subfigure}{0.3\textwidth}
+		 	\input{img/comparison/all_hetero_rang.tex}\\[-0.8cm]
+		 	\subcaption{\hspace{-3cm}~\label{hetero_a}}
+		\end{subfigure}
+		 \hspace{0.6cm}	
+		 \begin{subfigure}{0.3\textwidth}
+		 	\input{img/comparison/all_hetero_SNR.tex}\\[-0.8cm]
+		 	\subcaption{\hspace{-1cm}~\label{hetero_b}}
+		\end{subfigure}		 
+		 \begin{subfigure}{0.3\textwidth}
+		 	\input{img/comparison/all_hetero_Mw.tex}\\[-0.8cm]
+		 	\subcaption{\hspace{-1cm}~\label{hetero_c}}
+		\end{subfigure}
+	\end{minipage}
+	}
+	
+	%legend
+	\definecolor{hald}{rgb}{0.00000,0.44700,0.74100}%
+	\definecolor{rpca}{rgb}{0.85000,0.32500,0.09800}%
+	\definecolor{mcmc}{rgb}{0.49400,0.18400,0.55600}%
+	\caption{Relative error $\delta$ on the diagonal of the signal CSM. Denoising methods: DRec~(\protect\tikz[baseline]\protect\draw[line width=1.0pt,color=hald] (0,.5ex)--++(.5,0) ;), RPCA with $\lambda_{opt}$~(\protect\tikz[baseline]\protect\draw[dashed,line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;),
+	RPCA with $\lambda=M^{-\frac{1}{2}}$~(\protect\tikz[baseline]\protect\draw[line width=1.0pt , color=rpca] (0,.5ex)--++(.5,0) ;) and
+	PFA~(\protect\tikz[baseline]\protect\draw[line width=1.0pt , color=mcmc] (0,.5ex)--++(.5,0) ;).
+	(a,b,c) Noise is added homogeneously to the 93 receivers.	 (d,e,f) Noise is 10~dB higher on 10 random receivers. When one parameter varies, the other are constant, given by Tab.~\ref{default_values}.
+	}
+\end{figure}
+%\todo[inline]{parler de l'intervalle de crédibilité}
+
+
+%%% CONCLUSION
+%=====================================
+\section*{Conclusion}
+DRec has the great advantage to be simple and fast to implement, but it appears to be less reliable than RPCA and MCMC, especially when dealing with heterogeneous noise. RPCA presents one major difficulty which lies on the choice of the regularization parameter, especially when the signal CSM is not very low-rank. MCMC only have priors to be set, but they can be diffuse. Its main drawback is computational time that could be reduced by lessening the number of iterations, thanks to a precise initialization. This initialization could be the results of the convex optimization method for example. Moreover, factorial analysis model offers the flexibility to be easily adapted for a correlated noise model such as Corcos model \citep{Corcos1963}, a topic which is currently under study.
+
+%%% REMERCIEMENTS
+%====================================
+\section*{Acknowledgements}
+This work was performed within the framework of the Labex CeLyA of the Université de Lyon, within the programme ‘Investissements d’Avenir’ (ANR-10- LABX-0060/ANR-11-IDEX-0007) operated by the French National Research Agency (ANR).
+This work was also performed in the framework of Clean Sky 2 Joint Undertaking, European Union (EU), Horizon 2020, CS2-RIA, ADAPT project, Grant agreement no 754881.
+
+%---------------------------------------------------------------------------------------------------------------------------------------------
+%\newpage
+% The following Bibstyle includes the ISBN numbers of the references
+%\bibliographystyle{is-plain}
+\bibliographystyle{bebec}
+\bibliography{biblio}
+% More than one bibtex file can be referenced here, e.g.
+% \bibliography{array-lit,lit-beamforming,myliterature}
+
+
+\end{document}

@@ -1,0 +1,81 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+\definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=3.505in,
+height=2.647in,
+at={(0.698in,0.577in)},
+scale only axis,
+xmin=-20,
+xmax=20,
+xlabel style={font=\color{white!15!black}},
+xlabel={SNR (dB)},
+ymin=-80,
+ymax=0,
+ylabel style={font=\color{white!15!black}},
+ylabel={Relative error on diag(${S_p}$) (dB)},
+axis background/.style={fill=white},
+legend style={at={(0.97,0.03)}, anchor=south east, legend cell align=left, align=left, draw=white!15!black}
+]
+\addplot [color=mycolor1, line width=1.0pt]
+  table[row sep=crcr]{%
+-20	-1.01181028098879e-05\\
+-18	-1.30452604679024\\
+-16	-2.17479310822197\\
+-14	-2.87654870401891\\
+-12	-3.9221454677978\\
+-10	-5.20938636219564\\
+-8	-6.10694986919316\\
+-6	-7.03940282080461\\
+-4	-7.3798819885131\\
+-2	-8.12430643809389\\
+0	-8.30855980532569\\
+2	-8.78234780930155\\
+4	-9.0852259736287\\
+6	-9.34726041517242\\
+8	-9.73831148130785\\
+10	-10.0752689910005\\
+12	-10.3589575919484\\
+14	-10.5419944907041\\
+16	-10.6644116246586\\
+18	-10.7737184200925\\
+20	-10.9849489303199\\
+};
+\addlegendentry{R=93}
+
+\addplot [color=mycolor2, line width=1.0pt]
+  table[row sep=crcr]{%
+-20	-53.5741487870477\\
+-18	-57.5658705049987\\
+-16	-62.7910407300137\\
+-14	-67.4556755159269\\
+-12	-72.7613977281263\\
+-10	-70.5159860695007\\
+-8	-65.9290633699741\\
+-6	-61.5708979841393\\
+-4	-58.9875755111576\\
+-2	-56.3639752384538\\
+0	-53.4490511582578\\
+2	-51.2341086208789\\
+4	-49.0576564090457\\
+6	-46.9842161217631\\
+8	-45.0107462111162\\
+10	-43.0991381234713\\
+12	-41.288634962121\\
+14	-39.5543134781599\\
+16	-36.759240013466\\
+18	-34.8455498349361\\
+20	-33.8483763024821\\
+};
+\addlegendentry{R=5}
+
+\end{axis}
+\end{tikzpicture}%
