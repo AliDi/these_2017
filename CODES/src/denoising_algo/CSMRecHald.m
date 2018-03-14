@@ -7,14 +7,15 @@ function [Spp_out , d1, cvx_slvitr ] = CSMReconstruction( Spp)
 M=size(Spp,1);
 CSM=double(Spp);
 M=double(M);
-
+cvx_precision('high')
 cvx_begin
 	variable d1(M);
 	CSM + diag(d1,0) == hermitian_semidefinite(M);
 	minimize(sum(d1));
+	%minimize(norm(diag(CSM + diag(d1,0)),2));
 cvx_end
 
-Spp_out = Spp+diag(d1);
+Spp_out = CSM+diag(d1);
 
 cvx_status;
 cvx_slvtol;
