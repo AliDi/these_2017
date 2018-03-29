@@ -1,0 +1,240 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[french]{babel}
+%\usepackage{fontspec}
+\usepackage{graphicx}
+\usepackage{amsthm,amssymb,amsfonts,mathtools}
+\usepackage[utf8]{inputenc}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{graphicx}
+%\setlength{\columnseprule}{0.5pt}
+
+
+\newcounter{exo}[section]
+\setcounter{exo}{0}
+\newenvironment{exo}{\addtocounter{exo}{1}\vspace{0.4cm}\fbox{\textbf{Exercice \theexo:}}\\[-0.2cm]}{}
+
+\usepackage{icomma} %pour le bon espacement dans le nombres décimaux
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%%%%%%%%%head%%%%%%%%%%%%%%%%%%%%%%%
+%\twocolumn[ 
+%  \begin{@twocolumnfalse}
+% \begin{center}
+% \fbox{\Large \textsc{ Exercices : Calcul matriciel}}
+%\end{center}
+%    \hrulefill
+%\end{@twocolumnfalse}
+ % ]
+\begin{center}
+	\fbox{\Large \textsc{ Exercices : Calcul matriciel}}
+\end{center}
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{multicols}{2}
+%\end{multicols}
+\indent\exo
+\begin{enumerate}
+	\item $A=
+	\begin{pmatrix}
+		1&-1\\1&0
+	\end{pmatrix}$ et $B=
+	\begin{pmatrix}
+		2&1\\2&-1
+	\end{pmatrix}$. Calculer $AB$ puis $BA$. \\
+	\item $A=
+	\begin{pmatrix}
+		1&2&3\\6&5&4
+	\end{pmatrix}$ et $B=
+	\begin{pmatrix}
+		1&-2\\-2&4\\1&-2
+	\end{pmatrix}$. Calculer $AB$
+	\item $A=
+	\begin{pmatrix}
+		2&1&1\\1&1&1\\3&1&0
+	\end{pmatrix}$ et $B=
+	\begin{pmatrix}
+		1&0&-1&2\\1&2&1&-1\\2&1&1&1
+	\end{pmatrix}$. Calculer $AB$ et $BA$
+	\item $ A=
+	\begin{pmatrix}
+		1 &1&1\\1&1&1\\1&1&1
+	\end{pmatrix}$. Calculer $A^2$
+	\item $A=
+	\begin{pmatrix}
+		1+i&2\\-3i&4
+	\end{pmatrix}$ et $B=
+	\begin{pmatrix}
+		-i&2i\\5&1
+	\end{pmatrix}$ où $i=\sqrt{-1}$. Calculer $AB$
+	\item $A=
+	\begin{pmatrix}
+		2&1\\1&3
+	\end{pmatrix}$ et $B=
+	\begin{pmatrix}
+		4\\1
+	\end{pmatrix}$. Calculer $AB$ puis $B^TA$
+\end{enumerate}
+
+\exo
+\begin{enumerate}
+	\item Les matrices suivantes sont-elles inversibles ? Si oui, les inverser.\\
+	$A=\begin{pmatrix}
+		1&1&1\\
+		-1&2&1\\
+		0&1&-1
+	\end{pmatrix}~~~~
+	B=\begin{pmatrix}
+		3&2&1\\
+		-1&2&-1\\
+		0&1&-2
+	\end{pmatrix}~~~~
+	C=\begin{pmatrix}
+		1&2&4\\
+		1&-2&-1\\
+		2&0&3
+	\end{pmatrix}$
+	\item $A=\begin{pmatrix}
+		1&3&\alpha\\2&-1&1\\-1&1&0
+	\end{pmatrix}$. Déterminer les valeurs de $\alpha$ pour lesquels $A$ n'est pas inversible.
+	\item $A=\begin{pmatrix}
+		\cos(\alpha)&\sin(\alpha)\\-\sin(\alpha)&\cos(\alpha)
+	\end{pmatrix}$. Calculer le déterminant de $A$.
+\end{enumerate}
+	
+
+\exo
+\begin{enumerate}
+	\item Calculer l'inverse de la matrice $M=
+	\begin{pmatrix}
+		3&2&-1\\1&-1&1\\2&-4&4
+	\end{pmatrix}$.
+	\item En déduire les solutions des systèmes 
+	$\left\{ \begin{array}{rl}
+		3x+2y-z&=5\\
+		x-y+z&=1\\
+		2x-4y+4z&=-3
+	\end{array} \right.$ et 
+	$\left\{ \begin{array}{rl}
+		3x+2y-z&=-1\\
+		x-y+z&=3\\
+		2x-4y+4z&=2
+	\end{array} \right.$
+
+\end{enumerate}
+
+\exo 
+
+Les familles suivantes forment-elles une base dans $\mathbb{R}^3$ ?\\[0.2cm]
+\indent $F_1=\left\{\begin{pmatrix}1\\0\\0\end{pmatrix},\begin{pmatrix}0\\0\\1\end{pmatrix},\begin{pmatrix}0\\1\\0\end{pmatrix}\right\}$~~~~
+ $F_2=\left\{	\begin{pmatrix}1\\0\\0\end{pmatrix},\begin{pmatrix}0\\2\\0\end{pmatrix},\begin{pmatrix}0\\0\\0\end{pmatrix}\right\}$~~~~
+ $F_3=\left\{	\begin{pmatrix}1\\1\\1\end{pmatrix},\begin{pmatrix}1\\-1\\1\end{pmatrix},\begin{pmatrix}0\\0\\1\end{pmatrix}\right\}$\\[0.2cm]
+\indent $F_4=\left\{	\begin{pmatrix}5\\1\\0\end{pmatrix},\begin{pmatrix}0\\2\\8\end{pmatrix},\begin{pmatrix}4\\2\\-1\end{pmatrix},\begin{pmatrix}1\\2\\1\end{pmatrix}\right\}$~~~~
+$F_5=\left\{	\begin{pmatrix}1\\1\\1\end{pmatrix},\begin{pmatrix}1\\-1\\1\end{pmatrix},\begin{pmatrix}2\\0\\2\end{pmatrix}\right\}$~~~~
+
+
+\exo
+
+Soit $\mathcal{T}$ l'application linéaire de matrice $A=\begin{pmatrix} 1&0&0\\0&1&0\\0&0&0\end{pmatrix}$. 
+\begin{enumerate}
+	\item Quelle est l'image par $\mathcal{T}$ des vecteurs $(1,2,3)^t$ et $(1,2,-1)^t$ ?
+	\item Trouver tous les vecteurs $X$ tels que $AX=(1,2,0)^t$.
+\end{enumerate}
+
+\exo\\
+\indent Soit une application linéaire de matrice $A=\begin{pmatrix}
+		0,1&8,9&17,9&17,7\\
+		2,3&5,4&13,1&8,5\\
+		-1&1,1&1,2&3,2\\
+		0,1&2,3&4,7&4,5
+	 \end{pmatrix}$.\\
+
+ %c=a+2*b et d=-2*a+c,  avec a, b c et d les colonne de A
+\indent Les valeurs propres de cette matrice sont $\lambda_1=12,4855$, $\lambda_2=-1.2855$ et $\lambda_3=\lambda_4=0$. On souhaite résoudre $AX=Y$.
+\begin{enumerate}
+	\item Connaissant $Y$, que peut-on dire du vecteur inconnu $X$ ?
+	\item Que peut-on dire de $A$ exprimée dans la base des vecteurs propres ?
+	\item On appelle \textbf{rang} la dimension de l'espace vectoriel engendré par une famille de vecteurs. Le rang est donc le nombre de vecteurs linéairement indépendants d'une famille. Quel est le rang de $A$ (i.e. quel est le rang de la famille de ses vecteurs colonnes) ?
+\end{enumerate}
+
+%Si on veut trouver x, on peut pas car A non inversible. Il faut trouver 2 equation supplémentaires.
+%Dans la base de VP, on peut réduire la dimension de A.
+
+
+\exo
+\begin{enumerate}
+        \item Diagonaliser si cela est possible les matrices suivantes  :\\
+        $A=\begin{pmatrix}
+		2&1\\3&4
+        \end{pmatrix}~~~~
+         B=\begin{pmatrix}
+		6&-4\\4&-2
+	 \end{pmatrix}~~~~
+	 C= \begin{pmatrix}
+		0&1\\-1&0	
+	\end{pmatrix}~~~~
+	D=\begin{pmatrix}
+		1&1\\-1&-1
+	\end{pmatrix}~~~~
+	E=\begin{pmatrix}
+		1&1&3\\
+		1&5&1\\
+		3&1&1
+	\end{pmatrix}$
+	\item Calculer $C^2$, $C^n$.
+\end{enumerate}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+	\fbox{\Large \textsc{ Exercices supplémentaires}}
+\end{center}
+\indent\exo
+\begin{enumerate}
+	\item $A=\begin{pmatrix}
+		1&2&0\\
+		2&1&0\\
+		0&1&0
+	\end{pmatrix}$. Trouver toutes les matrices $B$ telles que $AB=0_3$.
+%	\item Résoudre le système 
+%	$\left\{ \begin{array}{rl}
+%		2x+y+z&=3\\
+%		x-y+3z&=8\\
+%		x+2y+2z&=-3
+%	\end{array} \right.$.
+	\item Soient $a$ et $b$ des réels non nuls. $A=\begin{pmatrix}
+		a&b\\0&a
+	\end{pmatrix}$. Trouver toutes les matrices $B \in M_2(\mathbb{R})$ qui commutent avec $A$, c'est à dire telles que $AB=BA$.
+	%solution : B=(c1 c2 0 c1)'
+
+\end{enumerate}
+
+\exo
+
+Diagonaliser si possible les matrices suivantes : \\
+$A=\begin{pmatrix}
+	3&6&-4\\
+	0&-1&1\\
+	3&5&-3
+\end{pmatrix}~~~~
+B=\begin{pmatrix}
+	1&0&0\\
+	0&6&-4\\
+	0&4&2-
+\end{pmatrix}~~~~
+C=\begin{pmatrix}
+	2&-1&-1\\
+	-1&2&-1\\
+	0&0&1	
+\end{pmatrix}$
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
