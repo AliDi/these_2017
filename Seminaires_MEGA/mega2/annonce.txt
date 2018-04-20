@@ -1,0 +1,15 @@
+
+
+Alban Potherat, Coventry University
+Convection and magnetoconvection in a tangent cylinder : a model-experiment for the liquid core of the Earth
+
+Vendredi 20 avril 2018, 11h, INSA Bât. humanités amphi Est
+Convection and magnetoconvection in a tangent cylinder : a model-experiment for the liquid core of the Earth
+
+Séminaire labellisé MEGA.
+
+The liquid core of the Earth is subject to intense convection driven by the heat and solute elements released from the solid core. It drives the dyamics of the entire planet, from plate tectonics to the Earth magnetic field.
+
+The tangent cylinder is the region of the liquid core obtained by elevating the boundary of the solid core (1200 km radius) along the Earth rotation axis, up to the the Core-Mantle Boundary (3500 km radius). Even though, it is not bounded by solid boundaries, the Taylor-Proudman constraint that results from the Coriolis force makes it difficult for the flow there to cross this imaginary boundary. As a consequence convection there behaves partly as between unbounded planes, but also a lot like in solid cylinders. Between planes, it is well known that the effect of a magnetic field, such as the Earth’s can radically lower the critical Rayleigh number at which convection ignites and alter the ensuing convection patterns. Yet, it is unclear how this effect translates in these peculiar conditions.
+
+Here we report experiments conducted in transparent sulfuric acid, where both convection and magnetoconvection could be visualised by means of some of the large magnets available at the Grenoble High Magnetic Field Laboratory. We show that the similarity between convection in a TC and in a solid cylinder is all the stronger as rotation is fast and that the picture is radically changed under the effect of an external magnetic field.
