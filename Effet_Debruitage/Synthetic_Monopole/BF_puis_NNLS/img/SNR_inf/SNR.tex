@@ -1,0 +1,133 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+\definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
+\definecolor{mycolor3}{rgb}{0.92900,0.69400,0.12500}%
+\definecolor{mycolor4}{rgb}{0.49400,0.18400,0.55600}%
+\definecolor{mycolor5}{rgb}{0.46600,0.67400,0.18800}%
+\definecolor{mycolor6}{rgb}{0.30100,0.74500,0.93300}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=4.503in,
+height=3.468in,
+at={(0.776in,0.579in)},
+scale only axis,
+xmin=-20,
+xmax=20,
+xlabel style={font=\color{white!15!black}},
+xlabel={SNR (dB)},
+ymin=-0.5,
+ymax=3.5,
+ylabel style={font=\color{white!15!black}},
+ylabel={$10 \log_{10}(\tilde{S_{qq_0}}/S_{qq_0})$},
+axis background/.style={fill=white},
+title style={font=\bfseries},
+title={Source 1},
+axis x line*=bottom,
+axis y line*=left,
+legend style={legend cell align=left, align=left, draw=white!15!black}
+]
+\addplot [color=mycolor1, line width=1.0pt, mark=o, mark options={solid, mycolor1}]
+  table[row sep=crcr]{%
+-20	3.16256612204957\\
+-16	1.55753032993188\\
+-12	0.70012878050989\\
+-8	0.301122406447516\\
+-4	0.128699786189819\\
+0	0.0563224977166193\\
+4	0.0260364811663869\\
+8	0.0132033325841027\\
+12	0.00763077293708887\\
+16	0.00512429931324834\\
+20	0.00394554256756775\\
+};
+\addlegendentry{none}
+
+\addplot [color=mycolor2, line width=1.0pt, mark=o, mark options={solid, mycolor2}]
+  table[row sep=crcr]{%
+-20	0.967551567029064\\
+-16	0.430359881420271\\
+-12	0.18978141585301\\
+-8	0.0857354340055455\\
+-4	0.0407735033595566\\
+0	0.020944840299083\\
+4	0.0118885599832317\\
+8	0.00755984286737668\\
+12	0.00538206430053264\\
+16	0.00422869779501922\\
+20	0.00358892324375546\\
+};
+\addlegendentry{DRec}
+
+\addplot [color=mycolor3, line width=1.0pt, mark=o, mark options={solid, mycolor3}]
+  table[row sep=crcr]{%
+-20	-0.0768014834800576\\
+-16	-0.0127679416744734\\
+-12	0.00849465690669868\\
+-8	0.0127020862116853\\
+-4	0.0115377946985614\\
+0	0.00926744614804183\\
+4	0.00722408375530045\\
+8	0.00569531790898154\\
+12	0.00463393817275401\\
+16	0.00392685730025593\\
+20	0.00346562682792132\\
+};
+\addlegendentry{RPCA}
+
+\addplot [color=mycolor4, line width=1.0pt, mark=o, mark options={solid, mycolor4}]
+  table[row sep=crcr]{%
+-20	-0.0516975827330234\\
+-16	0.016753030700391\\
+-12	0.0235088223230469\\
+-8	0.0186093228971513\\
+-4	0.0141736290282052\\
+0	0.0104695578119145\\
+4	0.00780231306286432\\
+8	0.00598782358333419\\
+12	0.00479108918796356\\
+16	0.00401549277731554\\
+20	0.00351796242046321\\
+};
+\addlegendentry{PFA}
+
+\addplot [color=mycolor5, line width=1.0pt, mark=o, mark options={solid, mycolor5}]
+  table[row sep=crcr]{%
+-20	0.0284321378122217\\
+-16	0.00187294066057091\\
+-12	-0.0158733915424713\\
+-8	-0.0274691315775422\\
+-4	-0.034945532880736\\
+0	-0.0397268538856146\\
+4	-0.0427692415529714\\
+8	-0.0446990633126865\\
+12	-0.0459207667695091\\
+16	-0.04669323054705\\
+20	-0.0471812679316201\\
+};
+\addlegendentry{DR}
+
+\addplot [color=mycolor6, dotted, line width=1.0pt]
+  table[row sep=crcr]{%
+-20	0\\
+-16	0\\
+-12	0\\
+-8	0\\
+-4	0\\
+0	0\\
+4	0\\
+8	0\\
+12	0\\
+16	0\\
+20	0\\
+};
+\addlegendentry{data1}
+
+\end{axis}
+\end{tikzpicture}%

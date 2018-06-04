@@ -1,4 +1,4 @@
-function [Sq Sy Sp Sn] = generate_Spp_signal(freqs , Nsrc , rho , SNR, Mw, extra_SNR , x_src , z_src)
+function [Sq Sy Sp Sn] = generate_Spp_signal(freqs , Nsrc , rho , SNR, Mw, extra_SNR , x_src , z_src,r_mic)
 %[Sq Sy Sp Sn] = generate_Spp_signal(freqs , Nsrc , rho , SNR, Mw, extra_SNR)
 %freqs : vector, frequencies
 %Nsrc : number of sources
@@ -36,14 +36,12 @@ Nfreq = length(freqs);
 
 fftsign=+1;
 
+c=340;
 %%%--------------------------------------------------------------------------------------------
 %%% Antenna parameters
 %%%--------------------------------------------------------------------------------------------
 %[x_mic y_mic] = meshgrid(x_mic,y_mic);
 %r_mic = [x_mic(:) y_mic(:) z_mic(:)];
-
-r_mic=load('spiral_array_coord.mat');
-r_mic=r_mic.mic_info;
 
 Nmic = size(r_mic,1);
 
@@ -86,7 +84,7 @@ y_src = zeros(1,Nsrc);
 r_src = [x_src(:) y_src(:) z_src(:)]; %coordinates of real sources
 
 %strength coefficients
-qrms = 1*ones(Nsrc,1); %rms value supposed to be constant on frequency
+qrms = 2*ones(Nsrc,1); %rms value supposed to be constant on frequency
 
 %source correlation (do not depend on frequency)
 %rho : amount of source correlation. 0<rho<1 : partially correlated ; 0 : uncorrelated , ...
@@ -116,8 +114,8 @@ for f=1:Nfreq
 
 	%choose a propagator
 	%G_src_mic(:,:,f) = randn(Nmic,Nsrc)+1i*randn(Nmic,Nsrc); %random mixing matrix
-    %G_src_mic(:,:,f) = GreenFreeFieldUniformFlow(r_src , r_mic , freqs(f) , -fftsign ,Mach); %monopole in uniform flow
-    G_src_mic(:,:,f) = GreenFreeField(r_src, r_mic , freqs(f) , -fftsign); %monopole in free field
+    %G_src_mic(:,:,f) = GreenFreeFieldUniformFlow(r_src , r_mic , freqs(f) , -fftsign ,Mach,c); %monopole in uniform flow
+    G_src_mic(:,:,f) = GreenFreeField(r_src, r_mic , freqs(f) , -fftsign,c); %monopole in free field
         
     %Calculate propagated signals
 	P(:,:,f) = G_src_mic(:,:,f)*Q(:,:,f);
@@ -146,18 +144,18 @@ end
 % %%%--------------------------------------------------------------------------------------------
 % %%% Display data
 % %%%--------------------------------------------------------------------------------------------
-% 
- figure
- plot3(r_mic(:,1),r_mic(:,2),r_mic(:,3),'ob')
- hold on
- plot3(x_src(:),y_src(:),z_src(:),'or')
- title('Configuration')
- legend('mic positions','src positions')
- xlabel('x (m)')
- ylabel('y (m)')
- zlabel('z (m)')
- grid on
- 
+
+% figure
+% plot3(r_mic(:,1),r_mic(:,2),r_mic(:,3),'ob')
+% hold on
+% plot3(x_src(:),y_src(:),z_src(:),'or')
+% title('Configuration')
+% legend('mic positions','src positions')
+% xlabel('x (m)')
+% ylabel('y (m)')
+% zlabel('z (m)')
+% grid on
+
 % figure
 % plot3(r_mic(:,1),r_mic(:,2),r_mic(:,3),'ob')
 % hold on

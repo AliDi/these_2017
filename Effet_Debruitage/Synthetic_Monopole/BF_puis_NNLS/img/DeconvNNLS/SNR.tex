@@ -1,0 +1,114 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+\definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
+\definecolor{mycolor3}{rgb}{0.92900,0.69400,0.12500}%
+\definecolor{mycolor4}{rgb}{0.49400,0.18400,0.55600}%
+\definecolor{mycolor5}{rgb}{0.46600,0.67400,0.18800}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=5.345cm,
+height=4.5cm,
+at={(0cm,0cm)},
+scale only axis,
+xmin=-20,
+xmax=20,
+xlabel style={font=\color{white!15!black}},
+xlabel={SNR (dB)},
+ymin=-0.8,
+ymax=0.4,
+ylabel style={font=\color{white!15!black}},
+ylabel={$10 \log_{10}(\tilde{S_{qq_0}}/S_{qq_0})$},
+axis background/.style={fill=white},
+axis x line*=bottom,
+axis y line*=left,
+legend style={legend cell align=left, align=left, draw=white!15!black}
+]
+\addplot [color=mycolor1, line width=1.0pt, mark=o, mark options={solid, mycolor1}]
+  table[row sep=crcr]{%
+-20	-0.267595164686318\\
+-16	-0.090730599669748\\
+-12	-0.03053587848216\\
+-8	-0.00767505951308947\\
+-4	0.000491366506766561\\
+0	0.00485060140367148\\
+4	0.00654967412905553\\
+8	0.00759869780550737\\
+12	0.0060775091761396\\
+16	0.00501977071022954\\
+20	0.00409080987586956\\
+};
+\addlegendentry{RPCA}
+
+\addplot [color=mycolor2, line width=1.0pt, mark=o, mark options={solid, mycolor2}]
+  table[row sep=crcr]{%
+-20	-0.416416372867138\\
+-16	-0.526706188637767\\
+-12	-0.585286715001528\\
+-8	-0.617659266575473\\
+-4	-0.636211456880939\\
+0	-0.647160542920116\\
+4	-0.65376523767082\\
+8	-0.657811002356822\\
+12	-0.66031518303169\\
+16	-0.661875859919527\\
+20	-0.662852866337208\\
+};
+\addlegendentry{DR}
+
+\addplot [color=mycolor3, line width=1.0pt, mark=o, mark options={solid, mycolor3}]
+  table[row sep=crcr]{%
+-20	-0.363462191413219\\
+-16	-0.473762700205235\\
+-12	-0.532347679570475\\
+-8	-0.564722067812654\\
+-4	-0.583275017015957\\
+0	-0.594224419926823\\
+4	-0.600829249519529\\
+8	-0.604875073230225\\
+12	-0.607379280740861\\
+16	-0.608939970409961\\
+20	-0.609916983237545\\
+};
+\addlegendentry{DR_Quentin}
+
+\addplot [color=mycolor4, line width=1.0pt, mark=o, mark options={solid, mycolor4}]
+  table[row sep=crcr]{%
+-20	0.321771063350791\\
+-16	0.13419086232667\\
+-12	0.046814901183284\\
+-8	0.0130707008950523\\
+-4	0.0228888761897739\\
+0	0.018223172903171\\
+4	0.0119977529038887\\
+8	0.00780093818852565\\
+12	0.00686895006315569\\
+16	0.00562521952221483\\
+20	0.00486114431852883\\
+};
+\addlegendentry{none}
+
+\addplot [color=mycolor5, dotted, line width=1.0pt]
+  table[row sep=crcr]{%
+-20	0\\
+-16	0\\
+-12	0\\
+-8	0\\
+-4	0\\
+0	0\\
+4	0\\
+8	0\\
+12	0\\
+16	0\\
+20	0\\
+};
+\addlegendentry{data1}
+
+\end{axis}
+\end{tikzpicture}%
