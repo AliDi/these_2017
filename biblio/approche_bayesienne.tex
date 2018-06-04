@@ -75,10 +75,6 @@ Dans le contexte de régression, la fonction de vraisemblance ($[p|q]$) sont sou
 \section{Estimation des hyperparamètres et des sources}
 
 
-
-
-\subsection{Méthodes analytiques}
-
 Il existe trois principales approches pour poser le problème d'optimisation et en définir une fonction objectif \footnote{détails des calculs dans le cours de E. Thiébaut et C. Pichon : \url{https://cral.univ-lyon1.fr/labo/perso/eric.thiebaut/downloads/documents/cargese-2006-thiebaut.pdf}} : 
 
 \paragraph{\tbullet le maximum de vraisemblance}, pour lequel on cherche la solution 
@@ -88,9 +84,9 @@ Il existe trois principales approches pour poser le problème d'optimisation et 
 	 avec 
 	\begin{eqnarray}
 		f_{data} &=&-\log[\bm{p}|\bm{q}] + \text{cst}\\
-				 &=& [\bm{p}-\bm{Gq}]'  \bm{C}_{\bm{p}|\bm{q}}^{-1}  [\bm{p}-\bm{Gq}]
+				 &=& (\bm{p}-\bm{Gq})'  \bm{C}_{\bm{p}|\bm{q}}^{-1}  (\bm{p}-\bm{Gq})
 	\end{eqnarray}
-	en considérant que $[ \bm{p}|\bm{q} ]$ a une répartition gaussienne, de covariance $\bm{C}_{\bm{p}|\bm{q}}$ . L'estimateur obtenu est le même que celui donné par la méthode des moindres carrés.\\
+	en considérant que $[ \bm{p}|\bm{q} ]$ est une gaussienne, de covariance $\bm{C}_{\bm{p}|\bm{q}}$ . L'estimateur obtenu est le même que celui donné par la méthode des moindres carrés.\\
 	 	
 \paragraph{\tbullet le maximum a posteriori} (MAP), qui cherche à maximiser la densité des sources a posteriori : 
 	\begin{eqnarray}
@@ -135,13 +131,30 @@ Finalement, on ne conservant que les termes qui dépendent de $c$, on retrouve l
  J = (p'-cH)\Omega^{-1}_n(p-Hc) + \nu^2c'\Omega^-1_c c
 \end{equation}
 avec pour terme de régularisation $\nu = \beta^2/\alpha^2$.
+ 
+Le MAP peut être déterminé avec un algorithme déterministe, tel que l'algorithme Espérance-Maximisation.
+
+\section{Échantillonneurs}
+
+Si l'expression analytique de $[q|p]$ n'est pas connues, il est possible d'approcher cette densité en utilisant une méthode d'échantillonnage. \\
+
+L'estimation $\tilde{q}$ est alors donnée par le mode de $[q|p]$.
+\todo[inline]{mode, ou moyenne, ou médiane, ...?}
 
 
-\subsection{Méthodes numériques}
 \paragraph{Échantillonneur de Gibbs}
+Appartient à la famille des méthodes MCMC.
 
-\paragraph{MCMC}
-algo utilisé par Charles : Metropolis-Hasting
+Ne nécessite que la connaissance de la ddp à une constante multiplicative près.
+
+\paragraph{Metropolis-Hasting}
+(Utilisé par Charles) Marche aléatoire avec rejet de certain déplacements. 
+
+Ne nécessite que la connaissance de la ddp à une constante multiplicative près.
+
+\paragraph{Slice Sampling}
+
+
 
 
 \section{Confiance accordée à la reconstruction}
