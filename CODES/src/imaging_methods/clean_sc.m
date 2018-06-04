@@ -1,4 +1,5 @@
 function [cleanmap , dirtymap , count ] = clean_sc(LoopGain , Spp , G_map_mic , nb_itmax , trim)
+%[cleanmap , dirtymap , count ] = clean_sc(LoopGain , Spp , G_map_mic , nb_itmax , trim)
 %CLEAN-SC (from Sijtsma, 2007)
 %
 %LoopGain (scalar 0< <1) : fraction of max value substracted too clean map
@@ -17,7 +18,7 @@ function [cleanmap , dirtymap , count ] = clean_sc(LoopGain , Spp , G_map_mic , 
 
     while ~StopCriterion
 
-        count = count + 1
+        count = count + 1;
 
         %%% Trim Spp diagonal
         if strcmpi(trim,'on')

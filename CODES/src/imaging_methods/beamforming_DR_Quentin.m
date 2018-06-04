@@ -27,6 +27,11 @@ function [Sqq_diag , W ] = beamforming_DR_Quentin(Spp , G_map_mic , mic_weight)
         	
         	Sqq_diag(n) = a'*s / (a'*a);
         	
+        	
+			%%% Calculate sterring vectors
+        	L=sum(abs(G_map_mic(:,n)).^2,1).^-1;%(G_map_mic(:,n,f)'*G_map_mic(:,n,f))^(-1); %scalar            
+            W(n,:)=L*G_map_mic(:,n)'.*mic_weight;
+        	
       
         end		
 end

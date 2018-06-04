@@ -1,4 +1,4 @@
-function G=GreenFreeFieldUniformFlow(r_src , r_mic , f , Gsign , Mach)
+function G=GreenFreeFieldUniformFlow(r_src , r_mic , f , Gsign , Mach , c )
 %G=GreenFreeFieldUniformFlow(r_src , r_mic , f , Gsign , Mach)
 %Calculates the acoustic transfert matrix for free field propagation (3D),
 %from source points r_src to microphone points r_mic, SUBSONIC
@@ -14,7 +14,6 @@ function G=GreenFreeFieldUniformFlow(r_src , r_mic , f , Gsign , Mach)
 %
     [M, ~]= size(r_mic);
     [N, ~]= size(r_src);
-    c=340; %speed of sound in air, m/sbeam
     k=2*pi*f/c;
     
     Mach=reshape(Mach,1,3);
