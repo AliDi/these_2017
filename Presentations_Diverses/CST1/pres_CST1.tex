@@ -1,0 +1,220 @@
+\documentclass[10pt,xcolor=x11names,compress, notes=show]{beamer}% pour l'impression, tout n'apparait qu'une fois \documentclass[handout,12pt]{beamer}
+
+%\usepackage[scaled]{helvet}
+\usepackage[round]{natbib}
+\usepackage[utf8x]{inputenc}
+%\usepackage{ucs}
+\usepackage[USenglish]{babel}
+\usepackage{todonotes}
+\usepackage{color}
+%\usepackage{subfigure}
+%\usepackage[]{geometry}
+\usepackage{changepage}
+\usepackage{pifont} %pour les symbole sympa \ding{nb}
+
+% Pour Tikz
+\usepackage{tikz}
+\usetikzlibrary{calc}
+%\usetikzlibrary{arrows,shapes,trees,positioning}  
+
+%pour les plots matlab en tikz
+\usepackage{pgfplots} 
+\pgfplotsset{compat=newest}
+
+% Pour les maths
+\usepackage{bm}
+\usepackage{amsmath,mathtools}
+\usefonttheme[onlymath]{serif}
+\usepackage{cancel} %pour barrer des math
+
+% Pour la mise en forme
+\usepackage[export]{adjustbox}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+\usepackage{pdfpages}
+\setbeamertemplate{navigation symbols}{} 
+\usepackage{array}
+%\usepackage{palatino}
+%\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+\usepackage{multicol}
+\setlength{\columnsep}{0cm}
+\usepackage[framemethod=TikZ]{mdframed}
+
+
+%pour le theme
+\usetheme{Alice}
+
+%\useoutertheme[subsection=false]{miniframes} %%pour avoir le défilement en en-tête des diapos par section
+%\setbeamercolor*{lower separation line head}{bg=DeepSkyBlue4} 
+
+% Customisation 
+\setlength{\fboxrule}{0.2pt}
+\definecolor{green}{rgb}{0,0.5,0} 
+\newcommand{\diag}[1]{\operatorname{diag}\left(#1\right)}
+\newcommand{\tikzmark}[1]{\tikz[remember picture] \coordinate (#1) ++ (-3pt,6pt) {};}
+\newcommand{\citeTransp}[1]{\color{fg!50} \citep{#1}}
+\renewcommand\bibsection{\section[]{~}}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+
+%%% Page de titre
+%======================
+%\author{Alice Dinsenmeyer}
+\institute{\small \underline{Encadrement} : \\ Jérôme Antoni (LVA)\\ Christophe Bailly (LMFA) \\ Quentin Leclère (LVA)\\[1em]
+\underline{Référent} : \\ Laurent Maxit (LVA)\\[1em]
+\underline{Représentant MEGA} : \\ Simon Chesné (LaMCoS)}
+\title{Comité de suivi de thèse}
+\subtitle{Alice Dinsenmeyer -- Fin de 1\textsuperscript{ère} année}
+\date{}
+\titlegraphic{}
+\author{}
+
+
+\begin{document}
+
+%%%		Title
+%======================
+\begin{frame}[plain,t]
+	\maketitle	
+	\centering{ \vfill  \itshape \footnotesize 26 juin 2018}
+\end{frame}
+
+%%% Context
+%======================
+\newcommand{\done}[2]{\onslide<#1->{{\bfseries  \hfill $\triangleright$ #2}}}
+
+\section*{Sujet}
+\begin{frame}{\insertsectionhead}
+	%\vspace{-0.3cm}
+	%\linespread{1.5}
+	\begin{center}
+		 \hspace{-0.5cm} \bfseries Méthodes inverses pour la caractérisation de sources aéro-acoustiques
+	\end{center}
+	\begin{overlayarea}{\textwidth}{0.5\textwidth}
+		%\linespread{1.5}
+		\only<1-1>{
+		\begin{itemize} \setlength\itemsep{1em}
+	        		\item Financement : 50\% CeLyA + 50\% ADAPT \\ {\small (projet européen : LVA, LMFA, MicrodB, Airbus)}
+	        		\item Contexte : Réduction du bruit des avions 
+	        		\item Objectif : Localiser et  quantifier les sources de bruit de turbomachine et aérodynamique
+	        		\begin{itemize}
+        				\item[\ding{55}] fort bruit de CLT
+        				\item[\ding{55}] sources large bande
+			\end{itemize}
+	        		\item Méthodes existantes : formation de voies et déconvolution	        		
+			\begin{itemize}
+			        \item[\ding{51}] flexibles, simple, rapide
+			        \item[\ding{55}]   nécessite un bon modèle de source, sources corrélées, niveaux
+			\end{itemize}
+		\end{itemize}
+		}
+		
+		\only<2-2>{
+		Axes principaux de la thèse :  \\[1em]
+	        	\begin{enumerate} \setlength\itemsep{1em}
+        			\item Débruitage des mesures : $\bm{S}_{pp} = \bm{S}_{\text{acoustique}} + \bm{S_{\textsc{clt}}}$
+        			\item Identification des sources (quantification/localisation)
+        			\vspace{2em}
+        			\begin{itemize}
+        				\item[\ding{222}] Séquentiellement ou simultanément
+        				\item[\ding{222}] Approche bayésienne
+        				\item[\ding{222}]  Utilisation des connaissances/incertitudes a priori sur les sources et le bruit
+			\end{itemize}
+
+		\end{enumerate}
+
+	 	}
+ 	\end{overlayarea}
+ 	
+\end{frame}
+
+\section*{Objectifs}
+\begin{frame}{\only<1-2>{\insertsectionhead ~-- 1\textsuperscript{ère} année}\onslide<3->{Travail réalisé -- 1\textsuperscript{ère} année}}
+
+	
+	
+	%\linespread{1.5}
+ 	
+ 	\only<3>{ \section*{Travail réalisé}}
+ 	\onslide<2->{
+ 	\begin{itemize} \setlength\itemsep{1em}
+        		\item État de l'art et positionnement critique du sujet de thèse : 
+        		\begin{itemize}
+        			\item imagerie acoustique 	\done{3}{État de l'art et implémentation}
+        			\item inférence bayésienne	\done{4}{Étude partielle}
+        			\item physique des sources aéroacoustiques	\done{5}{Étude partielle}
+        			\item débruitage de la matrice interspectrale	\done{6}{État de l'art \\ \hfill  $\triangleright$  Présentation à la Berlin Beamforming Conference}
+		\end{itemize}
+		\item Prendre en main les codes  de focalisation bayésienne (LVA)	\done{7}{Fait}
+		\item Créer des cas tests pour la comparaison des méthodes	\done{8}{En cours}
+	\end{itemize}
+	}
+ 	
+\end{frame}
+
+
+
+\section*{Perspectives}
+\begin{frame}{\insertsectionhead~--~2\textsuperscript{ème} année}
+%\linespread{1.3}
+	\begin{itemize} \setlength\itemsep{1em}
+	        \item État de l’art sur les méthodes bayésiennes pour la localisation de sources
+	        \item Extension des méthodes d’imagerie bayésienne existantes au contexte aéroacoustique
+	        \item Élaboration de cas tests numériques
+	        \item Applications sur des données expérimentales de laboratoire ou de contexte industriel (projet ADAPT)
+	\end{itemize}
+\end{frame}
+
+\section*{Formation}
+\begin{frame}{\insertsectionhead}
+	\begin{itemize}
+	        \item Formation scientifique (/20h) :
+	        \begin{itemize}
+	        		\item Cours d’aéroacoustique (16h)
+	        		\item Cours Identification des systèmes et décomposition parcimonieuse des signaux (16h)
+		\end{itemize}
+	        \item Formation professionnalisante (/40h)
+	        \begin{itemize}
+	        		\item \underline{À faire en 2\textsuperscript{ème} année}
+		\end{itemize}
+		\item Séminaires (/6) : 
+		\begin{itemize}
+	        		\item 2 séminaires MEGA
+	        		\item 2 séminaires non-MEGA
+	        		\item Reste 2 à faire
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\section*{}
+
+
+
+
+
+
+
+
+
+
+%Texte du diapo \cite{Solomaa1973} et \cite{Dijkstra1982}
+%\vfill
+% 
+%{\tiny 
+%\usebibitemtemplate{\color{black}\insertbiblabel} 
+%\usebibliographyblocktemplate{\color{black}}{\color{black}}{\color{black}}{\color{black}} 
+% 
+%\begin{thebibliography}{} 
+%\bibitem{Solomaa1973} 
+%A.~Salomaa. 
+%\newblock {\em Formal Languages}. 
+%\newblock Academic Press, 1973. 
+%\bibitem{Dijkstra1982} 
+%E.~Dijkstra. 
+%\newblock Smoothsort, an alternative for sorting in situ. 
+%\newblock {\em Science of Computer Programming}, 1(3):223--233, 1982. 
+%\end{thebibliography} }
+
+
+\end{document}
