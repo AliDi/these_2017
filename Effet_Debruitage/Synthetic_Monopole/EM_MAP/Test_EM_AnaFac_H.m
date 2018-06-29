@@ -2,8 +2,8 @@
 addpath('/home/adinsenmey/Bureau/Codes_Exterieurs/AnaFac_H/')
 clear all
 close all
-load('s')
-rng(s)
+%load('s')
+%rng(s)
 
 % Param�tres de simulation
 M = 20;   % nombre de capteurs
@@ -12,10 +12,9 @@ K = 5;          % nombre de "sources" (nombre de facteurs)
 Isnap = 1000;    % nombre de snapshots
 
 % Fonctions de transfert
-%H = (randn(M,N) + 1i*randn(M,N))/sqrt(2);
+H = (randn(M,N) + 1i*randn(M,N))/sqrt(2);
 %H = H/K;
 %H = eye(M,N);
-H=G_map_mic(
 
 % Fonctions de base
 Lambda = (randn(N,K) + 1i*randn(N,K))/sqrt(2);

@@ -55,6 +55,8 @@ Nx=length(x_grid);
 z_grid=z_grid_min:dz_grid:z_grid_max;
 Nz=length(z_grid);
 
+Nmap=Nx*Nz;
+
 y_grid=linspace(0,0,Ny);
 %x_grid=linspace(x_grid_min,x_grid_max,Nx);
 %z_grid=linspace(z_grid_min,z_grid_max,Nz);
@@ -70,12 +72,12 @@ r_map=[x_map(:) y_map(:) z_map(:)];
 %coordinates of the source
 %one line with rotation theta
 Nsrc=1;
-theta=0;%0.0175;
+theta=0;%.0175;
 R=0.07;
 z_src = linspace(-R,R,Nsrc);
 x_src=zeros(1,Nsrc);
 
-x_src_rot =x_src*cos(theta) - z_src*sin(theta) ;%+0.02;
+x_src_rot =x_src*cos(theta) - z_src*sin(theta);
 z_src_rot=x_src*sin(theta)+z_src*cos(theta) ;    
 x_src=round(x_src_rot/dx_grid)*dx_grid;
 z_src=round(z_src_rot/dz_grid)*dz_grid;
@@ -116,45 +118,14 @@ for i=1:length(methods)
 end
 
 %Parameters for PFA denoising
-K_est=Nsrc+5;
-Nrun=1000;
+K_est=Nsrc+2;%+5;
+Nrun_den=100;
 opt.noise='hetero';
 
 
-%Parameters for bayesian imaging
-	%Distribution for Tau2
-prior.type='GG'; prior.param=[0]; option.fix=1e-6;
-%prior.type='TS'; prior.param=[0.01 0.01]; 
-
-	%Possible value for eta2
-reg.grid=logspace(-20,10,1000);
-%tmp=svd(G_map_mic);
-%reg.grid=logspace(log10(min(tmp)),log10(max(tmp)),1000);
-	
-	%Stopping criterion
-option.rerror=1e-3;
-option.count_max=200;
-
-	%Display J ?
-option.affich=0;
-
-	%Initialization
-option.Ini=''; %0 or CBF
-
-	%Aperture function
-Sigma02 = 0+ hanning(Nx)*hanning(Nz)';
-%Sigma02=ones(Nx,Nz);
-Sigma02=Sigma02(:);
-Sigma02 = Sigma02/sum(Sigma02);
-
-	%autres
-option.bootstrap=0;
-%option.fix (valeur minimale autorisée pour Tau2)
-%[reg.prior.a reg.prior.b] = Convert_InvGamma(0,10);
-%reg.prior.a=0; %Prior sur alpha2 (IG law) : Non informative
-%reg.prior.b=0; %idem
-
-
+%Parameters for MCMC FA
+Nrun = 100;
+opt = 'hetero';
    
 %%
 
@@ -165,10 +136,10 @@ for j=1:length(SNR) %vary SNR
 	%%% Generate CSM
 	%%%-----------------------------------------------------------------------------
 	[Sq Sy Sp Sn ] = generate_Spp_signal(freq, Nsrc , rho , SNR(j) , Mw,SNR(j) , x_src , z_src,r_mic); %no extra-noise
+    Sy=(Sy+Sy')/2;
 	%%
 
-
-	for i=1:length(methods)
+    for i=1:length(methods)
 		disp(['Denoising method : ' methods{i}]);
         
 
@@ -180,7 +151,6 @@ for j=1:length(SNR) %vary SNR
 		    case 'DRec',
 		        cvx_quiet('true'); cvx_precision('high');
 		        [Sy_denoised]=CSMRecHald(Sy);
-		        
                 %{
                 figure(66)
 		        hold on
@@ -217,8 +187,8 @@ for j=1:length(SNR) %vary SNR
                 Ini.Lambda(1,:,:) = (randn(Nmic,K_est) + 1i*randn(Nmic,K_est))/sqrt(2);
 
                 %opt.gamma2=1.1;    
-                [Sc,Lambda,alpha,beta2,gamma2] = MCMC_AnaFac_Quad_Sparse3(Sy,K_est,a,b,Mw,Nrun,opt,Ini);
-                for jj=1:Nrun
+                [Sc,Lambda,alpha,beta2,gamma2] = MCMC_AnaFac_Quad_Sparse3(Sy,K_est,a,b,Mw,Nrun_den,opt,Ini);
+                for jj=1:Nrun_den
                     tmp_Sy_denoised(:,:,jj)=squeeze(Lambda(jj,:,:))*diag(alpha(jj,:))*squeeze(Sc(jj,:,:))*diag(alpha(jj,:))*squeeze(Lambda(jj,:,:))';
                 end
                 Sy_denoised=mean(tmp_Sy_denoised(:,:,500:end),3);
@@ -233,10 +203,12 @@ for j=1:length(SNR) %vary SNR
 		    
 		        
         end
-        
+        Sy_denoised=(Sy_denoised+Sy_denoised')/2;
+        %[Sy_denoised,n,errec, diag_matout]=recdiag(Sy_denoised,1,1000,1e-9,30);
+
         err_denoising = norm( real(diag(Sp)) - real(diag(Sy_denoised))) /  norm( real(diag(Sp)));  
         disp(['Erreur de débruitage : ' num2str(10*log10(err_denoising)) ' dB'])
-
+%%
 		%%%-----------------------------------------------------------------------------
 		%%% Beamforming
 		%%%-----------------------------------------------------------------------------
@@ -257,7 +229,7 @@ for j=1:length(SNR) %vary SNR
 			%BF_map_extra(BF_map_extra<0)=0;
 			%BF_map(BF_map<0)=0;
 		    
-			figure
+			figSrc=figure;
             subplot(1,2,1)
             A=(real(BF_map'));
             A(A<0)=0;
@@ -274,28 +246,53 @@ for j=1:length(SNR) %vary SNR
 		    caxis([borne-20 borne])
 			set(gca,'Ydir','Normal')
             
-		end
-		
+        end
+%%
 		%%%-----------------------------------------------------------------------------
-		%%% EM MAP
+		%%% MCMC FA
 		%%%-----------------------------------------------------------------------------
         %%
-		MAP = EM_MAP_CSM(Sy_denoised,Mw,G_map_mic,Sigma02,prior,option,reg);
+        [u s v]=svd(diag(BF_map(:)));
+        s=diag(s);
+        
+         noise = real(mean(diag(Sy_denoised)));
+        %%% hyper-parametres
+
+        %beta
+        [a.beta2,b.beta2] = Convert_InvGamma(mean(noise),10*mean(noise));     % hyper-hyper-paramètres sur beta2
+
+        %gamma
+        alpha2_mean = abs(real(sort(eig(Sy_denoised),'descend'))); 
+        [a.alpha2,b.alpha2] = Convert_InvGamma(mean(alpha2_mean),10*mean(alpha2_mean));   % hyper-hyper-paramètres sur alpha2    
+
+        %initialisation
+        Ini.alpha2(1,:) =alpha2_mean(1:K_est);%alpha2_mean(1:K_est);
+        Ini.beta2(1,:) = b.beta2/a.beta2*ones(Nmic,1);
+        
+        Ini.Lambda(1,:,:) =(ones(Nmap,K_est)+1i*ones(Nmap,K_est));%
+        
+		[Sc_est,Lambda_est,alpha2_est,beta2_est] = MCMC_LatVar_QuadH(Sy_denoised,G_map_mic,K_est,a,b,Mw,Nrun,opt,Ini);
         %%
-		disp(['EM_MAP_CSM: ',num2str(MAP.count),' iterations'])
+        for n=1:Nrun
+        	tmp(:,:,n)=squeeze(Lambda_est(n,:,:))*squeeze(Sc_est(n,:,:))*squeeze(Lambda_est(n,:,:))';
+            tmp2(:,n)=diag(tmp(:,:,n));
+            %tmp(:,n)=diag(squeeze(Lambda_est(n,:,:))*diag(alpha2_est(n,:))*squeeze(Lambda_est(n,:,:))');
+        end
+        Sq_est_corr=mean(tmp(:,:,round(Nrun/2):end),3);        
+        Sq_est=mean(tmp2(:,round(Nrun/2):end),2);
         
         %MAP.Sc(MAP.Sc<0)=0;
-        Sq_est_corr=MAP.Sc;
-        A=reshape((diag(MAP.Sc)),Nx,Nz)';
+        Sq_est=reshape(real(Sq_est),Nx,Nz)';
+        A=Sq_est;
 		A(A<0)=0;
 
-        
+        figure(figSrc)
         subplot(1,2,2)
 		imagesc(x_grid,z_grid,10*log10(A));
 		%caxis([-30 5])
 	    xlabel('x (m)')
 	    ylabel('z (m)')
-	    title(['EM MAP, denoising = ' methods{i}])
+	    title(['MCMC FA, denoising = ' methods{i}])
 	    hold on
 	    plot(x_src,z_src,'*r')
 	    colorbar
@@ -323,10 +320,10 @@ for j=1:length(SNR) %vary SNR
         
         %save Sc
         clear amp_src;
-        amp_src(1,:,:)=MAP.Sc;
+        amp_src(1,:,:)=Sq_est';
         
         h5write(file_name.map{i},'/SNR',SNR(j),[j 1],[1 1]);
-        h5write(file_name.map{i},'/Amplitude_Source',amp_src,[j 1 1],[1 Nx*Nz Nx*Nz]);
+        h5write(file_name.map{i},'/Amplitude_Source',amp_src,[j 1 1],[1 Nx Nz]);
         
         %Save BF map
         clear amp_src;
@@ -337,18 +334,26 @@ for j=1:length(SNR) %vary SNR
        	
         
         %Save Acoustic power
-        %EM MAP
+        %MCMC
         Gmap=GreenFreeField(r_map,r_map,freq,-fftsign,c);
         Gmap(logical(eye(Nx*Nz)))=0;
-        Wmap(i,j)=1.2*340*k^2/(8*pi)*trace(MAP.Sc) + 0.5* real(trace(Gmap*MAP.Sc));
+        Wmap(i,j)=1.2*c*k^2/(8*pi)*trace(real(Sq_est_corr)) + 1.2*c*k*0.5*real(trace(Gmap*1i*Sq_est_corr));
+        %le resultat c-i-dessus est egal à 
+        %r=1i*Gmap*4*pi/k;
+        %r(logical(eye(Nmap)))=1;
+        %r=r*(1.2*c*k*k/(8*pi));
+        %trace(real(r)*Sq_est_corr)
+        
+        %et à Wmap(i,j)=1.2*c*k^2/(8*pi)*trace(real(Sq_est_corr)) - 1.2*c*k*0.5*imag(trace(Gmap*Sq_est_corr));
+        
 
         %Reference power (real sources)
         Gsrc=GreenFreeField(r_src,r_src,freq,-fftsign,c);
         Gsrc(logical(eye(Nsrc)))=0;
-        Wref(i,j)=1.2*340*k^2/(8*pi)*trace(real(Sq)) + 0.5* real(trace(Gsrc*Sq));
+        Wref(i,j)=1.2*c*k^2/(8*pi)*trace(real(Sq)) + 1.2*c*k*0.5*real(trace(Gsrc*1i*Sq));
 
         %beamforming
-        Wbf(i,j) = 1.2*340*k^2/(8*pi)*trace(BF_map(int32(ind_x_src),int32(ind_z_src)));
+        Wbf(i,j) = 1.2*c*k^2/(8*pi)*trace(BF_map(int32(ind_x_src),int32(ind_z_src)));
         
         
         h5write(file_name.bf{i},'/Puissance',Wbf(i,j),[1 j],[1 1]);
@@ -368,16 +373,25 @@ figure
 hold on
 legend('show');
 for i=1:length(methods)
-   t=plot(SNR,real(10*log10(Wmap(i,:)./Wref(i,:))),'x--','DisplayName',['MAP, ' methods{i}]);
+   t=plot(SNR,real(10*log10(Wmap(i,:)./Wref(i,:))),'x--','DisplayName',['MCMC, ' methods{i}]);
    plot(SNR,real(10*log10(Wbf(i,:)./Wref(i,:))),'o-','DisplayName',['BF, ' methods{i}],'color',t.Color);
 
 end
-plot(SNR,zeros(1,length(SNR)),':')
+%plot(SNR,zeros(1,length(SNR)),':')
 xlabel('SNR (dB)')
 ylabel('$10 \log_{10}(\hat{W}/W_{ref})$')
 
+%%
+% Fidélité aux données
+%{
+Sy_est=G_map_mic*Sq_est_corr*G_map_mic' + mean(beta2_est(round(Nrun/2):end,:,1))*eye(Nmic);
+figure
+imagesc(10*log10(real(Sy./Sy_est)))
 
-
+Sp_est=G_map_mic*Sq_est_corr*G_map_mic';
+figure
+imagesc(10*log10(real(Sp./Sp_est)))
+%}
 
 %%%-----------------------------------------------------------------------------
 %% % 

@@ -84,7 +84,7 @@ y_src = zeros(1,Nsrc);
 r_src = [x_src(:) y_src(:) z_src(:)]; %coordinates of real sources
 
 %strength coefficients
-qrms = 2*ones(Nsrc,1); %rms value supposed to be constant on frequency
+qrms = 1e-1*ones(Nsrc,1); %rms value supposed to be constant on frequency
 
 %source correlation (do not depend on frequency)
 %rho : amount of source correlation. 0<rho<1 : partially correlated ; 0 : uncorrelated , ...
