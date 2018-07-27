@@ -3,17 +3,19 @@
 %===================================================
 
 
-On décrit ici les sources de bruit d'un avion à turboréacteur double flux, les méthodes de séparation des différentes contributions et les mécanismes de génération de bruits en écoulement.\\
+On décrit ici les sources de bruit d'un avion à turboréacteur double flux, les mécanismes de génération de bruits en écoulement et les méthodes expérimentales permettant de reproduire ces sources ainsi que de les mesurer. \\
+
+
 
 
 Le bruit peut être généralement décomposé en 4 composantes : \\
 -une partie tonale générée par les composantes tournantes de la machine\\
 -une partie cyclostationnaire induite par les composantes tournantes de la machine\\
 -le bruit machine aléatoire \\
--le bruit de fond (indépendant de la machine) (aérodynamique ?)\\
+-le bruit hydrodynamique.\\
 
 
-Séparer ces composantes dans le champ total mesuré permet de mieux comprendre la contribution de chaque source ou de chaque élément du réacteur, par exemple.
+Séparer ces composantes dans le champ total mesuré permet de mieux comprendre la contribution de chaque source ou de chaque élément du réacteur, par exemple. Cette séparation est décrite dans le chapitre~\ref{debruitage}.
 
 
 
@@ -55,6 +57,7 @@ Les moteurs double flux ont permis de diminuer l'importance du bruit de jet, mai
 
 
 \subsection{Bruit de jet}
+Review de Tam sur le bruit de jet : \cite{TamReviewJet}.
 
 page 86 de Smith : Description du bruit de jet\\
 -small-scale Eddies (HF)\\
@@ -65,8 +68,19 @@ Sur un moteur à low-bypass-ration, le centre du jet sort à 500 m/s de la tuyè
 Depuis les turboréacteurs double-flux, le jet chaud est entouré du jet froid issu de la soufflante.\\
 
 
-L'enjeu est donc de séparer ces composantes pour extraire seulement le bruit induit par les sources d'intérêt.
+\subsubsection{Shock-associated noise}
+Review : \cite{Bailly2014}
+Lorsque la pression en sortie de tuyère est supérieure à la pression ambiante, le jet est sous-détendu (traduction approx.) et des cellules de chocs se forment dans le jet pour qu'il s'adapte à la pression ambiante.
+L'expansion de chocs génère un screech (tone) et un bruit large bande. Ce dernier est généré par l'interaction des tourbillons générés aux lèvres de la tuyère avec les cellules de chocs, et le screech viendrait d'un mécanisme de rétroaction des chocs sur la tuyère.\\
 
+La fréquence de la bosse du spectre large bande diminue avec l'angle (pris par rapport à l'axe du jet aval) suivant la relation : 
+\begin{equation*}
+	    f_{\text{BBSAN}} = \frac{u_c}{L_{\text{shock}}(1-M_c \cos \theta)}
+\end{equation*}
+d'après Harper-Bourne \& Fisher. 
+$u_c$ est la vitesse de convection, $L_{\text{shock}}$ la longueur des cellules de choc (qui dépend du diamètre du jet et du nombre de Mach du jet détendu) et $M_c=u_c  / c_\infty$.\\
+
+Le screech peut être réduit en apportant des modifications aux lèvres de la tuyère : encoches (notched nozzle), rétrécissement ou épaississement. Le screech n'apparait que si la tuyère est axisymétrique (ce qui n'est pas le cas pour les avions civils).
 
 
 
