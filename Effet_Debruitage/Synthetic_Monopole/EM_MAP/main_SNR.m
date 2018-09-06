@@ -11,7 +11,7 @@ addpath('/home/adinsenmey/Bureau/Codes_Exterieurs/imagerie_jerome')
 %%%-----------------------------------------------------------------------------
 %%% Global constants
 %%%-----------------------------------------------------------------------------
-methods={'none'};%{'none','DRec','RPCA','PFA','DR'}; %denoising methods to apply
+methods={'none','PFA'};%{'none','DRec','RPCA','PFA','DR'}; %denoising methods to apply
 BF_flag=1; %display Beamforming results or not
 fftsign=+1;
 
@@ -20,7 +20,7 @@ fftsign=+1;
 %%%-----------------------------------------------------------------------------
 freq=1200; %frequency
 rho=0.999; %correlation between monopoles
-SNR=0;%noise level added
+SNR=[-15 -10 -5 0 5 10 15];%noise level added
 Mw=10^4; %number of snapshots
 c=340;
 lambda=c/freq;
@@ -69,9 +69,9 @@ r_map=[x_map(:) y_map(:) z_map(:)];
 
 %coordinates of the source
 %one line with rotation theta
-Nsrc=1;
+Nsrc=10;
 theta=0;%0.0175;
-R=0.07;
+R=0.25;
 z_src = linspace(-R,R,Nsrc);
 x_src=zeros(1,Nsrc);
 
@@ -229,6 +229,9 @@ for j=1:length(SNR) %vary SNR
 		    
 		    case 'none' %no denoising
 		        Sy_denoised=Sy;
+                
+            otherwise
+                error(['Unknown denoising name ' methods{i}] )
 
 		    
 		        
