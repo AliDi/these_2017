@@ -1,0 +1,174 @@
+\documentclass[12pt]{article}
+\setlength{\columnsep}{2cm}
+
+%\usepackage{cite} 
+%\usepackage[round,authoryear,numbers]{natbib}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx} %pour mettre des figures dans multicol avec l'environnement figure*
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+%\linespread{1.05} % Line spacing - Palatino needs more space between lines
+%\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+
+\usepackage[hmarginratio=1:1,top=2cm, right=2cm]{geometry} % Document margins
+\usepackage[textfont=it]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{booktabs} % Horizontal rules in tables
+%\usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
+\usepackage{hyperref} % For hyperlinks in the PDF
+
+\usepackage{bm}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tabularx}
+
+%\usepackage{titlesec} % Allows customization of titles
+%\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+%\renewcommand\thesubsection{\arabic{section}.\arabic{subsection}} % Roman numerals for subsections
+%\titleformat{\section}[block]{\bfseries\centering}{\thesection.}{1em}{}[{\titlerule[1.2pt]}] % Change the look of the section titles
+%\titleformat{\subsection}[block]{\bfseries}{\thesubsection.}{1em}{} % Change the look of the section titles
+%\renewcommand\thesubsubsection{\small{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}}
+%\titleformat{\subsubsection}[block]{\bfseries}{\thesubsubsection}{0.5em}{}
+%\titleformat*{\paragraph}{\vspace{-0.3cm}\small\bfseries}
+
+\newcommand{\tbullet}{$\vcenter{\hbox{\tiny$\bullet$}}~$}
+
+\usepackage{fancyhdr} % Headers and footers
+\pagestyle{fancy} % All pages have headers and footers
+\fancyhead{} % Blank out the default header
+%\fancyfoot{} % Blank out the default footer
+\renewcommand{\headrulewidth}{0pt} %pour enlever la ligne du header
+%\fancyhead[C]{titre, date, noms...	} % Custom header text
+%\fancyfoot[RO,RE]{\thepage} % Custom footer text
+%\fancyfoot[LO,LE]{A. DINSENMEYER, \today}
+%\renewcommand{\footrulewidth}{0.4pt} 
+
+%modif des espacement avant et après l'environnement equation
+\let\oldequation=\equation
+\let\endoldequation=\endequation
+\renewenvironment{equation}{\vspace{-0.2cm}\begin{oldequation}}{\vspace{-0.2cm}\end{oldequation}}
+ 
+%agrandissement de la zone de texte
+%\addtolength{\oddsidemargin}{-1cm}
+%\addtolength{\evensidemargin}{-1cm}
+%\addtolength{\textwidth}{2cm}
+%\addtolength{\topmargin}{-0.7cm}
+\addtolength{\textheight}{1cm}
+
+\usepackage{color}
+\usepackage[color=blue!20]{todonotes}
+\usepackage{mathtools}
+
+%pour écrire du pseudo code :
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\usepackage{hyperref}
+\hypersetup{
+     colorlinks   = true,
+     citecolor    = blue!90
+}
+
+\newcommand{\dd}{\partial}
+\newcommand{\ok}{ \textcolor{orange}{\bfseries \textsc ok }}
+
+
+\usepackage{subcaption}
+\usepackage{tabulary}
+\usepackage{pgfplots} 
+
+%pour la biblio en fin de page
+\usepackage{filecontents}
+
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{ {\fontsize{14pt}{14pt}\selectfont Rapport de séminaire, ED MEGA par Alice Dinsenmeyer} \\[1cm]
+\fontsize{18pt}{18pt}\selectfont\textbf{Étude de l’inconfort perçu pour des vibrations triaxiales typiques d’hélicoptères}} % Article title
+\author{
+\large{Présenté par Laurianne Delcor, doctorante LVA/Airbus}\\% Your name %\thanks{}
+%\normalsize École doctorale MEGA \\ % Your institution
+%\normalsize \href{mailto:john@smith.com}{john@smith.com} % Your email address
+\vspace{-5mm}
+}
+\date{\today}
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+\maketitle
+
+La thèse de Laurianne s'inscrit dans un objectif d'amélioration du confort des passagers d'hélicoptère, du point de vue sonore et vibratoire. Ces bruits et vibrations proviennent principalement du rotor, de la transmission, du moteur et du bruit aérodynamique.
+
+Les harmoniques du rotor sont entre 17 et 30 Hz (fréquence de passage de pales, 4 pales).
+
+
+\section{Expériences psychosensorielles}
+ Pour évaluer la gène des passagers, elle réalise des mesures psychosensorielles en laboratoire, à l'aide de signaux d'hélicoptère réels et modifiés, sur 53 participants.\\
+ Dans un premier temps, l'étude est menée sur la perception des vibrations verticales, qui sont principalement induite par les harmoniques du rotor (fréquence de passage de pales entre 17 et 30 Hz). La seconde partie de l'étude porte sur les vibrations triaxiales, dont les résultats sont ensuite comparés avec la norme ISO26-31.
+ 
+\subsection{Vibrations verticales}
+
+Les participants doivent évaluer leur inconfort sur une échelle allant de 0 à l'infini. Ces valeurs numériques sont ensuite normalisée : la moyenne individuelle est normalisée par la moyenne de tous les participants. La fréquence d'étude varie de 15 à 30 Hz.\\
+Comme attendu, l'incofort varie linéairement avec l'accélération de la vibration, jusqu'à atteindre un plateau.
+
+
+\subsection{Vibrations triaxiales}
+Les composantes vibratoires triaxiales de l’hélicoptère sont étudiées séparément. Au total, 6 expériences sont menées pour les excitations suivantes : 
+\begin{itemize}
+        \item le mode de poutre de queue (TS, pour Tail Shake en anglais),
+        \item le rotor,
+        \item la combinaison rotor + TS,
+        \item les excitation double-fréquence (battements, réputés très gênants),
+        \item le  déphasage axe vertical/horizontal,
+        \item signaux réels (i.e. mélange de toutes les composantes).
+\end{itemize}
+
+Les participants doivent évaluer leur inconfort entre 0 et 50. \\
+\paragraph{Résultats}
+Dans l'ensemble, on observe une augmentation linéaire avec l'amplitude d'accélération. Les vibrations selon l'axe z ont l'impact le plus important en comparaison avec les autres axes (y,x). \\
+Plus spécifiquement, pour chaque type d'excitation, voici les principales analyses :
+\begin{itemize}
+	\item S'il y a un mode queue, peu importe l'axe, l'inconfort reste le même.
+	\item Les battements augmentent l'inconfort, mais pas de lien avec la fréquence. 
+	\item Le déphasage a peu d'influence sur l'inconfort.
+	\item Signaux réels filtrés passe-bas à 30 Hz : filtré ou non, l'inconfort est le même.
+\end{itemize}
+Finalement, les mesures sont plutôt conformes aux index de la norme ISO26-31. 
+
+\section{Perspectives}
+
+\subsection{Améliorations}
+La fonction de transfert du siège peut être améliorée. L'excitation multifréquence est à approfondir.
+
+\subsection{Suite des travaux}
+
+Afin de comparer les résultats en laboratoire et en vol,une étude via questionnaire sera réalisée.\\
+Une nouvelles problématique émerge dans les hélicoptères récents : le bruit de chauffage doit être pris en compte.\\
+Le port du casque doit être pris en compte par une évaluation avec et sans.\\
+Enfin, des nouvelles expériences vont être menées mêlant bruit et vibrations.
+
+\section{Questions}
+Le siège utilisé est-il représentatif de ce qui existe vraiment dans les hélico ? Oui\\
+
+
+Pourquoi n'y a-t-il que 4dB entre ``peu inconfortable'' et ``très inconfortable'' ? Parce que l'unité est le g et 1 g représente une très grande accélération, perceptuellement.\\
+
+Est-on dans les gammes de résonance corps humain ? Non, elles sont plus basses : environ 4Hz pour la cage thoracique par exemple.
+
+
+%\medskip
+%\bibliographystyle{plainnat}
+%
+%\begin{thebibliography}{9}
+%\bibitem{doug} 
+% {Dougherty, R. P.},
+%\textit {Functional beamforming for aeroacoustic source distributions},
+% {AIAA paper},
+% {2014},
+% {vol. 3066}.
+%\end{thebibliography}
+\end{document}
