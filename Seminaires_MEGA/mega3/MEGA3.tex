@@ -1,0 +1,135 @@
+\documentclass[12pt]{article}
+\setlength{\columnsep}{2cm}
+
+%\usepackage{cite} 
+%\usepackage[round,authoryear,numbers]{natbib}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx} %pour mettre des figures dans multicol avec l'environnement figure*
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+%\linespread{1.05} % Line spacing - Palatino needs more space between lines
+%\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+
+\usepackage[hmarginratio=1:1,top=2cm, right=2cm]{geometry} % Document margins
+\usepackage[textfont=it]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{booktabs} % Horizontal rules in tables
+%\usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
+\usepackage{hyperref} % For hyperlinks in the PDF
+
+\usepackage{bm}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tabularx}
+
+%\usepackage{titlesec} % Allows customization of titles
+%\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+%\renewcommand\thesubsection{\arabic{section}.\arabic{subsection}} % Roman numerals for subsections
+%\titleformat{\section}[block]{\bfseries\centering}{\thesection.}{1em}{}[{\titlerule[1.2pt]}] % Change the look of the section titles
+%\titleformat{\subsection}[block]{\bfseries}{\thesubsection.}{1em}{} % Change the look of the section titles
+%\renewcommand\thesubsubsection{\small{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}}
+%\titleformat{\subsubsection}[block]{\bfseries}{\thesubsubsection}{0.5em}{}
+%\titleformat*{\paragraph}{\vspace{-0.3cm}\small\bfseries}
+
+\newcommand{\tbullet}{$\vcenter{\hbox{\tiny$\bullet$}}~$}
+
+\usepackage{fancyhdr} % Headers and footers
+\pagestyle{fancy} % All pages have headers and footers
+\fancyhead{} % Blank out the default header
+%\fancyfoot{} % Blank out the default footer
+\renewcommand{\headrulewidth}{0pt} %pour enlever la ligne du header
+%\fancyhead[C]{titre, date, noms...	} % Custom header text
+%\fancyfoot[RO,RE]{\thepage} % Custom footer text
+%\fancyfoot[LO,LE]{A. DINSENMEYER, \today}
+%\renewcommand{\footrulewidth}{0.4pt} 
+
+%modif des espacement avant et après l'environnement equation
+\let\oldequation=\equation
+\let\endoldequation=\endequation
+\renewenvironment{equation}{\vspace{-0.2cm}\begin{oldequation}}{\vspace{-0.2cm}\end{oldequation}}
+ 
+%agrandissement de la zone de texte
+%\addtolength{\oddsidemargin}{-1cm}
+%\addtolength{\evensidemargin}{-1cm}
+%\addtolength{\textwidth}{2cm}
+%\addtolength{\topmargin}{-0.7cm}
+\addtolength{\textheight}{1cm}
+
+\usepackage{color}
+\usepackage[color=blue!20]{todonotes}
+\usepackage{mathtools}
+
+%pour écrire du pseudo code :
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\usepackage{hyperref}
+\hypersetup{
+     colorlinks   = true,
+     citecolor    = blue!90
+}
+
+\newcommand{\dd}{\partial}
+\newcommand{\ok}{ \textcolor{orange}{\bfseries \textsc ok }}
+
+
+\usepackage{subcaption}
+\usepackage{tabulary}
+\usepackage{pgfplots} 
+
+%pour la biblio en fin de page
+\usepackage{filecontents}
+
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{ {\fontsize{14pt}{14pt}\selectfont Rapport de séminaire, ED MEGA par Alice Dinsenmeyer} \\[1cm]
+\fontsize{18pt}{18pt}\selectfont\textbf{ Contrôle de champ sonore\\ Labellisé MEGA}} % Article title
+
+\author{
+\large{Présenté par Alain Berry}\\
+Professeur au GAUS (Sherbrooke), invité au LVA et à l'EPFL
+% Your name %\thanks{}
+%\normalsize École doctorale MEGA \\ % Your institution
+%\normalsize \href{mailto:john@smith.com}{john@smith.com} % Your email address
+\vspace{-5mm}
+}
+\date{le 27/09/18}
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+\maketitle
+
+L'objectif du contrôle de champ sonore est de recréer une scène sonore spatialement à l'aide d'une antenne de haut-parleurs. Pour cela, une antenne de microphone mesure le bruit émis par une scène réelle ou virtuelle. Les applications se trouvent principalement dans les domaines de l'audio, de la réalité virtuelle, du multimédia, etc. Cette technologie est basée sur les limites de la perception humaine. Alain Berry présente 3 méthodes pour la reproduction de champ sonore.
+
+\section{Méthode inverse}
+Il est possible de résoudre classiquement un problème inverse, en écrivant le problème sous forme d'un problème d'optimisation. Cette résolution pose généralement des problèmes de régularisation, mais présente deux principaux avantages : elle s'applique à n'importe quel lieu connu et les outils d'optimisation sont déjà largement développés.
+
+\section{Synthèse de champ (Wave field synthesis)}
+Cette méthode utilise le principe de Huygens : les sources sont approximées par un ensemble de monopoles dans un plan. Mais en pratique, l'antenne de HP est généralement linéaire et non planaire. L'avantage de cette méthode est qu'elle est facilement commercialisable et valide sur un grand volume. En revanche, elle fonctionne en champ libre uniquement et nécessite beaucoup de HP.
+
+\section{L'ambisonie d'ordre élevé}
+Cette méthode repose sur la décomposition du champ sonore en une somme finies d'harmoniques sphériques. Le nombre d'harmonique dans la somme doit augmenter avec la fréquence pour que la zone de validité reste grande. Un problème inverse est ensuite résolu pour reproduire le champ sur les HP (avec régularisation). L'avantage de cette méthode est qu'elle nécessite moins de canaux que la WFS et elle peut prendre en compte des transformations spatiales. Cependant, elle est limitées en haute fréquence, l'étape d'inversion est délicate et elle fonctionne principalement en champ libre.
+
+\section{Exemple d'applications}
+
+Une application présentée par A. B. est la reproduction du champ dans une cabine d'avion, en vue de l'intégré dans un simulateur de vol. Les mesures sont donc effectuées dans un avion taille réel en vol. La reproduction du champ est fait à l'aide de pots vibrants placés à l'extérieur de la cabine.\\
+
+D'autres applications sont présentées :
+\begin{itemize}
+        \item environnement industriel : perception et localisation d'alarme pour les travailleurs
+        \item mesure d'absorption
+        \item auralisation
+\end{itemize}
+
+
+
+
+
+
+
+\end{document}
