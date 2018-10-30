@@ -1,0 +1,277 @@
+\documentclass[portrait,final,a0paper]{baposter}
+
+\usepackage[francais]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{calc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{relsize}
+\usepackage{multirow}
+\usepackage{rotating}
+\usepackage{bm}
+\usepackage{enumitem}
+\usepackage{url}
+\usepackage{booktabs}
+%\usepackage{multicol}
+\usepackage{xcolor}
+\usetikzlibrary{calc}
+
+\usepackage{tabularx}
+
+
+%\usepackage{times}
+\usepackage{helvet}
+%\usepackage{bookman}
+%\usepackage{palatino}
+\renewcommand*{\familydefault}{\sfdefault}
+
+\newcommand{\captionfont}{\footnotesize}
+
+\graphicspath{{images/}}
+
+\setlength{\columnsep}{1.5em}
+\setlength{\columnseprule}{0mm}
+
+\newcommand{\marktikz}[1]{ \tikz[remember picture,overlay]\node (#1) {};}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Save space in lists. Use this after the opening of the list
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\compresslist}{%
+\setlength{\itemsep}{1pt}%
+\setlength{\parskip}{0pt}%
+\setlength{\parsep}{0pt}%
+}
+
+
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt,color=main,fill=main!10, line width=1pt] (char) {#1};}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Begin of Document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Here starts the poster
+%%%---------------------------------------------------------------------------
+%%% Format it to your taste with the options
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Define some colors
+
+
+\definecolor{green}{rgb}{0.32,0.67,0.39}
+%\definecolor{main}{rgb}{0 0.627 0.588} %canard
+\definecolor{main}{rgb}{0 0.439  0.753} %bleu
+
+%\hyphenation{resolution occlusions}
+%%
+\begin{poster}%
+  % Poster Options
+  {
+  % Show grid to help with alignment
+  grid=false,
+  % Column
+  columns=4,
+  colspacing=1em,
+  % Color style
+  background=plain,%%shadetb,
+  bgColorOne=gray!12,%lightestgreen!80,
+  bgColorTwo=white,
+  borderColor=white,%darkgreen,
+  headerColorOne=white,%darkgreen,
+  %headerColorTwo=lightgreen,
+  headerFontColor=main,%white,
+  boxColorOne=white,%lightestgreen,
+  %boxColorTwo=lightgreen,
+  % Format of textbox
+  textborder=roundedleft,%faded,
+  % Format of text header
+  eyecatcher=true,
+  headerborder=closed,
+  headerheight=0.15\textheight,
+  %textfont=\sc,% An example of changing the text font
+  headershape=roundedright,
+  headershade=plain,%shadelr,
+  headerfont=\Large\bfseries,%\textsc, %Sans Serif
+  textfont={\setlength{\parindent}{1.5em}},
+  boxshade=plain,
+  linewidth=2pt
+  }
+  % Eye Catcher
+  {
+  \begin{minipage}{3cm}
+  	\centering
+ 	 \includegraphics[width=3cm]{logo/LABEX_CELYA.jpg} \\
+ 	  \includegraphics[trim={0 3cm 0 3cm},clip=true,width=3cm]{logo/logo_ADAPT.png}\\~\\
+
+\end{minipage}
+  }
+  % Title
+ {
+%\begin{tikzpicture}[overlay, remember picture, inner sep=0pt, outer sep=0pt]
+%  %\fill [white] ([yshift=-3cm]current page.north west) rectangle (current page.north east);
+%\end{tikzpicture}
+%\begin{minipage}{\linewidth}
+%	\vspace{0.5cm}
+%	\includegraphics[height=1cm]{logo/LABEX_CELYA.jpg} \hfill \includegraphics[height=1cm]{logo/logo_lmfa.pdf} \hfill \includegraphics[height=1cm]{logo/LVA_compact_couleur_transparent.png} \hfill   \includegraphics[trim={0 3cm 0 3cm},clip=true,height=1cm]{logo/logo_ADAPT.png}\\
+%\end{minipage} 
+ \textcolor{main}{\textbf{ Débruitage de la matrice interspectrale \\ pour l'étude des sources aéroacoustiques}}}
+  % Authors
+  { ~\\A. Dinsenmeyer\textsuperscript{1,2}, Q. Leclère\textsuperscript{1}, J. Antoni\textsuperscript{1}, E. Julliard\textsuperscript{3}}
+  % University logo
+  {
+\begin{minipage}{3cm}
+\centering
+ \includegraphics[width=2.5cm]{logo/LVA_compact_couleur.jpg}\\
+ \includegraphics[width=2.5cm]{logo/logo_lmfa.pdf} \\~\\
+\end{minipage}
+  }
+  
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Now define the boxes that make up the poster
+%%%---------------------------------------------------------------------------
+%%% Each box has a name and can be placed absolutely or relatively.
+%%% The only inconvenience is that you can only specify a relative position 
+%%% towards an already declared box. So if you have a box attached to the 
+%%% bottom, one to the top and a third one which should be in between, you 
+%%% have to specify the top and bottom boxes before you specify the middle 
+%%% box.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\headerbox{Contexte}{name=contexte}{
+Verrous scientifiques et technologiques
+ }
+ 
+ \headerbox{Méthode proposée}{name=methode,below=contexte,column=0,span=4}{
+ 
+ \begin{minipage}[t][10cm][t]{0.3\textwidth}
+	\centering
+	\resizebox{0.8cm}{!}{\circled{\textbf{1}}} \marktikz{step1out}  \\[1ex]
+	 {\bfseries Choisir un modèle statistique}\\
+	 $\displaystyle \bm{M\left( \bm{\theta} \right)}$
+	 \vspace{1em}
+
+	 
+	 
+	 \fbox{
+	\begin{tabular}{m{1ex} m{1ex} m{3cm} m{1ex}  m{2cm}}
+	$\bm{p}$ & $=$ & \centering$\bm{L \alpha c}$& $+$ &  \parbox{\linewidth}{ \centering $\bm{n}$} \\[1ex]
+	 & $=$  & \tikz{
+	 	\draw[rectangle,main,line width=1pt,fill=main!10] rectangle ++(0.5cm,-2cm); 
+		\draw[rectangle,main,line width=1pt] ++(0.6cm,-0.75cm) rectangle ++(0.5cm,-0.5cm);
+		\draw[main,line width=1pt] ++(0.6cm,-0.75cm) to  ++(0.5cm,-0.5cm);
+		\draw[main,rectangle,line width=1pt,fill=main!10] ++(1.2cm,-0.75cm) rectangle ++(2cm,-0.5cm);
+		}
+		 & $+$ & 
+		 \tikz{
+		\draw[rectangle,main,line width=1pt] rectangle ++(2cm,-2cm); 
+		\draw[line width=1pt,main] (0,0)to ++(2cm,-2cm);
+		}\\
+		 & &  \parbox{\linewidth}{ $\underbrace{\hspace{\linewidth}}$\\ \centering \scriptsize Matrice parcimonieuse} & & \parbox{\linewidth}{$\underbrace{\hspace{\linewidth}}$\\ \centering \scriptsize Bruit décorrélé}
+	\end{tabular}
+	}
+
+
+	\end{minipage}
+	\hfill
+	 \begin{minipage}[t][10cm][t]{0.3\textwidth}
+	\centering
+	\marktikz{step2in} 
+	\resizebox{0.8cm}{!}{\circled{\textbf{2}}}
+	\marktikz{step2out} \\[1ex]
+	{ \bfseries Choisir des distributions à priori}
+	\vspace{1em}
+	
+	\fbox{
+	
+	
+	}
+	
+	\end{minipage}
+	\hfill
+	 \begin{minipage}[t][10cm][t]{0.2\textwidth}
+		\centering
+		\marktikz{step3in}\resizebox{0.8cm}{!}{\circled{\textbf{3}}}  \marktikz{step3out}  \\[1ex]
+		Faire tourner un échantillonneur de Gibbs
+	\end{minipage}\\
+	\hfill
+	\flushright \begin{minipage}[t][10cm][t]{0.5\textwidth}
+		\centering
+		\marktikz{step4in}   \resizebox{0.8cm}{!}{\circled{\textbf{4}}} \marktikz{step4out} \\[1ex]
+		Reconstruire la CSM débruitée
+	\end{minipage}
+
+	\tikz[remember picture,overlay]{
+		\draw[->,line width=1pt, main,>=latex] ($ (step1out.east)+(1ex,1ex)$) to [out=30,in=150] ( $ (step2in.west) + (-1.5ex,1ex) $ );%
+		\draw[->,line width=1pt, main,>=latex] ($ (step2out.east)+(1ex,1ex)$) to [out=30,in=150] ( $ (step3in.west) + (-1.5ex,1ex) $ );%
+		\draw[->,line width=1pt, main,>=latex] ($ (step3out.east)+(1ex,1ex)$) to [out=-30,in=60] ( $ (step4out.east) + (1.5ex,1ex) $ );%
+	
+	}
+
+ }
+ 
+ 
+ \headerbox{Application à l'imagerie}{name=imagerie,column=0,span=4,below=methode}{
+ 
+ }
+ 
+ \headerbox{Analyse}{name=analyse,column=0, span=2,below=imagerie}{
+ 
+ }
+ 
+ \headerbox{Perspectives}{name=perspective,column=2, span=2,below=imagerie}{
+ 
+ }
+ 
+ 
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \headerbox{}{name=about,column=0,span=4,below=perspective}{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \noindent
+  \small
+  Contact : \url{alice.dinsenmeyer@insa-lyon.fr}\\
+  \textsuperscript{1}Laboratoire Vibrations Acoustique, Villeurbanne ; 
+\textsuperscript{2}Laboratoire de Mécanique des Fluides et Acoustique, Écully ; 
+\textsuperscript{3}Airbus, Toulouse
+%  \smaller
+%  
+%  
+%  \begin{minipage}{\linewidth}
+%      \begin{minipage}{0.45\linewidth}
+%          Poster by Lucas Bourneuf, in \LaTeX\\
+%          Source available on github
+%      \end{minipage}\hfill%
+%      \begin{minipage}{0.375\linewidth}
+%          \indent{}POGG is also on the web:\\
+%          \url{http://pogg.genouest.org}
+%      \end{minipage}\hfill%
+%      \begin{minipage}{0.125\linewidth}
+%
+%      \end{minipage}
+%  \end{minipage}
+%  \begin{center}
+%      \url{https://github.com/Aluriak/POGG_poster}
+%  \end{center}
+  }
+
+
+
+\end{poster}
+
+\end{document}
