@@ -1,4 +1,4 @@
-\documentclass[portrait,final,a0paper]{baposter}
+\documentclass[portrait,final,a0paper,]{baposter}
 
 \usepackage[francais]{babel}
 \usepackage[utf8]{inputenc}
@@ -48,6 +48,7 @@
 
 
 
+\newcommand{\diag}[1]{\lceil#1\rfloor}
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{
             \node[shape=circle,draw,inner sep=2pt,color=main,fill=main!10, line width=1pt] (char) {#1};}}
 
@@ -67,7 +68,7 @@
 
 \definecolor{green}{rgb}{0.32,0.67,0.39}
 %\definecolor{main}{rgb}{0 0.627 0.588} %canard
-\definecolor{main}{rgb}{0 0.439  0.753} %bleu
+\definecolor{main}{rgb}{0 0.439  0.753} %bleu %0 112 192
 
 %\hyphenation{resolution occlusions}
 %%
@@ -77,7 +78,7 @@
   % Show grid to help with alignment
   grid=false,
   % Column
-  columns=4,
+  columns=6,
   colspacing=1em,
   % Color style
   background=plain,%%shadetb,
@@ -92,9 +93,9 @@
   % Format of textbox
   textborder=roundedleft,%faded,
   % Format of text header
-  eyecatcher=true,
+  eyecatcher=false,
   headerborder=closed,
-  headerheight=0.15\textheight,
+  headerheight=0.08\textheight,
   %textfont=\sc,% An example of changing the text font
   headershape=roundedright,
   headershade=plain,%shadelr,
@@ -104,14 +105,7 @@
   linewidth=2pt
   }
   % Eye Catcher
-  {
-  \begin{minipage}{3cm}
-  	\centering
- 	 \includegraphics[width=3cm]{logo/LABEX_CELYA.jpg} \\
- 	  \includegraphics[trim={0 3cm 0 3cm},clip=true,width=3cm]{logo/logo_ADAPT.png}\\~\\
-
-\end{minipage}
-  }
+  {  }
   % Title
  {
 %\begin{tikzpicture}[overlay, remember picture, inner sep=0pt, outer sep=0pt]
@@ -121,17 +115,11 @@
 %	\vspace{0.5cm}
 %	\includegraphics[height=1cm]{logo/LABEX_CELYA.jpg} \hfill \includegraphics[height=1cm]{logo/logo_lmfa.pdf} \hfill \includegraphics[height=1cm]{logo/LVA_compact_couleur_transparent.png} \hfill   \includegraphics[trim={0 3cm 0 3cm},clip=true,height=1cm]{logo/logo_ADAPT.png}\\
 %\end{minipage} 
- \textcolor{main}{\textbf{ Débruitage de la matrice interspectrale \\ pour l'étude des sources aéroacoustiques}}}
+\vspace{0.4cm}\textcolor{main}{\textbf{Débruitage de la matrice interspectrale pour l'étude des sources aéroacoustiques}}}
   % Authors
   { ~\\A. Dinsenmeyer\textsuperscript{1,2}, Q. Leclère\textsuperscript{1}, J. Antoni\textsuperscript{1}, E. Julliard\textsuperscript{3}}
   % University logo
-  {
-\begin{minipage}{3cm}
-\centering
- \includegraphics[width=2.5cm]{logo/LVA_compact_couleur.jpg}\\
- \includegraphics[width=2.5cm]{logo/logo_lmfa.pdf} \\~\\
-\end{minipage}
-  }
+  {  }
   
  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -144,133 +132,142 @@
 %%% have to specify the top and bottom boxes before you specify the middle 
 %%% box.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-\headerbox{Contexte}{name=contexte}{
+ 
+ \headerbox{Contexte}{name=contexte,column=0,span=4}{
 Verrous scientifiques et technologiques
+
+Débriutage expé\\
+mise à zéro ou soustraction : pourquoi ?\\
+définition CSM\\~\\~\\~\\~\\
  }
  
- \headerbox{Méthode proposée}{name=methode,below=contexte,column=0,span=4}{
+
  
- \begin{minipage}[t][10cm][t]{0.3\textwidth}
+ \headerbox{Méthode proposée}{name=methode,below=contexte,below=contexte,column=0,span=6}{
+ 
+ \noindent\begin{minipage}[t]{0.24\textwidth}
 	\centering
-	\resizebox{0.8cm}{!}{\circled{\textbf{1}}} \marktikz{step1out}  \\[1ex]
+	\resizebox{0.5cm}{!}{\circled{\textbf{1}}} \marktikz{step1out}  \\[1ex]
 	 {\bfseries Choisir un modèle statistique}\\
-	 $\displaystyle \bm{M\left( \bm{\theta} \right)}$
-	 \vspace{1em}
-
-	 
-	 
-	 \fbox{
-	\begin{tabular}{m{1ex} m{1ex} m{3cm} m{1ex}  m{2cm}}
-	$\bm{p}$ & $=$ & \centering$\bm{L \alpha c}$& $+$ &  \parbox{\linewidth}{ \centering $\bm{n}$} \\[1ex]
+	 $\displaystyle \bm{M\left( \bm{\theta} \right)}$\\[1em]
+ 
+	%$\displaystyle \bm{p}_j=\bm{L \diag{\alpha} c}_j+\bm{n}_j$\\
+	%$\displaystyle j=1,\dots,Ns$\\[1ex]
+	 	 \newlength{\larg}	\setlength{\larg}{0.3cm}	
+	 	\newlength{\haut}	\setlength{\haut}{1.5cm}
+	 	\setlength{\tabcolsep}{0.7ex}
+	\noindent \begin{tabular}{m{1.2ex} m{0.5ex} m{2\larg+\haut+1ex} m{0.1ex}  m{\haut}}
+	$\bm{S}_{pp}$ & $=$ & \centering$\bm{L \diag{\alpha} S}_{cc} \bm{\diag{\alpha} L}'$&  $+$ &  \parbox{\linewidth}{ \centering $\diag{\bm{\sigma}^2_n}$} \\[1ex]
 	 & $=$  & \tikz{
-	 	\draw[rectangle,main,line width=1pt,fill=main!10] rectangle ++(0.5cm,-2cm); 
-		\draw[rectangle,main,line width=1pt] ++(0.6cm,-0.75cm) rectangle ++(0.5cm,-0.5cm);
-		\draw[main,line width=1pt] ++(0.6cm,-0.75cm) to  ++(0.5cm,-0.5cm);
-		\draw[main,rectangle,line width=1pt,fill=main!10] ++(1.2cm,-0.75cm) rectangle ++(2cm,-0.5cm);
+	 	\node at (-2cm,0) (a) {};
+	 	\draw [rectangle,main,line width=1pt,fill=main!10] (a)  rectangle  ++ (\larg,-\haut)  ; 	 
+	 	\draw[rectangle,main,line width=1pt,fill=main!10] (a)++(\larg+0.1cm,-0.5\haut+0.5\larg) rectangle ++(\larg,-\larg);
+		\draw[main,rectangle,line width=1pt,fill=main!10] (a)++(2\larg+0.2cm,-0.5\haut+0.5\larg) rectangle ++(\haut,-\larg);
 		}
-		 & $+$ & 
-		 \tikz{
-		\draw[rectangle,main,line width=1pt] rectangle ++(2cm,-2cm); 
-		\draw[line width=1pt,main] (0,0)to ++(2cm,-2cm);
+		 & $+$ 
+		 &\tikz{
+		\draw[main,line width=1pt]  (-1cm,0) rectangle ++(\haut,-\haut); 
+		\draw[line width=1pt,main] (-1cm,0) to ++(\haut,-\haut);
 		}\\
-		 & &  \parbox{\linewidth}{ $\underbrace{\hspace{\linewidth}}$\\ \centering \scriptsize Matrice parcimonieuse} & & \parbox{\linewidth}{$\underbrace{\hspace{\linewidth}}$\\ \centering \scriptsize Bruit décorrélé}
-	\end{tabular}
-	}
-
-
-	\end{minipage}
+		& &
+%		\tikz{
+%		\node [] at (0.25cm,0cm) {\small $(M\!\!\times\!\!K$)};
+%		\node [] at (0.85cm,0cm) {\small $(K\!\!\times\!\!K$)};
+%		\node [] at (0.85cm,0cm) {\small $(K\!\!\times\!\!M$)};
+%		}
+	 \parbox{\linewidth}{ \centering \footnotesize  $(M\!\!\times\!\!K)(K\!\!\times\!\!K)(K\!\!\times\!\!M)$}
+		& & \parbox{\linewidth}{ \centering \footnotesize $(M\!\!\times\!\! M)$}\\
+		 & &  \parbox{\linewidth}{ $\underbrace{\hspace{\linewidth}}$\\ \centering \scriptsize Matrice à rang réduit} & & \parbox{\linewidth}{$\underbrace{\hspace{\linewidth}}$\\ \centering \scriptsize Bruit décorrélé}
+	\end{tabular}	
+	%Justifier le modèle : sélection d'ordre, longueur corr
+	
+\end{minipage}
 	\hfill
-	 \begin{minipage}[t][10cm][t]{0.3\textwidth}
+\begin{minipage}[t]{0.24\textwidth}
 	\centering
 	\marktikz{step2in} 
-	\resizebox{0.8cm}{!}{\circled{\textbf{2}}}
+	\resizebox{0.5cm}{!}{\circled{\textbf{2}}}
 	\marktikz{step2out} \\[1ex]
-	{ \bfseries Choisir des distributions à priori}
-	\vspace{1em}
-	
-	\fbox{
-	
-	
-	}
-	
-	\end{minipage}
-	\hfill
-	 \begin{minipage}[t][10cm][t]{0.2\textwidth}
+	{ \bfseries Choix des distributions \textit{a priori}}\\[1em]
+	\vspace{1em}	
+	\includegraphics[width=0.9\textwidth]{modele.png}
+
+%	\begin{align*}
+%		\bm{L} &\sim \mathcal{N}_{\mathbb{C}} \left( 0,\frac{\bm{I}}{\kappa} \right)\\		
+%		\bm{\alpha}& \sim \mathcal{E}(\bm{a}_{\alpha}), \label{eq:alpha} \\
+%		\bm{c} &\sim  \mathcal{N}_{\mathbb{C}} ( 0 , \bm{\gamma}^2 )	\\
+%		\bm{n}& \sim \mathcal{N}_{\mathbb{C}} \left( 0 , \diag{\bm{\sigma}_n^2} \right)		
+%	\end{align*}
+%	
+%		Hyperpriors :
+%	\begin{align*}
+%		\bm{\gamma}^2 & \sim \mathcal{IG}( \bm{a}_{\gamma}, \bm{b}_{\gamma}) \\
+%		\bm{\sigma}_n^2  & \sim \mathcal{IG} (\bm{a}_{\sigma} , \bm{b}_{\sigma})
+%	\end{align*}		
+\end{minipage}\hfill
+\begin{minipage}[t]{0.24\textwidth}
 		\centering
-		\marktikz{step3in}\resizebox{0.8cm}{!}{\circled{\textbf{3}}}  \marktikz{step3out}  \\[1ex]
-		Faire tourner un échantillonneur de Gibbs
-	\end{minipage}\\
-	\hfill
-	\flushright \begin{minipage}[t][10cm][t]{0.5\textwidth}
+		{  \marktikz{step3in}\resizebox{0.5cm}{!}{\circled{\textbf{3}}}  \marktikz{step3out}  } \\[1ex]
+		{\bfseries Trouver le maximum de la distribution \textit{a posteriori}}\\
+		\textit{Estimer les paramètres qui expliquent au mieux les mesures}\\
+		\includegraphics[width=0.9\textwidth]{gibbs.png}	
+\end{minipage}
+\hfill
+ \begin{minipage}[t]{0.24\textwidth}
 		\centering
-		\marktikz{step4in}   \resizebox{0.8cm}{!}{\circled{\textbf{4}}} \marktikz{step4out} \\[1ex]
-		Reconstruire la CSM débruitée
-	\end{minipage}
+		\marktikz{step4in}   \resizebox{0.5cm}{!}{\circled{\textbf{4}}} \marktikz{step4out} \\[1ex]
+		{\bfseries Reconstruire la CSM débruitée}\\[1em]
+		\includegraphics[width=0.4\textwidth]{signal.png}  \raisebox{0.15\textwidth}{\large $+$} \includegraphics[width=0.4\textwidth]{bruit.png}
+\end{minipage}
 
-	\tikz[remember picture,overlay]{
-		\draw[->,line width=1pt, main,>=latex] ($ (step1out.east)+(1ex,1ex)$) to [out=30,in=150] ( $ (step2in.west) + (-1.5ex,1ex) $ );%
-		\draw[->,line width=1pt, main,>=latex] ($ (step2out.east)+(1ex,1ex)$) to [out=30,in=150] ( $ (step3in.west) + (-1.5ex,1ex) $ );%
-		\draw[->,line width=1pt, main,>=latex] ($ (step3out.east)+(1ex,1ex)$) to [out=-30,in=60] ( $ (step4out.east) + (1.5ex,1ex) $ );%
-	
-	}
+\tikz[remember picture,overlay]{
+	\draw[->,line width=1pt, main,>=latex] ($ (step1out.east)+(0,1ex)$) to [out=20,in=160] ( $ (step2in.west) + (0,1ex) $ );%
+	\draw[->,line width=1pt, main,>=latex] ($ (step2out.east)+(0	,1ex)$) to [out=20,in=160] ( $ (step3in.west) + (0,1ex) $ );%
+	\draw[->,line width=1pt, main,>=latex] ($ (step3out.east)+(0,1ex)$) to [out=20,in=160] ( $ (step4in.west) + (0,1ex) $ );%	
+}
+ }
+ 
+   \headerbox{}{name=image,span=2,column=4,boxColorOne=gray!12,borderColor=gray!12}{
+%  \begin{minipage}[t][1cm][t]{\linewidth}
+% 	\centering 	
+% 	\noindent \hspace{-3cm}\vspace{2cm}\includegraphics[width=12cm]{contexte.png} 
+%\end{minipage}
+\begin{minipage}[t][1cm][t]{\textwidth}
+	\centering
+	\node[inner sep=0pt,overlay,anchor=north west] () at (-1cm,1cm)  {\includegraphics[width=0.31\paperwidth]{contexte.png} };
+\end{minipage}
 
  }
  
  
- \headerbox{Application à l'imagerie}{name=imagerie,column=0,span=4,below=methode}{
+ \headerbox{Application à l'imagerie}{name=imagerie,column=0,span=6,below=methode}{
+ \centering
+ \includegraphics[width=0.9\textwidth]{imagerie_final.eps}
+
  
  }
  
- \headerbox{Analyse}{name=analyse,column=0, span=2,below=imagerie}{
+ \headerbox{Analyse}{name=analyse,column=0, span,below=imagerie}{
  
  }
  
- \headerbox{Perspectives}{name=perspective,column=2, span=2,below=imagerie}{
+ \headerbox{Perspectives}{name=perspective,column=2, span=3,below=imagerie}{
  
  }
  
- 
 
-
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \headerbox{}{name=about,column=0,span=4,below=perspective}{
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \noindent
-  \small
-  Contact : \url{alice.dinsenmeyer@insa-lyon.fr}\\
-  \textsuperscript{1}Laboratoire Vibrations Acoustique, Villeurbanne ; 
-\textsuperscript{2}Laboratoire de Mécanique des Fluides et Acoustique, Écully ; 
-\textsuperscript{3}Airbus, Toulouse
-%  \smaller
-%  
-%  
-%  \begin{minipage}{\linewidth}
-%      \begin{minipage}{0.45\linewidth}
-%          Poster by Lucas Bourneuf, in \LaTeX\\
-%          Source available on github
-%      \end{minipage}\hfill%
-%      \begin{minipage}{0.375\linewidth}
-%          \indent{}POGG is also on the web:\\
-%          \url{http://pogg.genouest.org}
-%      \end{minipage}\hfill%
-%      \begin{minipage}{0.125\linewidth}
-%
-%      \end{minipage}
-%  \end{minipage}
-%  \begin{center}
-%      \url{https://github.com/Aluriak/POGG_poster}
-%  \end{center}
-  }
-
-
+ \headerbox{}{name=about,column=0,span=6,below=perspective}{
+  	\centering
+  	 \small
+	  Contact : \url{alice.dinsenmeyer@insa-lyon.fr}\\
+	  \textsuperscript{1}Laboratoire Vibrations Acoustique, Villeurbanne ; 
+	\textsuperscript{2}Laboratoire de Mécanique des Fluides et Acoustique, Écully ; 
+	\textsuperscript{3}Airbus, Toulouse\\
+ 	 \includegraphics[width=3cm]{logo/LABEX_CELYA.jpg} \hfill
+ 	  \includegraphics[trim={0 3cm 0 3cm},clip=true,width=3cm]{logo/logo_ADAPT.png} \hfill
+ \includegraphics[width=2.5cm]{logo/LVA_compact_couleur.jpg} \hfill
+ \includegraphics[width=2.5cm]{logo/logo_lmfa.pdf} \hfill  
+}
 
 \end{poster}
 
