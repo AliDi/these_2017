@@ -46,8 +46,6 @@
 \setlength{\parsep}{0pt}%
 }
 
-
-
 \newcommand{\diag}[1]{\lceil#1\rfloor}
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{
             \node[shape=circle,draw,inner sep=2pt,color=main,fill=main!10, line width=1pt] (char) {#1};}}
@@ -69,7 +67,9 @@
 \definecolor{green}{rgb}{0.32,0.67,0.39}
 %\definecolor{main}{rgb}{0 0.627 0.588} %canard
 \definecolor{main}{rgb}{0 0.439  0.753} %bleu %0 112 192
-
+\definecolor{rouge}{rgb}{1 0.270 0 } %255 69 0
+\definecolor{jaune}{rgb}{1 0.745 0} %255 190 0
+\definecolor{vert}{rgb}{0.573 0.792 0.209} %146 202 74
 %\hyphenation{resolution occlusions}
 %%
 \begin{poster}%
@@ -117,7 +117,7 @@
 %\end{minipage} 
 \vspace{0.4cm}\textcolor{main}{\textbf{Débruitage de la matrice interspectrale pour l'étude des sources aéroacoustiques}}}
   % Authors
-  { ~\\A. Dinsenmeyer\textsuperscript{1,2}, Q. Leclère\textsuperscript{1}, J. Antoni\textsuperscript{1}, E. Julliard\textsuperscript{3}}
+  { ~\\ \textit{A. Dinsenmeyer}\textsuperscript{1,2}, Q. Leclère\textsuperscript{1}, J. Antoni\textsuperscript{1}, E. Julliard\textsuperscript{3}}
   % University logo
   {  }
   
@@ -134,18 +134,43 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  
  \headerbox{Contexte}{name=contexte,column=0,span=4}{
-Verrous scientifiques et technologiques
 
-Débriutage expé\\
-mise à zéro ou soustraction : pourquoi ?\\
-définition CSM\\~\\~\\~\\~\\
+\noindent $\bullet$ \textbf{Mesures multivoies} en présence de \textbf{bruit} : veine d'essai, extérieur,...\\
+\noindent $\bullet$ 2 types de fluctuations de pression : \\
+$ \left. \begin{array}{l} 
+\mbox{- la contribution des sources acoustiques (\textcolor{jaune}{signal})} \\                   
+\mbox{- la turbulence de l'écoulement (\textcolor{red}{bruit})}                      
+\end{array} \right\} \mbox{SNR très faible voire négatif}$
+
+\noindent $\bullet$ \textbf{Matrice interspectrale} (MI) : intercorrélation des coefficients de Fourier\\
+\noindent $\bullet$  \textbf{Contexte  industriel} : étude des sources de bruit d'un avion de ligne (moteur, profil)\\
+\indent $\hookrightarrow$ mesures en vol à débruiter
+ %TF de la matrice d'intercorrélation moyennée (hypothèse de champ stationnaire)\\
+
+%Débriutage expé\\
+%mise à zéro ou soustraction : pourquoi ?\\
+ }
+  \headerbox{Objectif}{name=obj,below=contexte,column=0,span=2}{
+ \noindent Séparer la contribution des sources acoustique du bruit de couche limite turbulente.\\
+ }
+  \headerbox{Idée générale}{name=idee,below=contexte,column=2,span=4}{
+\noindent \begin{minipage}{3cm}
+\centering
+\vspace{-0.1cm}\includegraphics[width=2.5cm]{idee.png}
+\end{minipage}
+\hspace{0.3cm}
+\begin{minipage}{\textwidth-3.1cm}
+ \noindent Exploiter les différences statistiques entre le bruit et le signal :\\
+ -bruit faiblement corrélé : MI diagonale\\
+ -signal corrélé, faible nombre de sources : MI à rang réduit\\[-2ex]
+\end{minipage}
+
  }
  
-
  
- \headerbox{Méthode proposée}{name=methode,below=contexte,below=contexte,column=0,span=6}{
- 
- \noindent\begin{minipage}[t]{0.24\textwidth}
+ \headerbox{Méthode proposée}{name=methode,below=idee,column=0,span=6}{
+ \centering \vspace{-1em} Faire une décomposition matricielle par de l'optimisation bayésienne :\\[1.5em]
+ \noindent\begin{minipage}[t]{0.23\textwidth}
 	\centering
 	\resizebox{0.5cm}{!}{\circled{\textbf{1}}} \marktikz{step1out}  \\[1ex]
 	 {\bfseries Choisir un modèle statistique}\\
@@ -154,7 +179,7 @@ définition CSM\\~\\~\\~\\~\\
 	%$\displaystyle \bm{p}_j=\bm{L \diag{\alpha} c}_j+\bm{n}_j$\\
 	%$\displaystyle j=1,\dots,Ns$\\[1ex]
 	 	 \newlength{\larg}	\setlength{\larg}{0.3cm}	
-	 	\newlength{\haut}	\setlength{\haut}{1.5cm}
+	 	\newlength{\haut}	\setlength{\haut}{1.3cm}
 	 	\setlength{\tabcolsep}{0.7ex}
 	\noindent \begin{tabular}{m{1.2ex} m{0.5ex} m{2\larg+\haut+1ex} m{0.1ex}  m{\haut}}
 	$\bm{S}_{pp}$ & $=$ & \centering$\bm{L \diag{\alpha} S}_{cc} \bm{\diag{\alpha} L}'$&  $+$ &  \parbox{\linewidth}{ \centering $\diag{\bm{\sigma}^2_n}$} \\[1ex]
@@ -175,22 +200,26 @@ définition CSM\\~\\~\\~\\~\\
 %		\node [] at (0.85cm,0cm) {\small $(K\!\!\times\!\!K$)};
 %		\node [] at (0.85cm,0cm) {\small $(K\!\!\times\!\!M$)};
 %		}
-	 \parbox{\linewidth}{ \centering \footnotesize  $(M\!\!\times\!\!K)(K\!\!\times\!\!K)(K\!\!\times\!\!M)$}
-		& & \parbox{\linewidth}{ \centering \footnotesize $(M\!\!\times\!\! M)$}\\
+	 \parbox{\linewidth}{ \centering \tiny  $(M\!\!\times\!\!K)(K\!\!\times\!\!K)(K\!\!\times\!\!M)$}
+		& & \parbox{\linewidth}{ \centering \tiny $(M\!\!\times\!\! M)$}\\
 		 & &  \parbox{\linewidth}{ $\underbrace{\hspace{\linewidth}}$\\ \centering \scriptsize Matrice à rang réduit} & & \parbox{\linewidth}{$\underbrace{\hspace{\linewidth}}$\\ \centering \scriptsize Bruit décorrélé}
 	\end{tabular}	
 	%Justifier le modèle : sélection d'ordre, longueur corr
 	
 \end{minipage}
 	\hfill
-\begin{minipage}[t]{0.24\textwidth}
+\begin{minipage}[t]{0.23\textwidth}
 	\centering
 	\marktikz{step2in} 
 	\resizebox{0.5cm}{!}{\circled{\textbf{2}}}
 	\marktikz{step2out} \\[1ex]
 	{ \bfseries Choix des distributions \textit{a priori}}\\[1em]
 	\vspace{1em}	
-	\includegraphics[width=0.9\textwidth]{modele.png}
+	\includegraphics[width=0.9\textwidth]{modele.png}\\
+	
+	Gaussienne\\
+	Exponentielle\\
+	Inverse Gamma
 
 %	\begin{align*}
 %		\bm{L} &\sim \mathcal{N}_{\mathbb{C}} \left( 0,\frac{\bm{I}}{\kappa} \right)\\		
@@ -205,18 +234,25 @@ définition CSM\\~\\~\\~\\~\\
 %		\bm{\sigma}_n^2  & \sim \mathcal{IG} (\bm{a}_{\sigma} , \bm{b}_{\sigma})
 %	\end{align*}		
 \end{minipage}\hfill
-\begin{minipage}[t]{0.24\textwidth}
+\begin{minipage}[t]{0.30\textwidth}
 		\centering
 		{  \marktikz{step3in}\resizebox{0.5cm}{!}{\circled{\textbf{3}}}  \marktikz{step3out}  } \\[1ex]
-		{\bfseries Trouver le maximum de la distribution \textit{a posteriori}}\\
-		\textit{Estimer les paramètres qui expliquent au mieux les mesures}\\
-		\includegraphics[width=0.9\textwidth]{gibbs.png}	
+		{\bfseries \noindent Maximiser la distribution \textit{a posteriori}}\\[1ex]
+		%\textit{Estimer les paramètres qui expliquent au mieux les mesures}\\
+		\includegraphics[width=0.8\textwidth]{gibbs.png}\vspace{-0.5ex}
+	
 \end{minipage}
 \hfill
- \begin{minipage}[t]{0.24\textwidth}
+ \begin{minipage}[t]{0.23\textwidth}
 		\centering
 		\marktikz{step4in}   \resizebox{0.5cm}{!}{\circled{\textbf{4}}} \marktikz{step4out} \\[1ex]
-		{\bfseries Reconstruire la CSM débruitée}\\[1em]
+		{\bfseries Reconstruire la MI débruitée}\\[1ex]
+		\setlength{\fboxsep}{2pt}
+		\fcolorbox{black}{vert}{\footnotesize MI mesurée}\\[-0.4ex] = \\[0.5ex]
+		\draw[->,line width=1pt ,main,>=latex] (0.5\textwidth-0.1cm,0) -- ++(-1cm,-0.7cm);
+		\draw[->,line width=1pt ,main,>=latex] (0.5\textwidth+0.1cm,0) -- ++(1cm,-0.7cm);
+		\vspace{0.7cm}
+		\noindent  \fcolorbox{black}{jaune}{\footnotesize MI acoustique} \hspace{0.8cm}  \fcolorbox{black}{rouge}{\footnotesize MI bruit}~~~~~~~\\
 		\includegraphics[width=0.4\textwidth]{signal.png}  \raisebox{0.15\textwidth}{\large $+$} \includegraphics[width=0.4\textwidth]{bruit.png}
 \end{minipage}
 
@@ -236,37 +272,80 @@ définition CSM\\~\\~\\~\\~\\
 	\centering
 	\node[inner sep=0pt,overlay,anchor=north west] () at (-1cm,1cm)  {\includegraphics[width=0.31\paperwidth]{contexte.png} };
 \end{minipage}
+ }
+  
+ \headerbox{Outils}{name=gibbs,below=methode,column=0,span=3}{
+ \noindent Inférence bayésienne : échantillonneur de Gibbs\\
+ modèle a variables latentes\\
+ Gibbs : Permet d'approximer la distribution jointe inconnue $p(\theta_1,\theta_2,\dots|\bm{S}_{pp})$ à partir des distributions conditionnelles connues $p(\theta_1|\bm{S}_{pp},\theta_2,\dots)$. C'est une méthodes de Monte-Carlo par chaînes de Markov : une marche aléatoire biaisée.
+ }
 
+ 
+ \headerbox{Utilisation du bruit de fond et des mesures multiples}{name=bf,span=3,column=3 , below=methode}{
+ Bruit commun à tous les régimes à un facteur près :
+For i
+  Pour chaque régime moteur
+Tirer $L^i$ dans $p(L|S_y^p, \text{tous les paramètres}^{i-1})$ 
+ Tirer $S_c^i$ dans $p(S_c|S_y^p, \text{tous les paramètres}^{i-1})$
+ 
+ }
+ 
+ \headerbox{Application à l'imagerie}{name=imagerie,column=0,span=6,below=gibbs}{
+ \vspace{-2ex}
+ \noindent\begin{minipage}{0.6\textwidth}
+$\bullet$ Étude du bruit de jet supersonique, not. des cellules de chocs (monopoles corrélés)\\
+$\bullet$ Méthode d'imagerie : IRLS régularisation bayésienne p=0
+\end{minipage}
+\hfill
+\begin{minipage}{0.35\textwidth}
+\centering
+$\bullet$ Erreur de reconstruction : 
+\begin{equation*}
+\frac{\| \bm{S}_{pp}^{\text{\smaller mesuré}}-\bm{S}_{pp}^{\text{\smaller reconstruit}}\|_1}{\|\bm{S}_{pp}^{\text{\smaller mesuré}}\|_1 \|\bm{S}_{pp}^{\text{\smaller reconstruit}}\|_1} 
+\end{equation*}
+\end{minipage}
+~\\~\\~\\
+\centering
+ \includegraphics[width=0.9\textwidth]{imagerie_final.eps} 
+ 
  }
  
  
- \headerbox{Application à l'imagerie}{name=imagerie,column=0,span=6,below=methode}{
+ \headerbox{Analyse}{name=analyse,column=0, span=3,below=imagerie}{
+ \begin{minipage}{0.45\textwidth}
  \centering
- \includegraphics[width=0.9\textwidth]{imagerie_final.eps}
+  \resizebox{0.5cm}{!}{\circled{\textbf{+}}}\\[1ex]
+  Intervalle de crédibilité\\
+  Réduction de dimension\\
+  Sélection automatique de l'ordre : pas de paramètre à régler\\
+  Modèle flexible  
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+   \resizebox{0.5cm}{!}{\circled{$\boldmath{-}$}}\\[1ex]
+   Sensibilité aux priors selon conditionnement\\
+   Coût de calcul élevé
+\end{minipage}
+ }
+ 
+ \headerbox{Perspectives}{name=perspective,column=3, span=3,below=imagerie}{
+ Échantillonneur plus robuste et plus rapide\\
+ Modèle à adapter, not. pour la corrélation du bruit
+ }
+ 
 
- 
- }
- 
- \headerbox{Analyse}{name=analyse,column=0, span,below=imagerie}{
- 
- }
- 
- \headerbox{Perspectives}{name=perspective,column=2, span=3,below=imagerie}{
- 
- }
- 
-
- \headerbox{}{name=about,column=0,span=6,below=perspective}{
+ \headerbox{}{name=about,column=0,span=6,below=analyse}{
   	\centering
-  	 \small
+  	 \footnotesize
 	  Contact : \url{alice.dinsenmeyer@insa-lyon.fr}\\
 	  \textsuperscript{1}Laboratoire Vibrations Acoustique, Villeurbanne ; 
 	\textsuperscript{2}Laboratoire de Mécanique des Fluides et Acoustique, Écully ; 
 	\textsuperscript{3}Airbus, Toulouse\\
- 	 \includegraphics[width=3cm]{logo/LABEX_CELYA.jpg} \hfill
- 	  \includegraphics[trim={0 3cm 0 3cm},clip=true,width=3cm]{logo/logo_ADAPT.png} \hfill
- \includegraphics[width=2.5cm]{logo/LVA_compact_couleur.jpg} \hfill
- \includegraphics[width=2.5cm]{logo/logo_lmfa.pdf} \hfill  
+ 	\noindent  \includegraphics[height=1.5cm]{logo/LABEX_CELYA.jpg} \hfill
+ 	  \includegraphics[trim={0 3cm 0 3cm},clip=true,height=1.5cm]{logo/logo_ADAPT.png} \hfill
+ \includegraphics[height=1.5cm]{logo/LVA_compact_couleur.jpg} \hfill
+ \includegraphics[height=1.5cm]{logo/logo_lmfa.pdf} \hfill  \\[-3ex]
+\hfill \textcolor{gray!50}{\scriptsize  Novembre 2018} \hfill
 }
 
 \end{poster}
