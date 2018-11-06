@@ -36,6 +36,7 @@
 \setlength{\columnseprule}{0mm}
 
 \newcommand{\marktikz}[1]{ \tikz[remember picture,overlay]\node (#1) {};}
+\renewcommand{\baselinestretch}{1.05} 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Save space in lists. Use this after the opening of the list
@@ -135,15 +136,15 @@
  
  \headerbox{Contexte}{name=contexte,column=0,span=4}{
 
-\noindent $\bullet$ \textbf{Mesures multivoies} en présence de \textbf{bruit} : veine d'essai, extérieur,...\\
+\noindent $\bullet$ \textbf{Mesures multivoies} en présence de \textbf{bruit} : veine d'essai, extérieur venté, milieu sous-marin...\\
 \noindent $\bullet$ 2 types de fluctuations de pression : \\
 $ \left. \begin{array}{l} 
 \mbox{- la contribution des sources acoustiques (\textcolor{jaune}{signal})} \\                   
 \mbox{- la turbulence de l'écoulement (\textcolor{red}{bruit})}                      
-\end{array} \right\} \mbox{SNR très faible voire négatif}$
+\end{array} \right\} \mbox{~SNR très faible voire négatif}$
 
 \noindent $\bullet$ \textbf{Matrice interspectrale} (MI) : intercorrélation des coefficients de Fourier\\
-\noindent $\bullet$  \textbf{Contexte  industriel} : étude des sources de bruit d'un avion de ligne (moteur, profil)\\
+\noindent $\bullet$  \textbf{Contexte  industriel} : étude des sources de bruit d'un avion de ligne (design moteur et profil)\\
 \indent $\hookrightarrow$ mesures en vol à débruiter
  %TF de la matrice d'intercorrélation moyennée (hypothèse de champ stationnaire)\\
 
@@ -151,7 +152,7 @@ $ \left. \begin{array}{l}
 %mise à zéro ou soustraction : pourquoi ?\\
  }
   \headerbox{Objectif}{name=obj,below=contexte,column=0,span=2}{
- \noindent Séparer la contribution des sources acoustique du bruit de couche limite turbulente.\\
+ \noindent \bfseries Séparer la contribution des sources acoustique du bruit de couche limite turbulente.\\
  }
   \headerbox{Idée générale}{name=idee,below=contexte,column=2,span=4}{
 \noindent \begin{minipage}{3cm}
@@ -161,15 +162,15 @@ $ \left. \begin{array}{l}
 \hspace{0.3cm}
 \begin{minipage}{\textwidth-3.1cm}
  \noindent Exploiter les différences statistiques entre le bruit et le signal :\\
- -bruit faiblement corrélé : MI diagonale\\
- -signal corrélé, faible nombre de sources : MI à rang réduit\\[-2ex]
+ - bruit faiblement corrélé : \textbf{MI diagonale},\\
+ - signal corrélé, peu de monopoles équivalents décorrélés : \textbf{MI à rang réduit}.\\[-2ex]
 \end{minipage}
 
  }
  
  
- \headerbox{Méthode proposée}{name=methode,below=idee,column=0,span=6}{
- \centering \vspace{-1em} Faire une décomposition matricielle par de l'optimisation bayésienne :\\[1.5em]
+ \headerbox{Méthode proposée : Analyse Factorielle Probabiliste (PFA)}{name=methode,below=idee,column=0,span=6}{
+ \centering  Faire une décomposition matricielle par de l'optimisation bayésienne :\\[1.5em]
  \noindent\begin{minipage}[t]{0.23\textwidth}
 	\centering
 	\resizebox{0.5cm}{!}{\circled{\textbf{1}}} \marktikz{step1out}  \\[1ex]
@@ -181,18 +182,18 @@ $ \left. \begin{array}{l}
 	 	 \newlength{\larg}	\setlength{\larg}{0.3cm}	
 	 	\newlength{\haut}	\setlength{\haut}{1.3cm}
 	 	\setlength{\tabcolsep}{0.7ex}
-	\noindent \begin{tabular}{m{1.2ex} m{0.5ex} m{2\larg+\haut+1ex} m{0.1ex}  m{\haut}}
-	$\bm{S}_{pp}$ & $=$ & \centering$\bm{L \diag{\alpha} S}_{cc} \bm{\diag{\alpha} L}'$&  $+$ &  \parbox{\linewidth}{ \centering $\diag{\bm{\sigma}^2_n}$} \\[1ex]
+	\noindent \begin{tabular}{m{1.8ex} m{0.5ex} m{2\larg+\haut+1ex} m{0.5ex}  m{\haut}}
+	$\bm{S}_{pp~}$ & $=$ & \centering$\bm{L \diag{\alpha} S}_{cc} \bm{\diag{\alpha} L}'$&  $+$ &  \parbox{\linewidth}{ \centering $\diag{\bm{\sigma}^2_n}$} \\[1ex]
 	 & $=$  & \tikz{
-	 	\node at (-2cm,0) (a) {};
+	 	\node at (0.5cm,0) (a) {};
 	 	\draw [rectangle,main,line width=1pt,fill=main!10] (a)  rectangle  ++ (\larg,-\haut)  ; 	 
 	 	\draw[rectangle,main,line width=1pt,fill=main!10] (a)++(\larg+0.1cm,-0.5\haut+0.5\larg) rectangle ++(\larg,-\larg);
 		\draw[main,rectangle,line width=1pt,fill=main!10] (a)++(2\larg+0.2cm,-0.5\haut+0.5\larg) rectangle ++(\haut,-\larg);
 		}
 		 & $+$ 
 		 &\tikz{
-		\draw[main,line width=1pt]  (-1cm,0) rectangle ++(\haut,-\haut); 
-		\draw[line width=1pt,main] (-1cm,0) to ++(\haut,-\haut);
+		\draw[main,line width=1pt]  (-0.9cm,0) rectangle ++(\haut,-\haut); 
+		\draw[line width=1pt,main] (-0.9cm,0) to ++(\haut,-\haut);
 		}\\
 		& &
 %		\tikz{
@@ -202,7 +203,7 @@ $ \left. \begin{array}{l}
 %		}
 	 \parbox{\linewidth}{ \centering \tiny  $(M\!\!\times\!\!K)(K\!\!\times\!\!K)(K\!\!\times\!\!M)$}
 		& & \parbox{\linewidth}{ \centering \tiny $(M\!\!\times\!\! M)$}\\
-		 & &  \parbox{\linewidth}{ $\underbrace{\hspace{\linewidth}}$\\ \centering \scriptsize Matrice à rang réduit} & & \parbox{\linewidth}{$\underbrace{\hspace{\linewidth}}$\\ \centering \scriptsize Bruit décorrélé}
+		 & &  \parbox{\linewidth}{ $\underbrace{\hspace{\linewidth}}$\\ \centering \small Matrice à rang réduit} & & \parbox{\linewidth}{$\underbrace{\hspace{\linewidth}}$\\ \centering \small Bruit \\ décorrélé}
 	\end{tabular}	
 	%Justifier le modèle : sélection d'ordre, longueur corr
 	
@@ -213,26 +214,11 @@ $ \left. \begin{array}{l}
 	\marktikz{step2in} 
 	\resizebox{0.5cm}{!}{\circled{\textbf{2}}}
 	\marktikz{step2out} \\[1ex]
-	{ \bfseries Choix des distributions \textit{a priori}}\\[1em]
-	\vspace{1em}	
-	\includegraphics[width=0.9\textwidth]{modele.png}\\
-	
-	Gaussienne\\
-	Exponentielle\\
-	Inverse Gamma
-
-%	\begin{align*}
-%		\bm{L} &\sim \mathcal{N}_{\mathbb{C}} \left( 0,\frac{\bm{I}}{\kappa} \right)\\		
-%		\bm{\alpha}& \sim \mathcal{E}(\bm{a}_{\alpha}), \label{eq:alpha} \\
-%		\bm{c} &\sim  \mathcal{N}_{\mathbb{C}} ( 0 , \bm{\gamma}^2 )	\\
-%		\bm{n}& \sim \mathcal{N}_{\mathbb{C}} \left( 0 , \diag{\bm{\sigma}_n^2} \right)		
-%	\end{align*}
-%	
-%		Hyperpriors :
-%	\begin{align*}
-%		\bm{\gamma}^2 & \sim \mathcal{IG}( \bm{a}_{\gamma}, \bm{b}_{\gamma}) \\
-%		\bm{\sigma}_n^2  & \sim \mathcal{IG} (\bm{a}_{\sigma} , \bm{b}_{\sigma})
-%	\end{align*}		
+	{ \bfseries Choix des distributions \textit{a priori}}\\[1.5em]
+	\includegraphics[width=0.95\textwidth]{modele.png}\\[1ex]
+	\small
+	$\bm{L},~\bm{c},~ \bm{n}$ suivent une loi normale ($\mathcal{N}_\mathbb{C}$)\\
+	$\bm{\alpha}$ suit une loi exponentielle (Exp), ce qui force la réduction du rang\\ \vfill		
 \end{minipage}\hfill
 \begin{minipage}[t]{0.30\textwidth}
 		\centering
@@ -252,7 +238,7 @@ $ \left. \begin{array}{l}
 		\draw[->,line width=1pt ,main,>=latex] (0.5\textwidth-0.1cm,0) -- ++(-1cm,-0.7cm);
 		\draw[->,line width=1pt ,main,>=latex] (0.5\textwidth+0.1cm,0) -- ++(1cm,-0.7cm);
 		\vspace{0.7cm}
-		\noindent  \fcolorbox{black}{jaune}{\footnotesize MI acoustique} \hspace{0.8cm}  \fcolorbox{black}{rouge}{\footnotesize MI bruit}~~~~~~~\\
+		\noindent ~~ \fcolorbox{black}{jaune}{\footnotesize MI acoustique} \hspace{0.8cm}  \fcolorbox{black}{rouge}{\footnotesize MI bruit}~~~~~~~\\
 		\includegraphics[width=0.4\textwidth]{signal.png}  \raisebox{0.15\textwidth}{\large $+$} \includegraphics[width=0.4\textwidth]{bruit.png}
 \end{minipage}
 
@@ -270,34 +256,32 @@ $ \left. \begin{array}{l}
 %\end{minipage}
 \begin{minipage}[t][1cm][t]{\textwidth}
 	\centering
-	\node[inner sep=0pt,overlay,anchor=north west] () at (-1cm,1cm)  {\includegraphics[width=0.31\paperwidth]{contexte.png} };
+	\node[inner sep=0pt,overlay,anchor=north west] () at (-1cm,1.5cm)  {\includegraphics[width=0.31\paperwidth]{contexte.png} };
 \end{minipage}
  }
   
- \headerbox{Outils}{name=gibbs,below=methode,column=0,span=3}{
- \noindent Inférence bayésienne : échantillonneur de Gibbs\\
- modèle a variables latentes\\
- Gibbs : Permet d'approximer la distribution jointe inconnue $p(\theta_1,\theta_2,\dots|\bm{S}_{pp})$ à partir des distributions conditionnelles connues $p(\theta_1|\bm{S}_{pp},\theta_2,\dots)$. C'est une méthodes de Monte-Carlo par chaînes de Markov : une marche aléatoire biaisée.
+ \headerbox{L'échantillonneur de Gibbs}{name=gibbs,below=methode,column=0,span=3}{
+ \noindent $\bullet$ Approxime la distribution jointe inconnue  $p(\theta_1,\theta_2,\dots|\bm{S}_{pp})$ \\à partir des distributions conditionnelles connues $p(\theta_1|\bm{S}_{pp},\theta_2,\dots)$\\
+ \noindent $\bullet$ Méthode de  Monte-Carlo par chaînes de Markov (\textbf{MCMC})\\(explore la distribution à l'aide d'une marche aléatoire biaisée)
+ 
  }
 
  
- \headerbox{Utilisation du bruit de fond et des mesures multiples}{name=bf,span=3,column=3 , below=methode}{
- Bruit commun à tous les régimes à un facteur près :
-For i
-  Pour chaque régime moteur
-Tirer $L^i$ dans $p(L|S_y^p, \text{tous les paramètres}^{i-1})$ 
- Tirer $S_c^i$ dans $p(S_c|S_y^p, \text{tous les paramètres}^{i-1})$
- 
+ \headerbox{Bruit de fond et des régimes multiples}{name=bf,span=3,column=3 , below=methode}{
+ \noindent$\bullet$ On dispose :  \parbox[t][2.4em][t]{0.7\textwidth}{ - d'une mesure de bruit de fond (moteurs coupés)\\
+ - de P mesures à différents régimes moteurs}\\
+  \noindent$\bullet$  Hypothèse : même bruit de fond pour les P mesures, à un facteur près.\\
+  \noindent$\bullet$ Toutes ces données sont utilisées simultanément pour le débruitage.
  }
  
  \headerbox{Application à l'imagerie}{name=imagerie,column=0,span=6,below=gibbs}{
  \vspace{-2ex}
- \noindent\begin{minipage}{0.6\textwidth}
-$\bullet$ Étude du bruit de jet supersonique, not. des cellules de chocs (monopoles corrélés)\\
-$\bullet$ Méthode d'imagerie : IRLS régularisation bayésienne p=0
+ \noindent\begin{minipage}{0.65\textwidth}
+$\bullet$ Étude du bruit de \textbf{jet supersonique}, not. des cellules de chocs (monopoles corrélés)\\
+$\bullet$ Méthode d'\textbf{imagerie} : IRLS avec régularisation bayésienne, forçant la parcimonie des sources
 \end{minipage}
 \hfill
-\begin{minipage}{0.35\textwidth}
+\begin{minipage}{0.32\textwidth}
 \centering
 $\bullet$ Erreur de reconstruction : 
 \begin{equation*}
@@ -306,31 +290,36 @@ $\bullet$ Erreur de reconstruction :
 \end{minipage}
 ~\\~\\~\\
 \centering
- \includegraphics[width=0.9\textwidth]{imagerie_final.eps} 
+\noindent \includegraphics[width=0.9\textwidth]{imagerie_final.eps} 
  
  }
  
  
- \headerbox{Analyse}{name=analyse,column=0, span=3,below=imagerie}{
- \begin{minipage}{0.45\textwidth}
- \centering
-  \resizebox{0.5cm}{!}{\circled{\textbf{+}}}\\[1ex]
-  Intervalle de crédibilité\\
-  Réduction de dimension\\
-  Sélection automatique de l'ordre : pas de paramètre à régler\\
-  Modèle flexible  
+ \headerbox{Analyse}{name=analyse,column=0, span=4,below=imagerie}{
+ \vspace{-1.5em}
+  \noindent \hfill \begin{minipage}{0.55\textwidth}
+~\centerline{\resizebox{0.5cm}{!}{\circled{\textbf{+}}}} \\[1ex]
+ \noindent $\bullet$ MCMC : \parbox[t][2.2em][t]{0.7\textwidth}{  
+ - intègre des connaissance \textit{a priori}\\
+ - fournit des intervalles de crédibilité}\\~\\
+   $\bullet$ PFA : ~~~~ \parbox[t][4.5em][t]{0.8\textwidth}{
+  - la MI conserve un sens physiques\\
+  - réduit la dimension des données\\
+- aucun paramètre à régler\\
+ - modèle flexible}\\\vfill
 \end{minipage}\hfill
-\begin{minipage}{0.45\textwidth}
-\centering
-   \resizebox{0.5cm}{!}{\circled{$\boldmath{-}$}}\\[1ex]
-   Sensibilité aux priors selon conditionnement\\
-   Coût de calcul élevé
+\begin{minipage}{0.4\textwidth}
+~\centerline{ \resizebox{0.5cm}{!}{\circled{\raisebox{-1ex}{\textbf{-}}}}}\\[1ex]
+  - Sensibilité aux choix des \textit{a priori}\\not. si le problème est mal conditionné\\
+ -  Coût de calcul élevé\\  \vfill
 \end{minipage}
  }
  
- \headerbox{Perspectives}{name=perspective,column=3, span=3,below=imagerie}{
- Échantillonneur plus robuste et plus rapide\\
- Modèle à adapter, not. pour la corrélation du bruit
+ \headerbox{Perspectives}{name=perspective,column=4, span=2,below=imagerie}{
+\noindent $\bullet$ Adapter l'échantillonneur pour qu'il soit :\\
+- plus robuste (moins sensible aux \textit{a priori})\\
+- plus rapide (meilleure convergence, coût de calcul réduit)\\[0.6ex]
+$\bullet$ Adapter le modèle à un bruit corrélé sur les microphones.\\[-0.9ex]
  }
  
 
