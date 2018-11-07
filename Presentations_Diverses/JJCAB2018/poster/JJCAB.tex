@@ -96,7 +96,7 @@
   % Format of text header
   eyecatcher=false,
   headerborder=closed,
-  headerheight=0.08\textheight,
+  headerheight=0.087\textheight,
   %textfont=\sc,% An example of changing the text font
   headershape=roundedright,
   headershade=plain,%shadelr,
@@ -169,7 +169,7 @@ $ \left. \begin{array}{l}
  
  
  \headerbox{Méthode proposée : Analyse Factorielle Probabiliste (PFA)}{name=methode,below=idee,column=0,span=6}{
- \centering  Faire une décomposition matricielle par de l'optimisation bayésienne :\\[1.5em]
+ \centering  Faire une décomposition matricielle par de l'optimisation bayésienne :\\[1.7em]
  \noindent\begin{minipage}[t]{0.23\textwidth}
 	\centering
 	\resizebox{0.5cm}{!}{\circled{\textbf{1}}} \marktikz{step1out}  \\[1ex]
@@ -210,18 +210,16 @@ $ \left. \begin{array}{l}
 	\hfill
 \begin{minipage}[t]{0.24\textwidth}
 	\centering
-	\marktikz{step2in} 
-	\resizebox{0.5cm}{!}{\circled{\textbf{2}}}
-	\marktikz{step2out} \\[1ex]
-	{ \bfseries Choisir des distributions \textit{a priori}}\\[1.5em]
+	\marktikz{step2in} \resizebox{0.5cm}{!}{\circled{\textbf{2}}} \marktikz{step2out} \\[1ex]
+	{ \bfseries Choisir des distributions \textit{a priori}}\\[1ex]
 	\includegraphics[width=0.95\textwidth]{modele.png}\\[1ex]
 	\small
 	$\bm{L},~\bm{c},~ \bm{n}$ suivent une loi normale ($\mathcal{N}_\mathbb{C}$)\\
-	$\bm{\alpha}$ suit une loi exponentielle (Exp), ce qui force la réduction du rang\\ \vfill		
+	$\bm{\alpha}$ suit une loi exponentielle (Exp), ce qui force la réduction du rang.\\ \vfill		
 \end{minipage}\hfill
 \begin{minipage}[t]{0.27\textwidth}
 		\centering
-		{  \marktikz{step3in}\resizebox{0.5cm}{!}{\circled{\textbf{3}}}  \marktikz{step3out}  } \\[1ex]
+		\marktikz{step3in} \resizebox{0.5cm}{!}{\circled{\textbf{3}}} \marktikz{step3out}  \\[1ex]
 		{\bfseries \noindent Maximiser la distribution \textit{a posteriori}}\\[1ex]
 		%\textit{Estimer les paramètres qui expliquent au mieux les mesures}\\
 		\includegraphics[width=0.8\textwidth]{gibbs.png}\vspace{-0.5ex}
@@ -230,7 +228,7 @@ $ \left. \begin{array}{l}
 \hfill
  \begin{minipage}[t]{0.21\textwidth}
 		\centering
-		\marktikz{step4in}   \resizebox{0.5cm}{!}{\circled{\textbf{4}}} \marktikz{step4out} \\[1ex]
+		\marktikz{step4in} \resizebox{0.5cm}{!}{\circled{\textbf{4}}} \marktikz{step4out} \\[1ex]
 		{\bfseries Reconstruire la MI débruitée}\\[1ex]
 		\setlength{\fboxsep}{2pt}
 		\fcolorbox{black}{vert}{\footnotesize MI mesurée}\\[-0.4ex] = \\[0.5ex]
@@ -243,7 +241,7 @@ $ \left. \begin{array}{l}
 
 \tikz[remember picture,overlay]{
 	\draw[->,line width=1pt, main,>=latex] ($ (step1out.east)+(0,1ex)$) to [out=20,in=160] ( $ (step2in.west) + (0,1ex) $ );%
-	\draw[->,line width=1pt, main,>=latex] ($ (step2out.east)+(0	,1ex)$) to [out=20,in=160] ( $ (step3in.west) + (0,1ex) $ );%
+	\draw[->,line width=1pt, main,>=latex] ($ (step2out.east)+(0,1ex)$) to [out=20,in=160] ( $ (step3in.west) + (0,1ex) $ );%
 	\draw[->,line width=1pt, main,>=latex] ($ (step3out.east)+(0,1ex)$) to [out=20,in=160] ( $ (step4in.west) + (0,1ex) $ );%	
 }
  }
@@ -255,7 +253,7 @@ $ \left. \begin{array}{l}
 %\end{minipage}
 \begin{minipage}[t][1cm][t]{\textwidth}
 	\centering
-	\node[inner sep=0pt,overlay,anchor=north west] () at (-1.1cm,1.5cm)  {\includegraphics[width=0.31\paperwidth]{contexte.png} };
+	\node[inner sep=0pt,overlay,anchor=north west] () at (-1.2cm,1.5cm)  {\includegraphics[width=0.31\paperwidth]{contexte.png} };
 \end{minipage}
  }
   
@@ -316,9 +314,9 @@ $\bullet$ Erreur de reconstruction :
  
  \headerbox{Perspectives}{name=perspective,column=4, span=2,below=imagerie}{
 \noindent $\bullet$ Adapter l'échantillonneur pour qu'il soit :\\
-- plus robuste (moins sensible aux \textit{a priori})\\
-- plus rapide (meilleure convergence, coût de calcul réduit)\\[0.6ex]
-$\bullet$ Adapter le modèle à un bruit corrélé sur les microphones.\\[-0.9ex]
+- plus robuste (moins sensible aux \textit{a priori}),\\
+- plus rapide (meilleure convergence, coût de calcul réduit).\\[0.6ex]
+$\bullet$ Adapter le modèle à un bruit corrélé sur les microphones.\\[-1.1ex]
  }
  
 
