@@ -118,7 +118,7 @@
 %\end{minipage} 
 \vspace{0.4cm}\textcolor{main}{\textbf{Débruitage de la matrice interspectrale pour l'étude des sources aéroacoustiques}}}
   % Authors
-  { ~\\ \textit{A. Dinsenmeyer}\textsuperscript{1,2}, Q. Leclère\textsuperscript{1}, J. Antoni\textsuperscript{1}, E. Julliard\textsuperscript{3}}
+  { ~\\ \textit{A. Dinsenmeyer}\textsuperscript{1,2}, Q. Leclère\textsuperscript{1}, J. Antoni\textsuperscript{1}, E. Julliard\hspace{0.1ex}\textsuperscript{3}}
   % University logo
   {  }
   
@@ -152,7 +152,7 @@ $ \left. \begin{array}{l}
 %mise à zéro ou soustraction : pourquoi ?\\
  }
   \headerbox{Objectif}{name=obj,below=contexte,column=0,span=2}{
- \noindent \bfseries Séparer la contribution des sources acoustique du bruit de couche limite turbulente.\\
+ \noindent \bfseries Séparer la contribution des sources acoustique du bruit de couche limite turbulente.\\[0.4ex]
  }
   \headerbox{Idée générale}{name=idee,below=contexte,column=2,span=4}{
 \noindent \begin{minipage}{3cm}
@@ -163,9 +163,8 @@ $ \left. \begin{array}{l}
 \begin{minipage}{\textwidth-3.1cm}
  \noindent Exploiter les différences statistiques entre le bruit et le signal :\\
  - bruit faiblement corrélé : \textbf{MI diagonale},\\
- - signal corrélé, peu de monopoles équivalents décorrélés : \textbf{MI à rang réduit}.\\[-2ex]
+ - signal corrélé, peu de monopoles équivalents décorrélés : \textbf{MI à rang réduit}.
 \end{minipage}
-
  }
  
  
@@ -209,18 +208,18 @@ $ \left. \begin{array}{l}
 	
 \end{minipage}
 	\hfill
-\begin{minipage}[t]{0.23\textwidth}
+\begin{minipage}[t]{0.24\textwidth}
 	\centering
 	\marktikz{step2in} 
 	\resizebox{0.5cm}{!}{\circled{\textbf{2}}}
 	\marktikz{step2out} \\[1ex]
-	{ \bfseries Choix des distributions \textit{a priori}}\\[1.5em]
+	{ \bfseries Choisir des distributions \textit{a priori}}\\[1.5em]
 	\includegraphics[width=0.95\textwidth]{modele.png}\\[1ex]
 	\small
 	$\bm{L},~\bm{c},~ \bm{n}$ suivent une loi normale ($\mathcal{N}_\mathbb{C}$)\\
 	$\bm{\alpha}$ suit une loi exponentielle (Exp), ce qui force la réduction du rang\\ \vfill		
 \end{minipage}\hfill
-\begin{minipage}[t]{0.30\textwidth}
+\begin{minipage}[t]{0.27\textwidth}
 		\centering
 		{  \marktikz{step3in}\resizebox{0.5cm}{!}{\circled{\textbf{3}}}  \marktikz{step3out}  } \\[1ex]
 		{\bfseries \noindent Maximiser la distribution \textit{a posteriori}}\\[1ex]
@@ -229,7 +228,7 @@ $ \left. \begin{array}{l}
 	
 \end{minipage}
 \hfill
- \begin{minipage}[t]{0.23\textwidth}
+ \begin{minipage}[t]{0.21\textwidth}
 		\centering
 		\marktikz{step4in}   \resizebox{0.5cm}{!}{\circled{\textbf{4}}} \marktikz{step4out} \\[1ex]
 		{\bfseries Reconstruire la MI débruitée}\\[1ex]
@@ -256,20 +255,20 @@ $ \left. \begin{array}{l}
 %\end{minipage}
 \begin{minipage}[t][1cm][t]{\textwidth}
 	\centering
-	\node[inner sep=0pt,overlay,anchor=north west] () at (-1cm,1.5cm)  {\includegraphics[width=0.31\paperwidth]{contexte.png} };
+	\node[inner sep=0pt,overlay,anchor=north west] () at (-1.1cm,1.5cm)  {\includegraphics[width=0.31\paperwidth]{contexte.png} };
 \end{minipage}
  }
   
  \headerbox{L'échantillonneur de Gibbs}{name=gibbs,below=methode,column=0,span=3}{
- \noindent $\bullet$ Approxime la distribution jointe inconnue  $p(\theta_1,\theta_2,\dots|\bm{S}_{pp})$ \\à partir des distributions conditionnelles connues $p(\theta_1|\bm{S}_{pp},\theta_2,\dots)$\\
- \noindent $\bullet$ Méthode de  Monte-Carlo par chaînes de Markov (\textbf{MCMC})\\(explore la distribution à l'aide d'une marche aléatoire biaisée)
+ \noindent $\bullet$ Approxime la distribution jointe inconnue  $p\left(\theta_1,\theta_2,\dots|\bm{S}_{pp}\right)$ \\à partir des distributions conditionnelles connues $p\left(\theta_1|\bm{S}_{pp},\theta_2,\dots\right)$.\\
+ \noindent $\bullet$ Méthode de  Monte-Carlo par chaînes de Markov (\textbf{MCMC}) : \\ explore la distribution à l'aide d'une marche aléatoire biaisée.
  
  }
 
  
  \headerbox{Bruit de fond et des régimes multiples}{name=bf,span=3,column=3 , below=methode}{
- \noindent$\bullet$ On dispose :  \parbox[t][2.4em][t]{0.7\textwidth}{ - d'une mesure de bruit de fond (moteurs coupés)\\
- - de P mesures à différents régimes moteurs}\\
+ \noindent$\bullet$ On dispose :  \parbox[t][2.4em][t]{0.7\textwidth}{ - d'une mesure de bruit de fond (moteurs coupés),\\
+ - de P mesures à différents régimes moteurs.}\\
   \noindent$\bullet$  Hypothèse : même bruit de fond pour les P mesures, à un facteur près.\\
   \noindent$\bullet$ Toutes ces données sont utilisées simultanément pour le débruitage.
  }
@@ -303,7 +302,7 @@ $\bullet$ Erreur de reconstruction :
  - intègre des connaissance \textit{a priori}\\
  - fournit des intervalles de crédibilité}\\~\\
    $\bullet$ PFA : ~~~~ \parbox[t][4.5em][t]{0.8\textwidth}{
-  - la MI conserve un sens physiques\\
+  - la MI conserve un sens physique\\
   - réduit la dimension des données\\
 - aucun paramètre à régler\\
  - modèle flexible}\\\vfill
