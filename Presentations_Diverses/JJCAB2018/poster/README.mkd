@@ -1,9 +1,0 @@
-# POGG POSTER 
-LaTeX and Baposter poster for quick and global presentation of POGG usage for Nitrification process modelization.
-
-
-Need [Baposter package](http://www.brian-amberg.de/uni/poster/) (just put ***baposter.cls*** file in working directory and run make)
-
-
-
-
