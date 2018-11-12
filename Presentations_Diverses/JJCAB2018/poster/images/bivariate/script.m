@@ -91,7 +91,9 @@ p=get(z,'position');
 set(z,'position',[p(1)-0.4*p(1) p(2)-0.4*p(2) p(3)+0.5*p(3) p(4)+0.5*p(4) ])
 pause(0.1)
 
-print(fig,'-dpng','-r150',['img/' num2str(1,'%05.0f.png')])
+%
+    print(fig,'-dsvg',['test/' num2str(1,'%05.0f.svg')])
+%print(fig,'-dpng','-r150',['img/' num2str(1,'%05.0f.png')])
 
 %frame = getframe(fig);
 %im = frame2im(frame);
@@ -103,7 +105,7 @@ print(fig,'-dpng','-r150',['img/' num2str(1,'%05.0f.png')])
 %%
 
 index = 1;
-for index=2:M
+for index=[2 100 200 300 400 500] %2:M
     
     subplot('position',z2.Position)
     delete(h2)
@@ -120,7 +122,7 @@ for index=2:M
     set(gca,'XTick',[-20  0 20])
     
     subplot('position',z.Position)
-    plot(x(index),y(index), '.k');
+    plot(x(1:index),y(1:index), '.k');
     xlim([min(x1) max(x1)])
     ylim([min(x2) max(x2)])
     
@@ -130,7 +132,9 @@ for index=2:M
     
     % Write to the GIF File
     %imwrite(imind,cm,filename,'gif','DelayTime',0.005,'WriteMode','append');
-    print(fig,'-dpng','-r150',['img/' num2str(index,'%05.0f.png')])
+        print(fig,'-dsvg',['test/' num2str(index,'%05.0f.svg')])
+
+    %print(fig,'-dpng','-r150',['img/' num2str(index,'%05.0f.png')])
 
 end
 
@@ -149,7 +153,9 @@ subplot('position',z.Position)
 line([min(x1) meanX],[meanY meanY],'color',rouge,'linewidth',2)
 line([meanX meanX],[min(x2) meanY],'color',jaune,'linewidth',2)
 
-print(fig,'-dpng','-r150',['img/' num2str(index+1,'%05.0f.png')])
+%
+%print(fig,'-dpng','-r150',['img/' num2str(index+1,'%05.0f.png')])
+    print(fig,'-dsvg',['test/' num2str(index+1,'%05.0f.svg')])
 
 
 %frame = getframe(fig);
