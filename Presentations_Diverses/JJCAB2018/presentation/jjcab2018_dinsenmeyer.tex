@@ -68,7 +68,7 @@
 \definecolor{vert}{rgb}{0.573 0.792 0.209} %146 202 74
 
 \newlength{\avion}
-\setlength{\avion}{0.5\textwidth}
+\setlength{\avion}{0.6\textwidth}
 
 \newlength{\larg}	\setlength{\larg}{0.5cm}	
 \newlength{\haut}	\setlength{\haut}{4\larg}
@@ -100,7 +100,8 @@
 %======================
 \section*{Contexte}
 \begin{frame}[t]{\insertsectionhead}
-	\noindent\begin{minipage}{\textwidth}
+\vspace{0.2cm}
+	\noindent\begin{minipage}{1.1\textwidth}
 		\begin{itemize}
 		        \item<1-> \textbf{Mesures bruitées} : Extérieur venté, soufflerie, milieu sous-marin, etc.
 		        	\item<2-> \textbf{Contexte industriel} : design moteur et profil			
@@ -109,11 +110,10 @@
 			\mbox{- les sources acoustiques (\textcolor{jaune}{signal})} \\                   
 			\mbox{- la turbulence de l'écoulement (\textcolor{rouge}{bruit})}                      
 			\end{array} \right\} \mbox{~SNR très faible voire négatif}$ 
-			\item<4-> \textbf{Matrice interspectrale} : corrélation des spectres
+			\item<4-> \textbf{Matrice interspectrale (MI)} : corrélation des spectres
 		\end{itemize}
 \end{minipage}
 \vfill
-\vspace{1cm}
 \begin{minipage}{\textwidth}
 		\centering
 		\includegraphics<2>[width=\avion]{avion2.eps}
@@ -138,7 +138,8 @@
 	        \item \textcolor{jaune}{signal} acoustique corrélé \hfill\tikz[baseline]{\draw[->,>=latex] (0,0.5ex) -- ++(1.5em,0);}  \textbf{MI à rang réduit}\\  peu de monopoles équivalents 
 	\end{itemize}
 \end{minipage}\\[1em]
-\onslide<2->{\tikz[baseline]{\draw[->,>=latex, line width=1.05pt] (0,1.3em) -- ++(0,-1.1em) -- ++(1.5em,0);} {\bfseries Faire une décomposition matricielle}\\[1em]}
+\onslide<2->{\tikz[baseline]{\draw[->,>=latex, line width=1.05pt] (0,1.3em) -- ++(0,-1.1em) -- ++(1.5em,0);} {\bfseries Faire une décomposition matricielle : \\
+MI mesurée = MI signal + MI bruit}\\[1em]}
 
 \begin{overlayarea}{\textwidth}{0.3\textheight}
 \centering
@@ -256,5 +257,11 @@
 %\newblock {\em Science of Computer Programming}, 1(3):223--233, 1982. 
 %\end{thebibliography} }
 
+
+%\begin{frame}
+%	\centering
+%	\bfseries
+%	\textcolor{DeepSkyBlue4}{Merci}
+%\end{frame}
 
 \end{document}
