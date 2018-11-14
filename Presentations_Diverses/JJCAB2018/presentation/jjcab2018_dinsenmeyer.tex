@@ -110,7 +110,8 @@
 			\mbox{- les sources acoustiques (\textcolor{jaune}{signal})} \\                   
 			\mbox{- la turbulence de l'écoulement (\textcolor{rouge}{bruit})}                      
 			\end{array} \right\} \mbox{~SNR très faible voire négatif}$ 
-			\item<4-> \textbf{Matrice interspectrale (MI)} : corrélation des spectres
+			%\item<4-> \textbf{Matrice interspectrale (MI)} : corrélation des spectres
+			\item<4-> Différentes échelles de corrélation
 		\end{itemize}
 \end{minipage}
 \vfill
@@ -125,33 +126,36 @@
 \end{frame}
 
 \begin{frame}
-\vspace{-0.5cm}
 \centering
-\textcolor{DeepSkyBlue4}{ \bfseries \large Comment séparer la contribution des sources acoustiques et le bruit de couche limite turbulente ?}\\[2em]
-
-\begin{minipage}{0.20\textwidth}
-	 \includegraphics[width=1.1\textwidth]{idee.png}
-\end{minipage}
+\textcolor{DeepSkyBlue4}{ \bfseries \large Comment séparer la contribution des sources acoustiques et le bruit de couche limite turbulente ?}\\[2ex]
+\hspace{0cm}\begin{minipage}{0.20\textwidth}	
+	\textbf{~MI mesurée}\\[1ex]
+	 \includegraphics[width=\textwidth]{csm.png}\vfill
+\end{minipage}\hfill
 \begin{minipage}{0.75\textwidth}
+	\hspace{1cm}
 	\begin{itemize}
-	        \item \textcolor{rouge}{bruit} faiblement corrélé \hfill\tikz[baseline]{\draw[->,>=latex] (0,0.5ex) -- ++(1.5em,0);} \textbf{MI diagonale~~~~~~}
-	        \item \textcolor{jaune}{signal} acoustique corrélé \hfill\tikz[baseline]{\draw[->,>=latex] (0,0.5ex) -- ++(1.5em,0);}  \textbf{MI à rang réduit}\\  peu de monopoles équivalents 
+	        \item \textcolor{rouge}{bruit} faiblement corrélé \tikz[baseline]{\draw[->,>=latex] (0,0.5ex) -- ++(1.5em,0);} \textbf{MI diagonale~~~~~~}
+	        \item \textcolor{jaune}{signal} acoustique corrélé \tikz[baseline]{\draw[->,>=latex] (0,0.5ex) -- ++(1.5em,0);}  \textbf{MI à rang réduit}\\  peu de monopoles équivalents \\~
 	\end{itemize}
-\end{minipage}\\[1em]
-\onslide<2->{\tikz[baseline]{\draw[->,>=latex, line width=1.05pt] (0,1.3em) -- ++(0,-1.1em) -- ++(1.5em,0);} {\bfseries Faire une décomposition matricielle : \\
-MI mesurée = MI signal + MI bruit}\\[1em]}
-
-\begin{overlayarea}{\textwidth}{0.3\textheight}
+	
+	\onslide<2->{\hspace{1cm}\tikz[baseline]{\draw[->,>=latex, line width=1.05pt] (0,1.3em) -- ++(0,-1.1em) -- ++(1.5em,0);} \parbox{6.5cm}{\centering \bfseries Faire une décomposition matricielle : \\
+MI mesurée = MI signal + MI bruit}}
+\end{minipage}
+\vfill
+\begin{overlayarea}{\textwidth}{0.5\textheight}
 \centering
 \includegraphics<3>[height=\textwidth,angle=-90]{model1.pdf}
 \includegraphics<4>[height=\textwidth,angle=-90]{model2.pdf}
-\includegraphics<5>[height=\textwidth,angle=-90]{model3.pdf}
-\includegraphics<6>[height=\textwidth,angle=-90]{model4.pdf}
-\includegraphics<7>[height=\textwidth,angle=-90]{model5.pdf}
-\includegraphics<8>[height=\textwidth,angle=-90]{model6.pdf}
-\includegraphics<9>[height=\textwidth,angle=-90]{model7.pdf}
-\includegraphics<10>[height=\textwidth,angle=-90]{model8.pdf}
+\includegraphics<5>[height=\textwidth,angle=-90]{model0.pdf}
+\includegraphics<6>[height=\textwidth,angle=-90]{model3.pdf}
+\includegraphics<7>[height=\textwidth,angle=-90]{model4.pdf}
+\includegraphics<8>[height=\textwidth,angle=-90]{model5.pdf}
+\includegraphics<9>[height=\textwidth,angle=-90]{model6.pdf}
+\includegraphics<10>[height=\textwidth,angle=-90]{model7.pdf}
+\includegraphics<11>[height=\textwidth,angle=-90]{model8.pdf}
 \end{overlayarea}
+\vspace{-1cm}
 
 %\begin{minipage}{\textwidth}
 %	\tikz[remember picture]{
@@ -170,7 +174,6 @@ MI mesurée = MI signal + MI bruit}\\[1em]}
 %%
 %}
 %\end{minipage}
-
 \end{frame}
 
 %\section*{Méthode de débruitage}
