@@ -216,6 +216,7 @@ Finalement : \\
 	\fbox{ \parbox{0.6\linewidth}{
 		\begin{equation}
 			\left[ \bm{c}_i | \infty_{-\bm{c_i}} \right]  \propto \mathcal{N}_c (\bm{\mu}_i, \bm{\Omega}_{\bm{c}_i})
+			\label{eq:c}
 		\end{equation}
 		\begin{align*}
 			&\text{où : } \quad \bm{\Omega}_{\bm{c}_i} = \left( \bm{qL}^H\bm{\Omega}_n^{-1} \bm{Lq}+ \bm{\gamma}^{-2} \right)^{-1} \\
@@ -397,7 +398,7 @@ Or,
 \begin{equation}
         \left[ \bm{y}_i |q_k, \infty_{-\bm{y}_i,-\bm{c}} \right] = \mathcal{N}_c(0 , \underbrace{ \bm{Lq \gamma}^2 \bm{qL}^H + \bm{\Omega}_n}_{\bm{B}})
 \end{equation}
-\todo[inline]{à redémontrer}
+Ce résultat est démontré en annexe~\ref{demo_marg}.
 
 La posterior marginalisée sur le binaire $q_k$ est donc : 
 \begin{align*}
@@ -496,6 +497,58 @@ Après normalisation, le changement d'état du binaire est accepté si $$-\ln\le
         \item Il serait intéressant de comparer les résultats dans le cas où le nombre de fonction de bases est grand (hypothèse de parcimonie non respectée)
 \end{itemize}
 
+\appendix
+%\@seccntformat#1{Appendix~\csname the#1\endcsname:\quad}
+\titleformat{\section}[block]{\bfseries\centering}{Annexe \thesection.}{1em}{}
+\section{Détail du calcul de la postérieure marginalisée \label{demo_marg}}
+
+La marginalisation revient à projeter la loi conjointe $[\bm{y}_i,\bm{c}_i]$sur $\bm{c}_i$ :
+\begin{align*}
+        [\bm{y}_i | \infty_{-\bm{c}}] &= \int [\bm{y}_i,\bm{c}_i]  \operatorname{d}\!\bm{c}_i\\
+        		&= \int [\bm{y}_i | \bm{c}_i ][\bm{c}_i] \operatorname{d}\!\bm{c}_i
+\end{align*}
+Or,
+\begin{align*}
+	 [\bm{y}_i | \bm{c}_i ][\bm{c}_i] &= \e^{(\bm{y}_i - \bm{Lqc}_i)^H \bm{\sigma_n^{-2}}(\bm{y}_i - \bm{Lqc}_i)} \e^{\bm{c}^h \bm{\gamma}^{-2}\bm{c}_i}\\
+	 		&= \e^{-\bm{y}_i^H\bm{\sigma}_n^{-2}\bm{y}_i}
+	 		\	\e\underbrace{^{(\bm{Lqc}_i)^H\bm{\sigma}_n^{-2}\bm{y}_i}}_{ \bm{c}_i\bm{\Omega}_{\bm{c}_i}^{-1} \bm{\mu}_i}
+	 		\	\e\underbrace{^{\bm{y}_i^H\bm{\sigma}_n^{-2}\bm{Lqc}_i}}_{\bm{\mu}_i^H \bm{\Omega}_{\bm{c}_i}^{-1}\bm{c}_i}
+	 		\	\e\underbrace{^{-(\bm{Lqc}_i)^H \bm{\sigma}_n^{-2}\bm{Lqc}_i}}_{-\bm{c}_i^H \bm{\Omega}_{\bm{c}_i}^{-1}\bm{c}_i}\\
+	 		&= \bm{C}_1 \e^{-(\bm{c}_i-\bm{\mu}_i)^H \bm{\Omega}_{\bm{c}_i}(\bm{c}_i-\bm{\mu}_i) }
+\end{align*}
+avec $\bm{\mu}_i$ et $\bm{\Omega}_{\bm{c}_i}$ sont donnés dans l'encart~\eqref{eq:c}. Donc,
+\begin{equation*}
+	      [\bm{y}_i | \infty_{-\bm{c}}]  = \int [\bm{y}_i | \bm{c}_i ][\bm{c}_i] \operatorname{d} \bm{c}_i = \bm{C}_1 \underbrace{ \int \mathcal{N}_c(\bm{\mu}_i, \bm{\Omega}_{\bm{c}_i})\operatorname{d}\!\bm{c}_i }_{=1}= \bm{C}_1
+\end{equation*}
+
+
+
+Par identification, 
+\begin{align*}
+	    & \bm{C}_1\ \e^{-\bm{\mu}_i^H   \bm{\Omega}_{\bm{c}_i \bm{\mu}_i   }} = \e^{-\bm{y}_i^H \bm{\sigma}_n^{-2} \bm{y}_i}\\
+	    \Leftrightarrow \quad & \bm{C}_1 = \e^{-\bm{y}_i^H\bm{\sigma}_n^{-2}\bm{y}_i} \ \e\underbrace{^{\bm{y}_i^H \bm{\sigma}_n^{-2} \bm{Lq \Omega}_{\bm{c}_i} \bm{q}^H \bm{L}^H  \bm{\sigma}_n^{-2}\bm{y}_i}}_{\bm{A}}\\
+	    & \bm{C}_1 = \e^{-\bm{y}_i ^H \bm{B}^{-1} \bm{y}_i}
+\end{align*}
+avec 
+\begin{equation*}
+	    \bm{A} = \frac{\bm{\sigma}_n^{-2}}{1 + \underbrace{\bm{L}^{H^{-1}} \bm{q}^{H^{-1}} \bm{\gamma}^{-2} \bm{q}^{-1}\bm{L}^{-1} }_{\bm{A}_2^{-1}} \bm{\sigma}_n^{2}}
+\end{equation*}
+et 
+\begin{align*}
+	    \bm{B}^{-1} & = -\bm{A} + \bm{\sigma}_n^{-2}  = \frac{\bm{- \sigma}_n^{-2} + \bm{\sigma}_n^{-2} \left( 1+ \bm{A}_2^{-1} \bm{\sigma}_2^2\right)}{1+  \bm{A}_2^{-1}\bm{\sigma}_n^{2}}\\
+	    & = \frac{1}{\bm{A}_2 + \bm{\sigma}_n^2}
+\end{align*}
+Finalement, 
+\begin{equation*}
+	      [\bm{y}_i | \infty_{-\bm{c}}]  = \bm{C}_1 = \mathcal{N}_c(\bm{0}, \bm{B}) \quad \text{où} \quad \bm{B} = \bm{Lq \gamma}^2 \bm{q}^H \bm{L}^H +\bm{\sigma}_n^2 .
+\end{equation*}
+
+
+
+
+
+
+ 
 
 
 
