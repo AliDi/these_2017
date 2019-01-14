@@ -174,7 +174,7 @@ $\bm{n}| \beta^2 \sim \mathcal{N}_c (0, \beta^2 \bm{\diag{\sigma^2}}) $ & $\bm{\
 														& $\beta^2 \sim \mathcal{IG}(a_{\beta},b_{\beta})$ 														
 \end{tabular}
 \end{center} 
-On note par la suite $\bm{\Omega}_n = \beta^2 \bm{\diag{\sigma^2}}$.
+On note par la suite $\bm{\Omega}_n = \beta^2 \bm{\diag{\sigma^2}}$. Le paramètre $\beta$ est introduit par anticipation d'un modèle adapté au cas multirégime d'Airbus.
 
 %\bigskip
 %
@@ -383,10 +383,10 @@ La probabilité que le binaire change d'état est :
 Pour que la somme de ces deux probabilité soit égale à 1, il faut les normaliser. La probabilité qu'un binaire change d'état est alors : 
 \begin{align*}
 	\left[q_{k_{mod}} | \infty_{-q_k}  \right] & =  \frac{ \e^{- g(q_{k_{mod}})}}{ \e^{- g(q_{k_{mod}})} +\e^{- g(q_{k})}}  \\[1ex]
-	&\boxed{= \frac{1}{1 + \e^{- \left(g(q_{k_{mod}}) -   g(q_{k})\right)}}}
+	&\boxed{= \frac{1}{1 + \e^{- \left(g(q_{k}) -   g(q_{k_{mod}})\right)}}}
 \end{align*}
 Un échantillon $t \sim \mathcal{U}(0,1)$ est comparé à $\left[q_{k_{mod}} | \infty_{-q_k}  \right]$. S'il y est inférieur, le binaire change d'état, sinon il conserve son état actuel.\\
-En pratique, comme $\bm{T}$ peut prendre de grandes valeurs (not. si $I_s$ est grand), le changement est accepté si $$-\ln\left(\frac{1}{t}-1\right) < g(q_{k_{mod}}) -   g(q_{k})$$
+En pratique, comme $\bm{T}$ peut prendre de grandes valeurs (not. si $I_s$ est grand), le changement est accepté si $$-\ln\left(\frac{1}{t}-1\right) < g(q_{k}) -   g(q_{k_{mod}})$$
 
 
 \paragraph{Avec marginalisation sur les facteurs $\bm{c}$}
@@ -411,7 +411,7 @@ De la même manière, la probabilité que le binaire change d'état est :
 	\left[q_{k_{mod}} | \infty	_{-q_{k_{mod}} ,-\bm{c}}  \right] & \propto  \frac{\e^{ - \sum_i  \bm{y}_i^H \bm{B}(q_{k_{mod}})^{-1}\bm{y}_i  }}{|\bm{B}(q_{k_{mod}})|^{I_s}}  l^{q_{k_{mod}}}(1-l)^{1-q_{k_{mod}}}\\
 	 & \propto \e^{- g(q_{k_{mod}})}
 \end{align*}
-Après normalisation, le changement d'état du binaire est accepté si $$-\ln\left(\frac{1}{t}-1\right) < g(q_{k_{mod}}) -   g(q_{k})$$.
+Après normalisation, le changement d'état du binaire est accepté si $$-\ln\left(\frac{1}{t}-1\right) < g(q_{k}) -   g(q_{k_{mod}})$$.
 
 
 
