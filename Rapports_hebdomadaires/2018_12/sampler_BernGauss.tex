@@ -74,13 +74,14 @@
 \newcommand{\ok}{ \textcolor{orange}{\bfseries \textsc ok }}
 \newcommand{\diag}[1]{\lceil#1\rfloor}
 \newcommand{\e}{\mathrm{e}}
+\newcommand{\tr}[1]{\operatorname{Trace}\!\left(#1\right)}
 
 
 \usepackage{subcaption}
 \usepackage{tabulary}
 \usepackage{pgfplots} 
 
-\graphicspath{{/home/adinsenmey/Bureau/these_2017/MCMC_Samplers/}}
+\graphicspath{{/home/adinsenmey/Bureau/these_2017/MCMC_Samplers/img/}}
 
 \everymath{\displaystyle}
 %----------------------------------------------------------------------------------------
@@ -247,7 +248,7 @@ avec :
 \subsubsection[]{Échantillonnage de $\bm{L}$}
 La matrice $\bm{L}$ est vectorisée de manière à écrire une matrice de covariance pour la postérieure qui soit à 2 dimensions. On note $\bm{\lambda}=\operatorname{vec}(\bm{L})$
 \begin{align*}
-	\left[ \bm{\lambda}| \infty_{\bm{\lambda}}  \right] \propto \prod_i^{I_{s}} [\bm{y}_i | \infty_{-\bm{y}_i}][\bm{\lambda}]
+	\left[ \bm{\lambda}| \infty_{-\bm{\lambda}}  \right] \propto \prod_i^{I_{s}} [\bm{y}_i | \infty_{-\bm{y}_i}][\bm{\lambda}]
 \end{align*}
 Or : 
 \begin{equation}
@@ -255,7 +256,7 @@ Or :
 \end{equation}
 donc : 
 \begin{align*}
-        \left[ \bm{\lambda}| \infty_{\bm{\lambda}}  \right] &\propto \e^{-\sum_i  \left( \bm{y}_i -  \left( \bm{c}_i^T \bm{q} \otimes \bm{I}_K \right) \bm{\lambda} \right) ^H \bm{\Omega}_n^{-1}  \left( \bm{y}_i -  \left( \bm{c}_i^T \bm{q} \otimes \bm{I}_M \right) \bm{\lambda} \right) }
+        \left[ \bm{\lambda}| \infty_{-\bm{\lambda}}  \right] &\propto \e^{-\sum_i  \left( \bm{y}_i -  \left( \bm{c}_i^T \bm{q} \otimes \bm{I}_K \right) \bm{\lambda} \right) ^H \bm{\Omega}_n^{-1}  \left( \bm{y}_i -  \left( \bm{c}_i^T \bm{q} \otimes \bm{I}_M \right) \bm{\lambda} \right) }
         \e^{- \bm{\lambda}^H K\bm{I}_{MK} \bm{\lambda} }\\
 &\propto \e^{ - (\bm{\lambda}- \bm{\mu}_\lambda)^H \bm{\Omega}^{-1}_{\bm{\lambda}}     (\bm{\lambda}- \bm{\mu}_\lambda)  }
 \end{align*}
@@ -298,7 +299,7 @@ si les dimensions des matrices $A$, $B$, $C$ et $D$ le permettent.
 
 \begin{equation}
 	\boxed{
-       \left[ \gamma^2| \bm{S}_{cc} \right] \propto \mathcal{IG} \left( a_\gamma + K I_{s} , b_\gamma + \operatorname{Trace}(\bm{S}_{cc})\right)
+       \left[ \gamma^2| \bm{S}_{cc} \right] \propto \mathcal{IG} \left( a_\gamma + K I_{s} , b_\gamma + \tr{\bm{S}_{cc}} \right)
        }
 \end{equation}
 
@@ -322,11 +323,11 @@ On considère un bruit hétéroskédastique : $\bm{\sigma}^2 = \operatorname{dia
 \begin{align*}
 	\left[  \bm{\sigma}^2|\infty_{-\bm{\sigma}^2}\right] &\propto \prod_i [\bm{y_i}| \infty_{-\bm{y}_i}][\bm{\sigma}]\\
 	&\propto  \frac{\e^{-\sum_i (\bm{y}_{i}-\bm{L} \bm{qc}_i)^H \beta^{-2}\bm{\sigma}^{-2} (\bm{y}_{i} - \bm{L} \bm{qc}_i) }}{\beta^2| \bm{\sigma}|^{I_s}} \frac{\e^{-\bm{\sigma}^{-2} b_\sigma}}{\bm{\sigma}^{2(a_\sigma-1)}}\\
-	& \propto \frac{ \e^{-\operatorname{Trace}\left( \beta^{-2} \bm{\sigma}^{-2} \overbrace{\sum_i \left\{   \bm{y}_i\bm{y}_i^H   
+	& \propto \frac{ \e^{-\tr{\beta^{-2} \bm{\sigma}^{-2} \overbrace{\sum_i \left\{   \bm{y}_i\bm{y}_i^H   
 	+ \bm{Lqc}_i \bm{c}_i^H\bm{qL}^H
 	-  \bm{y}_i\bm{c}_i^H \bm{qL}^H
 	- \bm{Lqc}_i\bm{y}_i^H
-	 \right\} }^{\bm{T}}\right) } }{|\bm{ \sigma}^2|^{I_s}}  \frac{\e^{-\bm{\sigma}^{-2} b_\sigma}}{\bm{\sigma}^{2(a_\sigma-1)}}
+	 \right\} }^{\bm{T}}} } }{|\bm{ \sigma}^2|^{I_s}}  \frac{\e^{-\bm{\sigma}^{-2} b_\sigma}}{\bm{\sigma}^{2(a_\sigma-1)}}
 \end{align*}
 On réinjecte $\bm{c}_i = \bm{\mu}_i + \bm{x}_i $ et on suppose que $\mathbb{E}(\bm{x}_i\bm{y}_i^H)\approx0$. En notant :
 \begin{equation*}
@@ -352,13 +353,13 @@ on  a : $\displaystyle \bm{Lq\mu}_i = \bm{Py}_i$. Finalement :
 De manière similaire à l'échantillonnage de $\sigma_m$ : 
 \begin{align*}
 	\left[ \beta^2 | \infty_{-\beta^2} \right] &\propto  \prod_i [\bm{y_i}| \infty_{-\bm{y}_i}][\beta^2]\\
-	& \propto \frac{\e^{-\beta^{-2}\operatorname{Trace}(\bm{\sigma^{-2}\bm{T}})}}{|\beta^{2}\bm{I}_M|^{I_s}} \frac{\e^{-\beta^{-2}b_\beta}}{\beta^{2(a_\beta-1}}
+	& \propto \frac{\e^{-\beta^{-2}\tr{\bm{\sigma^{-2}\bm{T}}}}}{|\beta^{2}\bm{I}_M|^{I_s}} \frac{\e^{-\beta^{-2}b_\beta}}{\beta^{2(a_\beta-1}}
 \end{align*}
 
 
 \begin{equation}
 	\boxed{
-	\left[	\beta^2 |\infty_{-\beta^2} \right] \propto  \mathcal{IG} \left( a_\beta + MI_s , b_\beta + \operatorname{Trace}(\bm{\sigma^{-2}\bm{T}})\right)
+	\left[	\beta^2 |\infty_{-\beta^2} \right] \propto  \mathcal{IG} \left( a_\beta + MI_s , b_\beta + \tr{\bm{\sigma^{-2}\bm{T}}}\right)
 	}
 \end{equation}
 
@@ -369,14 +370,14 @@ De manière similaire à l'échantillonnage de $\sigma_m$ :
 \begin{align*}
 	\left[q_k | \infty	_{-q_k}  \right] &\propto \prod_i  \left[ \bm{y}_i |q_k, \infty_{-\bm{y}_i} \right] [q_k]\\
 	&\propto  \frac{\e^{-\sum_i (\bm{y}_i-\bm{Lqc}_i)^H \bm{\Omega}_n^{-1}(\bm{y}_i - \bm{Lqc}_i) }}{|\bm{\Omega}_n|^{I_s}}   l^{q_k}(1-l)^{1-q_k}\\
-	& \propto \e^{-\operatorname{Trace}\left(  \bm{\Omega}_n^{-1}  \bm{T}(q_k) \right)  -q_k \ln\left( \frac{1}{l}-1 \right)}\\
+	& \propto \e^{-\tr{  \bm{\Omega}_n^{-1}  \bm{T}(q_k) } -q_k \ln\left( \frac{1}{l}-1 \right)}\\
 	& \propto \e^{- g(q_k)}
 \end{align*}
 Le changement d'état d'un binaire se traduit par l'ajout de la quantité $\delta_k = (-1)^{q_k}$. On note $q_{k_{mod}}=q_k + \delta_k$.
 La probabilité que le binaire change d'état est : 
 \begin{align*}
 	\left[q_{k_{mod}} | \infty	_{-q_k}  \right] & \propto  \prod_i  \left[ \bm{y}_i | q_{k_{mod}}, \infty_{-\bm{y}_i,\bm{c}} \right][q_{k_{mod}}]\\
-	& \propto \e^{-\operatorname{Trace}\left(  \bm{\Omega}_n^{-1}  \bm{T}(q_{k_{mod}}) \right)  -q_{k_{mod}} \ln\left( \frac{1}{l}-1 \right)}\\
+	& \propto \e^{-\tr{  \bm{\Omega}_n^{-1}  \bm{T}(q_{k_{mod}}) }  -q_{k_{mod}} \ln\left( \frac{1}{l}-1 \right)}\\
 	& \propto \e^{- g(q_{k_{mod}})}
 \end{align*}
 
@@ -403,7 +404,7 @@ Ce résultat est démontré en annexe~\ref{demo_marg}.
 La posterior marginalisée sur le binaire $q_k$ est donc : 
 \begin{align*}
 	\left[q_k | \infty	_{-q_k,-\bm{c}}  \right] &\propto \frac{\e^{ - \sum_i  \bm{y}_i^H \bm{B}(q_k)^{-1}\bm{y}_i  }}{|\bm{B}(q_k)|^{I_s}}  l^{q_k}(1-l)^{1-q_k}\\
-	& \propto \e^{-\operatorname{Trace}\left( \bm{B}(q_k)^{-1}\bm{S}_{yy}\right) - I_s|\bm{B}(q_k)| - q_k \ln\left( \frac{1}{l}-1 \right)}\\
+	& \propto \e^{-\tr{ \bm{B}(q_k)^{-1}\bm{S}_{yy}} - I_s|\bm{B}(q_k)| - q_k \ln\left( \frac{1}{l}-1 \right)}\\
 	& \propto \e^{- g(q_k)}
 \end{align*}
 De la même manière, la probabilité que le binaire change d'état est : 
@@ -496,6 +497,59 @@ Après normalisation, le changement d'état du binaire est accepté si $$-\ln\le
         \item Les résultats issus du modèle 2 changent beaucoup en fonction de l'initialisation, mais comme la convergence est rapide (surtout quand le SNR n'est pas trop bas), il serait possible de lancer simultanément plusieurs chaîne avec différentes initialisations, plus courtes.
         \item Il serait intéressant de comparer les résultats dans le cas où le nombre de fonction de bases est grand (hypothèse de parcimonie non respectée)
 \end{itemize}
+
+
+\section{Problème d'échelle}
+\cite{veit2008reechantillonnage} propose un moyen de gérer l’ambiguïté d'échelle entre les paramètres $\bm{c}$ et $\bm{L}$. D'après cet article, lever cette ambiguïté permettrait une exploration de la loi cible plus efficace, avec une meilleure mélangeance, en réduisant le temps de chauffe et la corrélation de ces paramètres. 
+De manière générale, cette ambiguïté se retrouve pour tout problème de la forme : 
+\begin{equation*}
+	    z=h \star x + b
+\end{equation*}
+où $\star$ est un opérateur bilinéaire quelconque, un produit matriciel dans notre cas. En effet, on a alors, pour tout couple $(x,h)$ et $s \neq 0$ :
+\begin{equation*}
+	    (sx) \star \left(\frac{h}{s} \right) = x \star h
+\end{equation*}
+\cite{veit2008reechantillonnage} propose donc d'échantillonner le paramètre de changement d'échelle sans modifier la loi cible. Dans notre modèle, il faut un facteur d'échelle $s_k$ par facteur :
+\begin{equation*}
+	    \bm{y} =  \bm{Lqc}+ \bm{n} = (\bm{\tilde{L}S}^{-1}) \bm{q}(\bm{\tilde{S}c}) + \bm{n} \quad \text{avec} \quad \bm{S} = \operatorname{diag}(s_1, \dots , s_k, \dots , s_K).
+\end{equation*}
+On peut montrer par un changement de variable 
+
+\begin{align*}
+	\bm{L}_k = \frac{\tilde{\bm{L}}_k}{s_k} \quad \text{et} \quad \bm{c_k} = \tilde{\bm{c}}_k s_k
+\end{align*}
+que l'échantillonnage de $s_k$ se fait selon la loi 
+\begin{equation}
+        [s_k|\infty_{-s_k}] \propto |s|^{I_s - M -1} [ \tilde{\bm{c}}_k,\tilde{\bm{L}}_k| s_k] 
+\end{equation}
+Sous l'hypothèse d'indépendance de $\bm{c}_k$ et $\bm{L}_k$, 
+\begin{equation}
+        [s_k|\infty_{-s_k}] \propto |s_k|^{I_s - M -1} \prod_i [ \tilde{\bm{c}}_{ki}] \prod_m[\tilde{\bm{L}}_{mk}] .
+\end{equation}
+
+En posant $r_k=s_k^2$, on en déduit que 
+\begin{align*}
+	[r_k|\infty] & \propto r_k^{\frac{I_s -M -1}{2}} \e^{-r_k\sum_i \bm{\tilde{c}}_{ki}^H \gamma_k^{-2}\bm{\tilde{c}}_{ki}} \quad
+	 \e^{-r_k^{-1}\sum_m \bm{\tilde{L}}_{mk}^H K \bm{\tilde{L}}_{mk}}\\
+	 & \propto r_k^{\frac{I_s -M -1}{2}} \e^{-r_k  \gamma_k^{-2} \bm{\tilde{S}}_{{cc}_{kk}}} \quad
+	 	\e^{-r_k^{-1}K \sum_m \bm{\tilde{L}}_{mk}^H \bm{\tilde{L}}_{mk}}
+			%& \propto r^{\frac{K-MK-1}{2}} \e^{-r \tr{ \bm{\gamma}^{-2} \bm{S}_{cc}} - r^{-1} K \bm{\lambda}^H \bm{\lambda}}
+\end{align*}
+
+$r$ suit donc une loi Gaussienne Inverse Généralisée (GIG)  de la forme : 
+\begin{equation*}
+	    f_{GIG}(r) = \left(\frac{a_r}{b_r}\right)^{\frac{p_r}{2}}  \frac{r^{p_r-1}}{2 \operatorname{Y}_{p_r}\!\left( \sqrt{a_rb_r}\right)} \e^{-\frac{1}{2} ( a_r r + b_r r^{-1} )}
+\end{equation*}
+$ \operatorname{Y}_{p_r} (\cdot)$ est la fonction de Bessel de seconde espèce.
+
+Par identification, les paramètres sont : 
+\begin{align*}
+	a_{r_k} & = 2 \gamma_k^{-2}\bm{S}_{{cc}_{kk}}\\
+	b_{r_k} &= 2K \sum_m \bm{\tilde{L}}_{mk}^H \bm{\tilde{L}}_{mk}\\
+	p_r &= I_s- M + \frac{1}{2}
+\end{align*}
+Après tirage de $r_k$, on calcule $s_k$ avec $\mathrm{p}(s_k=+\sqrt{r})=\mathrm{p}(s_k=-\sqrt{r})=0,5$.
+
 
 \appendix
 %\@seccntformat#1{Appendix~\csname the#1\endcsname:\quad}
