@@ -422,81 +422,193 @@ Après normalisation, le changement d'état du binaire est accepté si $$-\ln\le
 \begin{itemize}
         \item $M=20$
         \item $I_s = 10^4$
-        \item SNR = 0 et -10 dB
+        \item SNR = 0 dB et -10 dB
         \item Nombre de fonction de base : 5
-        \item Nombre de facteurs recherché : $M-1$  
-        \item Trace($\bm{S}_{pp}$)/M = 2.4     
+        \item Nombre de facteurs recherché : $K_r= M-1$  
+        %\item Trace($\bm{S}_{pp}$)/M = 2.4     
 \end{itemize}
+Le paramètre $\beta^2$ est fixé à 1.
 
-
-\subsection{Sans marginalisation}
-
-\begin{figure}[H]
-\centering
-	\includegraphics[width = 0.32\linewidth]{./bern_nomarg_Sp_SNR0.png}
-	 \includegraphics[width = 0.32\linewidth]{./bern_nomarg_bruit_SNR0.png}
-	\includegraphics[width = 0.32\linewidth]{./bern_nomarg_gamma2_SNR0.png}\\
-	\includegraphics[width = 0.32\linewidth]{./bern_nomarg_q_SNR0.png}
-	\includegraphics[width = 0.32\linewidth]{./bern_nomarg_l_SNR0.png}
-	\caption{SNR = 0dB}
-\end{figure}
-\begin{figure}[H]
-\centering
-	\includegraphics[width = 0.32\linewidth]{./bern_nomarg_Sp_SNRm10.png}
-	 \includegraphics[width = 0.32\linewidth]{./bern_nomarg_bruit_SNRm10.png}
-	\includegraphics[width = 0.32\linewidth]{./bern_nomarg_gamma2_SNRm10.png}\\
-	\includegraphics[width = 0.32\linewidth]{./bern_nomarg_q_SNRm10.png}
-	\includegraphics[width = 0.32\linewidth]{./bern_nomarg_l_SNRm10.png}
-	\caption{SNR = -10dB}
-\end{figure}
-
-\newpage
-\subsection{Avec marginalisation}
-\begin{figure}[H]
-\centering
-	\includegraphics[width = 0.32\linewidth]{./bern_marg_Sp_SNR0.png}
-	 \includegraphics[width = 0.32\linewidth]{./bern_marg_bruit_SNR0.png}
-	\includegraphics[width = 0.32\linewidth]{./bern_marg_gamma2_SNR0.png}\\
-	\includegraphics[width = 0.32\linewidth]{./bern_marg_q_SNR0.png}
-	\includegraphics[width = 0.32\linewidth]{./bern_marg_l_SNR0.png}
-	\caption{SNR = 0dB}
-\end{figure}
-\begin{figure}[H]
-\centering
-	\includegraphics[width = 0.32\linewidth]{./bern_marg_Sp_SNRm10.png}
-	 \includegraphics[width = 0.32\linewidth]{./bern_marg_bruit_SNRm10.png}
-	\includegraphics[width = 0.32\linewidth]{./bern_marg_gamma2_SNRm10.png}\\
-	\includegraphics[width = 0.32\linewidth]{./bern_marg_q_SNRm10.png}
-	\includegraphics[width = 0.32\linewidth]{./bern_marg_l_SNRm10.png}
-	\caption{SNR = -10dB}
-\end{figure}
-
-\newpage
-\subsection{Comparaison avec l'ancienne version}
-\begin{figure}[H]
-\centering
-	\includegraphics[width = 0.32\linewidth]{./exp_Sp_SNR0.png}
-	 \includegraphics[width = 0.32\linewidth]{./exp_bruit_SNR0.png}
-	\includegraphics[width = 0.32\linewidth]{./exp_gamma2_SNR0.png}\\
-	\includegraphics[width = 0.32\linewidth]{./exp_q_SNR0.png}
-	\caption{SNR = 0dB}
-\end{figure}
-\begin{figure}[H]
-\centering
-	\includegraphics[width = 0.32\linewidth]{./exp_Sp_SNRm10.png}
-	 \includegraphics[width = 0.32\linewidth]{./exp_bruit_SNRm10.png}
-	\includegraphics[width = 0.32\linewidth]{./exp_gamma2_SNRm10.png}\\
-	\includegraphics[width = 0.32\linewidth]{./exp_q_SNRm10.png}
-	\caption{SNR = -10dB}
-\end{figure}
-%
-
-
-\textbf{Remarques : }
+\paragraph{Priors}
 \begin{itemize}
-        \item Les résultats issus du modèle 2 changent beaucoup en fonction de l'initialisation, mais comme la convergence est rapide (surtout quand le SNR n'est pas trop bas), il serait possible de lancer simultanément plusieurs chaîne avec différentes initialisations, plus courtes.
-        \item Il serait intéressant de comparer les résultats dans le cas où le nombre de fonction de bases est grand (hypothèse de parcimonie non respectée)
+        \item $a_\sigma = b_\sigma = a_\gamma = b_\gamma = 0.01$ (paramètres pour un prior Gamma non-informatif)
+        \item $a_l = b_l = 1$ (paramètre pour un prior bêta non-informatif)
 \end{itemize}
+\textit{Remarque : }Le choix d'un prior non informatif pour $\gamma^2$ est important pour la robustesse du solveur. De cette façon, si le nombre de binaires q est surestimé, une compensation pourra avoir lieu par une mise à 0 de certaines valeurs de $\gamma^2_k$ et du $\bm{c}_k$ correspondant.
+
+\paragraph{Initialisation}
+\begin{itemize}
+        \item $\bm{L}_{(0)} \sim \mathcal{N}_c(0,\bm{I}/K_r)$
+	\item $\sigma_{m(0)}^2=\tr{\bm{S}_{yy}}/M$
+        \item  $\gamma_{k(0)}^2=0.3 \times \sigma_{m(0)}^2$ (hypothèse d'un SNR à -5 dB ($10\log_{10}(0.3)$)
+        \item $q_{k(0)}=1$ 
+\end{itemize}
+
+\todo[inline]{
+- avec marg/sans marg pour 4 initialisations\\
+-comp avec modele 1\\
+-comp q=1\\
+-effet facteur d'échelle\\
+-effet prior sur le param de parcimonie\\
+-effet $\gamma^2_k$ sur modele 1(et prior non informatif)
+}
+
+\subsection{Comparaison du modèle 2 AVEC et SANS marginalisation}
+On compare ici le cas où $\bm{q}$ est tiré (toujours en bloc) suivant une postérior marginalisée ou non.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{ToyCase/margon.png}
+	\caption{SNR = 0 dB -- Modèle 2 AVEC marginalisation}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{ToyCase/margoff.png}
+	\caption{SNR = 0 dB -- Modèle 2 SANS marginalisation}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{ToyCase/margon_snrm10db.png}
+	\caption{SNR = -10 dB -- Modèle 2 AVEC marginalisation}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{ToyCase/margoff_snrm10db.png}
+	\caption{SNR = -10 dB -- Modèle 2 SANS marginalisation}
+\end{figure}
+
+\subsection{Effet de l'échantillonnage d'un facteur d'échelle}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{ToyCase/scalingon.png}\\
+	\includegraphics[width=0.4\textwidth]{ToyCase/s.png}
+	\caption{SNR = 0 dB -- Modèle 2, avec marginalisation, AVEC échantillonnage d'un facteur d'échelle $s$.}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{ToyCase/scalingon_snrm10db.png}\\
+	\includegraphics[width=0.4\textwidth]{ToyCase/s_snrm10db.png}
+	\caption{SNR = -10 dB -- Modèle 2, avec marginalisation, AVEC échantillonnage d'un facteur d'échelle $s$.}
+\end{figure}
+
+\subsection{Modèle 2 : binaires fixés à 1}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{ToyCase/qfixe1.png}
+	\caption{SNR = 0 dB -- Modèle 2, avec marginalisation, $\bm{q}=1$ (sans scaling).}
+\end{figure}
+
+\subsection{Modèle 2 : prior informatif sur $l$}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{ToyCase/lsparse.png}\\
+	\includegraphics[width=0.4\textwidth]{ToyCase/priorl.png}
+	\caption{SNR = 0 dB -- Modèle 2, avec marginalisation, le prior sur le paramètre de parcimonie $l$ n'est pas uniforme (sans scaling).}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{ToyCase/lsparse_snrm10db.png}
+	\caption{SNR = -10 dB -- Modèle 2, avec marginalisation, le prior sur le paramètre de parcimonie $l$ n'est pas uniforme (sans scaling).}
+\end{figure}
+
+\newpage
+\subsection{Comparaison avec le modèle 1}
+\paragraph{$\bm{\gamma}^2 = \gamma^2\bm{I}_K$}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{ToyCase/modele1.png}	
+	\caption{SNR = 0 dB  -- Modèle 1, avec $\bm{\gamma}^2 = \gamma^2\bm{I}_K$ .}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{ToyCase/modele1_snrm10db.png}	
+	\caption{SNR =-1 0 dB  -- Modèle 1, avec $\bm{\gamma}^2 = \gamma^2\bm{I}_K$ .}
+\end{figure}
+
+\paragraph{$\bm{\gamma}^2 = \diag{\bm{\gamma^2 }}$}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{ToyCase/modele1_diffgamma2.png}	
+	\caption{SNR = 0 dB  -- Modèle 1, avec $\bm{\gamma}^2  = \diag{\bm{\gamma^2 }}$ .}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{ToyCase/modele1_diffgamma2_snrm10db.png}	
+	\caption{SNR = -10 dB  -- Modèle 1, avec $\bm{\gamma}^2  = \diag{\bm{\gamma^2 }}$ .}
+\end{figure}
+
+\todo[inline]{Le plus important : modèle 2 très sensible au choix de  a.alpha (ex : SVD ne marche pas bien. a.alpha=1 semble plus robuste. a.alpha=2 ne marche pas.\\
+}
+
+
+%\subsection{Sans marginalisation}
+%
+%\begin{figure}[H]
+%\centering
+%	\includegraphics[width = 0.32\linewidth]{./bern_nomarg_Sp_SNR0.png}
+%	 \includegraphics[width = 0.32\linewidth]{./bern_nomarg_bruit_SNR0.png}
+%	\includegraphics[width = 0.32\linewidth]{./bern_nomarg_gamma2_SNR0.png}\\
+%	\includegraphics[width = 0.32\linewidth]{./bern_nomarg_q_SNR0.png}
+%	\includegraphics[width = 0.32\linewidth]{./bern_nomarg_l_SNR0.png}
+%	\caption{SNR = 0dB}
+%\end{figure}
+%\begin{figure}[H]
+%\centering
+%	\includegraphics[width = 0.32\linewidth]{./bern_nomarg_Sp_SNRm10.png}
+%	 \includegraphics[width = 0.32\linewidth]{./bern_nomarg_bruit_SNRm10.png}
+%	\includegraphics[width = 0.32\linewidth]{./bern_nomarg_gamma2_SNRm10.png}\\
+%	\includegraphics[width = 0.32\linewidth]{./bern_nomarg_q_SNRm10.png}
+%	\includegraphics[width = 0.32\linewidth]{./bern_nomarg_l_SNRm10.png}
+%	\caption{SNR = -10dB}
+%\end{figure}
+%
+%\newpage
+%\subsection{Avec marginalisation}
+%\begin{figure}[H]
+%\centering
+%	\includegraphics[width = 0.32\linewidth]{./bern_marg_Sp_SNR0.png}
+%	 \includegraphics[width = 0.32\linewidth]{./bern_marg_bruit_SNR0.png}
+%	\includegraphics[width = 0.32\linewidth]{./bern_marg_gamma2_SNR0.png}\\
+%	\includegraphics[width = 0.32\linewidth]{./bern_marg_q_SNR0.png}
+%	\includegraphics[width = 0.32\linewidth]{./bern_marg_l_SNR0.png}
+%	\caption{SNR = 0dB}
+%\end{figure}
+%\begin{figure}[H]
+%\centering
+%	\includegraphics[width = 0.32\linewidth]{./bern_marg_Sp_SNRm10.png}
+%	 \includegraphics[width = 0.32\linewidth]{./bern_marg_bruit_SNRm10.png}
+%	\includegraphics[width = 0.32\linewidth]{./bern_marg_gamma2_SNRm10.png}\\
+%	\includegraphics[width = 0.32\linewidth]{./bern_marg_q_SNRm10.png}
+%	\includegraphics[width = 0.32\linewidth]{./bern_marg_l_SNRm10.png}
+%	\caption{SNR = -10dB}
+%\end{figure}
+%
+%\newpage
+%\subsection{Comparaison avec l'ancienne version}
+%\begin{figure}[H]
+%\centering
+%	\includegraphics[width = 0.32\linewidth]{./exp_Sp_SNR0.png}
+%	 \includegraphics[width = 0.32\linewidth]{./exp_bruit_SNR0.png}
+%	\includegraphics[width = 0.32\linewidth]{./exp_gamma2_SNR0.png}\\
+%	\includegraphics[width = 0.32\linewidth]{./exp_q_SNR0.png}
+%	\caption{SNR = 0dB}
+%\end{figure}
+%\begin{figure}[H]
+%\centering
+%	\includegraphics[width = 0.32\linewidth]{./exp_Sp_SNRm10.png}
+%	 \includegraphics[width = 0.32\linewidth]{./exp_bruit_SNRm10.png}
+%	\includegraphics[width = 0.32\linewidth]{./exp_gamma2_SNRm10.png}\\
+%	\includegraphics[width = 0.32\linewidth]{./exp_q_SNRm10.png}
+%	\caption{SNR = -10dB}
+%\end{figure}
+%%
+%
+%
+%\textbf{Remarques : }
+%\begin{itemize}
+%        \item Les résultats issus du modèle 2 changent beaucoup en fonction de l'initialisation, mais comme la convergence est rapide (surtout quand le SNR n'est pas trop bas), il serait possible de lancer simultanément plusieurs chaîne avec différentes initialisations, plus courtes.
+%        \item Il serait intéressant de comparer les résultats dans le cas où le nombre de fonction de bases est grand (hypothèse de parcimonie non respectée)
+%\end{itemize}
 
 
 \section{Problème d'échelle}
@@ -568,8 +680,8 @@ et la variance est très faible.
 Le paramètre d'échelle oscille donc légèrement autour de 1, ce qui ne modifie pas l'échelle du problème.\\
 
 
-\subsection[]{Pour le couple $\beta^2, \bm{\sigma}$}
-L'ambiguité se pose également pour le couple $\beta^2, \bm{\sigma}$ dans le cas où on exploite P jeux de données (pour différents régime moteur par ex.).
+\subsection[]{Pour le couple $\beta^2, \bm{\sigma}^2$}
+L’ambiguïté se pose également pour le couple $\beta^2, \bm{\sigma}^2$ dans le cas où on exploite P jeux de données (pour différents régime moteur par ex.).
 On note $\bm{\beta}^2$ le vecteur contenant les $P$ valeurs réelles de $\beta^2_p$ et $\bm{\sigma}^2$ celui contenant les $M$ valeurs réelles $\sigma_m^2$.. Le facteur d'échelle s suit alors la loi suivante : 
 \begin{align*}
 	[s |\infty] &\propto |s|^{P-M-1} \prod_p [s \beta_p^2] \prod_m [s^{-1}\sigma_m^2]\\
