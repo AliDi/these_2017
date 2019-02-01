@@ -487,6 +487,7 @@ On compare ici le cas où $\bm{q}$ est tiré (toujours en bloc) suivant une post
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{ToyCase/scalingon_snrm10db.png}\\
+	{\scriptsize $|s|$}\\
 	\includegraphics[width=0.4\textwidth]{ToyCase/s_snrm10db.png}
 	\caption{SNR = -10 dB -- Modèle 2, avec marginalisation, AVEC échantillonnage d'un facteur d'échelle $s$.}
 \end{figure}
@@ -513,19 +514,20 @@ On compare ici le cas où $\bm{q}$ est tiré (toujours en bloc) suivant une post
 
 \newpage
 \subsection{Comparaison avec le modèle 1}
-\paragraph{$\bm{\gamma}^2 = \gamma^2\bm{I}_K$}
-\begin{figure}[H]
+\paragraph{Homoscédasticité des facteurs : $\bm{\gamma}^2 = \gamma^2\bm{I}_K$} ~\\
+\begin{figure}[h!]
 	\centering
 	\includegraphics[width=\textwidth]{ToyCase/modele1.png}	
 	\caption{SNR = 0 dB  -- Modèle 1, avec $\bm{\gamma}^2 = \gamma^2\bm{I}_K$ .}
 \end{figure}
-\begin{figure}[H]
+\begin{figure}[h!]
 	\centering
 	\includegraphics[width=\textwidth]{ToyCase/modele1_snrm10db.png}	
-	\caption{SNR =-1 0 dB  -- Modèle 1, avec $\bm{\gamma}^2 = \gamma^2\bm{I}_K$ .}
+	\caption{SNR =-10 dB  -- Modèle 1, avec $\bm{\gamma}^2 = \gamma^2\bm{I}_K$ .}
 \end{figure}
 
-\paragraph{$\bm{\gamma}^2 = \diag{\bm{\gamma^2 }}$}
+\newpage
+\paragraph{Hétéroscédasticité des facteurs : $\bm{\gamma}^2 = \diag{\bm{\gamma^2 }}$} ~\\
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{ToyCase/modele1_diffgamma2.png}	
@@ -537,8 +539,64 @@ On compare ici le cas où $\bm{q}$ est tiré (toujours en bloc) suivant une post
 	\caption{SNR = -10 dB  -- Modèle 1, avec $\bm{\gamma}^2  = \diag{\bm{\gamma^2 }}$ .}
 \end{figure}
 
+\newpage
+\paragraph{Sensibilité à l’initialisation} ~\\
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{ToyCase/modele1_ini2_snrm10db.png}	
+	\caption{SNR = -10 dB  -- Modèle 1, avec $\bm{q}_{(0)}=2$.}
+\end{figure}
+
+
+
 \todo[inline]{Le plus important : modèle 2 très sensible au choix de  a.alpha (ex : SVD ne marche pas bien. a.alpha=1 semble plus robuste. a.alpha=2 ne marche pas.\\
 }
+
+\subsection{Observations}
+\paragraph{Marginalisation :} 
+\begin{itemize}
+	\item Mélangeance : La marginalisation favorise la mélangeance des chaine et ainsi la sélection de l'ordre du modèle est plus précise. Sans marginalisation, le signal est surestimé, le résultat est moins parcimonieux.
+	\item Convergence : La marginalisation n'accélère pas visiblement la convergence. Cette observation  variera sûrement dans le cas d'initialisation moins favorables. 
+        \item Coût de calcul : 
+        \begin{itemize}
+	        \item Dans le cas d'un échantillonnage en bloc de $\bm{q}$, la marginalisation est à peine plus coûteuse (calcul d'un déterminant et d'un inverse de $\bm{B}$, de taille $M\times M$) 
+		\item Si $\bm{q}$ n'est pas échantillonné en bloc, la marginalisation est un gain de temps considérable puisqu'il évite de mettre à jour $\bm{S}_c$ après chaque tirage d'un $\bm{q}_k$.
+	\end{itemize}       
+\end{itemize}
+
+\paragraph{Facteur d'échelle : } l'échantillonnage du facteur d'échelle accélère légèrement la convergence, visible notamment sur l'évolution du paramètre $\gamma^2$ qui croît plus rapidement.
+
+\paragraph{Prior informatif sur $l$ :} Le résultat est plus parcimonieux, mais la convergence n'est pas accéléré, et les résultats ne sont pas particulièrement améliorés.
+
+\paragraph{Choix de l'initialisation : } Ces deux modèles sont très sensibles à l'initialisation. 
+
+\paragraph{Note sur la variance de $\bm{L}$}
+Le prior sur $\bm{L}$ pourrait être : 
+\begin{equation*}
+	    \bm{L} \sim \mathcal{N}_c (0,\frac{\bm{I}_{MK}}{L_q})
+\end{equation*}
+De cette façon, l'estimation de $\bm{L}$ ne dépendrait pas du choix du nombre de facteurs recherchés. Ce prior implique que $\bm{q}$ devienne le parent de $\bm{L}$ dans le graphe hiérarchique. 
+Les postériors sur $\bm{q}$ et $\bm{L}$ sont alors changés : 
+\begin{align*}
+	\bullet \quad   \bm{\Omega_\lambda} &=\left( (\bm{q}\bm{S}_{cc}^* \bm{q}) \otimes (\bm{\Omega}_n^{-1}) + L_q \bm{I}_{MK}   \right)^{-1}
+\end{align*}
+\begin{align*}
+	\bullet \quad  \left[q_k | \infty	_{-q_k,-\bm{c}}  \right] &\propto \prod_i  \left[ \bm{y}_i |q_k, \infty_{-\bm{y}_i,-\bm{c}} \right] [q_k]\\
+	& \propto \e^{-\tr{ \bm{B}(q_k)^{-1}\bm{S}_{yy}} - I_s\ln|\bm{B}(q_k)| - q_k \ln\left( \frac{1}{l}-1 \right) - \bm{\lambda}^H\bm{\lambda}L_q + MK \ln(Lq)}
+\end{align*}
+De même pour la version non-marginalisée.
+
+\hspace{-3cm}\begin{minipage}{1.4\textwidth}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.49\textwidth]{ToyCase/modele2_varL1surlq.png}			\includegraphics[width=0.5\textwidth]{ToyCase/modele2_varL1surlq_snrm10db.png}	
+		SNR = 0 dB \hspace{0.5\textwidth} SNR = -10 dB
+		\caption{Modèle 1 modifié : le prior sur $\bm{L}$ dépend de $\bm{q}$.}
+	\end{figure}
+\end{minipage}
+Le résultat est plus parcimonieux mais oscille fortement entre 2 modes, sûrement à cause de la corrélation introduite entre $\bm{L}$ et $\bm{q}$.\\
+
+
 
 
 %\subsection{Sans marginalisation}
