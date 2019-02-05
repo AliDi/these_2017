@@ -415,6 +415,85 @@ De la même manière, la probabilité que le binaire change d'état est :
 Après normalisation, le changement d'état du binaire est accepté si $$-\ln\left(\frac{1}{t}-1\right) < g(q_{k}) -   g(q_{k_{mod}})$$.
 
 
+\section{Problème d'échelle}
+\subsection[]{Pour le couple $\bm{c},\bm{L}$}
+
+\cite{veit2008reechantillonnage} propose un moyen de gérer l’ambiguïté d'échelle entre les paramètres $\bm{c}$ et $\bm{L}$. D'après cet article, lever cette ambiguïté permettrait une exploration de la loi cible plus efficace, avec une meilleure mélangeance, en réduisant le temps de chauffe et la corrélation de ces paramètres. 
+De manière générale, cette ambiguïté se retrouve pour tout problème de la forme : 
+\begin{equation*}
+	    z=h \star x + b
+\end{equation*}
+où $\star$ est un opérateur bilinéaire quelconque, un produit matriciel dans notre cas. En effet, on a alors, pour tout couple $(x,h)$ et $s \neq 0$ :
+\begin{equation*}
+	    (sx) \star \left(\frac{h}{s} \right) = x \star h
+\end{equation*}
+\cite{veit2008reechantillonnage} propose donc d'échantillonner le paramètre de changement d'échelle sans modifier la loi cible. Dans notre modèle, il faut un facteur d'échelle $s_k$ par facteur :
+\begin{equation*}
+	    \bm{y} =  \bm{Lqc}+ \bm{n} = (\bm{\tilde{L}S}^{-1}) \bm{q}(\bm{S\tilde{c}}) + \bm{n} \quad \text{avec} \quad \bm{S} = \operatorname{diag}(s_1, \dots , s_k, \dots , s_K).
+\end{equation*}
+On peut montrer par un changement de variable 
+
+\begin{align*}
+	\bm{L}_k = \frac{\tilde{\bm{L}}_k}{s_k} \quad \text{et} \quad \bm{c_k} = \tilde{\bm{c}}_k s_k
+\end{align*}
+que l'échantillonnage de $s_k$ se fait selon la loi 
+\begin{equation}
+        [s_k|\infty_{-s_k}] \propto |s_k|^{2(I_s - M -1)} [ \bm{c}_k,\bm{L}_k| s_k] 
+\end{equation}
+Sous l'hypothèse d'indépendance de $\bm{c}_k$ et $\bm{L}_k$, 
+\begin{equation}
+        [s_k|\infty_{-s_k}] \propto |s_k|^{2(I_s - M -1)} \prod_i [ \bm{c}_{ki}] \prod_m[\bm{L}_{mk}] .
+\end{equation}
+avec $|s_k|^2 = ss^*$.
+
+En posant $r_k=|s_k|^2$, on en déduit que 
+\begin{align*}
+	[r_k|\infty] & \propto r_k^{I_s -M -\frac{1}{2} -1} \e^{-r_k\sum_i \bm{\tilde{c}}_{ki}^H \gamma_k^{-2}\bm{\tilde{c}}_{ki}} \quad
+	 \e^{-r_k^{-1}\sum_m \bm{\tilde{L}}_{mk}^H K \bm{\tilde{L}}_{mk}}\\
+	 & \propto r_k^{I_s -M -\frac{1}{2} -1}  \e^{-r_k  \gamma_k^{-2} \bm{\tilde{S}}_{{cc}_{kk}}} \quad
+	 	\e^{-r_k^{-1}K \sum_m \bm{\tilde{L}}_{mk}^H \bm{\tilde{L}}_{mk}}
+			%& \propto r^{\frac{K-MK-1}{2}} \e^{-r \tr{ \bm{\gamma}^{-2} \bm{S}_{cc}} - r^{-1} K \bm{\lambda}^H \bm{\lambda}}
+\end{align*}
+
+$r$ suit donc une loi Gaussienne Inverse Généralisée (GIG)  de la forme : 
+\begin{equation*}
+	    f_{GIG}(r) = \left(\frac{a_r}{b_r}\right)^{\frac{p_r}{2}}  \frac{r^{p_r-1}}{2 \operatorname{Y}_{p_r}\!\left( \sqrt{a_rb_r}\right)} \e^{-\frac{1}{2} ( a_r r + b_r r^{-1} )} \quad, r>0
+\end{equation*}
+$ \operatorname{Y}_{p_r} (\cdot)$ est la fonction de Bessel de seconde espèce.
+
+Par identification, les paramètres sont : 
+\begin{align*}
+	a_{r_k} & = 2 \gamma_k^{-2}\bm{\tilde{S}}_{{cc}_{kk}}\\
+	b_{r_k} &= 2K \sum_m \bm{\tilde{L}}_{mk}^H \bm{\tilde{L}}_{mk}\\
+	p_r &= I_s- M - \frac{1}{2}
+\end{align*}
+Après tirage de $r_k$, on calcule $s_k=\sqrt{r_k} \e^{j\phi}$ avec $\phi \sim \mathcal{U}([0;2\pi[)$.
+
+Dans le cas où $M\approx K \ll I_s$, les paramètres sont de l'ordre de grandeur suivant :
+\begin{align*}
+	a_{r_k} &\approx 2 I_s\\
+	b_{r_k} &\approx 2M\\
+	p_r &\approx  I_s-M
+\end{align*}
+le mode de la GIG est alors :
+\begin{align*}
+	\mathrm{mode}_{GIG} & = \frac{(p_r -1) + \sqrt{(p_r-1)^2 + a_rb_r}}{a_r}\\
+	& \approx \frac{I_s + \sqrt{I_s^2}}{2I_s} \approx 1
+\end{align*}
+et la variance est très faible.
+Le paramètre d'échelle oscille donc légèrement autour de 1, ce qui ne modifie pas l'échelle du problème.\\
+
+
+\subsection[]{Pour le couple $\beta^2, \bm{\sigma}^2$}
+L’ambiguïté se pose également pour le couple $\beta^2, \bm{\sigma}^2$ dans le cas où on exploite P jeux de données (pour différents régime moteur par ex.).
+On note $\bm{\beta}^2$ le vecteur contenant les $P$ valeurs réelles de $\beta^2_p$ et $\bm{\sigma}^2$ celui contenant les $M$ valeurs réelles $\sigma_m^2$.. Le facteur d'échelle s suit alors la loi suivante : 
+\begin{align*}
+	[s |\infty] &\propto |s|^{P-M-1} \prod_p [s \beta_p^2] \prod_m [s^{-1}\sigma_m^2]\\
+	& \propto |s|^{P-M-1} \quad\e^{-\sum_p \beta_p^{-2} b_\beta s^{-1}} \e^{- \sum_m \sigma_m^{-2} b_\sigma s}\\
+	& \propto \mathcal{GIG}(2 \sum_m \sigma^{-2}_m b_\sigma, 2 \sum_p \beta^{-2}_p b_\beta, P-M)
+\end{align*}
+s doit être réel et son signe est tiré dans une loi uniforme $\mathcal{U}([0;1])$.
+
 
 \section{Résultats et analyse}
 \subsection{Paramètres de la simulation}
@@ -423,8 +502,8 @@ Après normalisation, le changement d'état du binaire est accepté si $$-\ln\le
         \item $M=20$
         \item $I_s = 10^4$
         \item SNR = 0 dB et -10 dB
-        \item Nombre de fonction de base : 5
-        \item Nombre de facteurs recherché : $K_r= M-1$  
+        \item Nombre de fonctions de base : 5
+        \item Nombre de facteurs recherchés : $K_r= M-1$  
         %\item Trace($\bm{S}_{pp}$)/M = 2.4     
 \end{itemize}
 Le paramètre $\beta^2$ est fixé à 1.
@@ -434,24 +513,15 @@ Le paramètre $\beta^2$ est fixé à 1.
         \item $a_\sigma = b_\sigma = a_\gamma = b_\gamma = 0.01$ (paramètres pour un prior Gamma non-informatif)
         \item $a_l = b_l = 1$ (paramètre pour un prior bêta non-informatif)
 \end{itemize}
-\textit{Remarque : }Le choix d'un prior non informatif pour $\gamma^2$ est important pour la robustesse du solveur. De cette façon, si le nombre de binaires q est surestimé, une compensation pourra avoir lieu par une mise à 0 de certaines valeurs de $\gamma^2_k$ et du $\bm{c}_k$ correspondant.
+\textit{Remarque : }Le choix d'un prior non informatif pour $\gamma^2$ est important pour la robustesse du solveur. De cette façon, si le nombre de binaires q est surestimé, une correction pourra avoir lieu par une mise à 0 de certaines valeurs de $\gamma^2_k$ et du $\bm{c}_k$ correspondant.
 
 \paragraph{Initialisation}
 \begin{itemize}
         \item $\bm{L}_{(0)} \sim \mathcal{N}_c(0,\bm{I}/K_r)$
 	\item $\sigma_{m(0)}^2=\tr{\bm{S}_{yy}}/M$
         \item  $\gamma_{k(0)}^2=0.3 \times \sigma_{m(0)}^2$ (hypothèse d'un SNR à -5 dB ($10\log_{10}(0.3)$)
-        \item $q_{k(0)}=1$ 
+        \item $\bm{q}_{(0)}=\bm{1}$ 
 \end{itemize}
-
-\todo[inline]{
-- avec marg/sans marg pour 4 initialisations\\
--comp avec modele 1\\
--comp q=1\\
--effet facteur d'échelle\\
--effet prior sur le param de parcimonie\\
--effet $\gamma^2_k$ sur modele 1(et prior non informatif)
-}
 
 \subsection{Comparaison du modèle 2 AVEC et SANS marginalisation}
 On compare ici le cas où $\bm{q}$ est tiré (toujours en bloc) suivant une postérior marginalisée ou non.
@@ -502,7 +572,7 @@ On compare ici le cas où $\bm{q}$ est tiré (toujours en bloc) suivant une post
 \subsection{Modèle 2 : prior informatif sur $l$}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{ToyCase/lsparse.png}\\
+	\includegraphics[width=\textwidth]{ToyCase/lsparse.png}
 	\includegraphics[width=0.4\textwidth]{ToyCase/priorl.png}
 	\caption{SNR = 0 dB -- Modèle 2, avec marginalisation, le prior sur le paramètre de parcimonie $l$ n'est pas uniforme (sans scaling).}
 \end{figure}
@@ -547,11 +617,6 @@ On compare ici le cas où $\bm{q}$ est tiré (toujours en bloc) suivant une post
 	\caption{SNR = -10 dB  -- Modèle 1, avec $\bm{q}_{(0)}=2$.}
 \end{figure}
 
-
-
-\todo[inline]{Le plus important : modèle 2 très sensible au choix de  a.alpha (ex : SVD ne marche pas bien. a.alpha=1 semble plus robuste. a.alpha=2 ne marche pas.\\
-}
-
 \subsection{Observations}
 \paragraph{Marginalisation :} 
 \begin{itemize}
@@ -568,13 +633,14 @@ On compare ici le cas où $\bm{q}$ est tiré (toujours en bloc) suivant une post
 
 \paragraph{Prior informatif sur $l$ :} Le résultat est plus parcimonieux, mais la convergence n'est pas accéléré, et les résultats ne sont pas particulièrement améliorés.
 
-\paragraph{Choix de l'initialisation : } Ces deux modèles sont très sensibles à l'initialisation. 
+\paragraph{Choix de l'initialisation : } Ces deux modèles sont très sensibles à l'initialisation.  Le modèle 2 présente un jeu de paramètres sensibles (les $a_\gamma$) de moins à initialiser, ce qui améliore sa robustesse.
 
 \paragraph{Note sur la variance de $\bm{L}$}
 Le prior sur $\bm{L}$ pourrait être : 
 \begin{equation*}
 	    \bm{L} \sim \mathcal{N}_c (0,\frac{\bm{I}_{MK}}{L_q})
 \end{equation*}
+avec $L_q=\sum_k q_k$.
 De cette façon, l'estimation de $\bm{L}$ ne dépendrait pas du choix du nombre de facteurs recherchés. Ce prior implique que $\bm{q}$ devienne le parent de $\bm{L}$ dans le graphe hiérarchique. 
 Les postériors sur $\bm{q}$ et $\bm{L}$ sont alors changés : 
 \begin{align*}
@@ -668,85 +734,6 @@ Le résultat est plus parcimonieux mais oscille fortement entre 2 modes, sûreme
 %        \item Il serait intéressant de comparer les résultats dans le cas où le nombre de fonction de bases est grand (hypothèse de parcimonie non respectée)
 %\end{itemize}
 
-
-\section{Problème d'échelle}
-\subsection[]{Pour le couple $\bm{c},\bm{L}$}
-
-\cite{veit2008reechantillonnage} propose un moyen de gérer l’ambiguïté d'échelle entre les paramètres $\bm{c}$ et $\bm{L}$. D'après cet article, lever cette ambiguïté permettrait une exploration de la loi cible plus efficace, avec une meilleure mélangeance, en réduisant le temps de chauffe et la corrélation de ces paramètres. 
-De manière générale, cette ambiguïté se retrouve pour tout problème de la forme : 
-\begin{equation*}
-	    z=h \star x + b
-\end{equation*}
-où $\star$ est un opérateur bilinéaire quelconque, un produit matriciel dans notre cas. En effet, on a alors, pour tout couple $(x,h)$ et $s \neq 0$ :
-\begin{equation*}
-	    (sx) \star \left(\frac{h}{s} \right) = x \star h
-\end{equation*}
-\cite{veit2008reechantillonnage} propose donc d'échantillonner le paramètre de changement d'échelle sans modifier la loi cible. Dans notre modèle, il faut un facteur d'échelle $s_k$ par facteur :
-\begin{equation*}
-	    \bm{y} =  \bm{Lqc}+ \bm{n} = (\bm{\tilde{L}S}^{-1}) \bm{q}(\bm{S\tilde{c}}) + \bm{n} \quad \text{avec} \quad \bm{S} = \operatorname{diag}(s_1, \dots , s_k, \dots , s_K).
-\end{equation*}
-On peut montrer par un changement de variable 
-
-\begin{align*}
-	\bm{L}_k = \frac{\tilde{\bm{L}}_k}{s_k} \quad \text{et} \quad \bm{c_k} = \tilde{\bm{c}}_k s_k
-\end{align*}
-que l'échantillonnage de $s_k$ se fait selon la loi 
-\begin{equation}
-        [s_k|\infty_{-s_k}] \propto |s_k|^{2(I_s - M -1)} [ \bm{c}_k,\bm{L}_k| s_k] 
-\end{equation}
-Sous l'hypothèse d'indépendance de $\bm{c}_k$ et $\bm{L}_k$, 
-\begin{equation}
-        [s_k|\infty_{-s_k}] \propto |s_k|^{2(I_s - M -1)} \prod_i [ \bm{c}_{ki}] \prod_m[\bm{L}_{mk}] .
-\end{equation}
-avec $|s_k|^2 = ss^*$.
-
-En posant $r_k=|s_k|^2$, on en déduit que 
-\begin{align*}
-	[r_k|\infty] & \propto r_k^{I_s -M -\frac{1}{2} -1} \e^{-r_k\sum_i \bm{\tilde{c}}_{ki}^H \gamma_k^{-2}\bm{\tilde{c}}_{ki}} \quad
-	 \e^{-r_k^{-1}\sum_m \bm{\tilde{L}}_{mk}^H K \bm{\tilde{L}}_{mk}}\\
-	 & \propto r_k^{I_s -M -\frac{1}{2} -1}  \e^{-r_k  \gamma_k^{-2} \bm{\tilde{S}}_{{cc}_{kk}}} \quad
-	 	\e^{-r_k^{-1}K \sum_m \bm{\tilde{L}}_{mk}^H \bm{\tilde{L}}_{mk}}
-			%& \propto r^{\frac{K-MK-1}{2}} \e^{-r \tr{ \bm{\gamma}^{-2} \bm{S}_{cc}} - r^{-1} K \bm{\lambda}^H \bm{\lambda}}
-\end{align*}
-
-$r$ suit donc une loi Gaussienne Inverse Généralisée (GIG)  de la forme : 
-\begin{equation*}
-	    f_{GIG}(r) = \left(\frac{a_r}{b_r}\right)^{\frac{p_r}{2}}  \frac{r^{p_r-1}}{2 \operatorname{Y}_{p_r}\!\left( \sqrt{a_rb_r}\right)} \e^{-\frac{1}{2} ( a_r r + b_r r^{-1} )} \quad, r>0
-\end{equation*}
-$ \operatorname{Y}_{p_r} (\cdot)$ est la fonction de Bessel de seconde espèce.
-
-Par identification, les paramètres sont : 
-\begin{align*}
-	a_{r_k} & = 2 \gamma_k^{-2}\bm{\tilde{S}}_{{cc}_{kk}}\\
-	b_{r_k} &= 2K \sum_m \bm{\tilde{L}}_{mk}^H \bm{\tilde{L}}_{mk}\\
-	p_r &= I_s- M - \frac{1}{2}
-\end{align*}
-Après tirage de $r_k$, on calcule $s_k=\sqrt{r_k} \e^{j\phi}$ avec $\phi \sim \mathcal{U}([0;2\pi[)$.
-
-Dans le cas où $M\approx K \ll I_s$, les paramètres sont de l'ordre de grandeur suivant :
-\begin{align*}
-	a_{r_k} &\approx 2 I_s\\
-	b_{r_k} &\approx 2M\\
-	p_r &\approx  I_s-M
-\end{align*}
-le mode de la GIG est alors :
-\begin{align*}
-	\mathrm{mode}_{GIG} & = \frac{(p_r -1) + \sqrt{(p_r-1)^2 + a_rb_r}}{a_r}\\
-	& \approx \frac{I_s + \sqrt{I_s^2}}{2I_s} \approx 1
-\end{align*}
-et la variance est très faible.
-Le paramètre d'échelle oscille donc légèrement autour de 1, ce qui ne modifie pas l'échelle du problème.\\
-
-
-\subsection[]{Pour le couple $\beta^2, \bm{\sigma}^2$}
-L’ambiguïté se pose également pour le couple $\beta^2, \bm{\sigma}^2$ dans le cas où on exploite P jeux de données (pour différents régime moteur par ex.).
-On note $\bm{\beta}^2$ le vecteur contenant les $P$ valeurs réelles de $\beta^2_p$ et $\bm{\sigma}^2$ celui contenant les $M$ valeurs réelles $\sigma_m^2$.. Le facteur d'échelle s suit alors la loi suivante : 
-\begin{align*}
-	[s |\infty] &\propto |s|^{P-M-1} \prod_p [s \beta_p^2] \prod_m [s^{-1}\sigma_m^2]\\
-	& \propto |s|^{P-M-1} \quad\e^{-\sum_p \beta_p^{-2} b_\beta s^{-1}} \e^{- \sum_m \sigma_m^{-2} b_\sigma s}\\
-	& \propto \mathcal{GIG}(2 \sum_m \sigma^{-2}_m b_\sigma, 2 \sum_p \beta^{-2}_p b_\beta, P-M)
-\end{align*}
-s doit être réel et son signe est tiré dans une loi uniforme $\mathcal{U}([0;1])$.
 
 
 

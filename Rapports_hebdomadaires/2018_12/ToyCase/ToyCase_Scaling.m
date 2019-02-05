@@ -8,7 +8,7 @@ addpath('/home/adinsenmey/Bureau/Codes_Exterieurs/codes_debruitage_jerome')
 Isnap = 10000; %nb d'échantillon
 K=5; %nb de facteurs
 M=20; % nb d'observations
-SNR=0 %en db
+SNR=-10 %en db
 
 %{
 graine=1;
@@ -55,7 +55,7 @@ b.sig2 = 0.01;
 Ini.sig2=real(diag(Sy));
 [a.beta2 , b.beta2] = Convert_InvGamma(1,10);
 gamma2_mean =real(mean(diag(Sy(:,:))));
-Ini.gamma2  = 0.01*gamma2_mean;
+Ini.gamma2  = 0.3*gamma2_mean;
 %[a.gamma2,b.gamma2] = Convert_InvGamma(0*gamma2_mean,100*gamma2_mean);   % hyperparamètres pour la variance des facteurs
 a.gamma2 = 0.01;
 b.gamma2=0.01;
@@ -63,19 +63,20 @@ b.gamma2=0.01;
 a.l=1; b.l=1;
 
 %% Inférence
-Nrun=2000;
+Nrun=5000;
 option.ref=0; option.noise='hetero'; option.marg='on'
 
 % Pour la version sparse 3
 for j=1:1
-    alpha2_mean(:,j) = svd(Sy(:,:,j+option.ref));%exp(-kappa*(0:K_est-1)'/(K_est-1));
-    alpha2_mean(:,j) = alpha2_mean(:,j)./max(alpha2_mean(:,j));
+    %alpha2_mean(:,j) = svd(Sy(:,:,j+option.ref));%exp(-kappa*(0:K_est-1)'/(K_est-1));
+    %alpha2_mean(:,j) = alpha2_mean(:,j)./max(alpha2_mean(:,j));
     a.alpha(:,j) = 2*ones(K_est,1);% 1./alpha2_mean(1:K_est,j);      % hyper-hyper-param�tres sur alpha
 end
 Ini.alpha(1,:,:) = 1./a.alpha;
 
-modele=2; [Sc_est,Lambda_est,q_est,l_est,beta2_est,gamma2_est, sig2_est,s] = MCMC_AnaFac_Quad_BernGauss_multiregime(Sy,K_est,a,b,Isnap,Nrun,option,Ini);
-%modele=1; [Sc_est,Lambda_est,q_est,beta2_est,gamma2_est, sig2_est] = MCMC_AnaFac_Quad_Sparse3_multiregime(Sy,K_est,a,b,Isnap,Nrun,option,Ini);
+%modele=2; [Sc_est,Lambda_est,q_est,l_est,beta2_est,gamma2_est, sig2_est,s] = MCMC_AnaFac_Quad_BernGauss_multiregime(Sy,K_est,a,b,Isnap,Nrun,option,Ini);
+%modele=2; [Sc_est,Lambda_est,q_est,l_est,beta2_est,gamma2_est, sig2_est,s] = MCMC_AnaFac_Quad_BernGauss_multiregime_varL1surlq(Sy,K_est,a,b,Isnap,Nrun,option,Ini);
+modele=1; [Sc_est,Lambda_est,q_est,beta2_est,gamma2_est, sig2_est] = MCMC_AnaFac_Quad_Sparse3_multiregime(Sy,K_est,a,b,Isnap,Nrun,option,Ini);
 %%
 
 for jj=1:Nrun
