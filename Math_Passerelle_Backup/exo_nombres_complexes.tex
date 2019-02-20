@@ -1,0 +1,186 @@
+\documentclass[12pt,a4paper,answers]{article}
+\usepackage[lmargin=1.5cm,tmargin=1.2cm,bmargin=1.5cm,rmargin=1.5cm]{geometry}
+\usepackage[french]{babel}
+%\usepackage{fontspec}
+\usepackage{graphicx}
+\usepackage{amsthm,amssymb,amsfonts,mathtools}
+\usepackage[utf8]{inputenc}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{graphicx}
+%\setlength{\columnseprule}{0.5pt}
+\usepackage{url}
+
+
+\newcounter{exo}[section]
+\setcounter{exo}{0}
+\newenvironment{exo}[1]{\stepcounter{exo}\\[1em] \fbox{\textbf{Exercice \theexo : #1}}\\[0.5em]}{}
+
+%Pour le mode exam
+\usepackage[auto-label]{exsheets}
+\SetupExSheets{
+	solution/print=false,
+	headings=block-subtitle,
+	counter-within = exo,
+ 	counter-format = \theexo.qu
+}
+
+\newcommand{\sol}[1]{\PrintSolutionsTF{~\\ \colorbox{gray!10}{\parbox{01\linewidth}{#1}}}}
+\newcommand{\ddroit}{\mathrm{d}}
+\newcommand{\pa}[1]{\left(#1\right)}
+
+
+
+
+\usepackage{icomma} %pour le bon espacement dans le nombres décimaux
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%%%%%%%%%head%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{center}
+	Alice Dinsenmeyer ~~~\url{alice.dinsenmeyer@insa-lyon.fr} \\[1ex]
+	\fbox{\Large \textsc{ Exercices : Nombres Complexes}}
+\end{center}
+Pour s'entraîner, des cours et exercices pour la préparation au cursus d'ingénieur se trouvent à l'adresse \url{emaths.education}
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{multicols}{2}
+%\end{multicols}
+
+%%%%%%%%%%%%%%%%%
+%
+%
+%
+%%%%%%%%%%%%%%%%%
+\indent\exo{}
+\indent Développer et simplifier les expressions suivantes :
+\begin{tasks}(2)
+        	\task  $A=(2+3i)(7-3i)$
+        	\sol{$A=23+15i$}
+        	\task $B=1+i+i^2+i^3+i^4$
+        	\sol{$B=1$}
+        	\task $C=(1+i)(2-5i)(4+5i)$
+        	\sol{$C=43+23i$}
+        	\task $D=(2+3i)^2$
+        	\sol{$D=-5+12i$}        	
+	\task*	Trouver un complexe $z$ tel que $z^2=5+12i$ (poser $z=a+ib$ puis résoudre le système d'équations).
+	\sol{
+	 $\left\{
+	\begin{matrix}
+	a^2-b^2=5\\
+	2ab=12	
+	\end{matrix}\right.	\Leftrightarrow
+	\left\{
+	\begin{matrix}
+	a=3\\
+	b=2	
+	\end{matrix}\right. \text{~ou~}
+	\left\{
+	\begin{matrix}
+	a=2i\\
+	b=-3i	
+	\end{matrix}\right.
+	$
+	}
+\end{tasks}			 
+
+
+\indent \exo{}
+\indent Placer dans le plan complexe les nombres suivant, puis les écrire sous forme trigonométrique :
+\begin{tasks}(3)
+	\task $z_1=1+i$
+	\sol{$|z|=\sqrt{2}$ et $\arg(z)=\pi/4$}
+	\task $z_2=3+3i$
+	\sol{$|z|=3\sqrt{2}$ 
+	et $\arg(z)=\pi/4$}
+	\task $z_3=-1+3i$
+	\sol{$|z|=\sqrt{10}$\\ 
+	et $\arg(z)\approx 1,89 \approx 0,60 \pi$}
+\end{tasks}
+
+Quelle est la nature du triangle formé par $z_1, z_2$ et $z_3$ ? Justifier.
+	\sol{$|z_1-z_2| = \sqrt{8}, |z_2-z_3|= 4 \text{~et~} |z_3-z_1|= \sqrt{8}$.\\
+$\bullet ~|z_1-z_2| =|z_3-z_1|$ donc le triangle est isocèle. \\
+$\bullet$ De plus, $|z_1-z_2|^2 + |z_3-z_1|^2 =  |z_2-z_3|^2$ donc le triangle est aussi rectangle.
+}
+
+\indent\exo{}
+\vspace{-1em}
+\begin{tasks}
+	\task Calculer le module et l'argument du nombre complexe $\displaystyle z=\left(\sqrt{3}-2 \right) \left( \cos\left( \frac{\pi}{5} \right) + i \sin \left( \frac{\pi}{5} \right) \right)$.	
+	\sol{ On remarque que $\sqrt{3}-2<0$, donc 
+	\begin{align*}
+		z&=	\left(2-\sqrt{3} \right) \left( -\cos\left( \frac{\pi}{5} \right) - i \sin \left( \frac{\pi}{5} \right) \right)\\
+			&=\left(2-\sqrt{3} \right) \left( \cos\left( \frac{\pi}{5} + \pi \right) + i \sin \left( \frac{\pi}{5} + \pi \right) \right)
+	\end{align*}
+	Donc $|z|=2-\sqrt{3}$ et $\arg(z)=\frac{6\pi}{5} + 2k\pi$ avec $k \in \mathbb{Z}$
+	}	
+	\task Écrire $z=\left( 1 + i \sqrt{3} \right)^5$ sous forme algébrique.
+	\sol{
+	Posons $z_0= 1 + i \sqrt{3}$. $|z_0|=2$ et $\arg(z_0)=\frac{\pi}{3} + 2k\pi$.\\
+	Donc $|z|=|z_0|^5=32$ et $\arg(z)=5\arg(z_0)=-\frac{\pi}{3} + 2k\pi$. \\Finalement, $z=32 \left(  \cos(-\frac{\pi}{3}) + i \sin(-\frac{\pi}{3}) \right)=16(1-i\sqrt{3})$
+	
+	}
+
+\end{tasks}
+
+\indent \exo{}
+\vspace{-1em}
+\begin{tasks}(2)
+	\task* Soient $z_1=e^{i\frac{\pi}{3}}$ et $z_2=e^{i\frac{\pi}{4}}$.
+	Calculer le quotient $Z=\frac{z_1}{z_2}$ de deux façons différentes et en déduire les valeurs exactes de $\cos\left( \frac{\pi}{12}\right)$ et $\sin\left( \frac{\pi}{12}\right)$.
+	\sol{
+	A l'aide des écritures exponentielles, on obtient $Z=e^{i\left( \frac{\pi}{3}-\frac{\pi}{4}\right)}=e^{i\frac{\pi}{12}}$.\\
+	A l'aide des écritures algébriques, on obtient $Z=\pa{\frac{1}{2} + i \frac{\sqrt{3}}{2}  }\pa{\frac{\sqrt{2}}{2} - i\frac{\sqrt{2}}{2}} = \pa{\frac{\sqrt{2}+\sqrt{6}}{4}} + i\pa{\frac{-\sqrt{2}+\sqrt{6}}{4}}$.\\
+	Par comparaison de ces deux écritures, on en déduit que $\cos	\pa{\frac{\pi}{12}}=\frac{\sqrt{2}+\sqrt{6}}{4}$ et $\sin	\pa{\frac{\pi}{12}}=\frac{\sqrt{6}-\sqrt{2}}{4}$.
+	}
+	\task* On écrit $z=a+ib=Re^{i\theta}$. Écrire de même $\bar{z}$ et $\frac{1}{z}$.
+	\sol{$\bar{z}=Re^{-i\theta}=a-ib$ (la fonction atan est impaire).\\
+	$\frac{1}{z}=\frac{1}{R}e^{-i\theta}=\frac{a}{a^2+b^2}-i \frac{b}{a^2+b^2}$
+	}
+	\task Linéariser $\sin^3\theta$.
+	\sol{ $\sin^3\theta = \frac{1}{4}\pa{3 \sin\theta-\sin3\theta}$}
+	\task Linéariser $\sin^4\theta$
+	\sol{$\sin^4\theta=\frac{1}{8}\cos 4\theta - \frac{1}{2}\cos 2 \theta +\frac{3}{8}$
+	}
+\end{tasks}
+
+\indent \exo{}
+\indent A, B et C sont des points d'affixe $a=6-i$, $b=-6+3i$ et $c=-18-7i$. Montrer que ces points sont alignés.
+\sol{Il faut montrer que les affixes des vecteurs $\overrightarrow{AB}$ et $\overrightarrow{BC}$ sont proportionnels.}
+
+\indent \exo{}
+\indent  Trouver les racines dans $\mathbb{C}$ des polynômes suivants :
+\begin{tasks}
+	\task $x^2+x+1$
+	\sol{$\Delta=-3=(i\sqrt{3})^2$ et les racines sont : $x_{1,2}=e^{\pm i \frac{2\pi}{3}}=-\frac{1}{2} \pm i\frac{\sqrt{3}}{2}$}
+	\task $4x^2+8x+29$
+	\sol{$\Delta=-400=(20i)^2$. Les racines sont donc $x_{1,2}=-1 \pm \frac{5}{2}i$.
+	}
+	\task $x^2 - (4+3i)x +(1+5i)$
+	\sol{$\Delta=3+4i=(2+i)^2$. Les racines sont donc $x_1=3+2i$ et $x_2=1+i$.}
+	\task  $x^2-\sqrt{2}+1$. Les écrire sous forme algébrique et exponentielle.
+	\sol{$\Delta=(-\sqrt{2})^2-4=(i\sqrt{2})^2$. Donc les racines sont $x_{1,2}=e^{\pm i\frac{\pi}{4}}=\frac{\sqrt{2}\pm i\sqrt{2}}{2}$}
+	\task  $x^8-1$ et les placer dans le plan complexe.
+	\sol{$x=e^{\frac{ik\pi}{4}}$ avec $k=\{0,1,2,3,4,5,6,7\}$}
+\end{tasks}
+
+\indent \exo{}
+On note $(H)$ l'ensemble des points $M$ du plan d'affixe z vérifiant : $z^2-4=4-\bar{z}^2$
+\begin{tasks}
+	\task On note $x$ et $y$ les parties réelle et imaginaire de l'affixe $z$ d'un point $M$. Montrer l'équivalence : $M$ appartient à $(H)$ ssi $x^2-y^2=4$.
+	\task Soient A, B et C les points d'affixes $2$, $-3-i\sqrt{5}$ et $-3+i\sqrt{5}$. Vérifier que A, B et C appartiennent à $(H)$.
+\end{tasks}
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
