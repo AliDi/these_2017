@@ -18,6 +18,7 @@
 %%% Pour Tikz
 \usepackage{tikz}
 \usetikzlibrary{calc}
+\usetikzlibrary{shapes}
 %\usetikzlibrary{arrows,shapes,trees,positioning}  
 
 %%%pour les plots matlab en tikz
@@ -397,9 +398,9 @@ $\hookrightarrow$ Méthode : l'échantillonneur de Gibbs}
 \vfill
 \onslide<12->{
 	\centering
-	\begin{tabular}{c c c c c}
+	\begin{tabular}{c c c c c c}
 	MI mesurée && MI signal && MI bruit\\
-	\includegraphics[valign=m,width=0.18\textwidth]{csm.png} &= & \includegraphics[valign=m,width=0.18\textwidth]{signal.png} & +&  \includegraphics[valign=m,width=0.18\textwidth]{bruit.png}\\
+	\includegraphics[valign=m,width=0.18\textwidth]{csm.png} &= & \includegraphics[valign=m,width=0.18\textwidth]{signal.png} & +&  \includegraphics[valign=m,width=0.18\textwidth]{bruit.png} & \pbox{0.2\textwidth}{\centering \footnotesize Exemple de mesures en vol}\\
 	\end{tabular}
 }
 \end{frame}
@@ -422,6 +423,7 @@ $\hookrightarrow$ Méthode : l'échantillonneur de Gibbs}
    	     \item compresse les données
    	     \item  aucun paramètre à régler
    	     \item  modèle flexible
+   	     \item possibilité de prendre en compte plusieurs configurations
 	\end{itemize}
 \end{itemize}
 \vfill
@@ -444,24 +446,24 @@ $\hookrightarrow$ Méthode : l'échantillonneur de Gibbs}
 \section{Débruitage référencé}
 \begin{frame}{\insertsectionhead}
 
+\textit{Hypothèse : le bruit extérieur de couche limite n'est pas présent sur les micros de référence}\\[1ex]
+
+{\small
 $\left.
 \begin{tabular}{l l}
 	$\bm{y}$ &: signaux à débruiter\\
 	$\bm{r}$ &: signaux de référence non-bruités \\ &(ex : intérieur de cabine)
 \end{tabular}
-\right\} \text{acquis simultanément} $
-
-\begin{center}
-\fbox{
-\parbox{3cm}{
-\begin{align*}
-	    \bm{S}_{aa} &= \bm{S}_{pr}\bm{S}_{rr}^{-1}\bm{S}_{rp}\\
-	    &= \bm{\gamma}^2_{pr} \circ \bm{S}_{pp}
-\end{align*}
-}}
-\end{center}
-
-$ \bm{\gamma}^2_{pr}$ : Cohérence multiple\\
+\right\} \text{acquis simultanément} $\\
+\begin{tabular}{l l}
+	 $\bm{a}$ & : signaux débruités
+\end{tabular}
+}
+\vfill
+\parbox{0.45 \textwidth}{
+\hfill $ \boxed{    \bm{S}_{aa} = \bm{S}_{pr}\bm{S}_{rr}^{-1}\bm{S}_{rp}}$
+}
+$\rightarrow$\parbox{0.4\textwidth}{\centering  Généralisation des\\ spectres cohérents}
 \vfill
 \pause
 
@@ -480,6 +482,11 @@ $ \bm{\gamma}^2_{pr}$ : Cohérence multiple\\
 \begin{itemize}
 	\item signaux de référence : non bruités \\ (ou bruit décorrélé)
 	\item nécessite des mesures simultanées supplémentaires
+	\item les seuils de cohérence dépendent
+	\begin{itemize}
+        		\item de la longeur des signaux
+       		 \item du nombre de références
+	\end{itemize}
 \end{itemize}
 \end{minipage}
 \end{frame}
@@ -494,6 +501,7 @@ $ \bm{\gamma}^2_{pr}$ : Cohérence multiple\\
 		\begin{itemize}
 	        		\item  Essais en vol
 	        		\item Conditions réalistes de vol : Mach 0.85
+	        		\item 6 régimes moteur dont 1 bruit de fond
 	        		\item 35 microphones externes, sur le fuselage \tikzmark{ext}
 	        		\item 14 microphones dans la cabine \tikzmark{int}
 	        		\item MI :
@@ -503,28 +511,51 @@ $ \bm{\gamma}^2_{pr}$ : Cohérence multiple\\
 	       		 	\item fenêtre de Hanning
 	       		 	\item overlap : 70\%, éq. à 500 segments
 			\end{itemize}		
+			\item Bruits :
+			\begin{itemize}
+        				\item couche limite à l'extrérieur
+        				\item ventilation à l'intérieur
+			\end{itemize}
 		\end{itemize}
-		\vspace{2.5cm}
+		\vspace{1.5cm}
 		}};
 		\draw[->,>=stealth,rouge,line width=1pt] ($(ext)+(0,1.5ex)$) [out=0,in=110] to ($(a)+(3.2cm,1.5cm)$);
 		\draw[->,>=stealth,source,line width=1pt] ($(int)+(0,1.5ex)$)  to ($(a)+(1.2cm,1.4cm)$);% [out=-45,in=135]
 	\end{tikzpicture}
 \end{frame}
 
+\captionsetup[subfigure]{labelformat=empty}
 \begin{frame}{\insertsectionhead}
 Autospectres zoomés dans la zone BBSAN\\[-2em]
-%\resizebox{\textwidth}{!}{
+
 \parbox{\textwidth}{
 	\begin{figure}
-		\centering
-		\subfloat[\scriptsize  Raw (high engine speed).]{\includegraphics[trim = 2ex 1ex 0 0,clip, width=0.32\textwidth]{./airbus/as_raw.png}}
-		\subfloat[\scriptsize  Background noise (idle engine speed).]{\includegraphics[trim = 2ex 1ex 0 0,clip,width=0.32\textwidth]{./airbus/as_bg.png}} 
-		\subfloat[\scriptsize   Background subtraction.]{\includegraphics[trim = 1.3ex 1ex 0 0,clip,width=0.385\textwidth]{./airbus/as_bgsub.png}}\\
-		\subfloat[\scriptsize   PFA denoising.]{\includegraphics[trim = 2ex 1ex 0 0,clip,width=0.32\textwidth]{./airbus/as_pfa.png}}
-		\subfloat[\scriptsize   Referenced denoising.]{\includegraphics[trim = 2ex 1ex 0 0,clip,width=0.32\textwidth]{./airbus/as_ref.png}}\\
+		{\centering
+		\subfloat[\scriptsize \itshape  Raw (high engine speed)]{\includegraphics[trim = 2ex 1ex 0 0,clip, width=0.32\textwidth]{./airbus/as_raw.png}}
+		\subfloat[\scriptsize \itshape Background noise (idle engine speed)]{\includegraphics[trim = 2ex 1ex 0 0,clip,width=0.32\textwidth]{./airbus/as_bg.png}} 
+		\subfloat[\scriptsize \itshape   Background subtraction]{\includegraphics[trim = 1.3ex 1ex 0 0,clip,width=0.385\textwidth]{./airbus/as_bgsub.png}}}\\
+		\hfill \subfloat[\scriptsize  \itshape PFA denoising]{\includegraphics[trim = 2ex 1ex 0 0,clip,width=0.32\textwidth]{./airbus/as_pfa.png}}
+		\subfloat[\scriptsize \itshape  Referenced denoising]{\includegraphics[trim = 2ex 1ex 0 0,clip,width=0.32\textwidth]{./airbus/as_ref.png}}\\
 	\end{figure}
 	}
-%		}
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west] (text) at ($(current page.south west)+(1cm,1cm)$) {\begin{minipage}[c][0.28\textwidth][c]{0.35\textwidth}
+			\centering \small
+			\includegraphics[height=0.5\textwidth]{airbus/jet.png}\\
+			\vfill
+			\uncover<2->{
+				figures d'interférences :\tikzmark{bbsan} \\
+				bruit de chocs large bande
+			}
+			\end{minipage}
+		};
+		\uncover<2->{
+			\node[draw, ellipse,minimum height=2.3cm, minimum width=1.5cm,anchor=west] (interf) at ($(current page.south west)+(5.7,2.5)$) {};
+			%\draw[anchor=west] (interf) ellipse (2cm and 1cm);
+			\draw[->,>=stealth,line width=1pt] (bbsan) to (interf); 
+		}
+	\end{tikzpicture}
+
 \end{frame}
 
 
@@ -546,11 +577,14 @@ Autospectres zoomés dans la zone BBSAN\\[-2em]
         				%
 
 \begin{frame}[t]{\insertsectionhead~--~Imagerie}
-Méthode d'imagerie : Iterative Reweighted Least Squares, $p=0$
-\vfill
+\centering
+\textbf{ Méthode inverse}\\
+{\small Iterative Reweighted Least Squares, $p=0$ + régularisation baysienne}\\~\\
+
 \begin{minipage}{1.1\textwidth}
 	\hspace{-0.65cm}\includegraphics[width=\textwidth]{airbus/imagerie_final.eps}
-\end{minipage}
+\end{minipage}~\\~\\~\\
+\textbf{Formation de voie}
 \end{frame}
 
 \begin{frame}{\insertsectionhead~--~Imagerie}
@@ -565,7 +599,7 @@ Méthode d'imagerie : Iterative Reweighted Least Squares, $p=0$
 
 \begin{frame}{Conclusions et perspectives}
 \begin{itemize}
-	\item Débruitage avec différentes approches, mais résultats concordants\\~\\
+	\item Débruitage avec différentes hypothèses, mais résultats similaires\\~\\
         \item Amélioration des performances d'imagerie
         \begin{itemize}
        		 \item dynamique
