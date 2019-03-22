@@ -1,0 +1,77 @@
+%thème créé en février 2017 par Alice Dinsenmeyer
+
+\definecolor{colorAlice}{rgb}{0,0.407843137,0.545098039} %Correspond au DeepBlueSky4 ici
+
+% Titre
+\setbeamerfont{title}{shape=\scshape,series=\bfseries}
+\setbeamercolor{frametitle}{fg=DeepSkyBlue4}
+\setbeamercolor{title}{fg=DeepSkyBlue4}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{framesubtitle}{size=\normalsize,series=\bfseries}
+\setbeamertemplate{frametitle}{
+	\vspace{0.3cm}\hspace{-0.6cm} \usebeamerfont*{frametitle}\insertframetitle
+	 %\hspace{-0.6cm}\usebeamerfont*{framesubtitle}\insertframesubtitle
+	}
+
+% Listes
+\setbeamercolor{itemize item}{fg=black}
+\setbeamercolor{itemize subitem}{fg=black}
+\setbeamertemplate{itemize subitem}{-}
+
+
+
+% Blocks
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\setbeamercolor{block title}{fg=DeepSkyBlue4,bg=DeepSkyBlue4!10}
+\setbeamercolor{block title alerted}{bg=DeepSkyBlue4!0} 
+\setbeamercolor{block title example}{bg=DeepSkyBlue4!20}
+\setbeamerfont{block title}{size=\normalsize}
+
+% Table des matières
+\setbeamercolor{toc}{fg=DeepSkyBlue4}
+\setbeamertemplate{section in toc}[square]
+\setbeamercolor{section number projected}{fg=white,bg=DeepSkyBlue4}
+%\setbeamertemplate{subsection in toc}[square]
+%\setbeamercolor{subsection number projected}{fg=white,bg=DeepSkyBlue4}
+
+% En-tête
+\setbeamercolor{myheadline}{fg=DeepSkyBlue4,bg=DeepSkyBlue4!10}
+\setbeamercolor{palette horizontalbar secondary}{fg=yellow,bg=blue}
+\setbeamertemplate{headline}{%
+\leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=\paperwidth,ht=3ex,dp=1.125ex]{myheadline}%
+    \insertsectionnavigationhorizontal{\paperwidth}{}{}%
+    \end{beamercolorbox}%
+  }
+}
+%\setbeamertemplate{headline}{
+%	\usebeamerfont{section in head/foot}%
+%	\vspace{0.1cm}
+%	\begin{beamercolorbox}[wd=\paperwidth]{DeepSkyBlue}
+%	\insertsectionnavigationhorizontal{\paperwidth}{\hskip0pt}{}%
+%	\end{beamercolorbox}%
+%	
+%}
+
+
+% Pied de page
+\setbeamertemplate{footline}{
+	%\linethickness{0.1pt}
+	%\framelatex{
+    	\usebeamerfont{section in head/foot}%
+    	\pied
+    	%~~~\insertauthor~|~\insertshorttitle
+    	
+    	%\insertframenumber/\inserttotalframenumber~~~
+   	 \vspace{0.1cm}
+    %}
+}
+
+% Liens
+\usepackage{hyperref}
+\hypersetup{colorlinks,linkcolor=DeepSkyBlue4}
+
+
+
+
