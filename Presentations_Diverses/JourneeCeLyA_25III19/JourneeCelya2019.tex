@@ -159,7 +159,7 @@
 \onslide<2->{
 {\bfseries Méthodes proposées}
 	\begin{itemize}
-		\item Résolution d'un problème inverse : Décomposition matricielle
+		\item Résolution d'un problème inverse : retrouver la contribution des sources
 		\item Utilisation de signaux de référence non-bruités
 	\end{itemize}
 }
@@ -271,10 +271,10 @@
 
 \section{Analyse Factorielle Probabiliste}
 \subsection*{Modèle statistique}
-\begin{frame}{\insertsectionhead~--~\insertsubsectionhead}
+\begin{frame}{\insertsectionhead}
 	\vfill
 	\begin{itemize}
-        		\item<1-> \textbf{Latent variable model}\\    ~\\    		
+        		\item<1-> \textbf{Modèle statistique}\\    ~\\    		
         		\hspace{-2em}\begin{tikzpicture}[remember picture]
 			\colorbox{gray!20}{$\tikzmark{p}\bm{p}_i = \tikzmark{L}\textcolor{blue}{\bm{L}}
 			\uncover<2->{\tikzmark{alpha}\bm{\alpha}}
@@ -288,43 +288,43 @@
 			
 			% L
 			\node(Ldescr) [below left=0.2cm and 0.8cm of L,align=center,font=\footnotesize] {
-				 matrix of\\ loading factors
+				 matrice de\\ mélange
 			};
 	    		%\draw[] (Ldescr.east) to [in=-90,out=45]  (L.south) ;
 	    		\draw[->,>=stealth] ($(Ldescr.east)+(-5pt,5pt)$) to ($(L)+(-2pt,0)$);
 	    		
 	    		%alpha
 	    		\uncover<2->{
-	    		\node (adescr) [below=of alpha,font=\footnotesize]{ sparsity weigths};
+	    		\node (adescr) [below=of alpha,font=\footnotesize,align=center]{poids};
 	    		\draw[->,>=stealth] (adescr) to ($(alpha.south)$);
 	    		}
 	    		
 	    		% c
 	    		\node(cdescr) [below right  =0.3cm  and 0.8cm of c , align=center,font=\footnotesize]{
-	    			 latent\\ factors
+	    			facteurs\\latents
 	    		};
 	    		\draw[->,>=stealth] (cdescr) to ($(c.south)+(2pt,0)$);
 	    		
 	    		% n
 	    		\node(ndescr) [below right=-0.5cm and 1cm of n,align=left,font=\footnotesize]{
-	    			error term\\ = uncorrelated noise
+	    			bruit (+erreurs)
 	    		};
 	    		\draw[->,>=stealth] (ndescr.west) to ($(n.east)+(11pt,6pt)$);
 		\end{tikzpicture}
 		
 		\begin{itemize}
-		        \item Capture dominant correlation with fewer parameters (close to PCA) \\
+		        \item Représente les principales corrélations avec quelques paramètres (proche de l'ACP) \\
 		        $\hookrightarrow$ MI à rang réduit
-		        \item Extract anisotropic noise\pause
-		        \item Enforced sparsity to reduce the number of significant factors\\
-		        $\hookrightarrow$  Data compression
+		        \item Modèle de bruit anisotrope\pause
+		        \item Renforce la parcimonie pour réduire le nombre de facteurs\\
+		        $\hookrightarrow$  Compression de donnée
 		\end{itemize}
 	\end{itemize}
 	\vfill
         	\begin{overlayarea}{\textwidth}{0.5\textheight}
-        	\only<2-4>{
+        	\onslide<3->{
 	\begin{itemize}        		
-        		\item \textbf{Bayesian framework: }See parameters as random variables\\[1ex]
+        		\item \textbf{Approche bayésienne : } une densité de probabilité par paramètre\\[1ex]
         		\renewcommand{\arraystretch}{1.5}    		
         		\hspace{-1cm}\begin{tabular}{|c|c|c|c|}
         		\hline
@@ -333,7 +333,7 @@
 		$\textcolor{rouge}{\bm{n}}_i\sim\mathcal{N}_{\mathbb{C}}(0,\diag{\bm{\sigma}_n^2})$&
 		$\bm{\alpha}\sim\mathcal{E}(a_\alpha)$\\\hline
 		\end{tabular}       \\[0.5ex]
-		+ hyperparameters : $\bm{\gamma}^2, \bm{\sigma}^2\sim\mathcal{IG}(\bm{a}_{\gamma,\sigma},\bm{b}_{\gamma,\sigma})$\\[1ex]      	
+		+ hyper-paramètres : $\bm{\gamma}^2, \bm{\sigma}^2\sim\mathcal{IG}(\bm{a}_{\gamma,\sigma},\bm{b}_{\gamma,\sigma})$\\[1ex]      	
 %		\pause			 
 %        		   \vfill     		
 %        		\item \textbf{Solved using MCMC algorithm} (Gibbs sampling)\\
@@ -356,19 +356,21 @@
 	\begin{tikzpicture}
 		\node (pic) {\fbox{\includegraphics[width=0.44\textwidth]{modele.png}}};
 		\node (mod) [right=0.7 of pic,align=center] {
-			\textbf{Parametric model}: $\mathcal{M}(\bm{\theta})$\\
-			\small with $\bm{\theta} = \left\{\bm{L},~\bm{\alpha},~\bm{c},~\bm{n},~\bm{a}_{\gamma,\alpha,\sigma},~\bm{b}_{\gamma,\alpha,\sigma}\right\}$
+			\textbf{Modèle paramétrique}: $\mathcal{M}(\bm{\theta})$\\
+			\small avec $\bm{\theta} = \left\{\bm{L},~\bm{\alpha},~\bm{c},~\bm{n},~\bm{a}_{\gamma,\alpha,\sigma},~\bm{b}_{\gamma,\alpha,\sigma}\right\}$
 		};
 		\draw[->,>=stealth,line width=1pt] (pic) to (mod);
 	\end{tikzpicture}
 	\vfill	
 	\begin{tabular}{c c}
-		\textbf{Optimization step }:&
-		$\boxed{ \displaystyle  \bm{\theta} =\underset{\bm{\theta}}{\arg\!\max} \underbrace{p\left( \bm{\theta} \mid \bm{S}_{yy}\right)}_{ \text{\pbox{7cm}{\centering \normalsize fitness function}}}}$ %fr :  fonction obectif	
+		\textbf{Étape d'optimisation }:&
+		$\boxed{ \displaystyle  \bm{\theta} =\underset{\bm{\theta}}{\arg\!\max} \underbrace{p\left( \bm{\theta} \mid \bm{S}_{yy}\right)}_{ \text{\pbox{7cm}{\centering \normalsize fonction objectif}}}}$ %fr :  fonction obectif	
 	\end{tabular}
 	\vfill
-	The fitness function is the posterior probability $\rightarrow$ has no close form\\
-	$\hookrightarrow$ approximation with numerical methods
+	La fonction objectif est la probabilité postérieure $\rightarrow$ pas de forme explicite\\
+	$\hookrightarrow$ approximation avec des méthodes numériques
+	%The fitness function is the posterior probability $\rightarrow$ has no close form\\
+	%$\hookrightarrow$ approximation with numerical methods
 	
 
 
@@ -386,17 +388,17 @@ $\hookrightarrow$ Méthode : l'échantillonneur de Gibbs}
 \vfill
 \begin{overlayarea}{\textwidth}{0.5\textheight}
 \centering
-\includegraphics<4>[trim=-1.66cm 0 0 0, clip,height=\wg,angle=-90]{model2.pdf}
-\includegraphics<5>[trim=-1.66cm 0 0 0, clip,height=\wg,angle=-90]{model0.pdf}
-\includegraphics<6>[trim=-1.66cm 0 0 0, clip,height=\wg,angle=-90]{model3.pdf}
-\includegraphics<7>[trim=-1.66cm 0 0 0, clip,height=\wg,angle=-90]{model4.pdf}
-\includegraphics<8>[trim=-1.66cm 0 0 0, clip,height=\wg,angle=-90]{model5.pdf}
-\includegraphics<9>[trim=-1.66cm 0 0 0, clip,height=\wg,angle=-90]{model6.pdf}
-\includegraphics<10>[trim=-1.66cm 0 0 0, clip,height=\wg,angle=-90]{model7.pdf}
-\includegraphics<11->[height=\wg+0.002\textwidth,angle=-90]{model8.pdf}
+\includegraphics<1>[trim=-1.66cm 0 0 0, clip,height=\wg,angle=-90]{model2.pdf}
+\includegraphics<2>[trim=-1.66cm 0 0 0, clip,height=\wg,angle=-90]{model0.pdf}
+\includegraphics<3>[trim=-1.66cm 0 0 0, clip,height=\wg,angle=-90]{model3.pdf}
+\includegraphics<4>[trim=-1.66cm 0 0 0, clip,height=\wg,angle=-90]{model4.pdf}
+\includegraphics<5>[trim=-1.66cm 0 0 0, clip,height=\wg,angle=-90]{model5.pdf}
+\includegraphics<6>[trim=-1.66cm 0 0 0, clip,height=\wg,angle=-90]{model6.pdf}
+\includegraphics<7>[trim=-1.66cm 0 0 0, clip,height=\wg,angle=-90]{model7.pdf}
+\includegraphics<8->[height=\wg+0.002\textwidth,angle=-90]{model8.pdf}
 \end{overlayarea}
 \vfill
-\onslide<12->{
+\onslide<9->{
 	\centering
 	\begin{tabular}{c c c c c c}
 	MI mesurée && MI signal && MI bruit\\
@@ -405,19 +407,19 @@ $\hookrightarrow$ Méthode : l'échantillonneur de Gibbs}
 }
 \end{frame}
 
-\begin{frame}
+\begin{frame}{\insertsectionhead}
 \vfill
 \onslide<1->{
-\hspace{-0.5cm}\begin{minipage}{0.55\textwidth}
+\hspace{-0.5cm}\begin{minipage}[t]{0.55\textwidth}
 ~\centerline{\resizebox{0.5cm}{!}{\circled{\textbf{+}}}} \\
 \begin{itemize}
-        \item[$\bullet$] Gibbs sampler:
+        \item[$\bullet$] Échantillonneur de Gibbs :
         \begin{itemize}
    	     \item intègre les connaissances a priori
    	     \item fournit un intervalle de crédibilité
    	     \item optimisation globale
 	\end{itemize}
-	\item[$\bullet$] PFA:
+	\item[$\bullet$] AFP :
 	\begin{itemize}
    	     \item la MI conserve un sens physique
    	     \item compresse les données
@@ -431,7 +433,7 @@ $\hookrightarrow$ Méthode : l'échantillonneur de Gibbs}
 }
 \hfill
 \pause
-\begin{minipage}{0.45\textwidth}
+\begin{minipage}[t]{0.45\textwidth}
 ~\centerline{\resizebox{0.5cm}{!}{\circled{\raisebox{-1ex}{\textbf{$\:$-$\:$}}}}}\\[1ex]
 \begin{itemize}
         \item[-] \small Sensibilité au choix des a priori \\ not. quand le problème est mal conditionné
@@ -446,9 +448,9 @@ $\hookrightarrow$ Méthode : l'échantillonneur de Gibbs}
 \section{Débruitage référencé}
 \begin{frame}{\insertsectionhead}
 
-\textit{Hypothèse : le bruit extérieur de couche limite n'est pas présent sur les micros de référence}\\[1ex]
+\textit{\small Hypothèse : pas de bruit extérieur (couche limite) sur les micros de référence}\\[1.5ex]
 
-{\small
+{\footnotesize
 $\left.
 \begin{tabular}{l l}
 	$\bm{y}$ &: signaux à débruiter\\
@@ -461,23 +463,24 @@ $\left.
 }
 \vfill
 \parbox{0.45 \textwidth}{
-\hfill $ \boxed{    \bm{S}_{aa} = \bm{S}_{pr}\bm{S}_{rr}^{-1}\bm{S}_{rp}}$
+\hfill $\displaystyle \boxed{    \bm{S}_{aa} = \bm{S}_{yr}\bm{S}_{rr}^{-1}\bm{S}_{ry}}$
 }
 $\rightarrow$\parbox{0.4\textwidth}{\centering  Généralisation des\\ spectres cohérents}
 \vfill
 \pause
 
-
-\hspace{-0.5cm}\begin{minipage}[t]{0.4\textwidth}
-~\centerline{\resizebox{0.5cm}{!}{\circled{\textbf{+}}}} \\[1ex]
+\rule{\textwidth}{0.4pt}
+\begin{minipage}[t]{0.4\textwidth}
+\small
+~\\~\centerline{\resizebox{0.5cm}{!}{\circled{\textbf{+}}}} \\[-1ex]
 \begin{itemize}
 	\item Simple à implémenter
 	\item Faible coût de calcul
-	\vfill
 \end{itemize}
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.55\textwidth}
+\small
 ~\centerline{\resizebox{0.5cm}{!}{\circled{\raisebox{-1ex}{\textbf{$\:$-$\:$}}}}}\\[-1ex]
 \begin{itemize}
 	\item signaux de référence : non bruités \\ (ou bruit décorrélé)
@@ -489,6 +492,7 @@ $\rightarrow$\parbox{0.4\textwidth}{\centering  Généralisation des\\ spectres 
 	\end{itemize}
 \end{itemize}
 \end{minipage}
+\vfill
 \end{frame}
 
 
@@ -496,8 +500,8 @@ $\rightarrow$\parbox{0.4\textwidth}{\centering  Généralisation des\\ spectres 
 \section{Application en cas réel}
 \begin{frame}{\insertsectionhead}
 	\begin{tikzpicture}[remember picture, overlay]
-		\node[yshift=-1.7cm,xshift=-4.5cm,right] (a) at (current page) {\includegraphics[width=\textwidth]{airbus/setup.png}};
-		\node at ($(current page)-(0.5cm,0)$) {\parbox{10cm}{
+		\node[yshift=-2cm,xshift=-4.5cm,right] (a) at (current page) {\includegraphics[width=\textwidth]{airbus/setup.png}};
+		\node at ($(current page)-(0.5cm,0.2)$) {\parbox{10cm}{
 		\begin{itemize}
 	        		\item  Essais en vol
 	        		\item Conditions réalistes de vol : Mach 0.85
@@ -526,16 +530,16 @@ $\rightarrow$\parbox{0.4\textwidth}{\centering  Généralisation des\\ spectres 
 
 \captionsetup[subfigure]{labelformat=empty}
 \begin{frame}{\insertsectionhead}
-Autospectres zoomés dans la zone BBSAN\\[-2em]
+Autospectres zoomés basses-moyennes fréquences\\[-2em]
 
 \parbox{\textwidth}{
 	\begin{figure}
 		{\centering
-		\subfloat[\scriptsize \itshape  Raw (high engine speed)]{\includegraphics[trim = 2ex 1ex 0 0,clip, width=0.32\textwidth]{./airbus/as_raw.png}}
-		\subfloat[\scriptsize \itshape Background noise (idle engine speed)]{\includegraphics[trim = 2ex 1ex 0 0,clip,width=0.32\textwidth]{./airbus/as_bg.png}} 
-		\subfloat[\scriptsize \itshape   Background subtraction]{\includegraphics[trim = 1.3ex 1ex 0 0,clip,width=0.385\textwidth]{./airbus/as_bgsub.png}}}\\
-		\hfill \subfloat[\scriptsize  \itshape PFA denoising]{\includegraphics[trim = 2ex 1ex 0 0,clip,width=0.32\textwidth]{./airbus/as_pfa.png}}
-		\subfloat[\scriptsize \itshape  Referenced denoising]{\includegraphics[trim = 2ex 1ex 0 0,clip,width=0.32\textwidth]{./airbus/as_ref.png}}\\
+		\subfloat[\scriptsize \itshape Mesure brute]{\includegraphics[trim = 2ex 1ex 0 0,clip, width=0.32\textwidth]{./airbus/as_raw.png}}%Raw (high engine speed)
+		\subfloat[\scriptsize \itshape Bruit de fond ]{\includegraphics[trim = 2ex 1ex 0 0,clip,width=0.32\textwidth]{./airbus/as_bg.png}} %Background noise (idle engine speed)
+		\subfloat[\scriptsize \itshape Débruitage : soustraction du bruit de fond   ]{\includegraphics[trim = 1.3ex 1ex 0 0,clip,width=0.385\textwidth]{./airbus/as_bgsub.png}}}\\%Background subtraction
+		\hfill \subfloat[\scriptsize  \itshape Débruitage : AFP ]{\includegraphics[trim = 2ex 1ex 0 0,clip,width=0.32\textwidth]{./airbus/as_pfa.png}}%PFA denoising
+		\subfloat[\scriptsize \itshape Débruitage référencé]{\includegraphics[trim = 2ex 1ex 0 0,clip,width=0.32\textwidth]{./airbus/as_ref.png}}\\% Referenced denoising
 	\end{figure}
 	}
 	\begin{tikzpicture}[remember picture, overlay]
@@ -587,15 +591,7 @@ Autospectres zoomés dans la zone BBSAN\\[-2em]
 \textbf{Formation de voie}
 \end{frame}
 
-\begin{frame}{\insertsectionhead~--~Imagerie}
-	\centering
-	\small
-	\begin{equation*}
-        		\text{Erreur} = \frac{\|\bm{S}_{aa}^{\text{débruitage}}-\bm{S}_{aa}^{\text{repropagé}}\|_1}{\|\bm{S}_{aa}^{\text{débruitage}}\|_1+\|\bm{S}_{aa}^{\text{repropagé}}\|_1}
-	\end{equation*}
-	\vfill
-	\includegraphics[width=0.8\textwidth]{airbus/erreur.eps}
-\end{frame}
+
 
 \begin{frame}{Conclusions et perspectives}
 \begin{itemize}
@@ -606,7 +602,7 @@ Autospectres zoomés dans la zone BBSAN\\[-2em]
         		\item localisation de sources corrélées
 	\end{itemize}~\\
 	
-	\item Corrections pour PFA :
+	\item Corrections pour l'AFP :
 	\begin{itemize}
         		\item augmenter la robustesse de l'échantillonneur
         		\item adapter le modèle statistique (meilleur contrôle de la parcimonie)
@@ -616,11 +612,23 @@ Autospectres zoomés dans la zone BBSAN\\[-2em]
 
 ~\\~\\~\\
 \vfill
+
 \begin{center}
 	\noindent\rule{\textwidth}{0.4pt}
 	\scriptsize \itshape{
 	This work was performed in the framework of Clean Sky 2 Joint Undertaking, European Union (EU), Horizon 2020, CS2-RIA, ADAPT project, Grant agreement no 754881.}\\
 \end{center}
+
+\end{frame}
+
+\begin{frame}{\insertsectionhead~--~Imagerie}
+	\centering
+	\small
+	\begin{equation*}
+        		\text{Erreur} = \frac{\|\bm{S}_{aa}^{\text{débruitage}}-\bm{S}_{aa}^{\text{repropagé}}\|_1}{\|\bm{S}_{aa}^{\text{débruitage}}\|_1+\|\bm{S}_{aa}^{\text{repropagé}}\|_1}
+	\end{equation*}
+	\vfill
+	\includegraphics[width=0.9\textwidth]{airbus/erreur.eps}
 \end{frame}
 
 \end{document}
