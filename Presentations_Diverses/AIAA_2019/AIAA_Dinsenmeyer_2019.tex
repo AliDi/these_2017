@@ -47,7 +47,7 @@
 \usepackage[framemethod=TikZ]{mdframed}
 
 %%% Theme
-\def \pied {~~~A. Dinsenmeyer~|~\insertshorttitle \hfill \insertframenumber/\inserttotalframenumber~~~} %content if footline
+\def \pied {~~~A.Dinsenmeyer, Q.{Leclère}, J.{Antoni} et E.Julliard~|~\insertshorttitle \hfill \insertframenumber/\inserttotalframenumber~~~} %content if footline
 \usetheme{Alice}
 
 %personnalisation
@@ -143,7 +143,7 @@
 
 \begin{frame}[t]{\insertsectionhead}
 	\begin{center}
-		\textcolor{black}{\bfseries \centering  How to separate signal from noise ?}
+		\textcolor{black}{\bfseries \centering  How to separate acoustic sources from noise ?}
 	\end{center}
 	\vfill
 
@@ -292,11 +292,11 @@
 				 mixing \\matrix
 			};
 	    		%\draw[] (Ldescr.east) to [in=-90,out=45]  (L.south) ;
-	    		\draw[->,>=stealth] ($(Ldescr.east)+(-5pt,5pt)$) to ($(L)+(-2pt,0)$);
+	    		\draw[->,>=stealth] ($(Ldescr.east)+(-2pt,6pt)$) to ($(L)+(-4pt,2pt)$);
 	    		
 	    		%alpha
 	    		\uncover<2->{
-	    		\node (adescr) [below=of alpha,font=\footnotesize,align=center]{
+	    		\node (adescr) [below=0.6cm of alpha,font=\footnotesize,align=center]{
 	    		weights
 	    		};
 	    		\draw[->,>=stealth] (adescr) to ($(alpha.south)$);
@@ -306,20 +306,20 @@
 	    		\node(cdescr) [below right  =0.3cm  and 0.8cm of c , align=center,font=\footnotesize]{
 	    			latents factors
 	    		};
-	    		\draw[->,>=stealth] (cdescr) to ($(c.south)+(2pt,0)$);
+	    		\draw[->,>=stealth] (cdescr) to ($(c.south)+(4pt,2pt)$);
 	    		
 	    		% n
 	    		\node(ndescr) [below right=-0.5cm and 1cm of n,align=left,font=\footnotesize]{
 	    			noise (+model errors)
 	    		};
-	    		\draw[->,>=stealth] (ndescr.west) to ($(n.east)+(11pt,6pt)$);
+	    		\draw[->,>=stealth] (ndescr.west) to ($(n.east)+(11pt,8pt)$);
 		\end{tikzpicture}
 		
 		\begin{itemize}
 		        \item Capture dominant correlation with few factors (close to PCA) \\
-		        $\hookrightarrow$ low-rank CSM
+		        $\hookrightarrow$ low-rank acoustic CSM
 		        \item Extract anisotropic noise\pause
-		        \item Weights enforce sparsity $\rightarrow$ lowers the number of factors\\
+		        \item Weights enforce sparsity $\rightarrow$ lower the number of factors\\
 		        $\hookrightarrow$ Data compression
 		\end{itemize}
 	\end{itemize}
@@ -331,7 +331,7 @@
         		\renewcommand{\arraystretch}{1.5}    		
         		\hspace{-1cm}\begin{tabular}{|c|c|c|c|}
         		\hline
-        		$\textcolor{blue}{\bm{L}}\sim\mathcal{N}_{\mathbb{C}}(0,\diag{\frac{1}{K}})$& 
+        		$\textcolor{blue}{\bm{L}}\sim\mathcal{N}_{\mathbb{C}}(0,\diag{\frac{\bm{1}}{K}})$& 
 		$\textcolor{green}{\bm{c}}_i\sim\mathcal{N}_{\mathbb{C}}(0,\diag{\bm{\gamma}^2})$&
 		$\textcolor{rouge}{\bm{n}}_i\sim\mathcal{N}_{\mathbb{C}}(0,\diag{\bm{\sigma}_n^2})$&
 		$\bm{\alpha}\sim\mathcal{E}(a_\alpha)$\\\hline
@@ -348,13 +348,12 @@
 %        		 \hspace{4ex}\parbox{0.3\textwidth}{
 %        		 $$\bm{\hat{S}}_{aa}=\frac{1}{N_s}\sum_{i=1}^{N_s}\textcolor{blue}{\bm{L}}\textcolor{green}{\bm{c}}_i\textcolor{green}{\bm{c}}^H_i\textcolor{blue}{\bm{L}}^H$$        
  %       		}
-		 
 	\end{itemize}
 	}		
 	\end{overlayarea}	
 \end{frame}
 
-\begin{frame}{\insertsectionhead ~--~ Optimization}
+\begin{frame}{\insertsectionhead ~-- Optimization}
 	\centering
 	\begin{tikzpicture}
 		\node (pic) {\fbox{\includegraphics[width=0.44\textwidth]{modele.png}}};
@@ -367,11 +366,15 @@
 	\vfill	
 	\begin{tabular}{c c}
 		\textbf{Optimization step}:&
-		$\boxed{ \displaystyle  \bm{\theta} =\underset{\bm{\theta}}{\arg\!\max} \underbrace{p\left( \bm{\theta} \mid \bm{S}_{yy}\right)}_{ \text{\pbox{7cm}{\centering \normalsize objective function}}}}$ %fr :  fonction obectif	
+		$\boxed{ \displaystyle  \bm{\theta} =\underset{\bm{\theta}}{\arg\!\max} \underbrace{\text{P} \left( \bm{\theta} \mid \bm{S}_{yy}\right)}_{ \text{\pbox{7cm}{\centering \normalsize objective function}}}}$ %fr :  fonction obectif	
 	\end{tabular}
 	\vfill
-	The objective function is the joint posterior probability  $\rightarrow$no closed-form\\
-	$\hookrightarrow$ approximated with numerical methods
+	\flushleft
+	\begin{itemize}
+        		\item The input data is the averaged CSM
+        		\item The objective function is the joint posterior probability\\  $\hookrightarrow$no closed-form	$\rightarrow$ approximated with numerical methods
+\end{itemize}
+	
 	%The fitness function is the posterior probability $\rightarrow$ has no close form\\
 	%$\hookrightarrow$ approximation with numerical methods
 	
@@ -384,22 +387,23 @@
 
 
 \newlength{\wg} \setlength{\wg}{0.4\textwidth}
-\begin{frame}{\insertsectionhead~-- Optimisation}
+\begin{frame}{\insertsectionhead~-- Optimization}
 \textbf{Maximizing the posterior probability distribution}\\% iterative ; biaised random walk
-{\itshape $\hookrightarrow$Find the optimal parameter set that best fit the data\\
-$\hookrightarrow$ Numerical method: the Gibbs sampler}%performs an iterative biased random walk
+{\itshape ~~~~$\hookrightarrow$ Find the optimal parameter set that best fits the data}\\
+%~~~~$\hookrightarrow$ Numerical method: the Gibbs sampler}%performs an iterative biased random walk
 \vfill
 \begin{overlayarea}{\textwidth}{0.5\textheight}
-	\begin{minipage}{0.49\textwidth}
+	\begin{minipage}{0.59\textwidth}
 	\vfill
 	\begin{itemize}
+		\item Numerical method: the Gibbs sampler
 		\item MCMC algorithm
 		\item global optimization process
 	        \item perform a biased random walk through the target distribution
 	\end{itemize}
 	\end{minipage}
 	\hfill
-	\begin{minipage}{0.5\textwidth}
+	\begin{minipage}{0.4\textwidth}
 	\centering
 		\only<1>{\vspace{0.97\wg}}
 		\includegraphics<2>[trim=-1.66cm 0 0 0, clip,height=\wg,angle=-90]{model2.pdf}
@@ -438,7 +442,7 @@ $\hookrightarrow$ Numerical method: the Gibbs sampler}%performs an iterative bia
 	~\\
 	\item[$\bullet$] Probabilistic Factor Analysis :
 	\begin{itemize}
-   	     \item preserves CSM positivity
+   	     \item preserves the CSM properties
    	     \item reduces data dimension
    	     \item  no input parameter to set
    	     \item  adaptable model
@@ -471,9 +475,9 @@ $\hookrightarrow$ Numerical method: the Gibbs sampler}%performs an iterative bia
 $\left.
 \begin{tabular}{l l}
 	$\bm{y}$ &: noisy measurements\\
-	$\bm{r}$ &: noise-free reference signals\\ &(ex : intérieur de cabine)
+	$\bm{r}$ &: noise-free reference signals\\ &(e.g. inside the aircraft cabine)
 \end{tabular}
-\right\} \text{synchronous acquisition} $\\
+\right\}~~ \text{synchronous acquisitions} $\\
 \begin{tabular}{l l}
 	 $\bm{a}$ & : denoised signals
 \end{tabular}
@@ -481,8 +485,8 @@ $\left.
 \vfill
 \parbox{0.45 \textwidth}{
 \hfill $\displaystyle \boxed{    \bm{S}_{aa} = \bm{S}_{yr}\bm{S}_{rr}^{-1}\bm{S}_{ry}}$
-}
-$\rightarrow$\parbox{0.4\textwidth}{\centering  Generalization of the\\ coherent spectra}
+}\hfill
+$\rightarrow$~~~\parbox{0.3\textwidth}{\centering  Generalization of the\\ coherent spectra}\hfill
 \vfill
 \pause
 
@@ -501,10 +505,10 @@ $\rightarrow$\parbox{0.4\textwidth}{\centering  Generalization of the\\ coherent
 ~\centerline{\resizebox{0.5cm}{!}{\circled{\raisebox{-1ex}{\textbf{$\:$-$\:$}}}}}\\[-1ex]
 \begin{itemize}
 	\item Reference channels have to be noise-free \\ (or independant from TBL)
-	\item Involve extra measurements 
+	\item Require extra measurements 
 	\item The coherence threshold depends on:
 	\begin{itemize}
-        		\item record length
+        		\item the record length
        		 \item the number of reference channels
 	\end{itemize}
 \end{itemize}
@@ -512,19 +516,17 @@ $\rightarrow$\parbox{0.4\textwidth}{\centering  Generalization of the\\ coherent
 \vfill
 \end{frame}
 
-
-
 \section{Application to flight test measurements}
 \begin{frame}{\insertsectionhead}
 	\begin{tikzpicture}[remember picture, overlay]
 		\node[yshift=-2cm,xshift=-4.5cm,right] (a) at (current page) {\includegraphics[width=\textwidth]{airbus/setup.png}};
-		\node[yshift=2cm,xshift=1.5cm,right] (b) at (current page) {\includegraphics[width=0.4\textwidth]{airbus/setup2.png}};
-		\node at ($(current page)-(2.5cm,0.5)$) {\parbox{7cm}{
+		\node[yshift=2.1cm,xshift=1.5cm,right,align=right] (b) at (current page) {{\scriptsize \textcolor{gray}{from Helffer, ICSV 2018}}\\ \includegraphics[width=0.4\textwidth]{airbus/setup2.png}};
+		\node at ($(current page)-(2cm,1cm)$) {\parbox{8cm}{
 		\begin{itemize}
 	        		\item Cruise flight condition: Mach 0.85
-	        		\item 5 different engine speed + 1 background meas. (idle speed)
-	        		\item 35 microphones, flushmounted on the aft fuselage \hfill \tikzmark{ext}~~~~~
-	        		\item 14 microphones in the cabin \tikzmark{int}\todo[inline]{a corriger : 9 mic + 6 accel (internal side of the fuselage)}•
+	        		\item 5 different engine speed \\+ 1 background meas. (idle speed)
+	        		\item 35 microphones flushmounted on the aft  \tikzmark{ext}\\ fuselage
+	        		\item 9 microphones + 6 accelerometers in the cabin\tikzmark{int}
 	        		\item CSM:
 	        		\begin{itemize}
 	       		 	\item 4 Hz resolution
@@ -540,40 +542,46 @@ $\rightarrow$\parbox{0.4\textwidth}{\centering  Generalization of the\\ coherent
 		\end{itemize}
 		\vspace{1.5cm}
 		}};
-		\draw[->,>=stealth,rouge,line width=1pt] ($(ext)+(0,1.5ex)$) to ($(a)+(3.2cm,1.5cm)$);%[out=0,in=110] 
-		\draw[->,>=stealth,source,line width=1pt] ($(int)+(0,1.5ex)$)  to ($(a)+(1.2cm,1.4cm)$);% [out=-45,in=135]
+		\draw[->,>=stealth,rouge,line width=1pt] ($(ext)+(0,1.7ex)$) [out=0,in=110]  to ($(a)+(3.2cm,1.5cm)$);%[out=0,in=110] 
+		\draw[->,>=stealth,source,line width=1pt] ($(int)+(0,1.5ex)$)  to ($(a)+(1.7cm,1.5cm)$);% [out=-45,in=135]
 	\end{tikzpicture}
 \end{frame}
 
 \captionsetup[subfigure]{labelformat=empty}
 \begin{frame}{\insertsectionhead}
-Autospectres zoomés basses-moyennes fréquences\\[-2em]
+Autospectra of the outer mic. in the MF frequency range\\[-2em]
 
 \parbox{\textwidth}{
 	\begin{figure}
 		{\centering
-		\subfloat[\scriptsize \itshape Mesure brute]{\includegraphics[trim = 2ex 1ex 0 0,clip, width=0.32\textwidth]{./airbus/as_raw.png}}%Raw (high engine speed)
-		\subfloat[\scriptsize \itshape Bruit de fond ]{\includegraphics[trim = 2ex 1ex 0 0,clip,width=0.32\textwidth]{./airbus/as_bg.png}} %Background noise (idle engine speed)
-		\subfloat[\scriptsize \itshape Débruitage : soustraction du bruit de fond   ]{\includegraphics[trim = 1.3ex 1ex 0 0,clip,width=0.385\textwidth]{./airbus/as_bgsub.png}}}\\%Background subtraction
-		\hfill \subfloat[\scriptsize  \itshape Débruitage : AFP ]{\includegraphics[trim = 2ex 1ex 0 0,clip,width=0.32\textwidth]{./airbus/as_pfa.png}}%PFA denoising
-		\subfloat[\scriptsize \itshape Débruitage référencé]{\includegraphics[trim = 2ex 1ex 0 0,clip,width=0.32\textwidth]{./airbus/as_ref.png}}\\% Referenced denoising
+		\subfloat[\scriptsize \itshape Raw (high engine speed)]{\includegraphics[trim = 2ex 1ex 0 0,clip, width=0.32\textwidth]{./airbus/as_raw.png}}%Raw (high engine speed)
+		\subfloat[\scriptsize \itshape Background noise (idle)]{\includegraphics[trim = 2ex 1ex 0 0,clip,width=0.32\textwidth]{./airbus/as_bg.png}} %Background noise (idle engine speed)
+		\subfloat[\scriptsize \itshape After background subtraction ]{\includegraphics[trim = 1.3ex 1ex 0 0,clip,width=0.385\textwidth]{./airbus/as_bgsub.png}}}\\%Background subtraction
+		\hfill \subfloat[\scriptsize  \itshape PFA denoising ]{\includegraphics[trim = 2ex 1ex 0 0,clip,width=0.32\textwidth]{./airbus/as_pfa.png}}%PFA denoising
+		\subfloat[\scriptsize \itshape Reference-based denoising]{\includegraphics[trim = 2ex 1ex 0 0,clip,width=0.32\textwidth]{./airbus/as_ref.png}}\\% Referenced denoising
 	\end{figure}
 	}
 	\begin{tikzpicture}[remember picture, overlay]
-		\node[anchor=south west] (text) at ($(current page.south west)+(1cm,1cm)$) {\begin{minipage}[c][0.28\textwidth][c]{0.35\textwidth}
-			\centering \small
-			\includegraphics[height=0.5\textwidth]{airbus/jet.png}\\
+		\node[anchor=south west] (text) at ($(current page.south west)+(0.8cm,1cm)$) {
+		\begin{minipage}[c][0.25\textwidth][l]{0.36\textwidth}
+			\small
 			\vfill
-			\uncover<2->{
-				figures d'interférences :\tikzmark{bbsan} \\
-				bruit de chocs large bande
+			%\includegraphics[height=0.5\textwidth]{airbus/jet.png}\\
+			\uncover<2->{				
+					$\blacktriangleright$ BG subtraction gives\\ negative autospectra\\[0.8ex]
+					 $\blacktriangleright$ Interference patterns:\tikzmark{bbsan} \\
+					shock-cell structure in the jet
+					\begin{center} 
+					\includegraphics[width=0.7\linewidth]{bbsan.png}\\
+					{\scriptsize \textcolor{gray}{From B. André, Ph.D. thesis, 2013}}
+					\end{center}
 			}
-			\end{minipage}
+		\end{minipage}
 		};
 		\uncover<2->{
-			\node[draw, ellipse,minimum height=2.3cm, minimum width=1.5cm,anchor=west] (interf) at ($(current page.south west)+(5.7,2.5)$) {};
+			\node[draw, ellipse,minimum height=2.3cm, minimum width=1.5cm,anchor=west] (interf) at ($(current page.south west)+(5.7,2.8)$) {};
 			%\draw[anchor=west] (interf) ellipse (2cm and 1cm);
-			\draw[->,>=stealth,line width=1pt] (bbsan) to (interf); 
+			\draw[->,>=stealth,line width=1pt] ($(bbsan)+(0,2ex)$) to (interf); 
 		}
 	\end{tikzpicture}
 
@@ -584,60 +592,96 @@ Autospectres zoomés basses-moyennes fréquences\\[-2em]
 	\centering
 	\includegraphics[width=0.7\textwidth]{airbus/mean_as.png}\\
 	\vfill
+	\small
 		\begin{itemize}
-        		\item Dynamique améliorée de 10-15 dB
-        		\item PFA :        \begin{itemize}
-       		 	\item Peu de bruit extrait à très basses fréquences $\rightarrow$ bruit corrélé
-       		 	\item Pas de signal à moyennes fréquences $\rightarrow$ modèle/priors à adapter
+        		\item Reduces the noise of 10-15 dB
+        		\item PFA :        
+        		\begin{itemize}
+       		 	\item Few denoising at very low frequency $\rightarrow$ TBL noise is correlated
+       		 	\item No extracted signal at high frequency $\rightarrow$ change the statistical model
 		\end{itemize}
-		\item PFA et méthode référencée concordantes en BF
+		\item PFA and reference-based denoising are in good agreement in the MF range
 		
 	\end{itemize}
 \end{frame}
 
-        				%
-
-\begin{frame}[t]{\insertsectionhead~--~Imagerie}
+        
+\begin{frame}[t]{\insertsectionhead~--~Imaging}
 \centering
-\textbf{ Méthode inverse}\\
-{\small Iterative Reweighted Least Squares, $p=0$ + régularisation baysienne}\\~\\
+\vspace{-0.2cm}
+\textbf{\footnotesize Inverse method}\\
+{\footnotesize Iterative Reweighted Least Squares, $p=0$ + bayesian regularization}\\[0.5ex]
 
-\begin{minipage}{1.1\textwidth}
-	\hspace{-0.65cm}\includegraphics[width=\textwidth]{airbus/imagerie_final.eps}
-\end{minipage}~\\~\\~\\
-\textbf{Formation de voie}
+\begin{minipage}{1.1\textwidth} 	
+ 		\hspace{-0.65cm}\includegraphics[width=\textwidth]{airbus/imagerie_final.eps};
+ 		\begin{tikzpicture}[remember picture,overlay]
+     			\uncover<3->{\node[draw, ellipse,minimum height=1.8cm, minimum width=0.6cm,anchor=west]  at ($(current page.east)+(-3.2cm,1.55cm)$) {};}
+        	\end{tikzpicture}
+ \end{minipage}~\\[0.5ex]
+\textbf{\footnotesize Conventional Beamforming}
+
+\vfill
+\onslide<2->{\small
+\flushleft
+	$\blacktriangleright$ Advanced denoising increase the dynamic of the beamforming map\\[0.5ex]
+        $\blacktriangleright$ 2 dominant wide-band sources $\rightarrow$ visible with advanced denoising\\[0.5ex]
+        \onslide<3->{$\blacktriangleright$ 4 correlated sources in the 1-2 frequency band (caused interference patterns)}
+        
+       
+}
 \end{frame}
 
-\begin{frame}{\insertsectionhead~--~Imagerie}
+\begin{frame}{\insertsectionhead~--~Imaging}
 	\centering
 	\small
 	\begin{equation*}
-        		\text{Erreur} = \frac{\|\bm{S}_{aa}^{\text{débruitage}}-\bm{S}_{aa}^{\text{repropagé}}\|_1}{\|\bm{S}_{aa}^{\text{débruitage}}\|_1+\|\bm{S}_{aa}^{\text{repropagé}}\|_1}
+        		\text{Error} = \frac{\|\bm{S}_{yy}^{\text{denoised}}-\bm{G}\bm{S}_{qq}\bm{G}'\|_1}{\|\bm{S}_{yy}^{\text{denoised}}\|_1+\|\bm{GS}_{qq}\bm{G}'\|_1}
 	\end{equation*}
+	\begin{itemize}
+        		\item $\bm{G}$ Convected Green’s functions between sources and microphones
+        		\item From the beamforming map (left): based only on the maximum location
+\end{itemize}
 	\vfill
 	\includegraphics[width=0.9\textwidth]{airbus/erreur.eps}
 \end{frame}
 
-\begin{frame}{Conclusions et perspectives}
+\begin{frame}{Conclusions}
 \begin{itemize}
-	\item Débruitage avec différentes hypothèses, mais résultats similaires\\~\\
-        \item Amélioration des performances d'imagerie
+	\item Different requirements/hypothesis:\\[-3ex]
+	\hspace{-0.8cm}\begin{minipage}[t]{0.43\textwidth}
+		\begin{block}{Reference denoising: }
+			\begin{itemize}
+       				 \item Noise-free reference channels
+       			 	 \item Rely on one measurement\\~
+			\end{itemize}
+		\end{block}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[t]{0.55\textwidth}
+		\begin{block}{PFA denoising:}
+			\begin{itemize}
+				\item Uncorrelated noise on the microphones
+	       			 \item Extract a common noise from several measurements including background 
+			\end{itemize}
+		\end{block}
+	\end{minipage}\\
+	~\\[1ex]	
+	$\hookrightarrow$ but they give similar results\\~\\
+        \item Increase of the imaging performance
         \begin{itemize}
-       		 \item dynamique
-        		\item localisation de sources corrélées
+       		 \item improvement of the dynamic
+        		\item localization of correlated sources
 	\end{itemize}~\\
 	
-	\item Corrections pour l'AFP :
+	\item Possible improvements for PFA:
 	\begin{itemize}
-        		\item augmenter la robustesse de l'échantillonneur
-        		\item adapter le modèle statistique (meilleur contrôle de la parcimonie)
-        		\item prendre en compte la corrélation du bruit en BF
+        		\item use a more efficient/robust solver
+        		\item change the model to have better control on sparsity level% adapter le modèle statistique (meilleur contrôle de la parcimonie)
+        		\item account for a correlated noise model for the low-frequency range% prendre en compte la corrélation du bruit en BF
 	\end{itemize}
 \end{itemize}
 
-~\\~\\~\\
 \vfill
-
 \begin{center}
 	\noindent\rule{\textwidth}{0.4pt}
 	\scriptsize \itshape{
@@ -648,10 +692,16 @@ Autospectres zoomés basses-moyennes fréquences\\[-2em]
 
 
 
+\appendix
+%%% APPENDIX
+\newcounter{finalframe}
+\setcounter{finalframe}{\value{framenumber}}
+
 \begin{frame}{Appendix}
 \centering
 \includegraphics[width=0.8\textwidth]{ic_95pc.png}\\
 In gray : 95\% credible interval for PFA denoising
 \end{frame}
+\setcounter{framenumber}{\value{finalframe}}
 
 \end{document}
