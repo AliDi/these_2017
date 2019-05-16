@@ -115,12 +115,12 @@
 \begin{frame}[t]{\insertsectionhead}
 \vspace{0.2cm}
 \begin{overlayarea}{\textwidth}{0.3\textheight}
-\only<1-3>{
+\only<1-2>{
 	\noindent\begin{minipage}{1.1\textwidth}
 		\begin{itemize}
 		        \item<1-> \textbf{Unwanted noise} : electronic, ambient, flow-induced, \dots
-		        	\item<2-> \textbf{Multi-channel acquisition} : inflight/wind tunnel tests for aircraft design\\			
-		        \item<3-> 2 kind of pressure fluctuations: \\
+		        	\item<1-> \textbf{Multi-channel acquisition} : inflight/wind tunnel tests for aircraft design\\			
+		        \item<2-> 2 kinds of pressure excitation: \\
 			$ \left. \begin{array}{l} 
 			\mbox{- from the acoustic sources (\textcolor{source}{signal})} \\                   
 			\mbox{- from the turbulent boundary layer (\textcolor{rouge}{noise})}                      
@@ -132,18 +132,18 @@
 \vfill
 \begin{minipage}{\textwidth}
 		\centering
-		\includegraphics<2>[width=\avion]{avion2.eps}
+		\includegraphics<1>[width=\avion]{avion2.eps}
 		%\includegraphics<2>[width=\avion]{avion2.eps}
 		%\includegraphics<+>[width=\avion]{avion3.eps}
 		%\includegraphics<3>[width=\avion]{avion4.eps}
-		\includegraphics<3->[width=\avion]{avion5.eps}
+		\includegraphics<2->[width=\avion]{avion5.eps}
 	\end{minipage}
 	
 \end{frame}
 
 \begin{frame}[t]{\insertsectionhead}
 	\begin{center}
-		\textcolor{black}{\bfseries \centering  How to separate acoustic sources from noise ?}
+		\textcolor{black}{\bfseries \centering  How to separate the acoustic sources from the noise ?}
 	\end{center}
 	\vfill
 
@@ -226,16 +226,16 @@
 \begin{frame}[t]{\insertsectionhead}
 \centering
 	
-	 \hfill \includegraphics[width=3cm,valign=m]{idee.png}  \hfill \onslide<2->{\small $\bm{S}_{xy} =\sum_{i=1}^{I}\bm{x}_i\bm{y}_i^H$} 
+	 \hfill \includegraphics[width=3cm,valign=m]{idee.png}  \hfill \onslide<2->{\small $\bm{S}_{xy} =\frac{1}{I}\sum_{i=1}^{I}\bm{x}_i\bm{y}_i^H$} 
 
 	\vfill
 
 \begin{overlayarea}{\textwidth}{0.4\textheight}
-	\alt<1-1>{\small For $i=1,\dots,I$ snapshots}{\small Averaged Cross-Spectral Matrix:}
+	\alt<1-1>{\small For $i=1,\dots,I$ snapshots}{\small Averaged Cross-Spectral Matrix:} \onslide<3->{$I\rightarrow \infty$}
 	\only<1>{
 	$$\underbracket[0.5pt]{~\bm{p}_i~}_{\text{measured spectra}} =\underbracket[0.5pt]{~\textcolor{source}{\bm{a}}_i~}_{\text{acoustical part}} + \underbracket[0.5pt]{~\textcolor{rouge}{\bm{n}}_i~}_{\text{unwanted noise}} $$
 	}
-	\only<3->{$$\underbracket[0.5pt]{~\bm{S}_{pp}~}_{\text{measured CSM}} =\underbracket[0.5pt]{ ~\textcolor{source}{\bm{S}_{aa}}~}_{\text{acoustical CSM}} +\underbracket[0.5pt]{\bcancel{~\textcolor{rouge}{\bm{S}_{nn}}~}}_{\parbox[t]{2cm}{\centering \text{\scriptsize unwanted noise} \\ $\approx$ \scriptsize diagonal matrix }} + \underbracket[0.5pt]{\bcancel{~\bm{S}_{an}+\bm{S}_{na}}}_{\parbox[t]{2cm}{\centering  \text{\scriptsize cross-terms}\\ $\rightarrow 0$ }}$$
+	\only<3->{$$\underbracket[0.5pt]{~\bm{S}_{pp}~}_{\text{measured CSM}} =\underbracket[0.5pt]{ ~\textcolor{source}{\bm{S}_{aa}}~}_{\text{acoustical CSM}} +\underbracket[0.5pt]{\bcancel{~\textcolor{rouge}{\bm{S}_{nn}}~}}_{\parbox[t]{2.2cm}{\centering \text{\scriptsize unwanted noise} \\ $\approx$ \scriptsize diagonal matrix }} + \underbracket[0.5pt]{\bcancel{~\bm{S}_{an}+\bm{S}_{na}}}_{\parbox[t]{2cm}{\centering  \text{\scriptsize cross-terms}\\ $\rightarrow 0$ }}$$
 	}	
 	\only<2>{$$\underbracket[0.5pt]{~\bm{S}_{pp}~}_{\text{measured CSM}} =\underbracket[0.5pt]{ ~\textcolor{source}{\bm{S}_{aa}}~}_{\text{acoustical CSM}} +\underbracket[0.5pt]{~\textcolor{rouge}{\bm{S}_{nn}}~}_{\parbox[t]{2cm}{\centering \text{\scriptsize unwanted noise} \\ ~}}  + \underbracket[0.5pt]{~\bm{S}_{an}+\bm{S}_{na}}_{\parbox[t]{2cm}{\centering  \text{\scriptsize cross-terms}\\ ~ }}$$
 	}
@@ -264,26 +264,30 @@
 
 	\begin{itemize}
 		\setlength{\itemindent}{1cm}
-		\item<3-> \textcolor{source}{Acoustic signal} with \textbf{high} spatial correlation: {\bfseries low-rank CSM}\\ %\centering few uncorrelated monopoles
-		\item<3-> \textcolor{rouge}{TBL Noise} with \textbf{low} spatial correlation: {\bfseries diagonal CSM}\\		
+		\item<3-> \textcolor{rouge}{TBL noise} with \textbf{short} spatial correlation: {\bfseries diagonal CSM}\\		
+		\item<3-> \textcolor{source}{Acoustic signal} - with \textbf{high} spatial correlation \\
+		\hspace{3cm} - few equivalent monopoles: {\bfseries low-rank CSM}\\ %\centering few uncorrelated monopoles
 	\end{itemize}
 \end{frame}
 
 
 \section{Probabilistic Factor Analysis (PFA)}
+\begin{frame}
+\tableofcontents[currentsection,hideothersubsections]
+\end{frame}
 \subsection*{Statistical model}
 \begin{frame}{\insertsectionhead}
 	\vfill
 	\begin{itemize}
         		\item<1-> \textbf{Statistical model}\\    ~\\    		
-        		\hspace{-2em}\begin{tikzpicture}[remember picture]
+        		\hspace{-6em}\begin{tikzpicture}[remember picture]
 			\colorbox{gray!20}{$\tikzmark{p}\bm{p}_i = \tikzmark{L}\textcolor{blue}{\bm{L}}
 			\uncover<2->{\tikzmark{alpha}\bm{\alpha}}
 			 \tikzmark{c}\textcolor{green}{\bm{c}}_i + \tikzmark{n}\textcolor{red}{\bm{n}}_i$}
 			
 			%p
 			\node (pdescr) [below left=-0.5cm and 1cm of p, align=center,font=\footnotesize]{
-				measured\\spectra
+				vector of\\measured spectra
 			};
 			\draw[->,>=stealth] (pdescr) -- ($(p.east)+(-7pt,6pt)$);
 			
@@ -304,9 +308,9 @@
 	    		
 	    		% c
 	    		\node(cdescr) [below right  =0.3cm  and 0.8cm of c , align=center,font=\footnotesize]{
-	    			latents factors
+	    			vector of\\latents factors
 	    		};
-	    		\draw[->,>=stealth] (cdescr) to ($(c.south)+(4pt,2pt)$);
+	    		\draw[->,>=stealth] ($(cdescr.north west)+(3pt,-3pt)$) to ($(c.south)+(2pt,2pt)$);
 	    		
 	    		% n
 	    		\node(ndescr) [below right=-0.5cm and 1cm of n,align=left,font=\footnotesize]{
@@ -317,10 +321,10 @@
 		
 		\begin{itemize}
 		        \item Capture dominant correlation with few factors (close to PCA) \\
-		        $\hookrightarrow$ low-rank acoustic CSM
+		        $\hookrightarrow$ low-rank acoustic CSM : $\bm{S}_{aa}=\textcolor{blue}{\bm{L}}\textcolor{green}{\bm{S}_{cc}}\textcolor{blue}{\bm{L}}^H$
 		        \item Extract anisotropic noise\pause
 		        \item Weights enforce sparsity $\rightarrow$ lower the number of factors\\
-		        $\hookrightarrow$ Data compression
+		        \item Strong data compression 
 		\end{itemize}
 	\end{itemize}
 	\vfill
@@ -366,13 +370,13 @@
 	\vfill	
 	\begin{tabular}{c c}
 		\textbf{Optimization step}:&
-		$\boxed{ \displaystyle  \bm{\theta} =\underset{\bm{\theta}}{\arg\!\max} \underbrace{\text{P} \left( \bm{\theta} \mid \bm{S}_{yy}\right)}_{ \text{\pbox{7cm}{\centering \normalsize objective function}}}}$ %fr :  fonction obectif	
+		$\boxed{ \displaystyle  \bm{\theta} =\underset{\bm{\theta}}{\arg\!\max} \underbrace{\text{P} \left( \bm{\theta} \mid \bm{S}_{pp}\right)}_{ \text{\pbox{7cm}{\centering \normalsize objective function}}}}$ %fr :  fonction obectif	
 	\end{tabular}
 	\vfill
 	\flushleft
 	\begin{itemize}
-        		\item The input data is the averaged CSM
-        		\item The objective function is the joint posterior probability\\  $\hookrightarrow$no closed-form	$\rightarrow$ approximated with numerical methods
+        		%\item The input data is the averaged CSM
+        		\item The objective function is the joint posterior probability\\  $\hookrightarrow$ no closed-form	$\rightarrow$ approximated with numerical methods
 \end{itemize}
 	
 	%The fitness function is the posterior probability $\rightarrow$ has no close form\\
@@ -398,8 +402,8 @@
 	\begin{itemize}
 		\item Numerical method: the Gibbs sampler
 		\item MCMC algorithm
-		\item global optimization process
-	        \item perform a biased random walk through the target distribution
+		\item Global optimization process
+	       % \item perform a biased random walk through the target distribution
 	\end{itemize}
 	\end{minipage}
 	\hfill
@@ -436,7 +440,7 @@
 \begin{itemize}
         \item[$\bullet$] The bayesian approach:
         \begin{itemize}
-   	     \item prior knowledge is part of the model
+   	     \item prior knowledges are part of the model
    	     \item gives credible interval
 	\end{itemize}
 	~\\
@@ -466,15 +470,18 @@
 \end{frame}
 
 
-\section{Denoising with reference channel}
+\section{Denoising with reference channels}
+\begin{frame}
+\tableofcontents[currentsection,hideothersubsections]
+\end{frame}
 \begin{frame}{\insertsectionhead}
 
-\textit{\small Hypothesis : no TBL noise on the reference microphone in the cabine}\\[1.5ex]
+\textit{\small Hypothesis : the TBL noise does not affect the sensors inside the cabin}\\[1.5ex]
 
 {\small
 $\left.
 \begin{tabular}{l l}
-	$\bm{y}$ &: noisy measurements\\
+	$\bm{p}$ &: noisy measurements\\
 	$\bm{r}$ &: noise-free reference signals\\ &(e.g. inside the aircraft cabine)
 \end{tabular}
 \right\}~~ \text{synchronous acquisitions} $\\
@@ -484,7 +491,7 @@ $\left.
 }
 \vfill
 \parbox{0.45 \textwidth}{
-\hfill $\displaystyle \boxed{    \bm{S}_{aa} = \bm{S}_{yr}\bm{S}_{rr}^{-1}\bm{S}_{ry}}$
+\hfill $\displaystyle \boxed{    \bm{S}_{aa} = \bm{S}_{pr}\bm{S}_{rr}^{-1}\bm{S}_{rp}}$
 }\hfill
 $\rightarrow$~~~\parbox{0.3\textwidth}{\centering  Generalization of the\\ coherent spectra}\hfill
 \vfill
@@ -517,6 +524,9 @@ $\rightarrow$~~~\parbox{0.3\textwidth}{\centering  Generalization of the\\ coher
 \end{frame}
 
 \section{Application to flight test measurements}
+\begin{frame}
+\tableofcontents[currentsection,hideothersubsections]
+\end{frame}
 \begin{frame}{\insertsectionhead}
 	\begin{tikzpicture}[remember picture, overlay]
 		\node[yshift=-2cm,xshift=-4.5cm,right] (a) at (current page) {\includegraphics[width=\textwidth]{airbus/setup.png}};
@@ -635,7 +645,7 @@ Autospectra of the outer mic. in the MF frequency range\\[-2em]
 	\centering
 	\small
 	\begin{equation*}
-        		\text{Error} = \frac{\|\bm{S}_{yy}^{\text{denoised}}-\bm{G}\bm{S}_{qq}\bm{G}'\|_1}{\|\bm{S}_{yy}^{\text{denoised}}\|_1+\|\bm{GS}_{qq}\bm{G}'\|_1}
+        		\text{Error} = \frac{\|\bm{S}_{pp}^{\text{denoised}}-\bm{G}\bm{S}_{qq}\bm{G}'\|_1}{\|\bm{S}_{pp}^{\text{denoised}}\|_1+\|\bm{GS}_{qq}\bm{G}'\|_1}
 	\end{equation*}
 	\begin{itemize}
         		\item $\bm{G}$ Convected Green’s functions between sources and microphones
