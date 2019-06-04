@@ -54,7 +54,10 @@
 
 
 \newcommand{\N}{\mathcal{N}}
-
+\newcommand{\prior}[1]{\textcolor{DarkOrchid3}{#1}}
+\newcommand{\lik}[1]{\textcolor{SteelBlue3}{#1}}
+\newcommand{\post}[1]{\textcolor{SeaGreen4}{#1}}
+%\definecolor{prior}{}{red}
 
 \begin{document}
 
@@ -126,7 +129,7 @@
 \textcolor{colorAlice}{\textbf{How to do inference about hypothesis from data ?}}\\
 
 
-\alt<1>{$$ P(\h \mid \d) = \frac{P(\d \mid \h) P(\h)}{P(\d)}$$}{$$ P(\p \mid \d) = \frac{P(\d \mid \p) P(\p)}{P(\d)}$$}
+\alt<1>{$$ P(\h \mid \d) = \frac{P(\d \mid \h) P(\h)}{P(\d)}$$}{$$ \post{P(\p \mid \d)} = \frac{\lik{P(\d \mid \p) }\prior{P(\p)}}{P(\d)}$$}
 
 \begin{overlayarea}{1.1\textwidth}{0.5\textheight}
 \only<1-2>{\textbf{Required tools} : \\~\\
@@ -144,9 +147,9 @@
 \only<3-6>{
 \pause \pause
 \begin{itemize}
-        \item $P(\d \mid \p)$: \textbf{likelihood }of a set of parameters in a given model \pause
-        \item $P(\p)$ : \textbf{ prior }probability of the parameters\pause
-        \item $P(\p \mid \d)$ : \textbf{posterior }probability of the parameter given the data\pause
+        \item $P(\d \mid \p)$: \lik{\textbf{likelihood }}of a set of parameters in a given model \pause
+        \item $P(\p)$ : \prior{\textbf{ prior} }probability of the parameters\pause
+        \item $P(\p \mid \d)$ : \post{ \textbf{posterior }}probability of the parameter given the data\pause
         \item $P(\d)$ : \textbf{evidence} of the data\pause
 \end{itemize}
 }
@@ -158,6 +161,7 @@
         $\bullet$ classification / clustering\\
        {\small  (yes/no category)  (group similar things)}\\
         \includegraphics[width=0.5\linewidth]{clustering.png}\\
+         \vspace{-0.5cm}
         {\scriptsize source : wikipedia}
 \end{minipage}
 \hfill
@@ -186,7 +190,7 @@ $\hookrightarrow$ Bayesian machine learning is nothing more than learning a prob
 \end{frame}
 
 \section{Bayesian Machine Learning}
-\begin{frame}{\insertsectionhead (in one slide)}
+\begin{frame}{\insertsectionhead ~(in one slide)}
 \begin{itemize}
         \item Have a model $\mathcal{M}(\theta)$ \pause
         \item Specify prior believes we have about the parameters $\theta$ \pause
@@ -226,10 +230,10 @@ P(y \mid X,w,\sigma^2)& = \N(Xw, \sigma^2) \hfill \rightarrow\text{likelihood}\\
 \begin{frame}{\insertsectionhead}
 	\textbf{Bayesian point of view}\\
 	We introduce the prior and then maximize the posterior:
-	$$\underbrace{P(w \mid y,X)}_{\text{posterior}}\propto \underbrace{P(y,X,w)}_{\text{likelihood}}\underbrace{P(w \mid \mu_w,\sigma^2_{w})}_{\text{prior}}$$
+	$$\underbrace{P(w \mid y,X)}_{\text{posterior}}\propto \underbrace{P(y,X,w)}_{\lik{\text{likelihood}}}\underbrace{P(w \mid \mu_w,\sigma^2_{w})}_{\prior{\text{prior}}}$$
 	\pause
 	Gaussian prior for $w$ : $P(w \mid \mu_w,\sigma^2_w) = \N(0,\sigma_0)$,
-	$$P(w \mid y,X) \propto \exp\left(-\frac{(y-Xw)^2}{\sigma^2}	\right) \exp \left(-\frac{(w-\mu_w)^2}{\sigma^2_w} \right)$$
+	$$P(w \mid y,X) \propto \lik{\exp\left(-\frac{(y-Xw)^2}{\sigma^2}	\right) } \prior{\exp \left(-\frac{(w-\mu_w)^2}{\sigma^2_w} \right)}$$
 	\pause ~\\
 	Then, minimize the neg-log posterior writes:
 	$$w_{\text{\textsc{MAP}}} = \arg\min \| \hat{y}-Xw\|^2_2 + \lambda \|w\|^2_2$$
@@ -254,19 +258,21 @@ P(y \mid X,w,\sigma^2)& = \N(Xw, \sigma^2) \hfill \rightarrow\text{likelihood}\\
 \begin{frame}{Norms vs Priors}
 \begin{itemize}
         \item The median minimize the L1 norm : \\
-        $\text{median}(x) = \arg\min_s \sum_i \|x_i - s\|_1$\\
-        The least absolute deviation estimate arises from the maximum likelihood estimate with errors having a Laplace distribution\\
-        fat-tailed distribution $\rightarrow$ less prone to outliers
+        $$\text{median}(x) =\underset{s}{\arg\min} \sum_i \|x_i - s\|_1$$\\
         
-        $$f=  \| y - Xw \|^2_2 + \lambda_2 \| w \|_1$$
+        $\hookrightarrow$ least absolute deviation estimate = maximum likelihood estimate with errors having a Laplace distribution\\
+        (fat-tailed distribution $\rightarrow$ less prone to outliers)
         
+       % $$f=  \| y - Xw \|^2_2 + \lambda_2 \| w \|_1$$
+        \vfill
+        \pause
         \item The mean minimize the L2 norm : \\
-        $\text{mean}(x) = \arg\min_s \sum_i \|x_i - s\|_2$\\
-        gives the least squares estimate
-        more sensitive to outliers
+        $$\text{mean}(x) =\underset{s}{\arg\min} \sum_i \|x_i - s\|_2$$\\
+       $\hookrightarrow$ least squares estimate = ML estimate with Gaussian errors
+        (more sensitive to outliers)\\~\\\pause
+        \textit{Gauss proved the central limit theorem $\rightarrow$ justify the use of least squares}
         
 \end{itemize}
-
 \end{frame}
 
 
@@ -338,7 +344,7 @@ $\hookrightarrow$ Probabilistic Principal Component Analysis model
 
 
 \begin{frame}{References}
-Book : \textit{Pattern Recognition and Machine Leaning},  Bishop\\
+Book : \textit{Pattern Recognition and Machine Leaning},  Bishop\\~\\~\\
 New article : \textit{Machine learning in acoustics: a review}, Bianco \& coaut.
 \end{frame}
 \end{document}
