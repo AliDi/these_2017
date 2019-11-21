@@ -22,7 +22,7 @@ function [Sqq_diag , W ] = beamforming(Spp , G_map_mic , mic_weight)
     
         for n=1:Nmap
             %%% Calculates weighting vectors (source scaling)
-            L=sum(abs(G_map_mic(:,n)).^2,1).^-1;%(G_map_mic(:,n,f)'*G_map_mic(:,n,f))^(-1); %scalar
+            L=(sum(abs(G_map_mic(:,n)).^2,1)).^-1;%(G_map_mic(:,n,f)'*G_map_mic(:,n,f))^(-1); %scalar
             
             %%% Calculate sterring vectors
             W(n,:)=L*G_map_mic(:,n)'.*mic_weight;

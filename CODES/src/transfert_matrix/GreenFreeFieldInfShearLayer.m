@@ -1,6 +1,6 @@
 function G=GreenFreeFieldInfShearLayer(r_src , r_mic , f , Gsign ,Mach , c , n_SL , pos_SL )
 %G=GreenFreeFieldInfShearLayer(r_src , r_mic , f , Gsign ,Mach , c , n_SL , pos_SL )
-%Calculates the acoustic transfert matrix for free field propagation (3D),
+%Calculates the acoustic transfer matrix for free field propagation (3D),
 %from source points r_src to microphone points r_mic
 %through a infinitly thin shear layer (SL)
 %n_SL is a vector normal to the interface flow/quiescent anechoic room
@@ -14,8 +14,8 @@ function G=GreenFreeFieldInfShearLayer(r_src , r_mic , f , Gsign ,Mach , c , n_S
 %
 %/!!\ vector are signed !
 %
-    [M, ~]= size(r_mic);
-    [N, ~]= size(r_src);
+    M= size(r_mic,1);
+    N= size(r_src,1);
     
     %reshape vectors
     Mach=reshape(Mach,1,3);
